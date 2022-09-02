@@ -1,0 +1,69 @@
+@import 'src/scss/variable';
+
+.ngc-switch {
+    cursor: pointer;
+    display: flex;
+    width: fit-content;
+
+    .ngc-switch__box {
+        position: relative;
+        width: 38px;
+        min-width: 38px;
+        max-width: 38px;
+        height: 22px;
+        min-height: 22px;
+        max-height: 22px;
+        background-color: $color-placeholder;
+        border-radius: 11px;
+
+        &:after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            position: absolute;
+            left: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 50%;
+            background-color: $color-white;
+            transition: 300ms cubic-bezier(.35, 0, .25, 1);
+        }
+
+        input {
+            display: none;
+        }
+    }
+
+    &.ngc-switch--active:not(.ngc-switch--disabled) .ngc-switch__box {
+        // background-color: var(--primary-color, blue);
+        background-color: var(--primary-color, $color-primary);
+    }
+
+    &.ngc-switch--active {
+        .ngc-switch__box {
+            background-color: var(--switch-color, $color-primary);
+
+            &:after {
+                left: calc(100% - 21px);
+            }
+        }
+    }
+
+    &:not(.ngc-switch--disabled) {
+        &:focus-visible .ngc-switch__box {
+            box-shadow: $box-shadow-focus;
+        }
+    }
+
+    .ngc-switch__label {
+        display: flex;
+        align-items: center;
+        // font-weight: $font-weight-semibold;
+        margin-left: 10px;
+        color: var(--switch-label-color, inherit);
+
+        &:empty {
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,12 @@
+<div class="wgc-tooltip"
+    [style.--tooltip-color]='color'
+    [style.--tooltip-text-color]='color'
+    [style.width]='width'
+    [style.minWidth]='minWidth'
+    [style.maxWidth]='maxWidth'
+    [style.height]='height'
+    [style.minHeight]='minHeight'
+    [style.maxHeight]='maxHeight'>
+    {{ message }}
+    <ng-content></ng-content>
+</div>

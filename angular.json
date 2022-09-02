@@ -1,3 +1,5 @@
+//  https://angular.io/guide/build#configure-target-specific-file-replacements
+
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
@@ -36,6 +38,17 @@
             "scripts": []
           },
           "configurations": {
+            "aot": {
+              "aot": true
+            },
+            "dev": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev.ts"
+                }
+              ]
+            },
             "production": {
               "budgets": [
                 {
@@ -70,15 +83,26 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "configurations": {
-            "production": {
-              "browserTarget": "project:build:production"
-            },
-            "development": {
-              "browserTarget": "project:build:development"
-            }
+          "options": {
+            "browserTarget": "project:build",
+            "host": "0.0.0.0",
+            "port": 8000,
+            "open": true
           },
-          "defaultConfiguration": "development"
+          "configurations": {
+            "aot": {
+              "browserTarget": "project:build:aot"
+            },
+            "dev": {
+              "browserTarget": "project:build:dev"
+            },
+            "local": {
+              "browserTarget": "project:build:local"
+            },
+            "sw": {
+              "browserTarget": "project:build:sw"
+            }
+          }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

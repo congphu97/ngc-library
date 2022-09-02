@@ -1,0 +1,15 @@
+<div class="ngc-switch">
+    <div class="ngc-switch__box">
+        <input
+            type="checkbox"
+            [disabled]="disabled"
+            [(ngModel)]="ngModel"
+            (ngModelChange)="ngModelChange?.emit( $event )"/>
+    </div>
+    <div class="ngc-switch__label">
+        {{ label }}
+        <ng-container *ngIf="!label">
+            <ng-content></ng-content>
+        </ng-container>
+    </div>
+</div>

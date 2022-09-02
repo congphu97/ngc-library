@@ -1,0 +1,12 @@
+<color-photoshop color="#fff" (onChangeComplete)="handleChange($event)"></color-photoshop>
+
+<div class="ngc-color-picker-list">
+    <div *ngFor="let color of colors">
+        <button
+            class="ngc-color-picker-item"
+            [style.--color-picker-item-color]="color"
+            [style.--color-picker-item-bg-color]="color"
+            (click)="pickColor( color )">
+        </button>
+    </div>
+</div>
