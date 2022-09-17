@@ -8,7 +8,7 @@ if (environment.production) {
   enableProdMode();
 }
 else {
-  console.log( environment.SERVER_API_URL)
+  console.log( environment)
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

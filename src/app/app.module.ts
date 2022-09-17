@@ -9,6 +9,7 @@ import { NgcColorPickerModule } from './@ngc/ngc-color-picker';
 import { NgcSwitchModule } from './@ngc/ngc-switch/ngc-switch.module';
 import { NgcCheckboxModule } from './@ngc/ngc-checkbox/ngc-checkbox.module';
 import { NgcRadioModule } from './@ngc/ngc-radio/ngc-radio.module';
+import { NgcClipboardCopyModule } from './@ngc/ngc-clipboard-copy/ngc-clipboard-copy.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { NgcRadioModule } from './@ngc/ngc-radio/ngc-radio.module';
     AppRoutingModule,
     BrowserAnimationsModule,
 
-    NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule
+    NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule
   ],
   providers: [],
   bootstrap: [AppComponent]

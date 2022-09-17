@@ -30,7 +30,7 @@ export class NgcRadioGroupComponent implements OnInit, OnChanges, ControlValueAc
 	};
 
 	public ngOnChanges(changes: SimpleChanges): void {
-		
+
 	}
 
 }

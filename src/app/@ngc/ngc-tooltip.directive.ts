@@ -2,9 +2,9 @@ import { Directive, ElementRef, HostListener, Input, ViewContainerRef, ChangeDet
 import {
 	Overlay, OverlayRef, HorizontalConnectionPos,
 	VerticalConnectionPos, OverlayConfig, FlexibleConnectedPositionStrategy,
-	ConnectedOverlayPositionChange, GlobalPositionStrategy
+	ConnectedOverlayPositionChange, GlobalPositionStrategy, PositionStrategy
 } from '@angular/cdk/overlay';
-import { NgcTooltipComponent } from './ngc-tooltip/ngc-tooltip.component';
+import { NGCITooltipDirection, NGCITooltipPosition, NgcTooltipComponent } from './ngc-tooltip/ngc-tooltip.component';
 import { ComponentPortal, TemplatePortal } from '@angular/cdk/portal';
 
 const overlayRefs: OverlayRef[] = [];
@@ -18,6 +18,7 @@ export class NgcTooltipDirective {
 	private _overlayRef: OverlayRef;
  	private _portal: any;
 	private _instance: NgcTooltipComponent;
+	@Input() public position: NGCITooltipPosition = 'above';
 
 	private isOpened: boolean;
 
@@ -42,7 +43,7 @@ export class NgcTooltipDirective {
 
 	@HostListener( 'mouseover', [ '$event' ] )
 	public triggerMouseEnter( event: MouseEvent ) {
-		console.log({event})
+		console.log(1, {event})
 		if( this.isOpened ) return;
 
 		this._open();
@@ -50,28 +51,31 @@ export class NgcTooltipDirective {
 
 	@HostListener( 'mouseleave', [ '$event' ] )
 		public triggerMouseOut( event: MouseEvent ) {
-			console.log({event})
+			console.log(2 ,{event})
 			this._close();
 	}
 
 	private _open() {
 		setTimeout( () => {
-			this._overlayRef = this._overlayRef || this._createOverlayRef();
+		}, 300 )
+		this._overlayRef = this._overlayRef || this._createOverlayRef();
 
-			// Push overlay ref to global
-			overlayRefs.push( this._overlayRef );
+		// Push overlay ref to global
+		overlayRefs.push( this._overlayRef );
 
-			if ( this._overlayRef?.hasAttached() ) return;
+		if ( this._overlayRef?.hasAttached() ) return;
 
-			this.isOpened = true;
+		this.isOpened = true;
 
-			if (  this.tooltip ) {
+		console.log( this.tooltip )
+
+		if (  this.tooltip ) {
 			this._portal = this._portal || new ComponentPortal( NgcTooltipComponent, this._vcRef );
 			this._instance = this._overlayRef.attach( this._portal ).instance;
 
-			this._setTooltipMessage();
-			}
-		}, 300 )
+			this._instance.messageOnly = true;
+			this._instance.message = this.tooltip;
+		}
 	}
 
 	private _close() {
@@ -84,6 +88,7 @@ export class NgcTooltipDirective {
 
 	private _createOverlayRef() {
 		const config: OverlayConfig = new OverlayConfig({
+			// positionStrategy: this._createPositionStrategy(),
 			height: '400px',
 			width: '600px',
 			scrollStrategy	: this._overlay.scrollStrategies.reposition({ autoClose: true, scrollThrottle: 1000 }),
@@ -92,22 +97,128 @@ export class NgcTooltipDirective {
 		const overlayRef: OverlayRef = this._overlay.create( config );
 
 		overlayRef.setDirection( 'ltr' );
+		console.log( overlayRef)
+		if ( this.position ) {
+			( overlayRef.getConfig().positionStrategy as FlexibleConnectedPositionStrategy )
+			.positionChanges
+			// .pipe( untilCmpDestroyed( this ) )
+			.subscribe( ( change: ConnectedOverlayPositionChange ) => {
+				const _originX: HorizontalConnectionPos = change.connectionPair.originX;
+				const _originY: VerticalConnectionPos = change.connectionPair.originY;
+				const _overlayX: HorizontalConnectionPos = change.connectionPair.overlayX;
+				const _overlayY: VerticalConnectionPos = change.connectionPair.overlayY;
+				let position!: NGCITooltipPosition;
+				let direction!: NGCITooltipDirection;
 
+				if ( _originX === 'center' ) {
+					position = _originY === 'top' ? 'above' : 'below';
+
+					if ( _overlayX !== 'center' ) direction = _overlayX === 'start' ? 'start' : 'end';
+				}
+
+				if ( _originY === 'center' ) {
+					position = _originX === 'start' ? 'before' : 'after';
+
+					if ( _overlayY !== 'center' ) direction = _overlayY === 'top' ? 'start' : 'end';
+				}
+
+				this._instance.setPositionClasses( position, direction );
+				// this._instance.detectChanges();
+			} );
+
+		}
 		return overlayRef;
 
 	}
 
-	/**
-	 * @return {void}
-	 */
-	private _setTooltipMessage() {
-		if ( !this._instance ) return;
+	// /**
+	//  * @return {FlexibleConnectedPositionStrategy}
+	//  */
+	//  private _createPositionStrategy(): FlexibleConnectedPositionStrategy {
+	// 	let originX: HorizontalConnectionPos = this.originX || 'center';
+	// 	let originY: VerticalConnectionPos = this.originY || 'center';
+	// 	let originFallbackX: HorizontalConnectionPos = originX;
+	// 	let originFallbackY: VerticalConnectionPos = originY;
+	// 	let overlayX: HorizontalConnectionPos = this.overlayX || 'center';
+	// 	let overlayY: VerticalConnectionPos = this.overlayY || 'center';
+	// 	let overlayFallbackX: HorizontalConnectionPos = overlayX;
+	// 	let overlayFallbackY: VerticalConnectionPos = overlayY;
+	// 	let offsetX: number = +( this.offsetX || 0 );
+	// 	let offsetY: number = +( this.offsetY || 0 );
+	// 	let offsetFallbackX: number = offsetX;
+	// 	let offsetFallbackY: number = offsetY;
 
-		this._instance.messageOnly = false;
+	// 	switch ( this.position ) {
+	// 		case 'above':
+	// 		case 'below':
+	// 			if ( !this.originY ) originY = this.position === 'above' ? 'top' : 'bottom';
+	// 			if ( !this.overlayY ) overlayY = this.position === 'above' ? 'bottom' : 'top';
+	// 			if ( !this.offsetY ) offsetY = this.position === 'above' ? -7 : 7;
 
-		if ( this.tooltip) {
-			this._instance.message = this.tooltip.toString();
-			this._instance.messageOnly = true;
-		}
-	}
+	// 			offsetFallbackX = -offsetX;
+	// 			offsetFallbackY = -offsetY;
+	// 			break;
+	// 		case 'before':
+	// 		case 'after':
+	// 			if ( !this.originX ) originX = this.position === 'before' ? 'start' : 'end';
+	// 			if ( !this.overlayX ) overlayX = this.position === 'before' ? 'end' : 'start';
+	// 			if ( !this.offsetX ) offsetX = this.position === 'before' ? -7 : 7;
+
+	// 			offsetFallbackX = -offsetX;
+	// 			offsetFallbackY = -offsetY;
+	// 			break;
+	// 	}
+
+	// 	originFallbackX = this._fallbackX( originX );
+	// 	originFallbackY = this._fallbackY( originY );
+	// 	overlayFallbackX = this._fallbackX( overlayX );
+	// 	overlayFallbackY = this._fallbackY( overlayY );
+
+	// 	return this._overlay.position()
+	// 	.flexibleConnectedTo( this._elementRef )
+	// 	// .withLockedPosition()
+	// 	.withPush( true )
+	// 	.withPositions([
+	// 		{
+	// 			originX, originY,
+	// 			overlayX, overlayY,
+	// 			offsetX, offsetY,
+	// 		},
+	// 		{
+	// 			originX: originFallbackX, originY,
+	// 			overlayX: overlayFallbackX, overlayY,
+	// 			offsetX: offsetFallbackX, offsetY,
+	// 		},
+	// 		{
+	// 			originX, originY: originFallbackY,
+	// 			overlayX, overlayY: overlayFallbackY,
+	// 			offsetX, offsetY: offsetFallbackY,
+	// 		},
+	// 		{
+	// 			originX: originFallbackX, originY: originFallbackY,
+	// 			overlayX: overlayFallbackX, overlayY: overlayFallbackY,
+	// 			offsetX: offsetFallbackX, offsetY: offsetFallbackY,
+	// 		},
+	// 		{
+	// 			originX: originFallbackX, originY,
+	// 			overlayX: 'start', overlayY,
+	// 			offsetX: -7, offsetY,
+	// 		},
+	// 		{
+	// 			originX: originFallbackX, originY,
+	// 			overlayX: 'end', overlayY,
+	// 			offsetX: 7, offsetY,
+	// 		},
+	// 		{
+	// 			originX, originY: originFallbackY,
+	// 			overlayX, overlayY: 'top',
+	// 			offsetX, offsetY: -7,
+	// 		},
+	// 		{
+	// 			originX, originY: originFallbackY,
+	// 			overlayX, overlayY: 'bottom',
+	// 			offsetX, offsetY: 7,
+	// 		},
+	// 	]);
+	// }
 }
