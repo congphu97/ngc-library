@@ -1,0 +1,19 @@
+<div class="ngc-tab-groups">
+    <div class="ngc-tab-groups__header" >
+        <ng-container *ngFor="let item of items; let index = index;">
+            <div class="ngc-tab-groups__header-item"
+                [class.ngc-tab-group__header-item--active]="selectedIndex === index"
+                (click)="selected( index )">
+                {{ item?.label }}
+                <ng-container *ngTemplateOutlet='item?.header'></ng-container>
+            </div>
+        </ng-container>
+    </div>
+    <div class="ngc-tab-groups__content">
+        <ng-container *ngFor="let item of items; let index = index;">
+            <ng-container *ngIf="index === selectedIndex">
+                <ng-container *ngTemplateOutlet='item?.content'></ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

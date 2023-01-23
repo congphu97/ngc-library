@@ -1,0 +1,14 @@
+@import 'src/scss/partials/variable';
+
+.ngc-divider {
+	display: flex;
+	background-color: $color-border;
+
+	&:not(.ngc-divider--vertical) {
+		height: 1px;
+	}
+
+	&.ngc-divider--vertical {
+		width: 1px;
+	}
+}

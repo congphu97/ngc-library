@@ -1,0 +1,8 @@
+.ngc-truncate {
+    overflow: hidden;
+    white-space: pre-line;
+    word-break: break-word;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: var(--truncate-line, 2);
+}

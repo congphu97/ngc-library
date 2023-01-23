@@ -1,28 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgcTooltipModule } from './@ngc/ngc-tooltip';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgcColorPickerModule } from './@ngc/ngc-color-picker';
-import { NgcSwitchModule } from './@ngc/ngc-switch/ngc-switch.module';
-import { NgcCheckboxModule } from './@ngc/ngc-checkbox/ngc-checkbox.module';
-import { NgcRadioModule } from './@ngc/ngc-radio/ngc-radio.module';
-import { NgcClipboardCopyModule } from './@ngc/ngc-clipboard-copy/ngc-clipboard-copy.module';
+
+import { CoreModule } from './@core';
+
+import { TranslateModule } from '@ngx-translate/core';
+import { routing } from './app-routing.module';
+import { GuidelineModule } from './@guideline/guideline.module';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
+    BrowserModule, CoreModule, GuidelineModule,
+    TranslateModule.forRoot(),
 
-    NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule
+    routing
   ],
+  exports: [],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

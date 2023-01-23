@@ -16,6 +16,7 @@ export const COLOR = {
 	BORDER_SUPER_THICK	: '#8e8e93',
 	BORDER_THICK		: '#babcc0',
 	BORDER				: '#e4e4e6',
+	HIGHLIGHT			: '#f4f0d9',
 	BLUE: {
 		700: '#0040dd',
 		500: '#0a84ff',

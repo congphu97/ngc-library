@@ -1,0 +1,7 @@
+@import 'src/scss/partials/variable';
+
+.wgc-loading {
+	display: flex;
+	width: fit-content;
+	animation: $spin-animation;
+}

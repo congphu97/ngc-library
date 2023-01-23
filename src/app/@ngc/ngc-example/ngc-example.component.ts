@@ -2,12 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'ngc-example',
-  templateUrl: './ngc-example.component.html',
-  styleUrls: ['./ngc-example.component.scss']
+  templateUrl: './ngc-example.html',
+  styleUrls: ['./ngc-example.scss']
 })
-export class NgcExampleComponent implements OnInit {
+export class NgcTruncate implements OnInit {
 
-  @Input() public color: string;
+ 	@Input() public color: string;
 	@Input() public width: string;
 	@Input() public minWidth: string;
 	@Input() public maxWidth: string;

@@ -1,0 +1,33 @@
+@import 'src/scss/partials/variable';
+
+.ngc-tab-groups {
+    display: flex;
+    flex-direction: column;
+
+    .ngc-tab-groups__header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        border-bottom: 1px solid $color-primary;
+
+        .ngc-tab-groups__header-item {
+            padding: 10px 15px;
+            width: 100%;
+            align-items: center;
+            text-align: center;;
+            cursor: pointer;
+
+            &.ngc-tab-group__header-item--active {
+                color: $color-text;
+                font-weight: 500;
+                border-bottom: 2px solid $color-primary;
+            }
+        }
+    }
+
+    .ngc-tab-groups__content {
+        padding: 15px;
+        height: 60%;
+    }
+
+}

@@ -1,10 +1,15 @@
-import { NgModule } from '@angular/core';
+import { ModuleWithProviders } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+import { IRouteData } from '@core';
+import { GuidelineComponent } from './@guideline/guideline.component';
 
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+
+
+const routeData: IRouteData = { sidebar: false, cache: false };
+const routes: Routes = [
+	// { path: '', redirectTo: AUTH_CONSTANT.SIGNIN_PATH, pathMatch: 'full' },
+	{ path: '**', component: GuidelineComponent, data: routeData },
+];
+
+export const routing: ModuleWithProviders<RouterModule> = RouterModule.forRoot( routes, { useHash: false } );

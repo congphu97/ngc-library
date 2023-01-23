@@ -1,0 +1,9 @@
+<ngc-toast *ngFor="let toast of toasts"
+    [title]="toast?.title"
+    [description]="toast?.description"
+    [color]='toast?.config?.color'
+    [textColor]='toast?.config?.textColor'
+    [type]="toast?.config?.type"
+    [buttons]="toast?.config?.buttons"
+    (closed)="deleteToast( toast?.id )">
+</ngc-toast>

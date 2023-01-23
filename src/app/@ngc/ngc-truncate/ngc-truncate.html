@@ -1,0 +1,10 @@
+<!-- <ngc-tooltip #tooltip messageOnly maxWidth="300px">
+    {{ internalTooltip }}
+</ngc-tooltip>
+
+<div class="ngc-truncate" #wrapperEle [ngcTooltip]='tooltip'>
+    <ng-content></ng-content> -->
+<!-- </div> -->
+<div class="ngc-truncate" #wrapperEle [ngcTooltip]="internalTooltip">
+    <ng-content></ng-content>
+</div>

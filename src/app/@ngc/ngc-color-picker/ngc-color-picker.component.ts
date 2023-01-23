@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { ColorEvent } from 'ngx-color';
-import { COLOR } from '../@resource/color';
+import { COLOR } from '../../@resources/color';
 
 @Component({
   selector: 'ngc-color-picker',
@@ -24,7 +24,7 @@ export class NgcColorPickerComponent implements OnInit {
   }
 
   public pickColor( color: string ) {
-    
+
     this.pickedColorChange.emit( color );
   }
 

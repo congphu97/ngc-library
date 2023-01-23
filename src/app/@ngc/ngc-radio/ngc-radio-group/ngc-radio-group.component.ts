@@ -17,19 +17,24 @@ export class NgcRadioGroupComponent implements OnInit, OnChanges, ControlValueAc
   	ngOnInit(): void { }
 
 	public writeValue(obj: any) {
+		console.log( obj );
 	};
 	public registerOnChange(fn: any) {
+		console.log( fn );
 
 	};
 
 	public registerOnTouched (fn: any) {
+		console.log( fn );
 	};
 
 	public setDisabledState(isDisabled: boolean) {
+		console.log( isDisabled );
 
 	};
 
 	public ngOnChanges(changes: SimpleChanges): void {
+		console.log( changes );
 
 	}
 

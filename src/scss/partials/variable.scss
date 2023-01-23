@@ -1,4 +1,4 @@
-// @import 'angular-core/lib/scss/partials/variable'; 
+@import 'angular-core/lib/scss/partials/variable';
 
 @function hex-opacity($hex, $opacity: 1, $background: #fff) {
 	@return mix(
@@ -96,13 +96,12 @@ $palettes: (
 
 /* FONTS */
 $font-family-body: AvertaStdCY, Helvetica, sans-serif;
-$font-family-code: FiraCode, Helvetica, sans-serif;
+$font-family-code: SourceCodePro, Helvetica, sans-serif;
 
 /* COLORS */
 $color-primary: #444446;
 $color-secondary: #fafafa;
 $color-default: #f5f5f5;
-$color-white: #fff;
 
 $color-info: color(blue, 500);
 $color-success: color(green, 500);
@@ -131,6 +130,7 @@ $gradient-secondary-vertical: linear-gradient(to bottom, rgba(#fff, 0) 1%, #fafa
 
 /* BOX SHADOWS */
 $box-shadow: 0 8px 10px -2px rgba(0, 0, 0, .15);
+$box-shadow-thick: 0 10px 23px 2px rgba(36, 36, 38, .4);
 $box-shadow-focus: 0 14px 24px -4px rgba(228, 228, 228, .4);
 $box-shadow-scroll-horizontal: 7px 0 7px -3px rgba(200, 200, 200, .5);
 $box-shadow-scroll-vertical: 0 14px 24px -4px rgba(187, 185, 185, .4);

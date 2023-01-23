@@ -1,0 +1,88 @@
+
+<button [ngcTooltip]="'aabc'" [ngcClipboardCopy]="'abc'">abc</button>
+<button [ngcTooltip]="'dref'" [ngcClipboardCopy]="'dref'">abc</button>
+
+<ngc-color-picker></ngc-color-picker>
+<ngc-switch [label]="'abc'"></ngc-switch>
+<ngc-checkbox [label]="'checkbox'"></ngc-checkbox>
+<ngc-radio-group ngDefaultControl [label]="'radio'">
+   abc
+</ngc-radio-group>
+<ngc-divider></ngc-divider>
+<ngc-divider vertical></ngc-divider>
+<ngc-loading>.mb-10</ngc-loading>
+<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
+<ngc-loading class="mb-10" color='#0000ff'></ngc-loading>
+<ngc-loading class="mb-10" color='#primary'></ngc-loading>
+<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
+
+<ngc-icon name="close"></ngc-icon>
+<button class="m-10" (click)="openToast( 'success' )">Open toast success</button>
+<button class="m-10" (click)="openToast( 'info' )">Open toast infor</button>
+<button class="m-10" (click)="openToast( 'warning' )">Open toast warning</button>
+<button class="m-10" (click)="openToast( 'danger' )">Open toast danger</button>
+
+<ngc-truncate>
+   What is Lorem Ipsum?\
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\
+		standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\
+		It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of\
+		Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+</ngc-truncate>
+
+<ngc-tab-group>
+	<ngc-tab [label]="'tab1'">
+		What is Lorem Ipsum? 1
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+		Why do we use it?
+		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+	</ngc-tab>
+	<ngc-tab [label]="'tab2'">
+		What is Lorem Ipsum? 2
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+		Why do we use it?
+		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+	</ngc-tab>
+	<ngc-tab [label]="'tab3'">
+		What is Lorem Ipsum? 3
+		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+		Why do we use it?
+		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+	</ngc-tab>
+</ngc-tab-group>
+
+<ngc-tab-group>
+	<ngc-tab>
+		<ng-template ngcTabHeader>Tab 1</ng-template>
+		<ng-template ngcTabContent>
+			What is Lorem Ipsum? 1
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+			Why do we use it?
+			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		</ng-template>
+	</ngc-tab>
+	<ngc-tab>
+		<ng-template ngcTabHeader>Tab 2</ng-template>
+		<ng-template ngcTabContent>
+			What is Lorem Ipsum? 2
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+			Why do we use it?
+			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		</ng-template>
+	</ngc-tab>
+	<ngc-tab>
+		<ng-template ngcTabHeader>Tab 3</ng-template>
+		<ng-template ngcTabContent>
+			What is Lorem Ipsum? 3
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+			Why do we use it?
+			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		</ng-template>
+	</ngc-tab>
+</ngc-tab-group>

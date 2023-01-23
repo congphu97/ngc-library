@@ -1,0 +1,13 @@
+
+<div class="ngc-toast-container">
+    <div class="ngc-toast-header">
+        {{ title }}
+        <button (click)="closed?.emit()">X</button>
+    </div>
+    <div class="ngc-toast-description" [innerHtml]="description | safeHtml"></div>
+    <div class="ngc-toast-button">
+        <ng-container *ngFor="let button of buttons">
+            <button (click)="button?.onClicked(); closed?.emit( $event )">{{ button?.title }}</button>
+        </ng-container>
+    </div>
+</div>
