@@ -1,0 +1,19 @@
+
+<div class="ngc-progress-bar">
+    <input id="range" class="ngc-progress-bar__toggle" type="range" [min]="min" [max]="max" [value]="value" (input)="changeRange($event)">
+
+    <ng-container>
+        <div class="ngc-progress-bar__label">
+            <div>{{labelText}}</div>
+        </div>
+    </ng-container>
+    <div class="ngc-progress-bar__line">
+        <div class="ngc-progress-bar__line-current"></div>
+    </div>
+    <ng-container *ngIf="statusText && ( mode == progressBarMode?.STATUS)">
+        <div class="ngc-progress-bar__status">
+            <div>{{statusText}}</div>
+            <div>{{percent}}%</div>
+        </div>
+    </ng-container>
+</div>

@@ -16,7 +16,7 @@ _.mixin( LODASH_MIXIN );
 import { ENVIRONMENT } from '@environments/environment';
 // import { HASH } from '@environments/hash';
 
-// import { CONSTANT as APP_CONSTANT } from '@resources';
+import { CONSTANT as APP_CONSTANT } from '@app/@core';
 
 import { FormModule } from './form.module';
 import { CopyrightComponent, DragZoneComponent, NotFoundComponent, SeenAllComponent } from './components';
@@ -86,7 +86,7 @@ import {
 	loader: ( lang: string ) => import( `./i18n/${lang}.json` ),
 })
 export class CoreModule {
-
+	const
 	/**
 	 * @constructor
 	 * @param {AppConfig} _appConfig
@@ -105,17 +105,17 @@ export class CoreModule {
 		this._appConfig.logo = ENVIRONMENT.APP_LOGO;
 		this._appConfig.url = ENVIRONMENT.APP_URL;
 		// this._appConfig.mainPath = APP_CONSTANT.MAIN_PATH;
-		// this._appConfig.locale = APP_CONSTANT.LOCALE;
+		this._appConfig.locale = APP_CONSTANT.LOCALE;
 
 		this._serverConfig.apiURL = ENVIRONMENT.SERVER_API_URL;
 		this._serverConfig.wsURL = ENVIRONMENT.SERVER_WEBSOCKET_URL;
 		this._serverConfig.fcmPublicKey = ENVIRONMENT.FCM_PUBLIC_KEY;
 		this._serverConfig.fcmSubscriptionEndpoint = ENVIRONMENT.FCM_SUBSCRIPTION_ENDPOINT;
 
-		// this._dateTimeConfig.timezone = APP_CONSTANT.TIMEZONE;
-		// this._dateTimeConfig.timeFormat = APP_CONSTANT.TIME_FORMAT;
-		// this._dateTimeConfig.dateFormat = APP_CONSTANT.DATE_FORMAT;
-		// this._dateTimeConfig.weekStart = APP_CONSTANT.WEEK_START;
+		this._dateTimeConfig.timezone = APP_CONSTANT.TIMEZONE;
+		this._dateTimeConfig.timeFormat = APP_CONSTANT.TIME_FORMAT;
+		this._dateTimeConfig.dateFormat = APP_CONSTANT.DATE_FORMAT;
+		this._dateTimeConfig.weekStart = APP_CONSTANT.WEEK_START;
 
 		// this._storageConfig.authorizedKey = HASH.AUTHORIZED_KEY;
 		// this._storageConfig.hashKey = HASH.STORAGE_HASH_KEY;

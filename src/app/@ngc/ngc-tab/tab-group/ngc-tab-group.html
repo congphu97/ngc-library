@@ -3,6 +3,7 @@
         <ng-container *ngFor="let item of items; let index = index;">
             <div class="ngc-tab-groups__header-item"
                 [class.ngc-tab-group__header-item--active]="selectedIndex === index"
+                [@widthGrow]="state"
                 (click)="selected( index )">
                 {{ item?.label }}
                 <ng-container *ngTemplateOutlet='item?.header'></ng-container>

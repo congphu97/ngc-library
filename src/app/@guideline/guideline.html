@@ -86,3 +86,18 @@
 		</ng-template>
 	</ngc-tab>
 </ngc-tab-group>
+
+<ngc-breadcrumb>
+	<ngc-breadcrumb-item>
+		Home
+	</ngc-breadcrumb-item>
+	<ngc-breadcrumb-item [commands]='[ "/" ]'>
+		Home
+	</ngc-breadcrumb-item>
+	<ngc-breadcrumb-item [commands]='[ "/" ]'>
+		Home
+	</ngc-breadcrumb-item>
+</ngc-breadcrumb>
+
+<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
+<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"[statusText]="'Uploading .... '"></ngc-progress-bar>

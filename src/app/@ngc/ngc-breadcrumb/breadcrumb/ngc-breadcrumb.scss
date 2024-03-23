@@ -1,0 +1,38 @@
+.ngc-breadcrumb {
+	display: flex;
+	align-items: center;
+	font-size: 13px;
+	line-height: 13px;
+	// color: $color-label;
+
+	.ngc-breadcrumb-item {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		min-width: 0;
+
+		&:not(:last-child) {
+			// max-width: var(--breadcrumb-item-max-width);
+		}
+
+		&:not(.ngc-breadcrumb-item--disabled) {
+			&.ngc-breadcrumb-item--active {
+				cursor: pointer;
+
+				&:hover {
+					opacity: .8;
+				}
+			}
+		}
+
+		&.ngc-breadcrumb-item--disabled {
+			// @include cursor-not-allowed;
+			// color: $color-disabled;
+		}
+	}
+
+	.ngc-breadcrumb__divider-icon {
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+}

@@ -1,0 +1,12 @@
+<ng-container *ngFor="let item of breadcrumbItems; let first = first;">
+    <ngc-ion *ngIf="!first">/</ngc-ion>
+    <div>
+        <ng-container *ngIf='item?.truncate; else elseBlock;'>
+            <ngc-truncate [limitLine]='item?.truncateLimitLine'></ngc-truncate>
+				<ngc-container *ngTemplateOutlet='item?.templateRef'></ngc-container>
+        </ng-container>
+        <ng-template #elseBlock>
+            <ng-container *ngTemplateOutlet='item?.templateRef'></ng-container>
+        </ng-template>
+    </div>
+</ng-container>

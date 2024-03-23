@@ -13,7 +13,11 @@ import { GuidelineComponent } from './guideline.component';
 import { NgcIconModule } from '@app/@ngc/ngc-icon/ngc-icon.module';
 import { NgcTruncateModule } from '@app/@ngc/ngc-truncate/ngc-truncate.module';
 import { NgcTabModule } from '@app/@ngc/ngc-tab/ngc-tab.module';
+import { NgcBreadcrumbModule } from '@app/@ngc/ngc-breadcrumb/ngc-breadcrumb.module';
+import { NgcProgressBarModule } from '@app/@ngc/ngc-progress-bar/ngc-progress-bar.module';
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [ GuidelineComponent ],
@@ -21,7 +25,8 @@ import { NgcTabModule } from '@app/@ngc/ngc-tab/ngc-tab.module';
     BrowserModule,
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
-    NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule
+    NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
+    SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],
   providers: [],
