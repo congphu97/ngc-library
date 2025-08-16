@@ -2,18 +2,19 @@
 
 .ngc-toast {
 	$self: &;
-    width: 500px;
-    overflow: hidden;
+	width: 500px;
+	overflow: hidden;
 	border-radius: 8px;
 	border: 1px solid $color-border;
-    display: flex;
-    padding: 15px 20px;
+	display: flex;
+	padding: 15px 20px;
 	margin-top: 30px;
 	margin-bottom: 30px;
-    background-color: var(--toast-color, color(darkGray, 700));
+	background-color: var(--toast-color, color(darkGray, 700));
 	color: var(--toast-text-color, $color-white);
+	animation: $popup-animation;
 
-    &#{ $self }-info {
+	&#{ $self }-info {
 		background-color: $color-info;
 	}
 
@@ -29,17 +30,21 @@
 		background-color: $color-danger;
 	}
 
-    .ngc-toast-container {
+	.ngc-toast-container {
 		align-items: center;
 		width: 100%;
 		min-width: 0;
 
-        .ngc-toast-header {
-            display: flex;
-            justify-content: space-between;
-            font-size: 20px;
-        }
+		.ngc-toast-header {
+			display: flex;
+			justify-content: space-between;
+			font-size: $font-size-large;
+			font-weight: $font-weight-bold;
+		}
 
-        .ngc-toast-description{}
-    }
+		.ngc-toast-description {
+			font-size: $font-size-base;
+			font-weight: $font-weight-normal;
+		}
+	}
 }

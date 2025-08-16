@@ -99,6 +99,7 @@ $font-family-body: AvertaStdCY, Helvetica, sans-serif;
 $font-family-code: SourceCodePro, Helvetica, sans-serif;
 
 /* COLORS */
+$color-black: #0a0a0a;
 $color-primary: #444446;
 $color-secondary: #fafafa;
 $color-default: #f5f5f5;
@@ -144,3 +145,15 @@ $z-level-1: 100;
 $z-level-2: 1000;
 $z-level-3: 10000;
 $z-level-4: 2147483647;
+
+/* FONT SIZES */
+$font-size-small: 12px;
+$font-size-base: 14px;
+$font-size-large: 16px;
+$font-size-xlarge: 18px;
+$font-size-xxlarge: 20px;
+
+/* FONT WEIGHTS */
+$font-weight-normal: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
