@@ -1,9 +1,12 @@
+@import 'src/scss/partials/variable';
+@import 'src/scss/partials/mixin';
+
 .ngc-breadcrumb {
 	display: flex;
 	align-items: center;
 	font-size: 13px;
 	line-height: 13px;
-	// color: $color-label;
+	color: $color-label;
 
 	.ngc-breadcrumb-item {
 		display: flex;
@@ -26,8 +29,8 @@
 		}
 
 		&.ngc-breadcrumb-item--disabled {
-			// @include cursor-not-allowed;
-			// color: $color-disabled;
+			@include cursor-not-allowed;
+			color: $color-disabled;
 		}
 	}
 

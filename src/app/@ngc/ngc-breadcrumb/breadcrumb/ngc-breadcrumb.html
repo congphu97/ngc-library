@@ -1,6 +1,9 @@
 <ng-container *ngFor="let item of breadcrumbItems; let first = first;">
-    <ngc-ion *ngIf="!first">/</ngc-ion>
-    <div>
+    <ngc-icon class="ngc-breadcrumb__divider-icon" name="chevron-forward-outline" *ngIf="!first">/</ngc-icon>
+    <div class="ngc-breadcrumb__item"
+		[class.ngc-breadcrumb-item--active]='item?.isActive'
+		[class.ngc-breadcrumb-item--disabled]='item?.disabled'
+		(click)='item?.navigate()'>
         <ng-container *ngIf='item?.truncate; else elseBlock;'>
             <ngc-truncate [limitLine]='item?.truncateLimitLine'></ngc-truncate>
 				<ngc-container *ngTemplateOutlet='item?.templateRef'></ngc-container>
