@@ -16,6 +16,8 @@ import { NgcTabModule } from '@app/@ngc/ngc-tab/ngc-tab.module';
 import { NgcBreadcrumbModule } from '@app/@ngc/ngc-breadcrumb/ngc-breadcrumb.module';
 import { NgcProgressBarModule } from '@app/@ngc/ngc-progress-bar/ngc-progress-bar.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { NgcButtonModule } from '@app/@ngc/ngc-button';
+import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -26,6 +28,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
     NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
+    NgcButtonModule, NgcSliderModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

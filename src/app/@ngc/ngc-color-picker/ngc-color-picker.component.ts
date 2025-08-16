@@ -10,6 +10,7 @@ import { COLOR } from '../../@resources/color';
 export class NgcColorPickerComponent implements OnInit {
 
 	@Input() pickedColor: string;
+  @Input() mode: 'default' | 'list' = 'default';
 
 	@Output() public pickedColorChange: EventEmitter<string> = new EventEmitter<string>();
 

@@ -1,12 +1,13 @@
-<color-photoshop color="#fff" (onChangeComplete)="handleChange($event)"></color-photoshop>
+<ng-container *ngIf="mode === 'default'">
+    <color-photoshop color="#fff" (onChangeComplete)="handleChange($event)"></color-photoshop>
+</ng-container>
 
-<div class="ngc-color-picker-list">
-    <div *ngFor="let color of colors">
-        <button
-            class="ngc-color-picker-item"
-            [style.--color-picker-item-color]="color"
-            [style.--color-picker-item-bg-color]="color"
-            (click)="pickColor( color )">
-        </button>
+<ng-container *ngIf="mode === 'list'">
+    <div class="ngc-color-picker-list">
+        <div *ngFor="let color of colors">
+            <button class="ngc-color-picker-item" [style.--color-picker-item-color]="color"
+                [style.--color-picker-item-bg-color]="color" (click)="pickColor( color )">
+            </button>
+        </div>
     </div>
-</div>
+</ng-container>

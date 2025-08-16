@@ -40,7 +40,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              // "src/libs.scss"
+              "src/scss/libs.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [

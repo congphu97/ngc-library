@@ -1,4 +1,4 @@
-
+<!-- 
 <button [ngcTooltip]="'aabc'" [ngcClipboardCopy]="'abc'">abc</button>
 <button [ngcTooltip]="'dref'" [ngcClipboardCopy]="'dref'">abc</button>
 
@@ -100,4 +100,324 @@
 </ngc-breadcrumb>
 
 <ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
-<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"[statusText]="'Uploading .... '"></ngc-progress-bar>
+<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"[statusText]="'Uploading .... '"></ngc-progress-bar> -->
+
+
+<div class="ngc-guideline">
+	<div class="ngc-guideline__header">Component</div>
+	<div class="ngc-guideline__content content">
+		<div class="content__component">
+			<ng-container *ngFor="let component of compTemplatesArr">
+				<button ngcButton (click)="selectCompTemplate(component)">{{component?.label}}</button>
+			</ng-container>
+		</div>
+		<div class="content__guide">
+			<ng-container *ngTemplateOutlet='currentCompTemplate'></ng-container>
+		</div>
+	</div>
+	<div></div>
+</div>
+
+<ng-template #compTemplate label="Accordion">1</ng-template>
+<ng-template #compTemplate label="Alert">2</ng-template>
+<ng-template #compTemplate label="Alert Dialog">3</ng-template>
+<ng-template #compTemplate label="Aspect Ratio">4</ng-template>
+<ng-template #compTemplate label="Avatar">5</ng-template>
+<ng-template #compTemplate label="Badge">6</ng-template>
+<ng-template #compTemplate label="Breadcrumb">
+	<div class="mb-15">Breadcrumb</div>
+	<ngc-breadcrumb>
+		<ngc-breadcrumb-item>
+			Home
+		</ngc-breadcrumb-item>
+		<ngc-breadcrumb-item [commands]='[ "/" ]'>
+			Breadcrumb 1
+		</ngc-breadcrumb-item>
+		<ngc-breadcrumb-item [commands]='[ "/" ]'>
+			Breadcrumb 2
+		</ngc-breadcrumb-item>
+		<ngc-breadcrumb-item [commands]='[ "/" ]'>
+			Breadcrumb 3
+		</ngc-breadcrumb-item>
+	</ngc-breadcrumb>
+</ng-template>
+<ng-template #compTemplate label="Button">
+	<div class="mv-15">Button</div>
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10">
+			<button ngcButton (click)="console.log($event)">Default</button>
+		</div>
+		<div class="mr-10">
+			<button ngcButton color="primary" (click)="console.log($event)">Primary</button>
+		</div>
+		<div class="mr-10">
+			<button ngcButton color="white" (click)="console.log($event)">White</button>
+		</div>
+		<div class="mr-10">
+			<button ngcButton color="primary" disabled (click)="console.log($event)">Disabled</button>
+		</div>
+	</div>
+
+	<div class="mv-15">Button with Icon</div>
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10">
+			<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton color="primary" icon="calendar" (click)="console.log($event)">Primary</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton color="white" icon="calendar" (click)="console.log($event)">White</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton color="primary" disabled (click)="console.log($event)">
+				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+				Disabled
+			</button>
+		</div>
+	</div>
+
+	<div class="mv-15">Button with Loading</div>
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10">
+			<button ngcButton loading (click)="console.log($event)"></button>
+		</div>
+		<div class="mr-10">
+			<button ngcButton loading color="primary" (click)="console.log($event)"></button>
+		</div>
+		<div class="mr-10">
+			<button ngcButton loading color="white" (click)="console.log($event)"></button>
+		</div>
+	</div>
+
+</ng-template>
+<ng-template #compTemplate label="Calendar">9</ng-template>
+<ng-template #compTemplate label="Card">10</ng-template>
+<ng-template #compTemplate label="Carousel">11</ng-template>
+<ng-template #compTemplate label="Chart">12</ng-template>
+<ng-template #compTemplate label="Checkbox">
+	<div class="mb-15">Checkbox</div>
+	<div class="mb-10">
+		<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
+	</div>
+	<div class="mb-10">
+		<ngc-checkbox [label]="'Checkbox 2'" [checked]="true"></ngc-checkbox>
+	</div>
+	<div class="mb-10">
+		<ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"></ngc-checkbox>
+	</div>
+</ng-template>
+<ng-template #compTemplate label="Collapsible">14</ng-template>
+<ng-template #compTemplate label="Combobox">15</ng-template>
+<ng-template #compTemplate label="Clipboard">
+	<div class="mb-15">Clipboard</div>
+	<button ngcButton [ngcClipboardCopy]="'Click to Clipboard'">Click to Clipboard</button>
+</ng-template>
+<ng-template #compTemplate label="Color Picker">
+	<div class="mb-15">Color Picker</div>
+	<div class="mb-10">
+		<ngc-color-picker></ngc-color-picker>
+	</div>
+	<div class="mb-15">Color Picker List</div>
+	<div class="mb-10">
+		<ngc-color-picker mode='list'></ngc-color-picker>
+	</div>
+</ng-template>
+<ng-template #compTemplate label="Data Table">18</ng-template>
+<ng-template #compTemplate label="Date Picker">19</ng-template>
+<ng-template #compTemplate label="Dialog">20</ng-template>
+<ng-template #compTemplate label="Drawer">21</ng-template>
+<ng-template #compTemplate label="Dropdown Menu">22</ng-template>
+<ng-template #compTemplate label="Divide">
+	<div class="mb-15">Divider</div>
+	<ngc-divider></ngc-divider>
+	<ngc-divider vertical></ngc-divider>
+</ng-template>
+<ng-template #compTemplate label="Hover Card">24</ng-template>
+<ng-template #compTemplate label="Input">25</ng-template>
+<ng-template #compTemplate label="Input OTP">26</ng-template>
+<ng-template #compTemplate label="Label">27</ng-template>
+<ng-template #compTemplate label="Loading">
+	<div class="mb-15">Loading</div>
+	<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
+	<ngc-loading class="mb-10" color='#0000ff'></ngc-loading>
+	<ngc-loading class="mb-10" color='#primary'></ngc-loading>
+	<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
+</ng-template>
+<ng-template #compTemplate label="Menubar">28</ng-template>
+<ng-template #compTemplate label="Navigation Menu">29</ng-template>
+<ng-template #compTemplate label="Pagination">30</ng-template>
+<ng-template #compTemplate label="Popover">31</ng-template>
+<ng-template #compTemplate label="Progress">
+	<div class="mb-15">Progress</div>
+	<div class="mb-10">
+		<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
+	</div>
+	<div class="mb-10">
+		<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
+			[statusText]="'Uploading .... '"></ngc-progress-bar>
+	</div>
+</ng-template>
+<ng-template #compTemplate label="Radio Group">
+	<div>
+		<ngc-radio-group [label]="'Radio Group 1'">
+			<ngc-radio [label]="'Option 1'" [value]="'option1'"></ngc-radio>
+			<ngc-radio [label]="'Option 2'" [value]="'option2'"></ngc-radio>
+			<ngc-radio [label]="'Option 3'" [value]="'option3'"></ngc-radio>
+		</ngc-radio-group>
+	</div>
+
+</ng-template>
+<ng-template #compTemplate label="Resizable">34</ng-template>
+<ng-template #compTemplate label="Scroll-area">35</ng-template>
+<ng-template #compTemplate label="Select">36</ng-template>
+<ng-template #compTemplate label="Separator">37</ng-template>
+<ng-template #compTemplate label="Sheet">38</ng-template>
+<ng-template #compTemplate label="Sidebar">39</ng-template>
+<ng-template #compTemplate label="Skeleton">40</ng-template>
+<ng-template #compTemplate label="Slider">
+	<div class="mb-15">Slider</div>
+	<ngc-slider class="w-300" [(ngModel)]="slideValue"></ngc-slider>
+	<div class="mt-15">Value: {{ slideValue }}</div>
+
+	<h3 class="mv-20">Primary</h3>
+	<ngc-slider class="w-300" color="primary" [(ngModel)]="slideValue"></ngc-slider>
+	<div class="mt-15">Value: {{ slideValue }}</div>
+
+	<h3 class="mv-20">Custom</h3>
+	<!-- <ngc-slider class="w-300" [color]="'GREEN' | color: 400" [(ngModel)]="slideValue"></ngc-slider> -->
+	<div class="mt-15">Value: {{ slideValue }}</div>
+
+	<h3 class="mv-20">Readonly</h3>
+	<ngc-slider class="w-300" readonly [(ngModel)]="slideValue"></ngc-slider>
+	<div class="mt-15">Value: {{ slideValue }}</div>
+
+	<h3 class="mv-20">Disabled</h3>
+	<ngc-slider class="w-300" disabled [(ngModel)]="slideValue"></ngc-slider>
+	<div class="mt-15">Value: {{ slideValue }}</div>
+
+</ng-template>
+<ng-template #compTemplate label="Sonner">42</ng-template>
+<ng-template #compTemplate label="Switch">
+	<div class="mb-15">Switch</div>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-switch ngDefaultControl [ngModel]="true">
+				Default
+			</ngc-switch>
+		</div>
+		<div class="mr-10">
+			<ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true">
+			</ngc-switch>
+		</div>
+		<div class="mr-10">
+			<ngc-switch ngDefaultControl disabled label="Active & Disabled" [ngModel]="true">
+			</ngc-switch>
+		</div>
+		<div class="mr-10">
+			<ngc-switch [disabled]="true" label="Disabled">
+			</ngc-switch>
+		</div>
+	</div>
+
+</ng-template>
+<ng-template #compTemplate label="Table">44</ng-template>
+<ng-template #compTemplate label="Tabs">
+	<div class="mb-15">Tabs</div>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Tab 1'">
+			What is Lorem Ipsum? 1
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+			Aldus PageMaker including versions of Lorem Ipsum.
+
+			Why do we use it?
+			It is a long established fact that a reader will be distracted by the readable content of a page when
+			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
+			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
+			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		</ngc-tab>
+		<ngc-tab [label]="'Tab 2'">
+			What is Lorem Ipsum? 2
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+			Aldus PageMaker including versions of Lorem Ipsum.
+
+			Why do we use it?
+			It is a long established fact that a reader will be distracted by the readable content of a page when
+			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
+			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
+			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		</ngc-tab>
+		<ngc-tab [label]="'Tab 3'">
+			What is Lorem Ipsum? 3
+			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+			Aldus PageMaker including versions of Lorem Ipsum.
+
+			Why do we use it?
+			It is a long established fact that a reader will be distracted by the readable content of a page when
+			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
+			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
+			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
+<ng-template #compTemplate label="Textarea">46</ng-template>
+<ng-template #compTemplate label="Toast">
+	<div class="mb-15">Toast</div>
+	<button ngcButton class="m-10" (click)="openToast( 'success' )">Open toast success</button>
+	<button ngcButton class="m-10" (click)="openToast( 'info' )">Open toast infor</button>
+	<button ngcButton class="m-10" (click)="openToast( 'warning' )">Open toast warning</button>
+	<button ngcButton class="m-10" (click)="openToast( 'danger' )">Open toast danger</button>
+</ng-template>
+<ng-template #compTemplate label="Toggle">48</ng-template>
+<ng-template #compTemplate label="Toggle Group">49</ng-template>
+<ng-template #compTemplate label="Tooltip">
+	<div class="mb-15">Tooltip</div>
+	<div class="layout-row layout-wrap layout-align-start-center">
+		<div class="mr-10">
+			<button ngcButton position="above" [ngcTooltip]="'Tooltip'">Tooltip Above</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="below" [ngcTooltip]="'Tooltip'">Tooltip Below</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="before" [ngcTooltip]="'Tooltip'">Tooltip Before</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="after" [ngcTooltip]="'Tooltip'">Tooltip After</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="below" [ngcTooltip]="tooltip">Tooltip Custom</button>
+		</div>
+	</div>
+
+</ng-template>
+<ng-template #compTemplate label="Typography">51</ng-template>

@@ -16,7 +16,8 @@
       "@wgc": [ "app/@wgc" ],
       "@wgc/*": [ "app/@wgc/*", "app/@wgc/lib/*" ],
       "@environments": [ "environments" ],
-      "@environments/*": [ "environments/*" ]
+      "@environments/*": [ "environments/*" ],
+      "@src": [ "src" ],
     }
   }
 }
