@@ -1,0 +1,10 @@
+<div class="ngc-button-wrapper">
+  <div class="ngc-button__icon" *ngIf="buttonIcon || icon">
+    <ng-content select="[ngcButtonIcon]"></ng-content>
+    <ngc-icon [name]="icon"></ngc-icon>
+  </div>
+  <div class="ngc-button__content">
+    <ng-content></ng-content>
+  </div>
+  <ngc-loading class="ngc-button__loading" *ngIf="loading"></ngc-loading>
+</div>
