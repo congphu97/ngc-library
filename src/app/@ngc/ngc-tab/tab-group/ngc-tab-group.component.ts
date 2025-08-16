@@ -13,11 +13,11 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
   animations: [
 	trigger('widthGrow', [
 		state('closed', style({
-			border: 'red',
+			border: 'gray',
 			with: 0
 		})),
 		state('open', style({
-			color: 'red',
+			color: 'black',
 			with: '100%',
 		})),
 		transition('open => closed', [
@@ -30,7 +30,8 @@ import { trigger, transition, style, animate, state } from '@angular/animations'
 ]
 })
 export class NgcTabGroupComponent implements OnChanges, AfterContentInit {
-	state = "closed";
+	
+	public state = "open";
 
 	@Input() selectedIndex: number = 0;
 
@@ -56,7 +57,7 @@ export class NgcTabGroupComponent implements OnChanges, AfterContentInit {
 		this.selectedIndex = index;
 		this.selectedIndexChange.emit( index );
 		this.tabChanged.emit( this.items[ index ] );
-		(this.state == "closed") ? this.state = "open" : this.state = "closed";
+		this.state = 'open';
 	}
 
 }

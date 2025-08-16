@@ -16,19 +16,23 @@
             align-items: center;
             text-align: center;;
             cursor: pointer;
+            background: $color-secondary;
 
             &.ngc-tab-group__header-item--active {
                 color: $color-text;
                 font-weight: 500;
-                border-bottom: 2px solid $color-primary;
+                border-bottom: 3px solid $color-primary;
                 transition: all ease-in-out 0.5s;
+                background: $color-default;
             }
         }
     }
 
     .ngc-tab-groups__content {
         padding: 15px;
-        height: 60%;
+        height: 100%;
+        border: 1px solid $color-default;
+        animation: $popup-animation;
     }
 
 }
