@@ -8,4 +8,14 @@
 		font-size: var(--icon-font-size, inherit);
 		line-height: var(--icon-line-height, inherit);
 	}
+
+	ion-icon {
+		font-size: var(--icon-font-size, inherit);
+		line-height: var(--icon-line-height, inherit);
+	}
+}
+
+ion-icon {
+	font-size: var(--icon-font-size, inherit);
+	line-height: var(--icon-line-height, inherit);
 }

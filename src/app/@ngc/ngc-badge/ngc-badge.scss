@@ -1,0 +1,50 @@
+@import 'src/scss/partials/variable';
+
+.ngc-badge {
+	display: flex;
+	position: relative;
+	width: fit-content;
+
+	&.ngc-badge--pos-inline {
+		> .ngc-badge-count {
+			top: 0;
+			transform: none;
+		}
+	}
+
+	&.ngc-badge--pos-absolute {
+		> .ngc-badge-count {
+			position: absolute;
+			left: 100%;
+		}
+	}
+
+	&.ngc-primary {
+		> .ngc-badge-count {
+			background-color: var(--primary-color, $color-primary);
+			color: $color-white;
+		}
+	}
+
+	> .ngc-badge-count {
+		padding: 2px 4px;
+		background-color: var(--badge-color, $color-label);
+		border-radius: 5px;
+		font-size: 11px;
+		color: var(--badge-text-color, $color-white);
+		position: relative;
+		left: 0;
+		top: -7px;
+		transform: translateX(-40%);
+		width: fit-content;
+		min-width: 16px;
+		height: fit-content;
+		min-height: 16px;
+		text-align: center;
+		white-space: nowrap;
+
+		&:empty {
+			display: none;
+		}
+	}
+}

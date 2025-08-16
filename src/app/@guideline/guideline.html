@@ -123,7 +123,22 @@
 <ng-template #compTemplate label="Alert Dialog">3</ng-template>
 <ng-template #compTemplate label="Aspect Ratio">4</ng-template>
 <ng-template #compTemplate label="Avatar">5</ng-template>
-<ng-template #compTemplate label="Badge">6</ng-template>
+<ng-template #compTemplate label="Badge">
+	<div class="mb-15">Badge</div>
+	<div class="layout-row layout-wrap layout-align-start-center mt-20">
+		<div class="mr-30" wgcBadge="2">
+			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+			<!-- <ngc-icon name="file-attachment" size="20px"></ngc-icon> -->
+		</div>
+		<ngc-badge class="mr-30" count="199" color="primary">
+			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+		</ngc-badge>
+		<!-- <ngc-badge class="mr-30" [count]="1000 | kUnit">
+			<ngc-icon name="file-attachment" size="20px"></ngc-icon>
+		</ngc-badge> -->
+	</div>
+
+</ng-template>
 <ng-template #compTemplate label="Breadcrumb">
 	<div class="mb-15">Breadcrumb</div>
 	<ngc-breadcrumb>

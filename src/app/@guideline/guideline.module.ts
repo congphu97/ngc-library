@@ -18,6 +18,7 @@ import { NgcProgressBarModule } from '@app/@ngc/ngc-progress-bar/ngc-progress-ba
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NgcButtonModule } from '@app/@ngc/ngc-button';
 import { NgcSliderModule } from '@app/@ngc/ngc-slider';
+import { NgcBadgeModule } from '@app/@ngc/ngc-badge';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -28,7 +29,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
     NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
-    NgcButtonModule, NgcSliderModule,
+    NgcButtonModule, NgcSliderModule, NgcBadgeModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],
