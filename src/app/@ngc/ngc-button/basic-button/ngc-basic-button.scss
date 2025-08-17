@@ -1,0 +1,79 @@
+@import 'src/scss/partials/variable';
+@import 'src/scss/partials/mixin';
+
+.ngc-basic-button {
+	display: flex;
+	cursor: pointer;
+	width: fit-content;
+	text-align: left;
+	font-weight: $font-weight-semibold;
+	color: var(--basic-button-color, inherit);
+	background-color: transparent;
+	border: none;
+
+	&.ngc-primary {
+		color: var(--primary-color, $color-primary);
+	}
+
+	&.ngc-basic-button--has-icon {
+		.ngc-basic-button__content {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+
+	&:not(.ngc-basic-button--disabled) {
+		&:hover {
+			opacity: .8;
+		}
+
+		&:focus-visible {
+			box-shadow: $box-shadow-focus;
+		}
+	}
+
+	&.ngc-basic-button--disabled {
+		@include cursor-not-allowed;
+		color: $color-disabled;
+	}
+
+	&.ngc-basic-button--left {
+		.ngc-basic-button-wrapper {
+			justify-content: flex-start;
+		}
+	}
+
+	&.ngc-basic-button--center {
+		.ngc-basic-button-wrapper {
+			justify-content: center;
+		}
+	}
+
+	&.ngc-basic-button--right {
+		.ngc-basic-button-wrapper {
+			justify-content: flex-end;
+		}
+	}
+
+	.ngc-basic-button-wrapper {
+		display: flex;
+		align-items: center;
+		height: 100%;
+		width: 100%;
+		// pointer-events: none;
+	}
+
+	.ngc-basic-button__icon {
+		font-size: var(--basic-button-icon-size, inherit);
+		line-height: var(--basic-button-icon-size, inherit);
+	}
+
+	.ngc-basic-button__content {
+		display: flex;
+		align-items: center;
+
+		&:empty {
+			display: none;
+		}
+	}
+}

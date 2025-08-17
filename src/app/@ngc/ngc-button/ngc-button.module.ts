@@ -1,17 +1,12 @@
 import { NgModule } from '@angular/core';
-
 import { CoreModule } from '@core';
 
-// import { WGCIconModule } from '../wgc-icon';
-// import { WGCLoadingModule } from '../wgc-loading';
-// import { WGCButtonComponent } from './button/wgc-button.component';
-// import { WGCBasicButtonComponent } from './basic-button/wgc-basic-button.component';
-// import { WGCFabButtonComponent } from './fab-button/wgc-fab-button.component';
-// import { WGCIconButtonComponent } from './icon-button/wgc-icon-button.component';
 import { NgcIconModule } from '../ngc-icon';
 import { NgcButtonIconDirective } from './button-icon/ngc-button-icon.directive';
 import { NgcButtonComponent } from './button/ngc-button.component';
 import { NgcLoadingModule } from '../ngc-loading';
+import { NgcIconButtonComponent } from './icon-button/ngc-icon-button.component';
+import { NgcBasicButtonComponent } from './basic-button/ngc-basic-button.component';
 
 @NgModule({
 	imports: [
@@ -20,16 +15,11 @@ import { NgcLoadingModule } from '../ngc-loading';
         NgcIconModule,
 	],
 	exports: [
-		// WGCButtonComponent, WGCBasicButtonComponent, WGCFabButtonComponent,
-		// WGCIconButtonComponent,
-        NgcButtonComponent,
-        NgcButtonIconDirective,
+		NgcIconButtonComponent, NgcBasicButtonComponent,
+        NgcButtonComponent, NgcButtonIconDirective,
 	],
 	declarations: [
-		// WGCButtonComponent, WGCBasicButtonComponent, WGCFabButtonComponent,
-		// WGCIconButtonComponent,
-        NgcButtonComponent,
-        NgcButtonIconDirective,
+		NgcIconButtonComponent, NgcBasicButtonComponent, NgcButtonComponent, NgcButtonIconDirective,
 	],
 	providers: [],
 })
