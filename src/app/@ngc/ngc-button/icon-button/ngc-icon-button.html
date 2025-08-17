@@ -1,0 +1,6 @@
+<div class="ngc-icon-button-wrapper">
+  <ngc-icon *ngIf="icon; else elseBlock" [name]="icon"></ngc-icon>
+  <ng-template #elseBlock>
+    <ng-content></ng-content>
+  </ng-template>
+</div>
