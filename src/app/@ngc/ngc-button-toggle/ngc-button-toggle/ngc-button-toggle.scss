@@ -1,0 +1,102 @@
+@import 'src/scss/partials/variable';
+@import 'src/scss/partials/mixin';
+
+.ngc-button-toggle {
+	display: flex;
+	background-color: $color-white;
+	border-radius: 20px;
+	border: 1px solid $color-border;
+	width: fit-content;
+	padding-left: 10px;
+	padding-right: 10px;
+
+	&.ngc-button-toggle--stretch {
+		width: 100%;
+		min-width: 0;
+
+		.ngc-button-toggle-item {
+			width: 100%;
+			min-width: 0;
+		}
+	}
+
+	&.ngc-button-toggle--theme-background {
+		padding: 5px;
+		border-radius: 10px;
+		background-color: $color-default;
+
+		&:not(.ngc-button-toggle--has-border) {
+			border: none;
+		}
+
+		&:not(.ngc-button-toggle--has-shadow) {
+			.ngc-button-toggle-item {
+				&.ngc-button-toggle-item--active {
+					box-shadow: none;
+				}
+			}
+		}
+
+		&.ngc-button-toggle--reverse {
+			background-color: $color-white;
+
+			.ngc-button-toggle-item {
+				&.ngc-button-toggle-item--active {
+					background-color: $color-default;
+				}
+			}
+		}
+
+		.ngc-button-toggle-item {
+			font-size: $font-size-body;
+			border-radius: 6px;
+			min-height: 30px;
+
+			&.ngc-button-toggle-item--active {
+				box-shadow: $box-shadow;
+				background-color: $color-white;
+			}
+		}
+	}
+
+	.ngc-button-toggle-item {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		text-align: center;
+		padding: 5px;
+		border-radius: 20px;
+		font-size: 16px;
+		font-weight: $font-weight-semibold;
+		cursor: pointer;
+		transition: background 200ms ease-in-out, color 200ms ease-in-out;
+		color: $color-label;
+		white-space: nowrap;
+
+		&:not(.ngc-button-toggle-item--disabled) {
+			&:hover,
+			&.ngc-button-toggle-item--active {
+				color: $color-text;
+			}
+		}
+
+		&:not(.ngc-button-toggle-item--only-icon) {
+			min-width: 115px;
+			min-height: 38px;
+
+			.ngc-button-toggle-item__icon {
+				margin-right: 5px;
+			}
+		}
+
+		&.ngc-button-toggle-item--disabled {
+			@include cursor-not-allowed;
+			color: $color-disabled;
+		}
+
+		&.ngc-button-toggle-item--only-icon {
+			width: 32px;
+			height: 32px;
+		}
+	}
+}
