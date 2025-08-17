@@ -1,8 +1,5 @@
-import { NgModule } from '@angular/core';
-
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CoreModule, FormModule } from '@core';
-
-
 import { NgcSliderComponent } from './ngc-slider.component';
 import { NgcTooltipModule } from '../ngc-tooltip';
 
@@ -14,5 +11,6 @@ import { NgcTooltipModule } from '../ngc-tooltip';
 	exports		: [ NgcSliderComponent ],
 	declarations: [ NgcSliderComponent ],
 	providers	: [],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class NgcSliderModule {}

@@ -1,0 +1,34 @@
+ng-container(*ngIf='eventTemplate; else elseBlock;')
+	ng-container(*ngTemplateOutlet='eventTemplate; context: { event: event };')
+ng-template(#elseBlock)
+	wgc-card.wgc-calendar-event-item(
+		borderRadius='12px',
+		contentPaddingVertical='10px',
+		contentPaddingRight='10px',
+		[color]='displayHighlight ? event?.color : undefined',
+		[active]='activeState && event?.id === selectedEventID',
+		[class.wgc-calendar-event-item--inactive]='event?.inactive',
+		(click)='selectEvent( event )')
+		.wgc-calendar-event-item__content
+			.wgc-calendar-event-item__info([style.color]='displayHighlight && event?.color ? ( event.color | contrast ) : ( "TEXT" | color )')
+				.wgc-calendar-event-item__name(
+					wgcInlineInput,
+					ngDefaultControl,
+					[name]='name',
+					[placeholder]='placeholder',
+					[formControl]='nameFormControl',
+					[ngModel]='event?.name',
+					[(editing)]='event.isEditing',
+					(saved)='updateEvent( event, $event )')
+					wgc-truncate(limitLine='1')
+						span([innerHtml]='event?.name | markText : searchBox?.searchQuery : true')
+				| {{ event?.moment | momentDate : "HH:mm" }}
+			button(
+				wgcIconButton,
+				icon='more-vertical',
+				*ngIf='event?.actionable && !event?.inactive',
+				[color]='"WHITE" | color',
+				[wgcTooltip]='"WGC.LABEL.MORE_ACTIONS" | translate',
+				[wgcMenuTriggerFor]='actionMenu || wgcCalendarActionMenu',
+				[menuData]='{ event: event }',
+				(click)='$event?.stopPropagation()')

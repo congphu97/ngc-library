@@ -1,0 +1,75 @@
+@import 'src/scss/partials/variable';
+
+.wgc-calendar-day-view {
+	flex-grow: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.wgc-calendar-event-block {
+		min-height: 125px;
+		display: flex;
+		flex-direction: column;
+
+		.wgc-calendar-event-block__header {
+			z-index: -2;
+			position: relative;
+
+			&:before {
+				z-index: -3;
+				position: absolute;
+				top: 50%;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				border-top: 1px solid $color-border;
+				content: '';
+			}
+
+			span {
+				padding-right: 10px;
+				background-color: $color-white;
+			}
+		}
+
+		.wgc-calendar-current-time-block {
+			position: relative;
+			flex-grow: 1;
+
+			.wgc-calendar-event-block__body {
+				padding-left: 35px;
+				display: flex;
+				flex-wrap: wrap;
+
+				.wgc-calendar-event-item-wrapper {
+					flex: 0 1 calc(100% / var(--max-event-per-hour));
+					margin-bottom: 10px;
+					padding-left: 10px;
+				}
+			}
+
+			.wgc-calendar-event-block__footer {
+				padding-left: 45px;
+
+				.wgc-calendar-new-event-input {
+					width: 300px;
+				}
+			}
+
+			.wgc-calendar-current-time {
+				z-index: -1;
+				position: absolute;
+				right: 0;
+				bottom: calc(100% - (var(--current-time) / 60 * 100 * 1%));
+				left: 0;
+				border-bottom: 2px solid var(--primary-color, $color-primary);
+				color: var(--primary-color, $color-primary);
+
+				span {
+					padding-right: 5px;
+					background-color: $color-white;
+				}
+			}
+		}
+	}
+}

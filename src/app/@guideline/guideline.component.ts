@@ -5,6 +5,9 @@ import { Socket } from 'ngx-socket-io';
 import { startWith } from 'rxjs/operators';
 import { forEach, indexOf } from 'lodash';
 import { ActivatedRoute } from '@angular/router';
+import moment, { Moment } from 'moment';
+import { COLOR } from '@app/@resources';
+import { NgcICalendarEvent } from '@app/@ngc/ngc-calendar';
 @Component({
 	selector: 'guideline',
 	templateUrl: './guideline.html',
@@ -17,14 +20,27 @@ export class GuidelineComponent implements OnInit {
 	public selectedCompIndex: number = 0;
 	public console = console;
 	public slideValue: number = 50;
+	public currentDate: Moment = moment().subtract(1, 'M');
+	public currentDateRange: Moment[] = [this.currentDate.clone(), this.currentDate.clone().add(3, 'd')];
+	public minDate: Moment = this.currentDate.clone().subtract(10, 'd');
+	public maxDate: Moment = this.currentDate.clone().add(10, 'd');
+
+	exampleCode: string = `
+			@Component({
+			selector: 'app-example',
+			templateUrl: './example.component.html'
+			})
+			export class ExampleComponent {}
+		`;
+
 	@ViewChildren('compTemplate', { read: TemplateRef }) public compTemplates: QueryList<TemplateRef<any>>;
 
 	get compTemplatesArr(): TemplateRef<any>[] { return (this.compTemplates as IObject)?._results; }
 
 	constructor(
 		private _route: ActivatedRoute,
-		private _ngcToastService: NgcToastService, 
-		private _socket: Socket, 
+		private _ngcToastService: NgcToastService,
+		private _socket: Socket,
 		private _cdr: ChangeDetectorRef
 	) { };
 
@@ -68,4 +84,80 @@ export class GuidelineComponent implements OnInit {
 		this._socket.emit('message', '123');
 		this._socket.on('hello', (event) => console.log('hello', event))
 	}
+
+
+	public calendarEvents: NgcICalendarEvent[] = [
+		{
+			id: 1,
+			name: 'First event of the day',
+			moment: moment(),
+			color: COLOR.WHITE,
+		},
+		{
+			id: 2,
+			name: 'And another one',
+			moment: moment(),
+			color: COLOR.BLACK,
+		},
+		{
+			id: 11,
+			name: 'Inactive event',
+			inactive: true,
+			moment: moment(),
+			color: COLOR.BLUE['400'],
+		},
+		{
+			id: 3,
+			name: 'Event this',
+			moment: moment().add(1, 'h'),
+			color: COLOR.PRIMARY,
+			actionable: true,
+		},
+		{
+			id: 4,
+			name: 'Event that',
+			moment: moment().add(1, 'h'),
+			color: COLOR.SUCCESS,
+		},
+		{
+			id: 5,
+			name: 'Eve',
+			moment: moment().add(1, 'h'),
+			color: COLOR.GREEN['400'],
+		},
+		{
+			id: 6,
+			name: 'Farewell',
+			moment: moment().add(1, 'h'),
+		},
+		{
+			id: 7,
+			name: 'YEP',
+			moment: moment().add(1, 'd'),
+			color: COLOR.SECONDARY,
+			actionable: true,
+		},
+		{
+			id: 7,
+			name: 'YEP 2',
+			moment: moment().add(1, 'd'),
+			color: COLOR.DEFAULT,
+		},
+		{
+			id: 8,
+			name: 'YSP',
+			moment: moment().add(1, 'd'),
+		},
+		{
+			id: 9,
+			name: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et',
+			moment: moment().add(1, 'd'),
+			color: COLOR.INFO,
+		},
+		{
+			id: 10,
+			name: 'Supa long long text',
+			moment: moment().add(1, 'd'),
+		},
+	];
 }

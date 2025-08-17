@@ -1,0 +1,49 @@
+include ../common/event-item-action.partial.pug
+
+<wgc-scroll-bar mode="auto">
+  <div class="wgc-calendar-event-block" *ngFor="let block of eventBlocks">
+    <div class="wgc-calendar-event-block__header">
+      <span>{{ block?.moment | momentDate : "HH:mm" }}</span>
+    </div>
+
+    <div class="wgc-calendar-current-time-block">
+      <div class="wgc-calendar-event-block__body">
+        <div
+          class="wgc-calendar-event-item-wrapper"
+          *ngFor="
+            let event of
+              (block?.seeMore || block?.events?.length <= maxEventPerHour * 2
+                ? block?.events
+                : block?.events | slice : 0 : maxEventPerHour);
+            trackBy: 'id' | trackByFn
+          "
+          [style.--max-event-per-hour]="maxEventPerHour"
+        >
+          <!-- include ../common/event-item.partial.pug -->
+        </div>
+      </div>
+
+      <div class="wgc-calendar-event-block__footer">
+        <button
+          wgcButton
+          alignment="left"
+          icon="double-chevron-down"
+          *ngIf="block?.events?.length > maxEventPerHour * 2 && !block?.seeMore"
+          (click)="block.seeMore = true"
+        >
+          {{ "WGC.LABEL.SHOW_MORE_COUNT" | translate : { count: block?.events?.length - maxEventPerHour } }}
+        </button>
+
+        <!-- include ../common/event-block-footer.partial.pug -->
+      </div>
+
+      <div
+        class="wgc-calendar-current-time"
+        *ngIf="block?.showCurrentTime"
+        [style.--current-time]="currentTime?.minute()"
+      >
+        <span>{{ currentTime | momentDate : "HH:mm" }}</span>
+      </div>
+    </div>
+  </div>
+</wgc-scroll-bar>

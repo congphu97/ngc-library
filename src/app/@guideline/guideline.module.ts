@@ -17,8 +17,13 @@ import { NgcBreadcrumbModule } from '@app/@ngc/ngc-breadcrumb/ngc-breadcrumb.mod
 import { NgcProgressBarModule } from '@app/@ngc/ngc-progress-bar/ngc-progress-bar.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { NgcButtonModule } from '@app/@ngc/ngc-button';
-import { NgcSliderModule } from '@app/@ngc/ngc-slider';
+import { NgcRangeInputModule } from '@app/@ngc/ngc-range-input';
 import { NgcBadgeModule } from '@app/@ngc/ngc-badge';
+import { NgcCalendarModule } from '@app/@ngc/ngc-calendar';
+import { NgcDatePickerModule } from '@app/@ngc/ngc-date-picker';
+import { NgcButtonToggleModule } from '@app/@ngc/ngc-button-toggle';
+import { NgcCodeBlockModule } from '@app/@ngc/ngc-code-block/ngc-code-block.module';
+// import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -29,7 +34,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
     NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
-    NgcButtonModule, NgcSliderModule, NgcBadgeModule,
+    NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
+    NgcCodeBlockModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

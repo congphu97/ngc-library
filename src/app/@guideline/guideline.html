@@ -122,7 +122,20 @@
 <ng-template #compTemplate label="Alert">2</ng-template>
 <ng-template #compTemplate label="Alert Dialog">3</ng-template>
 <ng-template #compTemplate label="Aspect Ratio">4</ng-template>
-<ng-template #compTemplate label="Avatar">5</ng-template>
+<ng-template #compTemplate label="Avatar">
+	<div class="mb-15">Avatar</div>
+	<!-- <div class="layout-row layout-wrap layout-align-start-center">
+		<div class="mr-30">
+			<ngc-avatar [src]="'https://picsum.photos/200/300'" size="50px"></ngc-avatar>
+		</div>
+		<div class="mr-30">
+			<ngc-avatar [src]="'https://picsum.photos/200/300'" size="50px" shape="circle"></ngc-avatar>
+		</div>
+		<div class="mr-30">
+			<ngc-avatar [src]="'https://picsum.photos/200/300'" size="50px" shape="rounded"></ngc-avatar>
+		</div>
+	</div> -->
+</ng-template>
 <ng-template #compTemplate label="Badge">
 	<div class="mb-15">Badge</div>
 	<div class="layout-row layout-wrap layout-align-start-center mt-20">
@@ -157,7 +170,26 @@
 	</ngc-breadcrumb>
 </ng-template>
 <ng-template #compTemplate label="Button">
-	<div class="mv-15">Button</div>
+	<h3 class="mv-20">Basic Button</h3>
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10">
+			<button ngcBasicButton (click)="console.log($event)">
+				Default
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcBasicButton color="primary" (click)="console.log($event)">
+				Primary
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcBasicButton color="primary" disabled (click)="console.log($event)">
+				Disabled
+			</button>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Button</h3>
 	<div class="layout-row layout-align-start-center layout-wrap">
 		<div class="mr-10">
 			<button ngcButton (click)="console.log($event)">Default</button>
@@ -173,7 +205,7 @@
 		</div>
 	</div>
 
-	<div class="mv-15">Button with Icon</div>
+	<h3 class="mv-20">Button with Icon</h3>
 	<div class="layout-row layout-align-start-center layout-wrap">
 		<div class="mr-10">
 			<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
@@ -199,7 +231,7 @@
 		</div>
 	</div>
 
-	<div class="mv-15">Button with Loading</div>
+	<h3 class="mv-20">Button with Loading</h3>
 	<div class="layout-row layout-align-start-center layout-wrap">
 		<div class="mr-10">
 			<button ngcButton loading (click)="console.log($event)"></button>
@@ -211,26 +243,120 @@
 			<button ngcButton loading color="white" (click)="console.log($event)"></button>
 		</div>
 	</div>
+	<h3 class="mv-20">Icon Button</h3>
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10">
+			<button ngcIconButton icon="calendar" (click)="console.log($event)"></button>
+		</div>
+		<div class="mr-10">
+			<button ngcIconButton color="primary" icon="calendar" (click)="console.log($event)"></button>
+		</div>
+		<!-- <div class="mr-10">
+			<button ngcIconButton [color]="'LIGHT_GRAY' | color:700" icon="calendar" (click)="console.log($event)"></button>
+		</div> -->
+		<div class="mr-10">
+			<button ngcIconButton disabled (click)="console.log($event)">
+				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcIconButton color="#ff0000" hoverColor="green" (click)="console.log($event)">
+				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcIconButton iconColor="yellow" color="#ff0000" hoverColor="green" (click)="console.log($event)">
+				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcIconButton size="40px" (click)="console.log($event)">
+				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcIconButton square size="40px" (click)="console.log($event)">
+				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+			</button>
+		</div>
+	</div>
 
 </ng-template>
-<ng-template #compTemplate label="Calendar">9</ng-template>
+<ng-template #compTemplate label="Button Toggle">
+	<h3 class="mb-20">Default</h3>
+	<ngc-button-toggle [selectedIndex]="0" (selectedIndexChange)="console.log($event)" (changes)="console.log($event)">
+		<ngc-button-toggle-item icon="list">
+			Button 1
+		</ngc-button-toggle-item>
+		<ngc-button-toggle-item icon="grid">
+			Button 2
+		</ngc-button-toggle-item>
+		<ngc-button-toggle-item icon="more-vertical">
+			Button 3
+		</ngc-button-toggle-item>
+	</ngc-button-toggle>
+
+	<h3 class="mv-20">Background</h3>
+	<ngc-button-toggle class="mb-20" theme="background" [selectedIndex]="0" (selectedIndexChange)="console.log($event)"
+		(changes)="console.log($event)">
+		<ngc-button-toggle-item icon="list">
+			Button 1
+		</ngc-button-toggle-item>
+		<ngc-button-toggle-item icon="grid">
+			Button 2
+		</ngc-button-toggle-item>
+		<ngc-button-toggle-item icon="more-vertical">
+			Button 3
+		</ngc-button-toggle-item>
+	</ngc-button-toggle>
+
+</ng-template>
+<ng-template #compTemplate label="Calendar">
+	<ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
+		(periodChange)="console.log('Period change', $event)"
+		(selectedEventIDChange)="console.log('Selected event', $event)"
+		(eventChange)="console.log('Event change', $event)"
+		(eventCreate)="console.log('Event create', $event)"></ngc-calendar>
+
+</ng-template>
 <ng-template #compTemplate label="Card">10</ng-template>
 <ng-template #compTemplate label="Carousel">11</ng-template>
 <ng-template #compTemplate label="Chart">12</ng-template>
 <ng-template #compTemplate label="Checkbox">
-	<div class="mb-15">Checkbox</div>
-	<div class="mb-10">
-		<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
-	</div>
-	<div class="mb-10">
-		<ngc-checkbox [label]="'Checkbox 2'" [checked]="true"></ngc-checkbox>
-	</div>
-	<div class="mb-10">
-		<ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"></ngc-checkbox>
-	</div>
+	<h3 class="mb-20">Checkbox</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="mb-10">
+				<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
+			</div>
+			<div class="mb-10">
+				<ngc-checkbox [label]="'Checkbox 2'" [checked]="true"></ngc-checkbox>
+			</div>
+			<div class="mb-10">
+				<ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"></ngc-checkbox>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block>
+				<pre><code #codeContent><div>123123</div></code></pre>
+			</ngc-code-block>
+
+		</ngc-tab>
+	</ngc-tab-group>
+
 </ng-template>
 <ng-template #compTemplate label="Collapsible">14</ng-template>
-<ng-template #compTemplate label="Combobox">15</ng-template>
+<ng-template #compTemplate label="Code Block">
+	<h3 class="mb-20">Code Block</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-code-block [code]="exampleCode" language="typescript"></ngc-code-block>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block [code]="123213" language="typescript"></ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
 <ng-template #compTemplate label="Clipboard">
 	<div class="mb-15">Clipboard</div>
 	<button ngcButton [ngcClipboardCopy]="'Click to Clipboard'">Click to Clipboard</button>
@@ -246,7 +372,27 @@
 	</div>
 </ng-template>
 <ng-template #compTemplate label="Data Table">18</ng-template>
-<ng-template #compTemplate label="Date Picker">19</ng-template>
+<ng-template #compTemplate label="Date Picker">
+	<h3 class="mb-20">Directive</h3>
+	<div class="layout-row">
+		<div class="mr-10">
+			<button ngcButton ngcDatePicker [pickedDate]="currentDate" [minDate]="minDate" [maxDate]="maxDate"
+				(picked)="console.log('Date Picked', $event)">
+				Date Picker
+			</button>
+		</div>
+		<div class="mr-10">
+			<button ngcButton ngcDatePicker dateRange [pickedDate]="currentDateRange" [minDate]="minDate"
+				[maxDate]="maxDate" (picked)="console.log('Date Range Picked', $event)">
+				Date Range Picker
+			</button>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Component</h3>
+	<ngc-date-picker class="w-300" mode="inline"></ngc-date-picker>
+
+</ng-template>
 <ng-template #compTemplate label="Dialog">20</ng-template>
 <ng-template #compTemplate label="Drawer">21</ng-template>
 <ng-template #compTemplate label="Dropdown Menu">22</ng-template>
@@ -299,24 +445,7 @@
 <ng-template #compTemplate label="Skeleton">40</ng-template>
 <ng-template #compTemplate label="Slider">
 	<div class="mb-15">Slider</div>
-	<ngc-slider class="w-300" [(ngModel)]="slideValue"></ngc-slider>
-	<div class="mt-15">Value: {{ slideValue }}</div>
-
-	<h3 class="mv-20">Primary</h3>
-	<ngc-slider class="w-300" color="primary" [(ngModel)]="slideValue"></ngc-slider>
-	<div class="mt-15">Value: {{ slideValue }}</div>
-
-	<h3 class="mv-20">Custom</h3>
-	<!-- <ngc-slider class="w-300" [color]="'GREEN' | color: 400" [(ngModel)]="slideValue"></ngc-slider> -->
-	<div class="mt-15">Value: {{ slideValue }}</div>
-
-	<h3 class="mv-20">Readonly</h3>
-	<ngc-slider class="w-300" readonly [(ngModel)]="slideValue"></ngc-slider>
-	<div class="mt-15">Value: {{ slideValue }}</div>
-
-	<h3 class="mv-20">Disabled</h3>
-	<ngc-slider class="w-300" disabled [(ngModel)]="slideValue"></ngc-slider>
-	<div class="mt-15">Value: {{ slideValue }}</div>
+	<ngc-slider></ngc-slider>
 
 </ng-template>
 <ng-template #compTemplate label="Sonner">42</ng-template>
@@ -351,51 +480,63 @@
 			What is Lorem Ipsum? 1
 			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
 			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+			into
+			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+			release of
 			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
 			Aldus PageMaker including versions of Lorem Ipsum.
 
 			Why do we use it?
 			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+			of
 			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
 			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
+			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+			evolved
 			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
 		</ngc-tab>
 		<ngc-tab [label]="'Tab 2'">
 			What is Lorem Ipsum? 2
 			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
 			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+			into
+			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+			release of
 			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
 			Aldus PageMaker including versions of Lorem Ipsum.
 
 			Why do we use it?
 			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+			of
 			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
 			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
+			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+			evolved
 			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
 		</ngc-tab>
 		<ngc-tab [label]="'Tab 3'">
 			What is Lorem Ipsum? 3
 			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
 			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
+			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+			into
+			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+			release of
 			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
 			Aldus PageMaker including versions of Lorem Ipsum.
 
 			Why do we use it?
 			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of
+			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+			of
 			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
 			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved
+			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+			evolved
 			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
 		</ngc-tab>
 	</ngc-tab-group>
