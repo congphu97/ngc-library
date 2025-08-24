@@ -1,17 +1,17 @@
 @import 'src/scss/partials/variable';
 
-.wgc-calendar-day-view {
+.ngc-calendar-day-view {
 	flex-grow: 1;
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 
-	.wgc-calendar-event-block {
+	.ngc-calendar-event-block {
 		min-height: 125px;
 		display: flex;
 		flex-direction: column;
 
-		.wgc-calendar-event-block__header {
+		.ngc-calendar-event-block__header {
 			z-index: -2;
 			position: relative;
 
@@ -32,31 +32,31 @@
 			}
 		}
 
-		.wgc-calendar-current-time-block {
+		.ngc-calendar-current-time-block {
 			position: relative;
 			flex-grow: 1;
 
-			.wgc-calendar-event-block__body {
+			.ngc-calendar-event-block__body {
 				padding-left: 35px;
 				display: flex;
 				flex-wrap: wrap;
 
-				.wgc-calendar-event-item-wrapper {
+				.ngc-calendar-event-item-wrapper {
 					flex: 0 1 calc(100% / var(--max-event-per-hour));
 					margin-bottom: 10px;
 					padding-left: 10px;
 				}
 			}
 
-			.wgc-calendar-event-block__footer {
+			.ngc-calendar-event-block__footer {
 				padding-left: 45px;
 
-				.wgc-calendar-new-event-input {
+				.ngc-calendar-new-event-input {
 					width: 300px;
 				}
 			}
 
-			.wgc-calendar-current-time {
+			.ngc-calendar-current-time {
 				z-index: -1;
 				position: absolute;
 				right: 0;

@@ -1,7 +1,7 @@
 <div class="ngc-calendar__header">
   <div class="ngc-calendar__header-left">
     <button ngcButton (click)="changeViewDate()">
-      {{ "WGC.LABEL.TODAY" | translate }}
+      {{ "NGC.LABEL.TODAY" | translate }}
     </button>
 
     <div
@@ -36,13 +36,13 @@
   <div class="ngc-calendar__header-middle">
     <ngc-button-toggle [selectedIndex]="selectedIndex">
       <ngc-button-toggle-item (click)="changeView('day')">
-        {{ "WGC.LABEL.DAY" | translate }}
+        {{ "NGC.LABEL.DAY" | translate }}
       </ngc-button-toggle-item>
       <ngc-button-toggle-item (click)="changeView('week')">
-        {{ "WGC.LABEL.WEEK" | translate }}
+        {{ "NGC.LABEL.WEEK" | translate }}
       </ngc-button-toggle-item>
       <ngc-button-toggle-item (click)="changeView('month')">
-        {{ "WGC.LABEL.MONTH" | translate }}
+        {{ "NGC.LABEL.MONTH" | translate }}
       </ngc-button-toggle-item>
     </ngc-button-toggle>
   </div>
@@ -50,10 +50,10 @@
   <div class="ngc-calendar__header-right">
     <button
       ngcButton
-      icon="chevron-left"
+      icon="chevron-back-outline"
       [ngcTooltip]="
-        'WGC.LABEL.PREVIOUS_PERIOD' | translate : {
-          period: ('WGC.LABEL.' + view | uppercase | translate | lowercase)
+        'NGC.LABEL.PREVIOUS_PERIOD' | translate : {
+          period: ('NGC.LABEL.' + view | uppercase | translate | lowercase)
         }
       "
       (click)="changeViewDate(viewDate, -1)"
@@ -62,10 +62,10 @@
     <button
       class="ngc-calendar__header-right__next"
       ngcButton
-      icon="chevron-right"
+      icon="chevron-forward-outline"
       [ngcTooltip]="
-        'WGC.LABEL.NEXT_PERIOD' | translate : {
-          period: ('WGC.LABEL.' + view | uppercase | translate | lowercase)
+        'NGC.LABEL.NEXT_PERIOD' | translate : {
+          period: ('NGC.LABEL.' + view | uppercase | translate | lowercase)
         }
       "
       (click)="changeViewDate(viewDate, 1)"

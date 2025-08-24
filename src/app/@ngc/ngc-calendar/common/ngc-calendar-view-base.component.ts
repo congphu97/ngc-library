@@ -3,7 +3,7 @@ import {
 	Output, EventEmitter, SimpleChanges,
 	Directive, ChangeDetectorRef
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
 import moment, { Moment } from 'moment-timezone';
 import _ from 'lodash';
@@ -32,7 +32,7 @@ export abstract class NgcCalendarViewBaseComponent implements OnChanges {
 	@Input() @CoerceBoolean() public activeState: boolean;
 	@Input() @CoerceBoolean() public creatable: boolean;
 	@Input() @CoerceBoolean() public displayHighlight: boolean;
-	@Input() @DefaultValue() public name: string = this.translateService.instant( 'Ngc.LABEL.NAME' );
+	@Input() @DefaultValue() public name: string = this.translateService.instant( 'NGC.NAME' );
 	@Input() @DefaultValue() public placeholder: string = this.translateService.instant( 'Ngc.PLACEHOLDER.TYPE_NAME' );
 	@Input() @CoerceArray() public events: NgcICalendarEvent[];
 	@Input() public selectedEventID: number;
@@ -40,7 +40,7 @@ export abstract class NgcCalendarViewBaseComponent implements OnChanges {
 	@Input() public eventTemplate: TemplateRef<any>;
 	@Input() public actionMenu: TemplateRef<any>;
 	// @Input() public searchBox: NgcSearchBoxComponent;
-	@Input() public nameFormControl: FormControl = new FormControl(
+	@Input() public nameFormControl: UntypedFormControl = new UntypedFormControl(
 		{ value: null, disabled: false },
 		[ Validators.required, Validators.maxLength( 255 ) ]
 	);
@@ -71,7 +71,7 @@ export abstract class NgcCalendarViewBaseComponent implements OnChanges {
 	 */
 	ngOnChanges( changes: SimpleChanges ) {
 		if ( changes.viewDate ) {
-			this.generatePeriod();
+			setTimeout( () => this.generatePeriod() );
 			this._refreshNewEventInput();
 		}
 

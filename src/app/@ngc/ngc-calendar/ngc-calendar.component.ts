@@ -4,7 +4,7 @@ import {
 	TemplateRef, ViewChild, ViewEncapsulation,
 	HostBinding, ChangeDetectionStrategy
 } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { UntypedFormControl, Validators } from '@angular/forms';
 import moment, { Moment } from 'moment-timezone';
 
 import { CoerceArray, CoerceBoolean, CoerceNumber } from '@core';
@@ -71,7 +71,7 @@ export class NgcCalendarComponent implements OnChanges {
 	@Input() public eventTemplate: TemplateRef<any>;
 	@Input() public actionMenu: TemplateRef<any>;
 	// @Input() public searchBox: NgcSearchBoxComponent;
-	@Input() public nameFormControl: FormControl = new FormControl(
+	@Input() public nameFormControl: UntypedFormControl = new UntypedFormControl(
 		{ value: null, disabled: false },
 		[ Validators.required, Validators.maxLength( 255 ) ]
 	);
