@@ -9,7 +9,7 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 	],
 	exports: [],
 	declarations: [
-	],
+  ],
 	providers: [
 		{
 			provide: HIGHLIGHT_OPTIONS,
@@ -26,7 +26,7 @@ import { HIGHLIGHT_OPTIONS, HighlightModule } from 'ngx-highlightjs';
 	]
 })
 @I18n({
-	prefix: 'WGC',
+	prefix: 'NGC',
 	loader: (lang: string) => import(`./i18n/${lang}.json`),
 })
 export class NgcModule { }

@@ -156,7 +156,7 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 	 */
 	ngAfterViewInit() {
 		this._focusMonitor.monitor( this._elementRef )
-		.pipe( untilCmpDestroyed( this ) )
+		.pipe( untilCmpDestroyed(this) as any )
 		.subscribe( this.close.bind( this ) );
 
 		/*
@@ -358,14 +358,14 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 
 		// On backdrop click
 		overlayRef.backdropClick()
-		.pipe( untilCmpDestroyed( this ) )
+		.pipe( untilCmpDestroyed(this) as any )
 		.subscribe( ( event: MouseEvent ) => this.autoClose && this.close( event ) );
 
 		// Update tooltip position classes
 		if ( this.position ) {
 			( overlayRef.getConfig().positionStrategy as FlexibleConnectedPositionStrategy )
 			.positionChanges
-			.pipe( untilCmpDestroyed( this ) )
+			.pipe( untilCmpDestroyed(this) as any )
 			.subscribe( ( change: ConnectedOverlayPositionChange ) => {
 				const _originX: HorizontalConnectionPos = change.connectionPair.originX;
 				const _originY: VerticalConnectionPos = change.connectionPair.originY;
