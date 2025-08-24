@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
 import { NgcToastService, NgcToastType } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
-import { untilCmpDestroyed } from 'angular-core';
+// import { untilCmpDestroyed } from 'angular-core';
 import { Socket } from 'ngx-socket-io';
 import { startWith } from 'rxjs/operators';
 import { forEach, indexOf } from 'lodash';
@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { COLOR } from '@app/@resources';
 import { NgcICalendarEvent } from '@app/@ngc/ngc-calendar';
+import { untilCmpDestroyed } from 'angular-core';
 @Component({
 	selector: 'guideline',
 	templateUrl: './guideline.html',
@@ -56,7 +57,7 @@ export class GuidelineComponent implements OnInit {
 			.changes
 			.pipe(
 				startWith(this.compTemplates),
-				untilCmpDestroyed(this)
+  				untilCmpDestroyed(this) as any
 			)
 			.subscribe(() => {
 				forEach(this.compTemplatesArr, (item: TemplateRef<any>) => {
@@ -85,6 +86,11 @@ export class GuidelineComponent implements OnInit {
 		this._socket.on('hello', (event) => console.log('hello', event))
 	}
 
+	public selectOptions = [
+		{ label: 'Option 1', value: 'option1' },
+		{ label: 'Option 2', value: 'option2' },
+		{ label: 'Option 3', value: 'option3' }
+	];
 
 	public calendarEvents: NgcICalendarEvent[] = [
 		{

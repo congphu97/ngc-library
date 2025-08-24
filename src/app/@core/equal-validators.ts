@@ -1,4 +1,4 @@
-import { FormControl, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { UntypedFormControl, AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import _ from 'lodash';
 
 export class EqualValidators {
@@ -10,8 +10,8 @@ export class EqualValidators {
 	 * @param {any} options
 	 * @return {() => {}}
 	 */
-	public static validator( equal: string, reverse: boolean = false, options: any = {} ): ( c: FormControl ) => {} {
-		return ( c: FormControl ): IObject => {
+	public static validator( equal: string, reverse: boolean = false, options: any = {} ): ( c: UntypedFormControl ) => {} {
+		return ( c: UntypedFormControl ): IObject => {
 			// Self value
 			const v: any = c.value;
 

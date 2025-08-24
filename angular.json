@@ -236,7 +236,6 @@
       }
     }
   },
-  "defaultProject": "cubable",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
@@ -247,7 +246,9 @@
     }
   },
   "cli": {
-    "analytics": true,
-    "defaultCollection": "@angular-eslint/schematics"
+    "analytics": false,
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   }
 }

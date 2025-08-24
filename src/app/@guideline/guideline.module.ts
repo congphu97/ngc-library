@@ -23,6 +23,11 @@ import { NgcCalendarModule } from '@app/@ngc/ngc-calendar';
 import { NgcDatePickerModule } from '@app/@ngc/ngc-date-picker';
 import { NgcButtonToggleModule } from '@app/@ngc/ngc-button-toggle';
 import { NgcCodeBlockModule } from '@app/@ngc/ngc-code-block/ngc-code-block.module';
+import { NgcPaginationModule } from '@app/@ngc/ngc-pagination/ngc-pagination.module';
+import { NgcTextareaModule } from '@app/@ngc/ngc-textarea/ngc-textarea.module';
+import { NgcSelectModule } from '@app/@ngc/ngc-select/ngc-select.module';
+import { NgcCardModule } from '@app/@ngc/ngc-card';
+import { NgcMenuModule } from '@app/@ngc/ngc-menu';
 // import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
@@ -35,7 +40,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
     NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
     NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
-    NgcCodeBlockModule,
+    NgcCodeBlockModule, NgcPaginationModule, NgcTextareaModule, NgcSelectModule,
+    NgcCardModule, NgcMenuModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

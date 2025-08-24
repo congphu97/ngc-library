@@ -139,7 +139,7 @@
 <ng-template #compTemplate label="Badge">
 	<div class="mb-15">Badge</div>
 	<div class="layout-row layout-wrap layout-align-start-center mt-20">
-		<div class="mr-30" wgcBadge="2">
+		<div class="mr-30" ngcBadge="2">
 			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
 			<!-- <ngc-icon name="file-attachment" size="20px"></ngc-icon> -->
 		</div>
@@ -319,14 +319,49 @@
 		(eventCreate)="console.log('Event create', $event)"></ngc-calendar>
 
 </ng-template>
-<ng-template #compTemplate label="Card">10</ng-template>
+<ng-template #compTemplate label="Card">
+	<ngc-card>
+		<div ngcCardContent class="layout-column">
+			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
+				Utility Types
+			</a>
+			<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
+				target="_blank">
+				CSS Naming Conventions that Will Save You Hours of Debugging
+			</a>
+			<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
+				API reference for Angular CDK drag-drop
+			</a>
+		</div>
+	</ngc-card>
+	<ngc-card class="mt-20">
+		<div ngcCardHeader>
+			Header
+		</div>
+		<div ngcCardContent class="layout-column">
+			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
+				Utility Types
+			</a>
+			<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
+				target="_blank">
+				CSS Naming Conventions that Will Save You Hours of Debugging
+			</a>
+			<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
+				API reference for Angular CDK drag-drop
+			</a>
+		</div>
+		<div ngcCardFooter>
+			Footer
+		</div>
+	</ngc-card>
+</ng-template>
 <ng-template #compTemplate label="Carousel">11</ng-template>
 <ng-template #compTemplate label="Chart">12</ng-template>
 <ng-template #compTemplate label="Checkbox">
 	<h3 class="mb-20">Checkbox</h3>
-	<ngc-tab-group>
+	<ngc-tab-group>d
 		<ngc-tab [label]="'Preview'">
-			<div class="mb-10">
+			<div class="mb-10" g>
 				<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
 			</div>
 			<div class="mb-10">
@@ -395,7 +430,50 @@
 </ng-template>
 <ng-template #compTemplate label="Dialog">20</ng-template>
 <ng-template #compTemplate label="Drawer">21</ng-template>
-<ng-template #compTemplate label="Dropdown Menu">22</ng-template>
+<ng-template #compTemplate label="Dropdown Menu">
+	<div class="layout-row layout-wrap layout-align-center-center" style="height: 800px;">
+
+		<div class="mr-10">
+			<button ngcButton position="before" [ngcMenuTriggerFor]="menu">
+				Menu Before
+			</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="after" [ngcMenuTriggerFor]="menu">
+				Menu After
+			</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="above" [ngcMenuTriggerFor]="menu">
+				Menu Above
+			</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton position="below" [ngcMenuTriggerFor]="menu">
+				Menu Below
+			</button>
+		</div>
+
+	</div>
+
+	<ngc-menu #menu>
+		<ngc-menu-content>
+			<button ngcMenuItem icon="trending-up-outline">
+				Item 1
+			</button>
+			<button ngcMenuItem icon="trending-down-outline">
+				Item 2
+			</button>
+			<button ngcMenuItem icon="eye-off">
+				Item 3
+			</button>
+		</ngc-menu-content>
+	</ngc-menu>
+
+</ng-template>
 <ng-template #compTemplate label="Divide">
 	<div class="mb-15">Divider</div>
 	<ngc-divider></ngc-divider>
@@ -413,8 +491,9 @@
 	<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
 </ng-template>
 <ng-template #compTemplate label="Menubar">28</ng-template>
-<ng-template #compTemplate label="Navigation Menu">29</ng-template>
-<ng-template #compTemplate label="Pagination">30</ng-template>
+<ng-template #compTemplate label="Pagination">
+	<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
+</ng-template>
 <ng-template #compTemplate label="Popover">31</ng-template>
 <ng-template #compTemplate label="Progress">
 	<div class="mb-15">Progress</div>
@@ -436,10 +515,10 @@
 	</div>
 
 </ng-template>
-<ng-template #compTemplate label="Resizable">34</ng-template>
-<ng-template #compTemplate label="Scroll-area">35</ng-template>
-<ng-template #compTemplate label="Select">36</ng-template>
-<ng-template #compTemplate label="Separator">37</ng-template>
+<ng-template #compTemplate label="Select">
+	<ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions"
+		(selectionChange)="console?.log($event)"></ngc-select>
+</ng-template>
 <ng-template #compTemplate label="Sheet">38</ng-template>
 <ng-template #compTemplate label="Sidebar">39</ng-template>
 <ng-template #compTemplate label="Skeleton">40</ng-template>
@@ -541,7 +620,9 @@
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
-<ng-template #compTemplate label="Textarea">46</ng-template>
+<ng-template #compTemplate label="Textarea">
+	<ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"></ngc-textarea>
+</ng-template>
 <ng-template #compTemplate label="Toast">
 	<div class="mb-15">Toast</div>
 	<button ngcButton class="m-10" (click)="openToast( 'success' )">Open toast success</button>
@@ -549,8 +630,6 @@
 	<button ngcButton class="m-10" (click)="openToast( 'warning' )">Open toast warning</button>
 	<button ngcButton class="m-10" (click)="openToast( 'danger' )">Open toast danger</button>
 </ng-template>
-<ng-template #compTemplate label="Toggle">48</ng-template>
-<ng-template #compTemplate label="Toggle Group">49</ng-template>
 <ng-template #compTemplate label="Tooltip">
 	<div class="mb-15">Tooltip</div>
 	<div class="layout-row layout-wrap layout-align-start-center">

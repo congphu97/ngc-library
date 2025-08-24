@@ -1,16 +1,15 @@
-import { enableProdMode } from '@angular/core';
+// import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
-import { ENVIRONMENT } from './environments/environment';
+// import { environment } from './environments';
 
+// if (environment.production) {
+//   enableProdMode();
+// } else {
+//   console.log(environment);
+// }
 
-if (ENVIRONMENT.PRODUCTION) {
-  enableProdMode();
-}
-else {
-  console.log( ENVIRONMENT)
-}
-
-platformBrowserDynamic().bootstrapModule(AppModule)
+platformBrowserDynamic()
+  .bootstrapModule(AppModule)
   .catch(err => console.error(err));
