@@ -28,6 +28,10 @@ import { NgcTextareaModule } from '@app/@ngc/ngc-textarea/ngc-textarea.module';
 import { NgcSelectModule } from '@app/@ngc/ngc-select/ngc-select.module';
 import { NgcCardModule } from '@app/@ngc/ngc-card';
 import { NgcMenuModule } from '@app/@ngc/ngc-menu';
+import { NgcExpansionPanelModule } from '@app/@ngc/ngc-expansion-panel/ngc-expansion-panel.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CoreModule } from '@app/@core';
+import { NgcListModule } from '@app/@ngc/ngc-list';
 // import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
@@ -35,13 +39,14 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 @NgModule({
   declarations: [ GuidelineComponent ],
   imports: [
-    BrowserModule,
+		DragDropModule,
+    BrowserModule, CoreModule, 
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
     NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
     NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
     NgcCodeBlockModule, NgcPaginationModule, NgcTextareaModule, NgcSelectModule,
-    NgcCardModule, NgcMenuModule,
+    NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

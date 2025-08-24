@@ -91,7 +91,7 @@ export class NgcScrollBar implements AfterContentInit, OnDestroy {
 		.changes
 		.pipe(
 			startWith( this.items ),
-			untilCmpDestroyed( this )
+			untilCmpDestroyed(this) as any
 		)
 		.subscribe( () => {
 			this._loadItemsThrottle.cancel();

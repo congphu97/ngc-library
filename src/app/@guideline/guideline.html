@@ -1,108 +1,3 @@
-<!-- 
-<button [ngcTooltip]="'aabc'" [ngcClipboardCopy]="'abc'">abc</button>
-<button [ngcTooltip]="'dref'" [ngcClipboardCopy]="'dref'">abc</button>
-
-<ngc-color-picker></ngc-color-picker>
-<ngc-switch [label]="'abc'"></ngc-switch>
-<ngc-checkbox [label]="'checkbox'"></ngc-checkbox>
-<ngc-radio-group ngDefaultControl [label]="'radio'">
-   abc
-</ngc-radio-group>
-<ngc-divider></ngc-divider>
-<ngc-divider vertical></ngc-divider>
-<ngc-loading>.mb-10</ngc-loading>
-<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
-<ngc-loading class="mb-10" color='#0000ff'></ngc-loading>
-<ngc-loading class="mb-10" color='#primary'></ngc-loading>
-<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
-
-<ngc-icon name="close"></ngc-icon>
-<button class="m-10" (click)="openToast( 'success' )">Open toast success</button>
-<button class="m-10" (click)="openToast( 'info' )">Open toast infor</button>
-<button class="m-10" (click)="openToast( 'warning' )">Open toast warning</button>
-<button class="m-10" (click)="openToast( 'danger' )">Open toast danger</button>
-
-<ngc-truncate>
-   What is Lorem Ipsum?\
-		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\
-		standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.\
-		It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of\
-		Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-</ngc-truncate>
-
-<ngc-tab-group>
-	<ngc-tab [label]="'tab1'">
-		What is Lorem Ipsum? 1
-		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-		Why do we use it?
-		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-	</ngc-tab>
-	<ngc-tab [label]="'tab2'">
-		What is Lorem Ipsum? 2
-		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-		Why do we use it?
-		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-	</ngc-tab>
-	<ngc-tab [label]="'tab3'">
-		What is Lorem Ipsum? 3
-		Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-		Why do we use it?
-		It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-	</ngc-tab>
-</ngc-tab-group>
-
-<ngc-tab-group>
-	<ngc-tab>
-		<ng-template ngcTabHeader>Tab 1</ng-template>
-		<ng-template ngcTabContent>
-			What is Lorem Ipsum? 1
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-			Why do we use it?
-			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-		</ng-template>
-	</ngc-tab>
-	<ngc-tab>
-		<ng-template ngcTabHeader>Tab 2</ng-template>
-		<ng-template ngcTabContent>
-			What is Lorem Ipsum? 2
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-			Why do we use it?
-			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-		</ng-template>
-	</ngc-tab>
-	<ngc-tab>
-		<ng-template ngcTabHeader>Tab 3</ng-template>
-		<ng-template ngcTabContent>
-			What is Lorem Ipsum? 3
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-			Why do we use it?
-			It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-		</ng-template>
-	</ngc-tab>
-</ngc-tab-group>
-
-<ngc-breadcrumb>
-	<ngc-breadcrumb-item>
-		Home
-	</ngc-breadcrumb-item>
-	<ngc-breadcrumb-item [commands]='[ "/" ]'>
-		Home
-	</ngc-breadcrumb-item>
-	<ngc-breadcrumb-item [commands]='[ "/" ]'>
-		Home
-	</ngc-breadcrumb-item>
-</ngc-breadcrumb>
-
-<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
-<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"[statusText]="'Uploading .... '"></ngc-progress-bar> -->
-
-
 <div class="ngc-guideline">
 	<div class="ngc-guideline__header">Component</div>
 	<div class="ngc-guideline__content content">
@@ -119,9 +14,6 @@
 </div>
 
 <ng-template #compTemplate label="Accordion">1</ng-template>
-<ng-template #compTemplate label="Alert">2</ng-template>
-<ng-template #compTemplate label="Alert Dialog">3</ng-template>
-<ng-template #compTemplate label="Aspect Ratio">4</ng-template>
 <ng-template #compTemplate label="Avatar">
 	<div class="mb-15">Avatar</div>
 	<!-- <div class="layout-row layout-wrap layout-align-start-center">
@@ -380,7 +272,110 @@
 	</ngc-tab-group>
 
 </ng-template>
-<ng-template #compTemplate label="Collapsible">14</ng-template>
+<ng-template #compTemplate label="Collapsible">
+	<h3 class="mb-20">Default</h3>
+	<ngc-accordion>
+		<ngc-expansion-panel theme="background" expanded>
+			<ngc-expansion-panel-header>
+				<ngc-truncate limitLine="1">Header</ngc-truncate>
+				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+
+		<ngc-expansion-panel>
+			<ngc-expansion-panel-header>
+				<ngc-truncate limitLine="1">Header</ngc-truncate>
+				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="circle-plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+	</ngc-accordion>
+
+	<h3 class="mv-20">Background Theme</h3>
+	<div cdkDropList (cdkDropListDropped)="console.log('Expansion Dropped', $event)">
+		<ngc-expansion-panel theme="background" cdkDrag draggable>
+			<ngc-expansion-panel-header>
+				<ngc-truncate limitLine="1">Header 1</ngc-truncate>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+					<ngc-icon name="trash" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+
+		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
+			<ngc-expansion-panel-header [color]="'GREEN' | color: 400">
+				<ngc-truncate limitLine="1">Header 2</ngc-truncate>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+					<ngc-icon name="trash" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+
+		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
+			<ngc-expansion-panel-header [color]="'RED' | color: 700">
+				<ngc-truncate limitLine="1">Header 3</ngc-truncate>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+					<ngc-icon name="trash" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+	</div>
+</ng-template>
+<ng-template #compTemplate label="List">
+	<ngc-menu #actionMenu>
+		<ngc-menu-content>
+			<ng-template ngcMenuContent let-listItemComp="listItemComp">
+				<button ngcMenuItem icon="text-input" (click)="listItemComp?.edit()">Rename</button>
+				<button ngcMenuItem icon="trash" [color]="'DANGER' | color">Delete</button>
+			</ng-template>
+		</ngc-menu-content>
+	</ngc-menu>
+
+	<ngc-list displayColorDot name="Name" placeholder="Type a name..." [activeColor]="'SUB' | color"
+		(itemsMoved)="console.log('Items Moved', $event)" (loadMore)="console.log('Load More', $event)">
+
+		<ngc-list-item draggable #listItemComp
+			*ngFor="let item of [ { id: 1, name: 'A' }, { id: 2, name: 'B' }, { id: 3, name: 'C' } ]; let first = first"
+			[id]="item?.id" [label]="item?.name" [description]="'12 items'" [active]="!!first"
+			(dotColorChange)="console.log('Item Dot Color Change', $event)"
+			(editing)="console.log('Item Editing', $event)" (saved)="console.log('Edit Item Saved', $event)"
+			(cancelled)="console.log('Edit Item Cancelled', $event)" (click)="console.log('Item Clicked', $event)">
+
+			<button ngcBasicButton icon="more-vertical" [ngcMenuTriggerFor]="actionMenu"
+				[menuData]="{ listItemComp: listItemComp }"
+				[class.hidden]="!listItemComp?.focusing && !listItemComp?.hovering" (menuOpened)="listItemComp?.focus()"
+				(menuClosed)="listItemComp?.blur()" (click)="$event?.stopPropagation()">
+			</button>
+		</ngc-list-item>
+	</ngc-list>
+</ng-template>
+
 <ng-template #compTemplate label="Code Block">
 	<h3 class="mb-20">Code Block</h3>
 	<ngc-tab-group>
@@ -403,7 +398,7 @@
 	</div>
 	<div class="mb-15">Color Picker List</div>
 	<div class="mb-10">
-		<ngc-color-picker mode='list'></ngc-color-picker>
+		<ngc-color-picker mode='inline'></ngc-color-picker>
 	</div>
 </ng-template>
 <ng-template #compTemplate label="Data Table">18</ng-template>
@@ -479,9 +474,7 @@
 	<ngc-divider></ngc-divider>
 	<ngc-divider vertical></ngc-divider>
 </ng-template>
-<ng-template #compTemplate label="Hover Card">24</ng-template>
 <ng-template #compTemplate label="Input">25</ng-template>
-<ng-template #compTemplate label="Input OTP">26</ng-template>
 <ng-template #compTemplate label="Label">27</ng-template>
 <ng-template #compTemplate label="Loading">
 	<div class="mb-15">Loading</div>
