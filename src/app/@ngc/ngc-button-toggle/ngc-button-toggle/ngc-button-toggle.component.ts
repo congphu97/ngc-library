@@ -65,7 +65,7 @@ export class NgcButtonToggleComponent implements AfterContentInit, OnChanges {
 		.changes
 		.pipe(
 			startWith( this.buttonToggleItems ),
-			untilCmpDestroyed( this )
+			untilCmpDestroyed(this) as any
 		)
 		.subscribe( ( items: QueryList<NgcButtonToggleItemComponent> ) => {
 			this.items = ( items as IObject )?._results;
@@ -79,7 +79,7 @@ export class NgcButtonToggleComponent implements AfterContentInit, OnChanges {
 				.clicked$
 				.pipe(
 					takeUntil( this.buttonToggleItems.changes ),
-					untilCmpDestroyed( this )
+					untilCmpDestroyed(this) as any
 				)
 				.subscribe( ( ev: MouseEvent ) => ev.detail && this.select( index ) );
 			} );
