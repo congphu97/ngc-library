@@ -49,7 +49,7 @@
   <button
     ngcBasicButton
     icon="close"
-    [ngcTooltip]="'WGC.LABEL.CLOSE' | translate"
+    [ngcTooltip]="'NGC.LABEL.CLOSE' | translate"
     (click)="close()"
   ></button>
 </div>
@@ -90,7 +90,7 @@
     *ngIf="clearable"
     (click)="clear()"
   >
-    {{ "WGC.LABEL.CLEAR" | translate }}
+    {{ "NGC.LABEL.CLEAR" | translate }}
   </button>
   <button
     ngcIconButton
@@ -122,7 +122,7 @@
 </div>
 
 <ng-container *ngIf="dateRange; else elseBlock">
-  <ngc-form-field class="ngc-date-picker__date-range-input" [label]="'WGC.LABEL.FROM' | translate">
+  <ngc-form-field class="ngc-date-picker__date-range-input" [label]="'NGC.LABEL.FROM' | translate">
     <input
       ngcFormFieldInput
       readonly
@@ -131,7 +131,7 @@
     />
   </ngc-form-field>
 
-  <ngc-form-field class="ngc-date-picker__date-range-input" [label]="'WGC.LABEL.TO' | translate">
+  <ngc-form-field class="ngc-date-picker__date-range-input" [label]="'NGC.LABEL.TO' | translate">
     <input
       ngcFormFieldInput
       readonly
@@ -145,7 +145,7 @@
   <div class="ngc-date-picker__time" *ngIf="!dateOnly">
     <ngc-switch
       color="primary"
-      [label]="'WGC.LABEL.ADD_TIME' | translate"
+      [label]="'NGC.LABEL.ADD_TIME' | translate"
       [(ngModel)]="showTime"
       (ngModelChange)="setTime()"
     ></ngc-switch>

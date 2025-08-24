@@ -223,7 +223,7 @@ export class NgcDatePickerDirective implements OnDestroy, OnChanges {
 
 		// Catch keyboard events on overlay
 		overlayRef.keydownEvents()
-		.pipe( untilCmpDestroyed( this ) )
+		.pipe( untilCmpDestroyed(this) as any )
 		.subscribe( ( event: KeyboardEvent ) => {
 			if ( event.key !== 'Escape' ) return;
 
@@ -234,7 +234,7 @@ export class NgcDatePickerDirective implements OnDestroy, OnChanges {
 
 		// On backdrop click
 		overlayRef.backdropClick()
-		.pipe( untilCmpDestroyed( this ) )
+		.pipe( untilCmpDestroyed(this) as any )
 		.subscribe( ( event: MouseEvent ) => {
 			this.closeOnClickOutside && this.close( event );
 			this.backdropPress.emit( event );
