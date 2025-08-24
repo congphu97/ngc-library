@@ -1,0 +1,40 @@
+<div 
+  class="ngc-expansion-panel__header"
+  [class.ngc-expansion-panel__header--sticky]="expansionPanelHeader?.sticky"
+  [class.ngc-expansion-panel__header--stretch]="expansionPanelHeader?.stretch">
+
+  <div 
+    class="ngc-expansion-panel__header__drag-handle"
+    cdkDragHandle 
+    *ngIf="cdkDrag !== undefined && !cdkDragDisabled">
+    <ngc-icon name="drag" size="20px"></ngc-icon>
+  </div>
+
+  <div 
+    class="ngc-expansion-panel__header-wrapper"
+    (click)="expanded ? collapse() : expand()">
+    
+    <ngc-icon 
+      class="ngc-expansion-panel__header__icon" 
+      name="chevron-right">
+    </ngc-icon>
+
+    <div class="ngc-expansion-panel__header__content">
+      <ng-container *ngTemplateOutlet="expansionPanelHeader?.templateRef"></ng-container>
+    </div>
+  </div>
+</div>
+
+<div 
+  class="ngc-expansion-panel__content"
+  ngcScrollBar 
+  *ngIf="expanded" 
+  [suppress]="!hasScrollBar">
+
+  <div class="ngc-expansion-panel__content-wrapper">
+    <ng-container *ngIf="isRendered">
+      <ng-container *ngTemplateOutlet="expansionPanelContent?.template"></ng-container>
+      <ng-content></ng-content>
+    </ng-container>
+  </div>
+</div>
