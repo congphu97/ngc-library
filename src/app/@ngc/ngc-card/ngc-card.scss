@@ -1,0 +1,65 @@
+@import 'src/scss/partials/variable';
+
+.ngc-card {
+	display: flex;
+	flex-direction: column;
+
+	&.ngc-card--active {
+		>.ngc-card-wrapper {
+			background-color: var(--card-active-color, $color-white);
+			border-width: var(--card-active-border-width, 1px);
+			border-style: var(--card-active-border-style, solid);
+			border-color: var(--card-active-border-color, $color-border);
+			border-radius: var(--card-active-border-radius, 10px);
+		}
+	}
+
+	>.ngc-card-wrapper {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		min-width: 0;
+		height: 100%;
+		min-height: 0;
+		background-color: var(--card-color, $color-secondary);
+		border-width: var(--card-border-width, 1px);
+		border-style: var(--card-border-style, solid);
+		border-color: var(--card-border-color, $color-border);
+		border-radius: var(--card-border-radius, 10px);
+
+	}
+
+	&__header:not(:empty) {
+		padding-top: var(--card-padding-top, 15px);
+		padding-bottom: var(--card-padding-bottom, 15px);
+		padding-left: var(--card-padding-left, 15px);
+		padding-right: var(--card-padding-right, 15px);
+		background: #f6f6f6;
+		font-weight: bold;
+		border-bottom: 1px solid $color-border;
+
+		border-top-left-radius: 8px;
+		border-top-right-radius: 8px;
+	}
+
+	&__content {
+		flex: 1;
+		padding-top: var(--card-padding-top, 15px);
+		padding-bottom: var(--card-padding-bottom, 15px);
+		padding-left: var(--card-padding-left, 15px);
+		padding-right: var(--card-padding-right, 15px);
+	}
+
+	&__footer:not(:empty) {
+		padding-top: var(--card-padding-top, 15px);
+		padding-bottom: var(--card-padding-bottom, 15px);
+		padding-left: var(--card-padding-left, 15px);
+		padding-right: var(--card-padding-right, 15px);
+		background: #f6f6f6;
+		font-weight: bold;
+		border-top: 1px solid $color-border;
+
+		border-bottom-left-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+}
