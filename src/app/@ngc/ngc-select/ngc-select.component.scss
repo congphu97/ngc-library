@@ -1,0 +1,21 @@
+select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ccc;         // viền mỏng xám
+  border-radius: 6px;             // bo góc
+  background-color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  appearance: none;              // ẩn icon mặc định trình duyệt
+  background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px;
+  cursor: pointer;
+
+  &:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  }
+}
