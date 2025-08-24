@@ -1,0 +1,61 @@
+@import 'src/scss/partials/variable';
+@import 'src/scss/partials/mixin';
+
+.ngc-menu-item {
+	display: flex;
+	align-items: center;
+	padding: 8px 10px;
+	min-height: 40px;
+	border-radius: 8px;
+	border: none;
+	font-weight: $font-weight-semibold;
+	width: 100%;
+	cursor: pointer;
+	background: none;
+	text-align: left;
+	color: var(--menu-item-color, inherit);
+
+	&:not(:last-child) {
+		margin-bottom: 5px;
+	}
+
+	&:not(.ngc-menu-item--disabled) {
+		&:focus-visible,
+		&:hover,
+		&.ngc-menu-item--focusing {
+			background-color: $color-default;
+		}
+	}
+
+	&.ngc-menu-item--disabled {
+		@include cursor-not-allowed;
+		opacity: .4;
+	}
+
+	.ngc-menu-item__content {
+		display: flex;
+		align-items: center;
+		min-width: 0;
+		width: 100%;
+	}
+
+	.ngc-menu-item__prefix,
+	.ngc-menu-item__suffix,
+	.ngc-menu-item__prefix [ngcMenuItemPrefix],
+	.ngc-menu-item__suffix [ngcMenuItemSuffix] {
+		display: flex;
+		align-items: center;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.ngc-menu-item__prefix [ngcMenuItemPrefix] {
+		margin-right: 5px;
+	}
+
+	.ngc-menu-item__suffix [ngcMenuItemSuffix] {
+		margin-left: 5px;
+	}
+}

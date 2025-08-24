@@ -1,0 +1,171 @@
+@import 'src/scss/partials/variable';
+
+ngc-menu {
+	display: none;
+}
+
+.ngc-menu {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+	width: 100%;
+	padding: 15px;
+	border-radius: 8px;
+	border: solid 1px $color-border;
+	box-shadow: $box-shadow;
+	animation: $popup-animation;
+	background-color: $color-white;
+
+	&:after {
+		content: '';
+		position: absolute;
+		background-image: url('/assets/images/arrow.png');
+		background-repeat: no-repeat;
+	}
+
+	&.ngc-menu--above,
+	&.ngc-menu--below {
+		&:after {
+			height: 8px;
+			width: 10px;
+		}
+
+		&:not(.ngc-menu--dir-start),
+		&:not(.ngc-menu--dir-end) {
+			&:after {
+				left: 50%;
+				transform: translateX(-50%);
+			}
+		}
+
+		&.ngc-menu--dir-start {
+			right: 30px;
+
+			&:after {
+				left: 30px;
+				right: unset;
+				transform: translateX(-50%);
+			}
+		}
+
+		&.ngc-menu--dir-end {
+			left: 30px;
+
+			&:after {
+				left: unset;
+				right: 30px;
+				transform: translateX(50%);
+			}
+		}
+	}
+
+	&.ngc-menu--before,
+	&.ngc-menu--after {
+		&:after {
+			height: 10px;
+			width: 8px;
+		}
+
+		&:not(.ngc-menu--dir-start),
+		&:not(.ngc-menu--dir-end) {
+			&:after {
+				top: 50%;
+				transform: translateY(-50%);
+			}
+		}
+
+		&.ngc-menu--dir-start {
+			bottom: 30px;
+
+			&:after {
+				top: 30px;
+				bottom: unset;
+				transform: translateY(-50%);
+			}
+		}
+
+		&.ngc-menu--dir-end {
+			top: 30px;
+
+			&:after {
+				top: unset;
+				bottom: 30px;
+				transform: translateY(50%);
+			}
+		}
+	}
+
+	&.ngc-menu--above:after {
+		background-position: -11px 0;
+		bottom: -6px;
+	}
+
+	&.ngc-menu--below:after {
+		background-position: 0 0;
+		top: -8px;
+	}
+
+	&.ngc-menu--before:after {
+		background-position: -22px 0;
+		right: -6px;
+	}
+
+	&.ngc-menu--after:after {
+		background-position: -33px 0;
+		left: -7px;
+	}
+
+	&.ngc-menu--no-arrow {
+		&:after {
+			display: none;
+		}
+	}
+
+	.ngc-menu__header,
+	.ngc-menu__content,
+	.ngc-menu__footer {
+		display: flex;
+		flex-direction: column;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.ngc-menu__header {
+		min-height: min-content; // Fix on safari < 14
+
+		.ngc-menu__header__title {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 5px;
+
+			.ngc-menu__header__title-wrapper {
+				display: flex;
+				align-items: center;
+				font-size: 16px;
+				font-weight: $font-weight-semibold;
+				min-width: 0;
+				width: 100%;
+				margin-right: 10px;
+			}
+		}
+
+		.ngc-menu__header__content {
+			margin-top: 5px;
+			margin-bottom: 5px;
+		}
+	}
+
+	.ngc-menu__content {
+		position: relative;
+		overflow: hidden;
+		min-height: 0;
+		height: 100%;
+	}
+
+	.ngc-menu__footer {
+		margin-top: 15px;
+	}
+}
