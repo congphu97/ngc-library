@@ -1,7 +1,7 @@
 <div class="ngc-toast-container">
     <div class="ngc-toast-header">
         {{ title }}
-        <ngc-icon (click)="closed?.emit()" name="close-outline"></ngc-icon>
+        <ngc-icon (click)="closed?.emit()" size="22px" name="close-outline"></ngc-icon>
 
     </div>
     <div class="ngc-toast-description" [innerHtml]="description | safeHtml"></div>

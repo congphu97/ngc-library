@@ -5,10 +5,11 @@ import { NgcToastGroupComponent } from './toast-group/ngc-toast-group.component'
 import { NgcToastComponent } from './toast/ngc-toast.component';
 import { NgcToastService } from './toast/ngc-toast.service';
 import { NgcIconModule } from '../ngc-icon';
+import { CoreModule } from '@app/@core';
 
 @NgModule({
   declarations: [ NgcToastComponent, NgcToastGroupComponent ],
-  imports: [ CommonModule, NgcIconModule ],
+  imports: [ CoreModule, CommonModule, NgcIconModule ],
   exports: [ NgcToastComponent, NgcToastGroupComponent ],
   providers: [ NgcToastService ]
 })

@@ -2,14 +2,13 @@
 
 .ngc-toast {
 	$self: &;
-	width: 500px;
+	width: 300px;
 	overflow: hidden;
 	border-radius: 8px;
 	border: 1px solid $color-border;
 	display: flex;
 	padding: 15px 20px;
-	margin-top: 30px;
-	margin-bottom: 30px;
+	margin: 30px;
 	background-color: var(--toast-color, color(darkGray, 700));
 	color: var(--toast-text-color, $color-white);
 	animation: $popup-animation;
@@ -34,6 +33,8 @@
 		align-items: center;
 		width: 100%;
 		min-width: 0;
+		cursor: pointer;
+
 
 		.ngc-toast-header {
 			display: flex;
