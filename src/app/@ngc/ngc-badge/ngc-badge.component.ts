@@ -32,8 +32,12 @@ export class NgcBadgeComponent implements AfterViewInit, OnChanges {
 	get classPosAbsolute(): boolean { return this.positionMode === 'absolute'; }
 
 
+	@HostBinding( 'style.--button-border-color' )
+	get styleBorderColor(): string { return this.background; }
+
 	@Input() public count: string;
 	@Input() public color: string;
+	@Input() public background: string;
 	@Input() public textColor: string;
 	@Input() @DefaultValue() public positionMode: WGCIBadgePositionMode = 'default';
 
@@ -53,6 +57,7 @@ export class NgcBadgeComponent implements AfterViewInit, OnChanges {
 	 */
 	ngAfterViewInit() {
 		this.color && this._elementRef.nativeElement.classList.add( 'ngc-' + this.color );
+		this.background && this._elementRef.nativeElement.classList.add( 'ngc-background-' + this.background );
 	}
 
 	/**

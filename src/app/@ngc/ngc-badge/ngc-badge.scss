@@ -1,4 +1,4 @@
-@import 'src/scss/partials/variable';
+@import '../../../scss/partials/variable.scss';
 
 .ngc-badge {
 	display: flex;
@@ -6,27 +6,67 @@
 	width: fit-content;
 
 	&.ngc-badge--pos-inline {
-		> .ngc-badge-count {
+		>.ngc-badge-count {
 			top: 0;
 			transform: none;
 		}
 	}
 
 	&.ngc-badge--pos-absolute {
-		> .ngc-badge-count {
+		>.ngc-badge-count {
 			position: absolute;
 			left: 100%;
 		}
 	}
 
 	&.ngc-primary {
-		> .ngc-badge-count {
+		>.ngc-badge-count {
 			background-color: var(--primary-color, $color-primary);
 			color: $color-white;
 		}
 	}
 
-	> .ngc-badge-count {
+
+	&.ngc-background-default {
+		background-color: var(--primary-color, $color-default);
+
+		padding: 5px 15px;
+		border: 1px solid $color-border;
+		border-radius: 15px;
+
+		>.ngc-badge-count {
+			background-color: var(--primary-color, $color-label);
+			color: $color-white;
+		}
+	}
+
+	&.ngc-background-primary {
+		background-color: var(--primary-color, $color-primary);
+
+		padding: 5px 15px;
+		border: 1px solid $color-border;
+		border-radius: 15px;
+
+		>.ngc-badge-count, ngc-icon {
+			background-color: var(--primary-color, $color-primary);
+			color: $color-white;
+		}
+	}
+
+	&.ngc-background-secondary {
+		background-color: var(--primary-color, $color-secondary);
+
+		padding: 5px 15px;
+		border: 1px solid $color-border;
+		border-radius: 15px;
+
+		>.ngc-badge-count {
+			background-color: var(--primary-color, $color-primary);
+			color: $color-white;
+		}
+	}
+
+	>.ngc-badge-count {
 		padding: 2px 4px;
 		background-color: var(--badge-color, $color-label);
 		border-radius: 5px;
