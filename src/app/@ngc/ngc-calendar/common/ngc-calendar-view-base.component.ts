@@ -33,7 +33,7 @@ export abstract class NgcCalendarViewBaseComponent implements OnChanges {
 	@Input() @CoerceBoolean() public creatable: boolean;
 	@Input() @CoerceBoolean() public displayHighlight: boolean;
 	@Input() @DefaultValue() public name: string = this.translateService.instant( 'NGC.NAME' );
-	@Input() @DefaultValue() public placeholder: string = this.translateService.instant( 'Ngc.PLACEHOLDER.TYPE_NAME' );
+	@Input() @DefaultValue() public placeholder: string = this.translateService.instant( 'NGC.PLACEHOLDER.TYPE_NAME' );
 	@Input() @CoerceArray() public events: NgcICalendarEvent[];
 	@Input() public selectedEventID: number;
 	@Input() public viewDate: Moment;

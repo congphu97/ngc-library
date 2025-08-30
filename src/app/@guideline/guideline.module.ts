@@ -32,21 +32,27 @@ import { NgcExpansionPanelModule } from '@app/@ngc/ngc-expansion-panel/ngc-expan
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CoreModule } from '@app/@core';
 import { NgcListModule } from '@app/@ngc/ngc-list';
+import { NgcDialogModule } from '@app/@ngc/ngc-dialog';
+import { MyDialogComponent } from './partial/my-dialog.component';
+import { NgcCarouselModule } from '@app/@ngc/ngc-carousel';
+import { NgcDrawerModule } from '@app/@ngc/ngc-drawer';
+import { NgcScrollBarModule } from '@app/@ngc/ngc-scroll-bar';
 // import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
-  declarations: [ GuidelineComponent ],
+  declarations: [ GuidelineComponent, MyDialogComponent ],
   imports: [
 		DragDropModule,
-    BrowserModule, CoreModule, 
+    BrowserModule, CoreModule,
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
     NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
     NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
     NgcCodeBlockModule, NgcPaginationModule, NgcTextareaModule, NgcSelectModule,
-    NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule,
+    NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
+    NgcDrawerModule, NgcScrollBarModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

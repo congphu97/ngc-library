@@ -1,19 +1,105 @@
-<div class="ngc-guideline">
-	<div class="ngc-guideline__header">Component</div>
-	<div class="ngc-guideline__content content">
-		<div class="content__component">
-			<ng-container *ngFor="let component of compTemplatesArr">
-				<button ngcButton (click)="selectCompTemplate(component)">{{component?.label}}</button>
-			</ng-container>
-		</div>
-		<div class="content__guide">
-			<ng-container *ngTemplateOutlet='currentCompTemplate'></ng-container>
-		</div>
-	</div>
-	<div></div>
-</div>
+<ngc-drawer-container stretch>
+	<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px" paddingLeft="20px"
+		[bgColor]="'WHITE' | color">
 
-<ng-template #compTemplate label="Accordion">1</ng-template>
+		<!-- <ngc-search-box
+      [autoFocusOn]="autoFocusOn"
+      [displayNotFound]="displayNotFound"
+      #searchBox
+      searchKey="label"
+      [data]="compTemplatesArr">
+    </ngc-search-box> -->
+
+		<ngc-list class="mt-5" stretch>
+			<ngc-list-item *ngFor="let component of compTemplatesArr">
+				<button class="content-component" ngcButton (click)="selectCompTemplate(component)">{{component?.label}}</button>
+			</ngc-list-item>
+		</ngc-list>
+
+	</ngc-drawer>
+
+	<ngc-drawer-content paddingVertical="20px" paddingHorizontal="20px">
+		<ngc-scroll-bar>
+			<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
+		</ngc-scroll-bar>
+	</ngc-drawer-content>
+</ngc-drawer-container>
+
+<ng-template #compTemplate label="Accordion">
+	<h3 class="mb-20">Default</h3>
+	<ngc-accordion>
+		<ngc-expansion-panel theme="background" expanded>
+			<ngc-expansion-panel-header>
+				<ngc-truncate limitLine="1">Header</ngc-truncate>
+				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+
+		<ngc-expansion-panel>
+			<ngc-expansion-panel-header>
+				<ngc-truncate limitLine="1">Header</ngc-truncate>
+				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="circle-plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+	</ngc-accordion>
+
+	<h3 class="mv-20">Background Theme</h3>
+	<div cdkDropList (cdkDropListDropped)="console.log('Expansion Dropped', $event)">
+		<ngc-expansion-panel theme="background" cdkDrag draggable>
+			<ngc-expansion-panel-header>
+				<ngc-truncate limitLine="1">Header 1</ngc-truncate>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+					<ngc-icon name="trash" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+
+		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
+			<ngc-expansion-panel-header [color]="'GREEN' | color: 400">
+				<ngc-truncate limitLine="1">Header 2</ngc-truncate>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+					<ngc-icon name="trash" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+
+		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
+			<ngc-expansion-panel-header [color]="'RED' | color: 700">
+				<ngc-truncate limitLine="1">Header 3</ngc-truncate>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+					<ngc-icon name="edit" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+					<ngc-icon name="trash" size="20px"></ngc-icon>
+				</button>
+				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+					<ngc-icon name="plus" size="20px"></ngc-icon>
+				</button>
+			</ngc-expansion-panel-header>
+			Body
+		</ngc-expansion-panel>
+	</div>
+</ng-template>
 <ng-template #compTemplate label="Avatar">
 	<div class="mb-15">Avatar</div>
 	<!-- <div class="layout-row layout-wrap layout-align-start-center">
@@ -29,23 +115,35 @@
 	</div> -->
 </ng-template>
 <ng-template #compTemplate label="Badge">
-	<div class="mb-15">Badge</div>
+	<h3 class="mb-20">Default</h3>
+
 	<div class="layout-row layout-wrap layout-align-start-center mt-20">
-		<div class="mr-30" ngcBadge="2">
+		<ngc-badge class="mr-30" ngcBadge="2">
 			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-			<!-- <ngc-icon name="file-attachment" size="20px"></ngc-icon> -->
-		</div>
+		</ngc-badge>
 		<ngc-badge class="mr-30" count="199" color="primary">
 			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
 		</ngc-badge>
-		<!-- <ngc-badge class="mr-30" [count]="1000 | kUnit">
-			<ngc-icon name="file-attachment" size="20px"></ngc-icon>
-		</ngc-badge> -->
+		<ngc-badge class="mr-30" [count]="1000 | kUnit">
+			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+		</ngc-badge>
 	</div>
 
+	<h3 class="mt-20 mb-20">Background Theme</h3>
+	<div class="layout-row layout-wrap layout-align-start-center mt-20">
+		<ngc-badge class="mr-30" ngcBadge="2" background="primary" color="white">
+			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+		</ngc-badge>
+		<ngc-badge class="mr-30" count="199" background="secondary" color="primary">
+			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+		</ngc-badge>
+		<ngc-badge class="mr-30" background="default" color="default" [count]="1000 | kUnit">
+			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+		</ngc-badge>
+	</div>
 </ng-template>
 <ng-template #compTemplate label="Breadcrumb">
-	<div class="mb-15">Breadcrumb</div>
+	<h3 class="mb-20">Default</h3>
 	<ngc-breadcrumb>
 		<ngc-breadcrumb-item>
 			Home
@@ -212,6 +310,7 @@
 
 </ng-template>
 <ng-template #compTemplate label="Card">
+	<h3 class="mb-20">Card</h3>
 	<ngc-card>
 		<div ngcCardContent class="layout-column">
 			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
@@ -247,11 +346,16 @@
 		</div>
 	</ngc-card>
 </ng-template>
-<ng-template #compTemplate label="Carousel">11</ng-template>
+<ng-template #compTemplate label="Carousel">
+	<ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'"
+		[photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)">
+	</ngc-carousel>
+
+</ng-template>
 <ng-template #compTemplate label="Chart">12</ng-template>
 <ng-template #compTemplate label="Checkbox">
 	<h3 class="mb-20">Checkbox</h3>
-	<ngc-tab-group>d
+	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
 			<div class="mb-10" g>
 				<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
@@ -272,82 +376,9 @@
 	</ngc-tab-group>
 
 </ng-template>
-<ng-template #compTemplate label="Collapsible">
-	<h3 class="mb-20">Default</h3>
-	<ngc-accordion>
-		<ngc-expansion-panel theme="background" expanded>
-			<ngc-expansion-panel-header>
-				<ngc-truncate limitLine="1">Header</ngc-truncate>
-				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
 
-		<ngc-expansion-panel>
-			<ngc-expansion-panel-header>
-				<ngc-truncate limitLine="1">Header</ngc-truncate>
-				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="circle-plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
-	</ngc-accordion>
-
-	<h3 class="mv-20">Background Theme</h3>
-	<div cdkDropList (cdkDropListDropped)="console.log('Expansion Dropped', $event)">
-		<ngc-expansion-panel theme="background" cdkDrag draggable>
-			<ngc-expansion-panel-header>
-				<ngc-truncate limitLine="1">Header 1</ngc-truncate>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
-					<ngc-icon name="trash" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
-
-		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
-			<ngc-expansion-panel-header [color]="'GREEN' | color: 400">
-				<ngc-truncate limitLine="1">Header 2</ngc-truncate>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
-					<ngc-icon name="trash" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
-
-		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
-			<ngc-expansion-panel-header [color]="'RED' | color: 700">
-				<ngc-truncate limitLine="1">Header 3</ngc-truncate>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
-					<ngc-icon name="trash" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
-	</div>
-</ng-template>
 <ng-template #compTemplate label="List">
+	<h3 class="mb-20">List</h3>
 	<ngc-menu #actionMenu>
 		<ngc-menu-content>
 			<ng-template ngcMenuContent let-listItemComp="listItemComp">
@@ -388,15 +419,18 @@
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Clipboard">
-	<div class="mb-15">Clipboard</div>
+	<h3 class="mb-20">Clipboard</h3>
+
 	<button ngcButton [ngcClipboardCopy]="'Click to Clipboard'">Click to Clipboard</button>
 </ng-template>
 <ng-template #compTemplate label="Color Picker">
-	<div class="mb-15">Color Picker</div>
+	<h3 class="mb-20">Color Picker</h3>
+
 	<div class="mb-10">
 		<ngc-color-picker></ngc-color-picker>
 	</div>
-	<div class="mb-15">Color Picker List</div>
+	<h3 class="mb-20">Color Picker Inline</h3>
+
 	<div class="mb-10">
 		<ngc-color-picker mode='inline'></ngc-color-picker>
 	</div>
@@ -418,16 +452,36 @@
 			</button>
 		</div>
 	</div>
-
 	<h3 class="mv-20">Component</h3>
 	<ngc-date-picker class="w-300" mode="inline"></ngc-date-picker>
 
 </ng-template>
-<ng-template #compTemplate label="Dialog">20</ng-template>
+<ng-template #compTemplate label="Dialog">
+	<h3 class="mb-20">Dialog</h3>
+
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<button ngcButton (click)="openDialog()">
+				Open Dialog Component
+			</button>
+		</div>
+
+		<div class="mr-10">
+			<button ngcButton (click)="openDialog(dialog)">
+				Open Dialog Template
+			</button>
+		</div>
+	</div>
+
+	<ng-template #dialog let-data="data">
+		<div class="p-30">{{ data?.content }}</div>
+	</ng-template>
+
+</ng-template>
 <ng-template #compTemplate label="Drawer">21</ng-template>
 <ng-template #compTemplate label="Dropdown Menu">
+	<h3 class="mb-20">Dropdown Menu</h3>
 	<div class="layout-row layout-wrap layout-align-center-center" style="height: 800px;">
-
 		<div class="mr-10">
 			<button ngcButton position="before" [ngcMenuTriggerFor]="menu">
 				Menu Before
@@ -470,7 +524,7 @@
 
 </ng-template>
 <ng-template #compTemplate label="Divide">
-	<div class="mb-15">Divider</div>
+	<h3 class="mb-20">Divider</h3>
 	<ngc-divider></ngc-divider>
 	<ngc-divider vertical></ngc-divider>
 </ng-template>
@@ -485,6 +539,7 @@
 </ng-template>
 <ng-template #compTemplate label="Menubar">28</ng-template>
 <ng-template #compTemplate label="Pagination">
+	<h3 class="mb-20">Pagination</h3>
 	<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
 </ng-template>
 <ng-template #compTemplate label="Popover">31</ng-template>
@@ -499,16 +554,57 @@
 	</div>
 </ng-template>
 <ng-template #compTemplate label="Radio Group">
-	<div>
-		<ngc-radio-group [label]="'Radio Group 1'">
-			<ngc-radio [label]="'Option 1'" [value]="'option1'"></ngc-radio>
-			<ngc-radio [label]="'Option 2'" [value]="'option2'"></ngc-radio>
-			<ngc-radio [label]="'Option 3'" [value]="'option3'"></ngc-radio>
-		</ngc-radio-group>
+	<h3 class="mb-20">Radio Group</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-radio [checked]="true">Default</ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [checked]="true" label="Primary" color="primary"></ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [checked]="true" [disabled]="true" label="Checked & Disabled" color="primary"></ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [disabled]="true" label="Disabled" color="primary"></ngc-radio>
+		</div>
 	</div>
+
+	<h3 class="mv-20">Radio Custom Color</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-radio [checked]="true" label="Red" color="#ff0000" labelColor="red"></ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [checked]="true" label="Blue" color="#0000ff" labelColor="blue"></ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [checked]="true" label="Green" color="#008000" labelColor="green"></ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [checked]="true" [disabled]="true" label="Checked & Disabled" color="#008000"></ngc-radio>
+		</div>
+		<div class="mr-10">
+			<ngc-radio [disabled]="true" label="Disabled" color="#008000"></ngc-radio>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Radio Group</h3>
+	<ngc-radio-group ngDefaultControl label="Label" [(ngModel)]="radioGroupValue">
+		<ngc-radio [value]="1">Radio 1</ngc-radio>
+		<ngc-radio [value]="2">Radio 2</ngc-radio>
+	</ngc-radio-group>
+
+	<h3 class="mv-20">Radio Group Disabled</h3>
+	<ngc-radio-group ngDefaultControl [disabled]="true" label="Label" [(ngModel)]="radioGroupValue">
+		<ngc-radio [value]="1">Radio 1</ngc-radio>
+		<ngc-radio [value]="2">Radio 2</ngc-radio>
+	</ngc-radio-group>
+
 
 </ng-template>
 <ng-template #compTemplate label="Select">
+	<h3 class="mb-20">Select</h3>
 	<ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions"
 		(selectionChange)="console?.log($event)"></ngc-select>
 </ng-template>
@@ -546,7 +642,7 @@
 </ng-template>
 <ng-template #compTemplate label="Table">44</ng-template>
 <ng-template #compTemplate label="Tabs">
-	<div class="mb-15">Tabs</div>
+	<h3 class="mb-20">Tabs</h3>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Tab 1'">
 			What is Lorem Ipsum? 1
@@ -614,17 +710,18 @@
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Textarea">
+	<h3 class="mb-20">Textarea</h3>
 	<ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"></ngc-textarea>
 </ng-template>
 <ng-template #compTemplate label="Toast">
-	<div class="mb-15">Toast</div>
+	<h3 class="mb-20">Toast</h3>
 	<button ngcButton class="m-10" (click)="openToast( 'success' )">Open toast success</button>
 	<button ngcButton class="m-10" (click)="openToast( 'info' )">Open toast infor</button>
 	<button ngcButton class="m-10" (click)="openToast( 'warning' )">Open toast warning</button>
 	<button ngcButton class="m-10" (click)="openToast( 'danger' )">Open toast danger</button>
 </ng-template>
 <ng-template #compTemplate label="Tooltip">
-	<div class="mb-15">Tooltip</div>
+	<h3 class="mb-20">Tooltip</h3>
 	<div class="layout-row layout-wrap layout-align-start-center">
 		<div class="mr-10">
 			<button ngcButton position="above" [ngcTooltip]="'Tooltip'">Tooltip Above</button>

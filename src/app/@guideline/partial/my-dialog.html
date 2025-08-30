@@ -1,0 +1,28 @@
+<!-- Dialog Header -->
+<div ngcDialogHeader>
+  <div class="flex mr-15">
+    <h1>My Dialog</h1>
+  </div>
+
+  <button
+    ngcButton
+    icon="close"
+    [ngcTooltip]="'NGC.LABEL.CLOSE' | translate"
+    (click)="dialogRef?.close()">
+  </button>
+</div>
+
+<!-- Dialog Content -->
+<div ngcDialogContent>
+  <div>My Dialog Content</div>
+  <div>{{ data?.content }}</div>
+</div>
+
+<!-- Dialog Footer -->
+<div ngcDialogFooter>
+  <!-- Cancel Button -->
+  <button ngcButton (click)="dialogRef?.close()">Cancel</button>
+
+  <!-- Save Button -->
+  <button ngcButton color="primary" (click)="dialogRef?.close(true)">Save</button>
+</div>

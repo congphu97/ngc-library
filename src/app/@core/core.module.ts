@@ -1,6 +1,6 @@
 import { NgModule, Optional, Inject } from '@angular/core';
 // import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
-// import { LazyLoadImageModule } from 'ng-lazyload-image';
+import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { RoundProgressModule } from 'angular-svg-round-progressbar';
 import {
 	CoreModule as AngularCoreModule,
@@ -34,11 +34,11 @@ import {
 	imports: [
 		// LoadingBarHttpClientModule, LazyLoadImageModule, RoundProgressModule,
 		RoundProgressModule,
-		AngularCoreModule, FormModule,
+		AngularCoreModule, FormModule, LazyLoadImageModule,
 	],
 	exports: [
 		// LoadingBarHttpClientModule, LazyLoadImageModule, AngularCoreModule,
-		AngularCoreModule,
+		AngularCoreModule, LazyLoadImageModule,
 		/* Component Inject (Do not remove) */
 		CopyrightComponent, DragZoneComponent, NotFoundComponent, SeenAllComponent,
 		/* End Component Inject (Do not remove) */

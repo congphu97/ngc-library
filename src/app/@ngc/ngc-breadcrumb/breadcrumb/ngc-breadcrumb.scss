@@ -4,15 +4,18 @@
 .ngc-breadcrumb {
 	display: flex;
 	align-items: center;
-	font-size: 13px;
+	font-weight: $font-weight-normal;
+	font-size: $font-size-large;
 	line-height: 13px;
-	color: $color-label;
+	color: $color-primary;
 
 	.ngc-breadcrumb-item {
 		display: flex;
 		align-items: center;
 		width: fit-content;
 		min-width: 0;
+		white-space: nowrap;
+		cursor: pointer;
 
 		&:not(:last-child) {
 			// max-width: var(--breadcrumb-item-max-width);
@@ -20,6 +23,7 @@
 
 		&:not(.ngc-breadcrumb-item--disabled) {
 			&.ngc-breadcrumb-item--active {
+				font-weight: $font-weight-semibold;
 				cursor: pointer;
 
 				&:hover {
