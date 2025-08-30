@@ -1,0 +1,15 @@
+@import 'src/scss/partials/variable';
+
+.ngc-drawer-content {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-width: 0;
+	height: 100%;
+	min-height: 0;
+	order: 0;
+	padding-top: var(--drawer-content-padding-top, 0);
+	padding-bottom: var(--drawer-content-padding-bottom, 0);
+	padding-left: var(--drawer-content-padding-left, 0);
+	padding-right: var(--drawer-content-padding-right, 0);
+}
