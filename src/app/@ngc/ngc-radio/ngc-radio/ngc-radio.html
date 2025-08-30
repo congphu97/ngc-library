@@ -1,0 +1,7 @@
+<div class="ngc-radio__circle"></div>
+<div class="ngc-radio__label">
+    {{ label }}
+    <ng-container *ngIf="!label">
+        <ng-content></ng-content>
+    </ng-container>
+</div>

@@ -1,41 +1,145 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import {
+	Component, Input, ContentChildren,
+	QueryList, AfterContentInit, ViewEncapsulation,
+	forwardRef, SimpleChanges, OnChanges,
+	HostListener, Output, EventEmitter,
+	ChangeDetectionStrategy, HostBinding
+} from '@angular/core';
+import { FormControl, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { startWith, takeUntil } from 'rxjs/operators';
+import _ from 'lodash';
 
+import { Unsubscriber, CoerceBoolean, DefaultValue, untilCmpDestroyed } from '@core';
+import { NgcRadioComponent } from '../ngc-radio/ngc-radio.component';
+
+export type NgcRadioGroupDirection = 'vertical' | 'horizontal';
+
+@Unsubscriber()
 @Component({
-  selector: 'ngc-radio-group',
-  templateUrl: './ngc-radio-group.component.html',
-  styleUrls: ['./ngc-radio-group.component.scss']
+	selector		: 'ngc-radio-group',
+	templateUrl		: './ngc-radio-group.html',
+	styleUrls		: [ './ngc-radio-group.scss' ],
+	host			: { class: 'ngc-radio-group' },
+	encapsulation	: ViewEncapsulation.None,
+	changeDetection	: ChangeDetectionStrategy.OnPush,
+	providers: [{
+		provide		: NG_VALUE_ACCESSOR,
+		useExisting	: forwardRef( () => NgcRadioGroupComponent ),
+		multi		: true,
+	}],
 })
-export class NgcRadioGroupComponent implements OnInit, OnChanges, ControlValueAccessor {
+export class NgcRadioGroupComponent implements OnChanges, AfterContentInit, ControlValueAccessor {
 
-	@Input() public label: string;
-	@Input() ngModel: any;
-	@Input() disabeld: boolean;
+	@HostBinding( 'class.ngc-radio-group--vertical' )
+	get classVertical(): boolean { return this.direction === 'vertical'; }
 
-  	constructor() { }
+	@HostBinding( 'class.ngc-radio-group--horizontal' )
+	get classHorizontal(): boolean { return this.direction === 'horizontal'; }
 
-  	ngOnInit(): void { }
+	@ContentChildren( NgcRadioComponent, { descendants: true } ) public radioList: QueryList<NgcRadioComponent>;
 
-	public writeValue(obj: any) {
-		console.log( obj );
-	};
-	public registerOnChange(fn: any) {
-		console.log( fn );
+	@Input() public ngModel: any;
+	@Input() public label: any;
+	@Input() public disableControl: boolean;
+	@Input() @CoerceBoolean() public disabled: boolean;
+	@Input() @CoerceBoolean() public readonly: boolean;
+	@Input() @CoerceBoolean() public required: boolean;
+	@Input() @DefaultValue() public direction: NgcRadioGroupDirection = 'vertical';
+	@Input() public formControl: FormControl;
 
-	};
+	@Output() public ngModelChange: EventEmitter<any> = new EventEmitter<any>();
 
-	public registerOnTouched (fn: any) {
-		console.log( fn );
-	};
+	private _innerValue: any;
 
-	public setDisabledState(isDisabled: boolean) {
-		console.log( isDisabled );
+	@HostListener( 'click', [ '$event' ] )
+	public triggerClick( event: MouseEvent ) {
+		if ( this.disabled || this.disableControl || this.readonly || !this.formControl ) return;
 
-	};
-
-	public ngOnChanges(changes: SimpleChanges): void {
-		console.log( changes );
-
+		event.stopPropagation();
+		this.formControl.markAsTouched();
 	}
+
+	/**
+	 * @constructor
+	 * @param {any} value
+	 */
+	public writeValue( value: any ) {
+		if ( value === this._innerValue ) return;
+
+		this._innerValue = value;
+	}
+
+	/**
+	 * @constructor
+	 * @param {Function} fn
+	 */
+	public registerOnChange( fn: Function ) {
+		this._onChangeCallback = fn;
+	}
+
+	/**
+	 * @constructor
+	 * @param {Function} fn
+	 */
+	public registerOnTouched( fn: Function ) {
+		this._onTouchedCallback = fn;
+	}
+
+	/**
+	 * @constructor
+	 * @param {SimpleChanges} changes
+	 */
+	ngOnChanges( changes: SimpleChanges ) {
+		if ( !changes.ngModel ) return;
+
+		_.forEach( this.radioList?.toArray(), ( item: NgcRadioComponent ) => {
+			item.checked = item.value !== undefined && item.value === this.ngModel;
+		} );
+	}
+
+	/**
+	 * @constructor
+	 */
+	ngAfterContentInit() {
+		this.radioList
+		.changes
+		.pipe(
+			startWith( this.radioList ),
+			untilCmpDestroyed( this )
+		)
+		.subscribe( ( items: QueryList<NgcRadioComponent> ) => {
+			const itemArr: NgcRadioComponent[] = items?.toArray();
+
+			_.forEach( itemArr, ( item: NgcRadioComponent, index: number ) => {
+				item.checked = item.value !== undefined && item.value === this.ngModel;
+				item.disabled = item.disabled || this.disabled || this.disableControl;
+				item.readonly = item.readonly || this.readonly;
+
+				item
+				.checkedChange
+				.pipe(
+					takeUntil( this.radioList.changes ),
+					untilCmpDestroyed( this )
+				)
+				.subscribe( ( checked: boolean ) => {
+					if ( !checked ) {
+						item.checked = true;
+						return;
+					}
+
+					this._innerValue = this.ngModel = item.value;
+
+					_.forEach( itemArr, ( _item: NgcRadioComponent, _index: number ) => {
+						_item.checked = index === _index;
+					} );
+					this._onTouchedCallback();
+					this._onChangeCallback( this._innerValue );
+				} );
+			} );
+		} );
+	}
+
+	private _onTouchedCallback: Function = () => {};
+	private _onChangeCallback: Function = ( _v: any ) => {};
 
 }
