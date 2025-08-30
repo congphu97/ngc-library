@@ -1,0 +1,127 @@
+@import 'src/scss/partials/variable';
+@import 'src/scss/partials/mixin';
+
+.ngc-dialog-panel {
+	display: flex;
+	flex-direction: column;
+	background-color: $color-white;
+	border-radius: 8px;
+	max-width: 90vw;
+	max-height: 90vh;
+	box-shadow: $box-shadow;
+
+	&.ngc-dialog-panel--fullscreen {
+		max-width: unset !important;
+		max-height: unset !important;
+		width: 100% !important;
+		height: 100% !important;
+		position: fixed !important;
+		border-radius: 0 !important;
+		top: 0;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		z-index: $z-level-4;
+	}
+}
+
+.ngc-dialog-container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-width: 0;
+	height: 100%;
+	min-height: 0;
+	position: relative;
+
+	> * {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		min-width: 0;
+		height: 100%;
+		min-height: 0;
+	}
+
+	[ngcDialogHeader],
+	[ngcDialogContent],
+	[ngcDialogFooter] {
+		display: flex;
+	}
+
+	[ngcDialogHeader],
+	[ngcDialogFooter] {
+		padding: 15px 25px;
+		justify-content: space-between;
+		align-items: center;
+		position: relative;
+		z-index: $z-level-3;
+
+		&[boxShadow] + [ngcDialogContent] {
+			padding-top: 25px;
+			padding-bottom: 25px;
+		}
+	}
+
+	[ngcDialogHeader] {
+		&[divider] {
+			border-bottom: 1px solid $color-border;
+			margin-bottom: 20px;
+		}
+
+		&[boxShadow] {
+			box-shadow: 0 14px 24px -4px rgba(228, 228, 228, .4);
+		}
+	}
+
+	[ngcDialogFooter] {
+		&[divider] {
+			border-top: 1px solid $color-border;
+			margin-top: 20px;
+		}
+
+		&[boxShadow] {
+			box-shadow: 0 -14px 24px -4px rgba(228, 228, 228, .4);
+		}
+
+		&[alignment='stretch'] {
+			margin-left: -10px;
+			margin-right: -10px;
+
+			.ngc-button {
+				width: 100%;
+				min-width: 0;
+				margin-right: 10px;
+				margin-left: 10px;
+			}
+		}
+	}
+
+	[ngcDialogContent] {
+		@include scroll(hidden);
+		width: 100%;
+		min-width: 0;
+		height: 100%;
+		min-height: 0;
+		flex-direction: column;
+		padding-left: 25px;
+		padding-right: 25px;
+	}
+
+	.ngc-dialog-container__btn-previous,
+	.ngc-dialog-container__btn-next {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 40px;
+		height: 40px;
+	}
+
+	.ngc-dialog-container__btn-previous {
+		left: -70px;
+	}
+
+	.ngc-dialog-container__btn-next {
+		right: -70px;
+	}
+}

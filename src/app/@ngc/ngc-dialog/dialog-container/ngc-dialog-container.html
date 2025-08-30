@@ -1,0 +1,22 @@
+<!-- Previous Button -->
+<button class="ngc-dialog-container__btn-previous"
+  ngcButton
+  icon="chevron-back-outline"
+  *ngIf="isPreviousPagerDisplayed"
+  [disabled]="isPreviousPagerDisabled"
+  [ngcTooltip]="'NGC.LABEL.PREVIOUS' | translate"
+  (click)="pagerClick('previous')">
+</button>
+
+<!-- Next Button -->
+<ng-template cdkPortalOutlet>
+
+</ng-template>
+  <button class="ngc-dialog-container__btn-next"
+    ngcButton
+    icon="chevron-forward-outline"
+    *ngIf="isNextPagerDisplayed"
+    [disabled]="isNextPagerDisabled"
+    [ngcTooltip]="'NGC.LABEL.NEXT' | translate"
+    (click)="pagerClick('next')">
+  </button>
