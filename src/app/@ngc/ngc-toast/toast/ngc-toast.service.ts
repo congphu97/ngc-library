@@ -10,7 +10,7 @@ export interface NgcToastButton {
     onClicked(): Function;
 }
 
-export interface INgcToastConfig {
+export interface NgcIToastConfig {
     icon?: string;
 	color?: string;
 	textColor?: string;
@@ -18,18 +18,30 @@ export interface INgcToastConfig {
     type?: NgcToastType;
     position?: NgcToastPosition;
     buttons?: NgcToastButton[];
+	canClose?: boolean;
+	translate?: boolean;
 }
 
 @Injectable({providedIn: 'root'})
 export class NgcToastService {
 
-    private _bottomPortal: ComponentPortal<NgcToastGroupComponent>;
-	private _bottomInstance: NgcToastGroupComponent;
+	private _topOverlayRef: OverlayRef;
 	private _bottomOverlayRef: OverlayRef;
+	// private _topPortal: ComponentPortal<NgcToastGroupComponent>;
+	private _bottomPortal: ComponentPortal<NgcToastGroupComponent>;
+	// private _topInstance: NgcToastGroupComponent;
+	private _bottomInstance: NgcToastGroupComponent;
+	// private _defaultConfig: NgcIToastConfig = {
+	// 	position	: 'bottom',
+	// 	canClose	: true,
+	// 	translate	: true,
+	// 	duration	: 5000,
+	// };
+
 
     constructor( private _overlay: Overlay ) { }
 
-    show( title: string, description?: string, config?: INgcToastConfig ) {
+    show( title: string, description?: string, config?: NgcIToastConfig ) {
 		this._bottomOverlayRef = this._bottomOverlayRef || this._createOverlayRef( config.position || 'bottom' );
 
 		if ( !this._bottomOverlayRef.hasAttached() ) {
@@ -46,6 +58,16 @@ export class NgcToastService {
         return this._bottomInstance.createToast( title, description, config );
     }
 
+		/**
+	 * @return {void}
+	 */
+	public closeAll() {
+		// this._topInstance = this._bottomInstance = undefined;
+
+		this._topOverlayRef?.detach();
+		this._bottomOverlayRef?.detach();
+	}
+	
     /**
 	 * @param {NgcToastPosition} position
 	 * @return {OverlayRef}

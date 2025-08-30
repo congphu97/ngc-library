@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import moment from 'moment-timezone';
 import _ from 'lodash';
 
-import { INgcToastConfig } from '../toast/ngc-toast.service';
+import { NgcIToastConfig } from '../toast/ngc-toast.service';
 
 @Component({
   selector: 'ngc-toast-group',
@@ -12,7 +12,7 @@ export class NgcToastGroupComponent {
 
 	public toasts: IObject[] = [];
 
-	public createToast( title: string, description?: string, config?: INgcToastConfig ) {
+	public createToast( title: string, description?: string, config?: NgcIToastConfig ) {
 		const id: number = +moment();
 
 		this.toasts.push({ id, title, description, config });
