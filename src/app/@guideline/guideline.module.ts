@@ -37,6 +37,7 @@ import { MyDialogComponent } from './partial/my-dialog.component';
 import { NgcCarouselModule } from '@app/@ngc/ngc-carousel';
 import { NgcDrawerModule } from '@app/@ngc/ngc-drawer';
 import { NgcScrollBarModule } from '@app/@ngc/ngc-scroll-bar';
+import { NgcCollapseModule } from '@app/@ngc/ngc-collapse';
 // import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
@@ -52,6 +53,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
     NgcCodeBlockModule, NgcPaginationModule, NgcTextareaModule, NgcSelectModule,
     NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
+    NgcCollapseModule,
     NgcDrawerModule, NgcScrollBarModule,
     SocketIoModule.forRoot(config)
   ],

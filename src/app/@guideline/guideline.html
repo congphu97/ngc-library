@@ -12,7 +12,8 @@
 
 		<ngc-list class="mt-5" stretch>
 			<ngc-list-item *ngFor="let component of compTemplatesArr">
-				<button class="content-component" ngcButton (click)="selectCompTemplate(component)">{{component?.label}}</button>
+				<button class="content-component" ngcButton
+					(click)="selectCompTemplate(component)">{{component?.label}}</button>
 			</ngc-list-item>
 		</ngc-list>
 
@@ -352,7 +353,29 @@
 	</ngc-carousel>
 
 </ng-template>
-<ng-template #compTemplate label="Chart">12</ng-template>
+<ng-template #compTemplate label="Collapse">
+	<h3 class="mb-20">Collapse</h3>
+	<ngc-collapse class="mb-20" [active]="true" borderWidth="1px">
+		<div ngcCollapseHeader>
+			Header
+		</div>
+		<div ngcCollapseContent class="layout-column">
+			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
+				Utility Types
+			</a>
+			<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
+				target="_blank">
+				CSS Naming Conventions that Will Save You Hours of Debugging
+			</a>
+			<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
+				API reference for Angular CDK drag-drop
+			</a>
+		</div>
+		<div ngcCollapseFooter>
+			Footer
+		</div>
+	</ngc-collapse>
+</ng-template>
 <ng-template #compTemplate label="Checkbox">
 	<h3 class="mb-20">Checkbox</h3>
 	<ngc-tab-group>
@@ -478,9 +501,9 @@
 	</ng-template>
 
 </ng-template>
-<ng-template #compTemplate label="Drawer">21</ng-template>
-<ng-template #compTemplate label="Dropdown Menu">
-	<h3 class="mb-20">Dropdown Menu</h3>
+<ng-template #compTemplate label="Dropdown"></ng-template>
+<ng-template #compTemplate label="Menu">
+	<h3 class="mb-20">Menu</h3>
 	<div class="layout-row layout-wrap layout-align-center-center" style="height: 800px;">
 		<div class="mr-10">
 			<button ngcButton position="before" [ngcMenuTriggerFor]="menu">
@@ -537,7 +560,6 @@
 	<ngc-loading class="mb-10" color='#primary'></ngc-loading>
 	<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
 </ng-template>
-<ng-template #compTemplate label="Menubar">28</ng-template>
 <ng-template #compTemplate label="Pagination">
 	<h3 class="mb-20">Pagination</h3>
 	<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
@@ -715,10 +737,20 @@
 </ng-template>
 <ng-template #compTemplate label="Toast">
 	<h3 class="mb-20">Toast</h3>
-	<button ngcButton class="m-10" (click)="openToast( 'success' )">Open toast success</button>
-	<button ngcButton class="m-10" (click)="openToast( 'info' )">Open toast infor</button>
-	<button ngcButton class="m-10" (click)="openToast( 'warning' )">Open toast warning</button>
-	<button ngcButton class="m-10" (click)="openToast( 'danger' )">Open toast danger</button>
+	<div class="layout-row">
+		<div class="m-10">
+			<button ngcButton (click)="openToast( 'success' )">Open toast success</button>
+		</div>
+		<div class="m-10">
+			<button ngcButton (click)="openToast( 'info' )">Open toast infor</button>
+		</div>
+		<div class="m-10">
+			<button ngcButton (click)="openToast( 'warning' )">Open toast warning</button>
+		</div>
+		<div class="m-10">
+			<button ngcButton (click)="openToast( 'danger' )">Open toast danger</button>
+		</div>
+	</div>
 </ng-template>
 <ng-template #compTemplate label="Tooltip">
 	<h3 class="mb-20">Tooltip</h3>

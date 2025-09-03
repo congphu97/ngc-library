@@ -1,7 +1,7 @@
 <div class="ngc-card-wrapper"
-     [autoUnhighlight]="autoUnhighlight"
-     [(highlightState)]="highlight"
-     (highlightStateChange)="highlightChange?.emit($event)">
+  [autoUnhighlight]="autoUnhighlight"
+  [(highlightState)]="highlight"
+  (highlightStateChange)="highlightChange?.emit($event)">
   
   <div class="ngc-card__header">
     <ng-content select="[ngcCardHeader]"></ng-content>
