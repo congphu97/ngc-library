@@ -28,7 +28,8 @@
 <div 
   class="ngc-expansion-panel__content"
   ngcScrollBar 
-  *ngIf="expanded" 
+  *ngIf="expanded"
+  [@toggleHeight]
   [suppress]="!hasScrollBar">
 
   <div class="ngc-expansion-panel__content-wrapper">

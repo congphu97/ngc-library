@@ -6,6 +6,7 @@ import {
 	HostBinding
 } from '@angular/core';
 import { CdkDrag } from '@angular/cdk/drag-drop';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 import { DefaultValue, CoerceBoolean, CoerceCssPixel, CoerceNumber } from '@core';
 
@@ -21,6 +22,17 @@ export type NgcIExpansionPanelTheme = 'default' | 'background';
 	host			: { class: 'ngc-expansion-panel' },
 	encapsulation	: ViewEncapsulation.None,
 	changeDetection	: ChangeDetectionStrategy.OnPush,
+	animations: [
+		trigger('toggleHeight', [
+		transition(':enter', [
+			style({ height: '0', opacity: 0 }),
+			animate('300ms ease-out', style({ height: '*', opacity: 1 })),
+		]),
+		transition(':leave', [
+			animate('300ms ease-in', style({ height: '0', opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class NgcExpansionPanelComponent implements OnChanges {
 
