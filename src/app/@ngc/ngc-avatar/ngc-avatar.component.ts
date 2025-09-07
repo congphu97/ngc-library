@@ -16,38 +16,38 @@ import {
 	DefaultValue, CoerceNumber, CoerceCssPixel,
 	Unsubscriber, untilCmpDestroyed
 } from '@core';
-import { WGCPageComponent } from '../wgc-page';
-import { WGCMenuComponent } from '../wgc-menu';
-import { WGCTabGroupComponent } from '../wgc-tabs';
-import { WGCGridComponent } from '../wgc-grid';
+import { NgcPageComponent } from '../ngc-page';
+import { NgcMenuComponent } from '../ngc-menu';
+import { NgcGridComponent } from '../ngc-grid';
+import { NgcTabGroupComponent } from '../ngc-tab';
 
-export type WGCIAvatarMode = 'auto' | 'text' | 'photo' | 'icon';
-export type WGCIAvatarSize = 'xlarge' | 'large' | 'medium' | 'small';
+export type NgcIAvatarMode = 'auto' | 'text' | 'photo' | 'icon';
+export type NgcIAvatarSize = 'xlarge' | 'large' | 'medium' | 'small';
 
-export interface WGCIAvatarOptions {
+export interface NgcIAvatarOptions {
 	characters?: number;
 	labelColor?: string;
 	size?: string;
 }
 
-export interface WGCIAvatar {
+export interface NgcIAvatar {
 	photo?: string;
 	color?: string;
 	icon?: string;
-	mode?: WGCIAvatarMode;
+	mode?: NgcIAvatarMode;
 }
 
 @Unsubscriber()
 @Component({
-	selector		: 'wgc-avatar',
-	templateUrl		: './wgc-avatar.pug',
-	styleUrls		: [ './wgc-avatar.scss' ],
-	host			: { class: 'wgc-avatar' },
-	providers		: [ WGCPageComponent, WGCMenuComponent, WGCTabGroupComponent, WGCGridComponent ],
+	selector		: 'ngc-avatar',
+	templateUrl		: './ngc-avatar.html',
+	styleUrls		: [ './ngc-avatar.scss' ],
+	host			: { class: 'ngc-avatar' },
+	providers		: [ NgcPageComponent, NgcMenuComponent, NgcTabGroupComponent, NgcGridComponent ],
 	encapsulation	: ViewEncapsulation.None,
 	changeDetection	: ChangeDetectionStrategy.OnPush,
 })
-export class WGCAvatarComponent implements OnChanges, AfterViewInit {
+export class NgcAvatarComponent implements OnChanges, AfterViewInit {
 
 	@HostBinding( 'style.--avatar-color' )
 	get styleColor(): string { return this.avatar?.color; }
@@ -58,17 +58,17 @@ export class WGCAvatarComponent implements OnChanges, AfterViewInit {
 	@HostBinding( 'style.--avatar-label-color' )
 	get styleLabelColor(): string { return this.parsedLabelColor; }
 
-	@HostBinding( 'class.wgc-avatar--auto' )
+	@HostBinding( 'class.ngc-avatar--auto' )
 	get classAuto(): boolean { return this.avatar?.color === 'auto'; }
 
 	@Input() public label: string;
 	@Input() public labelColor: string;
-	@Input() @DefaultValue() @CoerceCssPixel() public size: string | WGCIAvatarSize = 'small';
+	@Input() @DefaultValue() @CoerceCssPixel() public size: string | NgcIAvatarSize = 'small';
 	@Input() public defaultPhoto: string;
 	@Input() public errorPhoto: string;
 	@Input() @DefaultValue() @CoerceNumber() public characters: number = 2;
 	@Input() @DefaultValue() public lazy: boolean = true;
-	@Input() @DefaultValue() public avatar: WGCIAvatar = { mode: 'auto', color: 'auto' };
+	@Input() @DefaultValue() public avatar: NgcIAvatar = { mode: 'auto', color: 'auto' };
 	@Input() public scrolling$: Subject<any>;
 
 	public scroll$: Observable<any>;
@@ -78,17 +78,17 @@ export class WGCAvatarComponent implements OnChanges, AfterViewInit {
 
 	/**
 	 * @constructor
-	 * @param {WGCPageComponent} pageComp
-	 * @param {WGCGridComponent} gridComp
-	 * @param {WGCMenuComponent} menuComp
-	 * @param {WGCTabGroupComponent} tabGroupComp
+	 * @param {NgcPageComponent} pageComp
+	 * @param {NgcGridComponent} gridComp
+	 * @param {NgcMenuComponent} menuComp
+	 * @param {NgcTabGroupComponent} tabGroupComp
 	 * @param {ElementRef} _elementRef
 	 */
 	constructor(
-		@Optional() @Inject( WGCPageComponent ) public pageComp: WGCPageComponent,
-		@Optional() @Inject( WGCGridComponent ) public gridComp: WGCGridComponent,
-		@Optional() @Inject( WGCMenuComponent ) public menuComp: WGCMenuComponent,
-		@Optional() @Inject( WGCTabGroupComponent ) public tabGroupComp: WGCTabGroupComponent,
+		@Optional() @Inject( NgcPageComponent ) public pageComp: NgcPageComponent,
+		@Optional() @Inject( NgcGridComponent ) public gridComp: NgcGridComponent,
+		@Optional() @Inject( NgcMenuComponent ) public menuComp: NgcMenuComponent,
+		@Optional() @Inject( NgcTabGroupComponent ) public tabGroupComp: NgcTabGroupComponent,
 		private _elementRef: ElementRef
 	) {}
 
@@ -124,24 +124,24 @@ export class WGCAvatarComponent implements OnChanges, AfterViewInit {
 
 	/**
 	 * @param {string} label
-	 * @param {WGCIAvatar} avatar
-	 * @param {WGCIAvatarOptions} options
+	 * @param {NgcIAvatar} avatar
+	 * @param {NgcIAvatarOptions} options
 	 * @return {string}
 	 */
-	public static parseAvatar( label: string, avatar: WGCIAvatar, options?: WGCIAvatarOptions ): string {
+	public static parseAvatar( label: string, avatar: NgcIAvatar, options?: NgcIAvatarOptions ): string {
 		const avatarMode: string = avatar?.mode || 'auto';
 		const avatarColor: string = avatar?.color || 'auto';
 		const avatarIcon: string = avatar?.icon;
 		const avatarPhoto: string = avatar?.photo;
 
-		label = WGCAvatarComponent.parseLabel( label, options?.characters );
+		label = NgcAvatarComponent.parseLabel( label, options?.characters );
 		label = ( avatarMode === 'icon' ? new EmojiPipe().transform( avatarIcon ) : undefined ) || label;
 
-		const labelColor: string = options?.labelColor || WGCAvatarComponent.parseLabelColor( avatarColor );
+		const labelColor: string = options?.labelColor || NgcAvatarComponent.parseLabelColor( avatarColor );
 		const size: string = options?.size || 'unset';
-		const labelEl: string = `<div class="wgc-avatar__label">${label}</div>`;
-		const imgEl: string = avatarPhoto && avatarMode === 'photo' ? `<img class="wgc-avatar__image" src="${avatarPhoto}" />` : '';
-		const avatarClass: string = avatarColor !== 'auto' ? 'wgc-avatar' : 'wgc-avatar wgc-avatar--auto';
+		const labelEl: string = `<div class="ngc-avatar__label">${label}</div>`;
+		const imgEl: string = avatarPhoto && avatarMode === 'photo' ? `<img class="ngc-avatar__image" src="${avatarPhoto}" />` : '';
+		const avatarClass: string = avatarColor !== 'auto' ? 'ngc-avatar' : 'ngc-avatar ngc-avatar--auto';
 
 		return `
 			<div
@@ -157,7 +157,7 @@ export class WGCAvatarComponent implements OnChanges, AfterViewInit {
 	 * @constructor
 	 */
 	ngAfterViewInit() {
-		this.size && this._elementRef.nativeElement.classList.add( 'wgc-avatar-' + this.size );
+		this.size && this._elementRef.nativeElement.classList.add( 'ngc-avatar-' + this.size );
 
 		this.scroll$ = merge(
 			this.scrolling$,
@@ -174,48 +174,48 @@ export class WGCAvatarComponent implements OnChanges, AfterViewInit {
 	 * @param {SimpleChanges} changes
 	 */
 	ngOnChanges( changes: SimpleChanges ) {
-		if ( changes.label ) this.parsedLabel = WGCAvatarComponent.parseLabel( this.label, this.characters );
+		if ( changes.label ) this.parsedLabel = NgcAvatarComponent.parseLabel( this.label, this.characters );
 
 		if ( changes.avatar ) {
 			this.avatar = { ...this.avatar, mode: this.avatar?.mode || 'auto', color: this.avatar?.color || 'auto' };
-			this.parsedLabelColor = this.labelColor || WGCAvatarComponent.parseLabelColor( this.avatar.color );
+			this.parsedLabelColor = this.labelColor || NgcAvatarComponent.parseLabelColor( this.avatar.color );
 			this.isPhotoLoaded$ = this._checkPhotoLoaded( this.avatar.photo );
 		}
 	}
 
 	/**
-	 * @param {WGCIAvatarMode} mode
+	 * @param {NgcIAvatarMode} mode
 	 * @return {boolean}
 	 */
 	@Memoize()
-	public isAutoMode( mode: WGCIAvatarMode ): boolean {
+	public isAutoMode( mode: NgcIAvatarMode ): boolean {
 		return mode === 'auto';
 	}
 
 	/**
-	 * @param {WGCIAvatarMode} mode
+	 * @param {NgcIAvatarMode} mode
 	 * @return {boolean}
 	 */
 	@Memoize()
-	public isPhotoMode( mode: WGCIAvatarMode ): boolean {
+	public isPhotoMode( mode: NgcIAvatarMode ): boolean {
 		return mode === 'photo';
 	}
 
 	/**
-	 * @param {WGCIAvatarMode} mode
+	 * @param {NgcIAvatarMode} mode
 	 * @return {boolean}
 	 */
 	@Memoize()
-	public isIconMode( mode: WGCIAvatarMode ): boolean {
+	public isIconMode( mode: NgcIAvatarMode ): boolean {
 		return mode === 'icon';
 	}
 
 	/**
-	 * @param {WGCIAvatarMode} mode
+	 * @param {NgcIAvatarMode} mode
 	 * @return {boolean}
 	 */
 	@Memoize()
-	public isTextMode( mode: WGCIAvatarMode ): boolean {
+	public isTextMode( mode: NgcIAvatarMode ): boolean {
 		return mode === 'text';
 	}
 
