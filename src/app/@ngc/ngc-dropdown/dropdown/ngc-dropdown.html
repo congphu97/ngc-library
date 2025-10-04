@@ -1,0 +1,132 @@
+mixin none-item
+	button(ngcMenuItem, icon='ban', *ngIf='visibleNoneOption', (click)='clear()')
+		| {{ "WGC.LABEL.NONE" | translate }}
+
+mixin item
+	button(
+		ngcMenuItem,
+		[ngClass]='item?.classes',
+		[icon]='item?.icon',
+		[iconColor]='item?.color',
+		[color]='item?.color',
+		[dotColor]='item?.dotColor',
+		[disabled]='item?.disabled',
+		[autoClose]='!multiple && !item?.children',
+		[active]='multiple ? ( ngModel | includes: item?.value ) : ( item?.value !== undefined && ngModel === item?.value )',
+		(click)='!item?.disabled && selectItem( item )')
+		div(ngcMenuItemPrefix, *ngIf='item?.prefixTemp')
+			ng-container(*ngTemplateOutlet='item?.prefixTemp; context: { item: item };')
+		ng-container(*ngIf='item?.truncate; else elseBlock;')
+			ngc-truncate([limitLine]='item?.truncateLimitLine')
+				ng-container(*ngTemplateOutlet='item?.templateRef; context: { searchQuery: searchBox?.searchQuery }')
+		ng-template(#elseBlock)
+			ng-container(*ngTemplateOutlet='item?.templateRef; context: { searchQuery: searchBox?.searchQuery }')
+		ngc-icon(
+			ngcMenuItemSuffix,
+			name='chevron-right',
+			size='20px',
+			*ngIf='item?.children',
+			[color]='"LABEL" | color')
+		div(ngcMenuItemSuffix, *ngIf='item?.suffixTemp')
+			ng-container(*ngTemplateOutlet='item?.suffixTemp; context: { item: item };')
+
+ngc-menu.ngc-dropdown(
+	#dropdownMenu,
+	maxHeight='400px',
+	[hasScrollBar]='!useVirtualScroll',
+	(loadMore)='loadMore?.emit( !!$event )',
+	(opened)='onOpened( $event )',
+	(closed)='onClosed( $event )')
+	ngc-menu-header
+		ng-template(ngcMenuHeader)
+			ngc-menu-header-title
+				ng-container(*ngIf='selectedGroup; else elseBlock;')
+					button(
+						ngcBasicButton,
+						icon='chevron-left',
+						[color]='"LABEL" | color',
+						[ngcTooltip]='"WGC.LABEL.BACK" | translate',
+						(click)='unselectGroup()')
+					| {{ selectedGroup?.title || selectedGroup?.label }}
+				ng-template(#elseBlock)
+					| {{ placeholder }}
+			.ngc-dropdown-controls
+				ngc-search-box.ngc-dropdown-controls__search-box(
+					autoFocusOn,
+					searchKey='label',
+					[data]='items',
+					[placeholder]='searchPlaceholder')
+				button.ngc-dropdown-controls__btn-toogle-all(
+					ngcBasicButton,
+					*ngIf='multiple && filteredItems?.length',
+					(click)='dropdownMenu?.isAllItemsActivated ? removeAllItems() : addAllItems()')
+					| {{ "WGC.LABEL." + ( dropdownMenu?.isAllItemsActivated ? "DESELECT_ALL" : "SELECT_ALL" ) | translate }}
+	ngc-menu-content
+		ng-template(ngcMenuContent)
+			ng-container(*ngTemplateOutlet='searchBox?.notFoundTemplate')
+			ng-container(*ngIf='filteredItems?.length')
+				ng-container(*ngIf='useVirtualScroll; else elseBlock;')
+					cdk-virtual-scroll-viewport(
+						[itemSize]='itemSize',
+						[minBufferPx]='itemSize * 5',
+						[maxBufferPx]='itemSize * 10',
+						[style.height.px]='400')
+						+none-item
+						ng-container(*cdkVirtualFor='let item of filteredItems')
+							+item
+				ng-template(#elseBlock)
+					+none-item
+					ng-container(*ngFor='let item of filteredItems')
+						+item
+
+ngc-form-field(
+	panelClass='cdk-overlay-highest-pane',
+	[backdropClass]='[ "cdk-overlay-transparent-backdrop", "cdk-overlay-highest-backdrop" ]',
+	[autoFit]='autoFit',
+	[label]='label',
+	[appearance]='appearance',
+	[fakeInput]='isSelected && displayTemp',
+	[errorDisplayMode]='errorDisplayMode',
+	[offsetY]='formControl ? -20 : 0',
+	[required]='required',
+	[disabled]='disabled || disableControl',
+	[focusing]='dropdownMenu?.isOpened',
+	[ngcMenuTriggerFor]='!readonly && !disabled && !disableControl ? dropdownMenu : undefined')
+	div(ngcFormFieldPrefix, *ngIf='!multiple && ( selected?.icon || selected?.dotColor )')
+		ngc-icon(size='20px', *ngIf='selected?.icon', [name]='selected?.icon', [color]='selected?.color')
+		ngc-color-dot(viewOnly, *ngIf='selected?.dotColor', [color]='selected?.dotColor')
+	div(ngcFormFieldPrefix, *ngIf='selected?.prefixTemp')
+		ng-container(*ngTemplateOutlet='selected?.prefixTemp; context: { selected: selected };')
+	ng-container(*ngIf='isSelected && displayTemp; else elseBlock;')
+		ng-container(*ngTemplateOutlet='displayTemp; context: { selected: selected };')
+	ng-template(#elseBlock)
+		input(
+			ngcFormFieldInput,
+			readonly,
+			[style.color]='selected?.color',
+			[tabindex]='tabindex',
+			[ngModel]='displayValue',
+			[placeholder]='placeholder',
+			[disabled]='disabled',
+			[required]='required',
+			(keydown.enter)='$event?.stopPropagation(); dropdownMenuTrigger?.open();',
+			(blur)='!isDirty && formControl?.markAsUntouched()')
+	ng-container(*ngIf='formControl; else elseBlock2;')
+		input(
+			tabindex='-1',
+			style='display: none',
+			[formControl]='formControl',
+			[disableControl]='disableControl',
+			[ngModel]='ngModel')
+	ng-template(#elseBlock2)
+		input(
+			tabindex='-1',
+			style='display: none',
+			[disabled]='disabled',
+			[ngModel]='ngModel')
+	div(ngcFormFieldSuffix, *ngIf='selected?.suffixTemp')
+		ng-container(*ngTemplateOutlet='selected?.suffixTemp; context: { selected: selected };')
+	div(ngcFormFieldSuffix, *ngIf='!readonly')
+		ngc-icon(size='16px', [name]='isOpened ? "chevron-up" : "chevron-down"')
+	div(ngcFormFieldError, *ngIf='formFieldError')
+		ng-content(select='[ngcFormFieldError]')

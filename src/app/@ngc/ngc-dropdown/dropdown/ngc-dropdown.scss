@@ -1,0 +1,40 @@
+@import 'src/scss/partials/variable';
+
+.ngc-dropdown {
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+
+	.ngc-dropdown-controls {
+		display: flex;
+		align-items: center;
+
+		.ngc-dropdown-controls__search-box {
+			width: 100%;
+			min-width: 0;
+		}
+
+		.ngc-dropdown-controls__btn-toogle-all {
+			color: var(--primary-color, $color-primary);
+			font-weight: $font-weight-semibold;
+			white-space: nowrap;
+			margin-left: 15px;
+		}
+	}
+
+	[ngcFormFieldPrefix] {
+		&:not(:last-of-type) {
+			margin-right: 5px;
+		}
+	}
+
+	[ngcFormFieldSuffix] {
+		&:not(:first-of-type) {
+			margin-left: 5px;
+		}
+	}
+
+	[ngcFormFieldInput] {
+		cursor: pointer;
+	}
+}
