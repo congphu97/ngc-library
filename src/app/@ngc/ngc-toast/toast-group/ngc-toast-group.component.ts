@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import moment from 'moment-timezone';
 import _ from 'lodash';
-
-import { NgcIToastConfig } from '../toast/ngc-toast.service';
+import { NgcIToastConfig } from '../toast/ngc-toast.component';
 
 @Component({
   selector: 'ngc-toast-group',
