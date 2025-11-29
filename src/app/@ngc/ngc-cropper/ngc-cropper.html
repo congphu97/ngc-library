@@ -1,0 +1,49 @@
+<img id="cropper" />
+
+<div class="ngc-cropper__settings">
+  <button
+    ngcIconButton
+    icon="settings"
+    [ngcMenuTriggerFor]="viewModeMenu">
+  </button>
+</div>
+
+<ngc-menu #viewModeMenu>
+  <ngc-menu-content>
+    <ng-template ngcMenuContent>
+
+      <button
+        ngcMenuItem
+        [maxWidth]="'300px'"
+        [ngcTooltip]="ngcPrefix + '.MESSAGE.CROPPER_VIEW_MODE_1' | translate"
+        (click)="setViewMode(0)">
+        {{ ngcPrefix + '.LABEL.CROPPER_VIEW_MODE_1' | translate }}
+      </button>
+
+      <button
+        ngcMenuItem
+        [maxWidth]="'300px'"
+        [ngcTooltip]="ngcPrefix + '.MESSAGE.CROPPER_VIEW_MODE_2' | translate"
+        (click)="setViewMode(1)">
+        {{ ngcPrefix + '.LABEL.CROPPER_VIEW_MODE_2' | translate }}
+      </button>
+
+      <button
+        ngcMenuItem
+        [maxWidth]="'300px'"
+        [ngcTooltip]="ngcPrefix + '.MESSAGE.CROPPER_VIEW_MODE_3' | translate"
+        (click)="setViewMode(2)">
+        {{ ngcPrefix + '.LABEL.CROPPER_VIEW_MODE_3' | translate }}
+      </button>
+
+      <button
+        ngcMenuItem
+        [maxWidth]="'300px'"
+        [ngcTooltip]="ngcPrefix + '.MESSAGE.CROPPER_VIEW_MODE_4' | translate"
+        (click)="setViewMode(3)">
+        {{ ngcPrefix + '.LABEL.CROPPER_VIEW_MODE_4' | translate }}
+      </button>
+
+    </ng-template>
+  </ngc-menu-content>
+</ngc-menu>
