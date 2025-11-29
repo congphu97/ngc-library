@@ -1,9 +1,9 @@
 import { ChangeDetectorRef, Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
-import { NgcToastService, NgcToastType } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
+import { NgcToastService } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
 // import { untilCmpDestroyed } from 'angular-core';
 import { Socket } from 'ngx-socket-io';
 import { startWith } from 'rxjs/operators';
-import { forEach, indexOf } from 'lodash';
+import { forEach, indexOf, filter, search } from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { COLOR } from '@app/@resources';
@@ -11,6 +11,8 @@ import { NgcICalendarEvent } from '@app/@ngc/ngc-calendar';
 import { untilCmpDestroyed } from 'angular-core';
 import { NgcDialogService, NgcIDialogPagerType, NgcIDialogRef } from '@app/@ngc/ngc-dialog';
 import { MyDialogComponent } from './partial/my-dialog.component';
+import { Observable, Observer } from 'rxjs';
+import { NgcIToastType } from '@app/@ngc/ngc-toast/toast/ngc-toast.component';
 @Component({
 	selector: 'guideline',
 	templateUrl: './guideline.html',
@@ -27,7 +29,9 @@ export class GuidelineComponent implements OnInit {
 	public currentDateRange: Moment[] = [this.currentDate.clone(), this.currentDate.clone().add(3, 'd')];
 	public minDate: Moment = this.currentDate.clone().subtract(10, 'd');
 	public maxDate: Moment = this.currentDate.clone().add(10, 'd');
-
+	public suggestionFn: typeof this.suggestion = this.suggestion.bind( this );
+	public suggestionServerSideFn: typeof this.suggestionServerSide = this.suggestionServerSide.bind( this );
+	
 	exampleCode: string = `
 			@Component({
 			selector: 'app-example',
@@ -80,7 +84,7 @@ export class GuidelineComponent implements OnInit {
 	}
 
 
-	public openToast(type: NgcToastType) {
+	public openToast(type: NgcIToastType) {
 		this._ngcToastService.show('Toast title', 'Toast content', { type, position: 'top-right', duration: 5000 });
 	}
 
@@ -186,6 +190,113 @@ export class GuidelineComponent implements OnInit {
 		},
 	];
 
+	public positions: IObject[] = [
+		{
+			id			: 1,
+			order		: 1,
+			name		: 'CEO',
+			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers	: 1,
+			status		: 'Active',
+			email		: 'ceo@example.com',
+			website		: 'https://example.com',
+			done		: true,
+			money		: 100000,
+			assignees	: [ 1 ],
+			priorities	: [ 'Urgent' ],
+		},
+		{
+			id			: 2,
+			order		: 2,
+			name		: 'Vice President',
+			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers	: 1,
+			status		: 'Active',
+			email		: 'vice@example.com',
+			website		: 'https://example.com',
+			done		: true,
+			money		: 100000,
+			assignees	: [ 1 ],
+			priorities	: [ 'Urgent' ],
+		},
+		{
+			id			: 3,
+			order		: 3,
+			name		: 'Head of Department',
+			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers	: 5,
+			status		: 'Active',
+			email		: 'head@example.com',
+			website		: 'https://example.com',
+			done		: true,
+			money		: 100000,
+			assignees	: [ 1 ],
+			priorities	: [ 'Urgent' ],
+		},
+		{
+			id			: 4,
+			order		: 4,
+			name		: 'CFO',
+			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers	: 2,
+			status		: 'Active',
+			email		: 'cfo@example.com',
+			website		: 'https://example.com',
+			done		: true,
+			money		: 100000,
+			assignees	: [ 1 ],
+			priorities	: [ 'Urgent' ],
+		},
+		{
+			id			: 5,
+			order		: 5,
+			name		: 'CCO',
+			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers	: undefined,
+			status		: 'Active',
+			email		: 'cco@example.com',
+			website		: 'https://example.com',
+			done		: true,
+			money		: 100000,
+			assignees	: [ 1 ],
+			priorities	: [ 'Urgent' ],
+		},
+		{
+			id			: 6,
+			order		: 6,
+			name		: 'CMO',
+			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers	: undefined,
+			status		: 'Active',
+			email		: 'cmo@example.com',
+			website		: 'https://example.com',
+			done		: true,
+			money		: 100000,
+			assignees	: [ 1 ],
+			priorities	: [ 'Urgent' ],
+		},
+		{
+			id			: 7,
+			order		: 7,
+			name		: 'WFO',
+			description	: undefined,
+			kpi			: undefined,
+			noOfMembers	: undefined,
+			status		: undefined,
+			email		: undefined,
+			done		: false,
+			money		: undefined,
+			assignees	: undefined,
+			priorities	: undefined,
+		},
+	];
+
 	/**
 	 * @param {any} dialog
 	 * @return {void}
@@ -225,4 +336,45 @@ export class GuidelineComponent implements OnInit {
 			.subscribe((type: NgcIDialogPagerType) => console.log(`After dialog button ${type} clicked`));
 		/* eslint-enable */
 	}
+
+	/**
+	 * @param {string} searchStr
+	 * @return {IObject}
+	 */
+	public suggestion( searchStr: string ): IObject[] {
+		return filter( this.positions, ( position: IObject ) => {
+			return search( position.name, searchStr );
+		} );
+	}
+
+	/**
+	 * @param {string} searchStr
+	 * @return {Observable}
+	 */
+	public suggestionServerSide( searchStr: string ): Observable<IObject[]> {
+		return new Observable( ( observer: Observer<IObject[]> ) => {
+			observer.next(
+				filter( this.positions, ( position: IObject ) => {
+					return search( position.name, searchStr );
+				} )
+			);
+		} );
+	}
+
+	// /**
+	//  * @return {Observable}
+	//  */
+	// public mentionSource(): Observable<NgcIMention[]> | NgcIMention[] {
+	// 	return new Observable( ( observer: Observer<NgcIMention[]> ) => {
+	// 		const _mentionSource: NgcIMention[] = _.map( this.userMentions, ( user: IUser ) => ({
+	// 			id		: user.id,
+	// 			value	: user.name,
+	// 			link	: '',
+	// 			avatar	: user.avatar,
+	// 		}) );
+
+	// 		observer.next( _mentionSource );
+	// 		observer.complete();
+	// 	} );
+	// }
 }

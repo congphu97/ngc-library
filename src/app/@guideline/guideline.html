@@ -103,18 +103,113 @@
 </ng-template>
 <ng-template #compTemplate label="Avatar">
 	<div class="mb-15">Avatar</div>
-	<!-- <div class="layout-row layout-wrap layout-align-start-center">
-		<div class="mr-30">
-			<ngc-avatar [src]="'https://picsum.photos/200/300'" size="50px"></ngc-avatar>
+	<h3 class="mb-20">XLarge (72px)</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-avatar size="xlarge" label="AB"
+				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
 		</div>
-		<div class="mr-30">
-			<ngc-avatar [src]="'https://picsum.photos/200/300'" size="50px" shape="circle"></ngc-avatar>
+		<div class="mr-10">
+			<ngc-avatar size="xlarge" label="AB"
+				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
 		</div>
-		<div class="mr-30">
-			<ngc-avatar [src]="'https://picsum.photos/200/300'" size="50px" shape="rounded"></ngc-avatar>
+		<div class="mr-10">
+			<ngc-avatar size="xlarge" label="AB"
+				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
 		</div>
-	</div> -->
+		<div class="mr-10">
+			<ngc-avatar size="xlarge" label="AB"
+				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Large (56px)</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-avatar size="large" label="AB"
+				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="large" label="AB"
+				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="large" label="AB"
+				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="large" label="AB"
+				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Medium (40px)</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-avatar size="medium" label="AB"
+				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="medium" label="AB"
+				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="medium" label="AB"
+				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="medium" label="AB"
+				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Small (32px)</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-avatar size="small" label="AB"
+				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="small" label="AB"
+				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="small" label="AB"
+				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="small" label="AB"
+				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Custom Color &amp; Size</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10">
+			<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#ff0000' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#0000ff' }"></ngc-avatar>
+		</div>
+		<div class="mr-10">
+			<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#008000' }"></ngc-avatar>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Custom Avatar</h3>
+	<ngc-avatar size="medium">
+		<ngc-icon name="collection" color="white"></ngc-icon>
+	</ngc-avatar>
 </ng-template>
+
+<ng-template #compTemplate label="Avatar Picker">
+  <ngc-avatar-picker
+    class="w-500"
+    label="Avatar"
+    (picked)="console.log('Avatar Picked', $event)"
+  ></ngc-avatar-picker>
+</ng-template>
+
 <ng-template #compTemplate label="Badge">
 	<h3 class="mb-20">Default</h3>
 
@@ -498,10 +593,20 @@
 
 	<ng-template #dialog let-data="data">
 		<div class="p-30">{{ data?.content }}</div>
-	</ng-template>
+	</ng-template>toast
 
 </ng-template>
 <ng-template #compTemplate label="Dropdown"></ng-template>
+<ng-template #compTemplate label="Emoji Picker">
+	<h3 class="mb-20">Directive</h3>
+	<button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)">
+		Emoji Picker
+	</button>
+
+	<h3 class="mv-20">Component</h3>
+	<ngc-emoji-picker class="w-300" mode="inline"></ngc-emoji-picker>
+
+</ng-template>
 <ng-template #compTemplate label="Menu">
 	<h3 class="mb-20">Menu</h3>
 	<div class="layout-row layout-wrap layout-align-center-center" style="height: 800px;">
@@ -552,7 +657,25 @@
 	<ngc-divider vertical></ngc-divider>
 </ng-template>
 <ng-template #compTemplate label="Input">25</ng-template>
-<ng-template #compTemplate label="Label">27</ng-template>
+<ng-template #compTemplate label="Search Box ">
+	<h3 class="mb-20">Default</h3>
+	<ngc-search-box class="w-300" autoFocusOn displayNotFound #searchBox (searching)="console.log('Searching', $event)"
+		(cleared)="console.log('Cleared', $event)">
+	</ngc-search-box>
+	<div class="w-300">
+		<ng-container
+			*ngTemplateOutlet="searchBox?.notFoundTemplate; context: { emptyImage: 'assets/images/icons/video-empty.png' }">
+		</ng-container>
+	</div>
+	<h3 class="mv-20">Suggestion</h3>
+	<ngc-search-box class="w-300" [suggestion]="suggestionFn" (searching)="console.log('Searching', $event)"
+		(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
+	</ngc-search-box>
+	<h3 class="mv-20">Suggestion Server Side</h3>
+	<ngc-search-box class="w-300" [suggestion]="suggestionServerSideFn" (searching)="console.log('Searching', $event)"
+		(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
+	</ngc-search-box>
+</ng-template>
 <ng-template #compTemplate label="Loading">
 	<div class="mb-15">Loading</div>
 	<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>

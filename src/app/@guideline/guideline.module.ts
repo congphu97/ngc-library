@@ -38,6 +38,11 @@ import { NgcCarouselModule } from '@app/@ngc/ngc-carousel';
 import { NgcDrawerModule } from '@app/@ngc/ngc-drawer';
 import { NgcScrollBarModule } from '@app/@ngc/ngc-scroll-bar';
 import { NgcCollapseModule } from '@app/@ngc/ngc-collapse';
+import { NgcSearchBoxModule } from '@app/@ngc/ngc-search-box';
+import { NgcAvatarModule } from '@app/@ngc/ngc-avatar';
+import { NgcEmojiPickerModule } from '@app/@ngc/ngc-emoji-picker';
+import { NgcAvatarPickerModule } from '@app/@ngc/ngc-avatar-picker';
+
 // import { NgcSliderModule } from '@app/@ngc/ngc-slider';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
@@ -53,8 +58,8 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
     NgcCodeBlockModule, NgcPaginationModule, NgcTextareaModule, NgcSelectModule,
     NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
-    NgcCollapseModule,
-    NgcDrawerModule, NgcScrollBarModule,
+    NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
+    NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],
