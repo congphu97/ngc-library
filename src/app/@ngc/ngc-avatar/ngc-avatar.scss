@@ -1,6 +1,6 @@
 @import 'src/scss/partials/variable';
 
-.wgc-avatar {
+.ngc-avatar {
 	display: flex;
 	text-align: center;
 	align-items: center;
@@ -31,7 +31,7 @@
 		z-index: 0;
 	}
 
-	&.wgc-avatar--auto {
+	&.ngc-avatar--auto {
 		color: white;
 
 		&:before {
@@ -42,7 +42,7 @@
 		}
 	}
 
-	&.wgc-avatar-xlarge {
+	&.ngc-avatar-xlarge {
 		height: 72px;
 		min-height: 72px;
 		max-height: 72px;
@@ -52,7 +52,7 @@
 		font-size: 28px;
 	}
 
-	&.wgc-avatar-large {
+	&.ngc-avatar-large {
 		height: 56px;
 		min-height: 56px;
 		max-height: 56px;
@@ -62,7 +62,7 @@
 		font-size: 22.4px;
 	}
 
-	&.wgc-avatar-medium {
+	&.ngc-avatar-medium {
 		height: 40px;
 		min-height: 40px;
 		max-height: 40px;
@@ -72,7 +72,7 @@
 		font-size: 16px;
 	}
 
-	&.wgc-avatar-small {
+	&.ngc-avatar-small {
 		height: 32px;
 		min-height: 32px;
 		max-height: 32px;
@@ -82,12 +82,12 @@
 		font-size: 12.8px;
 	}
 
-	.wgc-avatar__label {
+	.ngc-avatar__label {
 		position: relative;
 		z-index: 1;
 	}
 
-	.wgc-avatar__image {
+	.ngc-avatar__image {
 		position: absolute;
 		top: .5px;
 		left: .5px;

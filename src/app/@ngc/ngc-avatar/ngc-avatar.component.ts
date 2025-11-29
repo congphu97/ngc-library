@@ -162,10 +162,10 @@ export class NgcAvatarComponent implements OnChanges, AfterViewInit {
 		this.scroll$ = merge(
 			this.scrolling$,
 			fromEvent( window, 'scroll' ),
-			fromEvent( this.menuComp?.scrollBar?.elementRef?.nativeElement, 'scroll' ),
-			fromEvent( this.tabGroupComp?.scrollBar?.elementRef?.nativeElement, 'scroll' ),
-			fromEvent( this.gridComp?.scrollBar?.elementRef?.nativeElement, 'scroll' ),
-			fromEvent( this.pageComp?.scrollBar?.elementRef?.nativeElement, 'scroll' )
+			// fromEvent( this.menuComp?.scrollBar?.elementRef?.nativeElement, 'scroll' ),
+			// fromEvent( this.tabGroupComp?.scrollBar?.elementRef?.nativeElement, 'scroll' ),
+			// fromEvent( this.gridComp?.scrollBar?.elementRef?.nativeElement, 'scroll' ),
+			// fromEvent( this.pageComp?.scrollBar?.elementRef?.nativeElement, 'scroll' )
 		);
 	}
 

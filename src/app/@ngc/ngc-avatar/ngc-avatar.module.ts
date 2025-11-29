@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 
 import { CoreModule } from '@core';
 
-// import { NgcEmojiPickerModule } from '../wgc-emoji-picker';
+import { NgcEmojiPickerModule } from '../ngc-emoji-picker';
 import { NgcAvatarComponent } from './ngc-avatar.component';
 
 @NgModule({
 	imports: [
 		CoreModule,
 
-		// NgcEmojiPickerModule,
+		NgcEmojiPickerModule,
 	],
 	exports		: [ NgcAvatarComponent ],
 	declarations: [ NgcAvatarComponent ],
