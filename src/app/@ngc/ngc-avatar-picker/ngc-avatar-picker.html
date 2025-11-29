@@ -1,0 +1,284 @@
+<label class="ngc-avatar-picker__label" ngcTruncate>
+  {{ label }}
+</label>
+
+<div class="ngc-avatar-picker__list">
+  <!-- Text Option -->
+  <div class="ngc-avatar-picker__list-item">
+    <div
+      class="ngc-avatar-picker__option"
+      [class.ngc-avatar-picker__option--active]="mode === 'text'"
+      (click)="mode = 'text'; pick()"
+    >
+      <ngc-icon
+        class="ngc-avatar-picker__option-icon"
+        size="20px"
+        name="typography"
+      ></ngc-icon>
+      <div class="ngc-avatar-picker__option-label">
+        {{ "NGC.LABEL.TEXT" | translate }}
+      </div>
+      <ngc-radio
+        class="ngc-avatar-picker__option-radio"
+        readonly
+        color="primary"
+        [checked]="mode === 'text'"
+      ></ngc-radio>
+    </div>
+  </div>
+
+  <!-- Photo Option -->
+  <div class="ngc-avatar-picker__list-item">
+    <div
+      class="ngc-avatar-picker__option"
+      [class.ngc-avatar-picker__option--active]="mode === 'photo'"
+      (click)="mode = 'photo'; pick()"
+    >
+      <ngc-icon
+        class="ngc-avatar-picker__option-icon"
+        size="20px"
+        name="image"
+      ></ngc-icon>
+      <div class="ngc-avatar-picker__option-label">
+        {{ "NGC.LABEL.PHOTO" | translate }}
+      </div>
+      <ngc-radio
+        class="ngc-avatar-picker__option-radio"
+        readonly
+        color="primary"
+        [checked]="mode === 'photo'"
+      ></ngc-radio>
+    </div>
+  </div>
+
+  <!-- Icon Option -->
+  <div class="ngc-avatar-picker__list-item">
+    <div
+      class="ngc-avatar-picker__option"
+      [class.ngc-avatar-picker__option--active]="mode === 'icon'"
+      (click)="mode = 'icon'; pick()"
+    >
+      <div class="ngc-avatar-picker__option-icon">
+        <ngc-emoji [emoji]="icon || defaultIcon"></ngc-emoji>
+      </div>
+      <div class="ngc-avatar-picker__option-label">
+        {{ "NGC.LABEL.ICON" | translate }}
+      </div>
+      <ngc-radio
+        class="ngc-avatar-picker__option-radio"
+        readonly
+        color="primary"
+        [checked]="mode === 'icon'"
+      ></ngc-radio>
+    </div>
+  </div>
+</div>
+
+<!-- Icon Picker -->
+<div class="ngc-avatar-picker__list">
+  <ng-container *ngIf="mode === 'icon'; else modeElseBlock">
+    <div class="ngc-avatar-picker__list-item ngc-avatar-picker__list-item--full">
+      <div class="ngc-avatar-picker__content ngc-avatar-picker__content--mode-icon">
+        <ngc-emoji-picker
+          mode="inline"
+          perLine="undefined"
+          (picked)="icon = $event?.unified; pick()"
+        ></ngc-emoji-picker>
+
+        <div class="ngc-avatar-picker__content--wrapper">
+          <div class="ngc-avatar-picker__avatar">
+            <ngc-avatar
+              size="xlarge"
+              [avatar]="{ icon: icon || defaultIcon, color: color, mode: 'icon' }"
+            ></ngc-avatar>
+          </div>
+
+          <div
+            class="ngc-avatar-picker__anchor"
+            ngcColorPicker
+            emptyMode="background"
+            [(pickedColor)]="color"
+            (picked)="pick()"
+          >
+            {{ "NGC.LABEL.EDIT_COLOR" | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Text / Photo -->
+  <ng-template #modeElseBlock>
+    <!-- Text Mode -->
+    <div
+      class="ngc-avatar-picker__list-item"
+      [class.ngc-avatar-picker__list-item--hidden]="mode !== 'text'"
+    >
+      <div class="ngc-avatar-picker__content ngc-avatar-picker__content--mode-text">
+        <div class="ngc-avatar-picker__content--wrapper">
+          <div class="ngc-avatar-picker__avatar">
+            <ngc-avatar
+              size="xlarge"
+              [label]="text || 'AB'"
+              [avatar]="{ mode: 'text', color: color }"
+            ></ngc-avatar>
+          </div>
+
+          <div
+            class="ngc-avatar-picker__anchor"
+            ngcColorPicker
+            emptyMode="background"
+            [(pickedColor)]="color"
+            (picked)="pick()"
+          >
+            {{ "NGC.LABEL.EDIT_COLOR" | translate }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Photo Mode -->
+    <div
+      class="ngc-avatar-picker__list-item"
+      [class.ngc-avatar-picker__list-item--hidden]="mode !== 'photo'"
+    >
+      <div class="ngc-avatar-picker__content ngc-avatar-picker__content--mode-photo">
+        <div class="ngc-avatar-picker__content--wrapper">
+          <ng-container *ngIf="photo; else photoUploadBlock">
+            <div class="ngc-avatar-picker__avatar">
+              <ngc-avatar
+                size="xlarge"
+                [avatar]="{ photo: croppedImage || photo, mode: 'photo' }"
+                [scrolling$]="scrolling$"
+              ></ngc-avatar>
+              <button
+                class="ngc-avatar-picker__btn-remove"
+                ngcIconButton
+                icon="trash"
+                [ngcTooltip]="'NGC.LABEL.REMOVE' | translate"
+                (click)="photo = null; pick()"
+              ></button>
+            </div>
+
+            <div>
+              <span class="ngc-avatar-picker__anchor" (click)="openDialog(photoDialog)">
+                {{ "NGC.LABEL.UPLOAD" | translate }}
+              </span>
+              &nbsp;{{ "NGC.LABEL.OTHER" | translate | lowercase }}
+            </div>
+          </ng-container>
+
+          <ng-template #photoUploadBlock>
+            <button
+              class="ngc-avatar-picker__avatar ngc-avatar-picker__avatar--empty"
+              ngcIconButton
+              size="72px"
+              iconSize="24px"
+              icon="cloud-upload"
+              (click)="openDialog(photoDialog)"
+            ></button>
+
+            <div class="ngc-avatar-picker__anchor" (click)="openDialog(photoDialog)">
+              {{ "NGC.LABEL.UPLOAD" | translate }}
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
+
+<!-- Photo Dialog -->
+<ng-template #photoDialog>
+  <div class="ngc-avatar-picker-dialog">
+    <div ngcDialogHeader>
+      <h1>{{ "NGC.LABEL.UPLOAD_YOUR_PHOTO" | translate }}</h1>
+      <button
+        ngcButton
+        icon="close"
+        [ngcTooltip]="'NGC.LABEL.CLOSE' | translate"
+        (click)="dialogRef?.close()"
+      ></button>
+    </div>
+
+    <div ngcDialogContent>
+      <ng-container *ngIf="isCropping; else cropElseBlock">
+        <ngc-cropper
+          circle
+          [image]="selectedFile"
+          [options]="{ aspectRatio: 1 / 1 }"
+          (init)="cropper = $event"
+          (cropped)="onCropped($event)"
+        ></ngc-cropper>
+      </ng-container>
+
+      <ng-template #cropElseBlock>
+        <input
+          #avatarPickerFileInput
+          type="file"
+          accept="image/*"
+          tabindex="-1"
+          style="display: none"
+          (change)="onFileSelected($any($event?.target)?.files[0]); avatarPickerFileInput.value = ''"
+        />
+
+        <ng-container *ngIf="croppedImage; else dragBlock">
+          <div class="ngc-avatar-picker__avatar">
+            <ngc-avatar
+              size="210px"
+              [avatar]="{ photo: croppedImage }"
+              [scrolling$]="scrolling$"
+            ></ngc-avatar>
+
+            <button
+              class="ngc-avatar-picker__btn-remove"
+              ngcIconButton
+              icon="trash"
+              size="24px"
+              [ngcTooltip]="'NGC.LABEL.REMOVE' | translate"
+              (click)="croppedImage = undefined"
+            ></button>
+          </div>
+
+          <div>
+            <span class="ngc-avatar-picker__anchor" (click)="avatarPickerFileInput?.click()">
+              {{ "NGC.LABEL.BROWSER" | translate }}
+            </span>
+            &nbsp;{{ "NGC.LABEL.OTHER" | translate | lowercase }}
+          </div>
+        </ng-container>
+
+        <ng-template #dragBlock>
+          <div
+            class="ngc-avatar-picker__drag-zone"
+            (dragover)="$event?.stopPropagation(); $event?.preventDefault()"
+            (drop)="$event?.preventDefault(); onFileSelected($event?.dataTransfer?.files[0])"
+          >
+            <div>{{ "NGC.LABEL.DRAG_IMAGE" | translate }}</div>
+            <div>{{ "NGC.LABEL.OR" | translate }}</div>
+            <div>
+              <span class="ngc-avatar-picker__anchor" (click)="avatarPickerFileInput?.click()">
+                {{ "NGC.LABEL.BROWSER" | translate }}
+              </span>
+              &nbsp;{{ "NGC.LABEL.OTHER" | translate | lowercase }}
+            </div>
+          </div>
+
+          <div>{{ "NGC.MESSAGE.SUPPORT_IMAGE" | translate }}</div>
+        </ng-template>
+      </ng-template>
+    </div>
+
+    <div ngcDialogFooter>
+      <button
+        class="ngc-avatar-picker__btn-update"
+        ngcButton
+        color="primary"
+        [disabled]="!isCropping && !croppedImage"
+        (click)="isCropping ? cropImage() : pickImage()"
+      >
+        {{ ("NGC.LABEL." + (isCropping ? "CROP" : "UPDATE")) | translate }}
+      </button>
+    </div>
+  </div>
+</ng-template>
