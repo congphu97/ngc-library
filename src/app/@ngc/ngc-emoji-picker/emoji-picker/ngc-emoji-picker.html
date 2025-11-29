@@ -1,0 +1,22 @@
+<div class="ngc-emoji-picker__header" *ngIf="mode !== 'inline'">
+  <div class="ngc-emoji-picker__header-title">
+    {{ 'WGC.PLACEHOLDER.PICK_EMOJI' | translate }}
+  </div>
+  <button
+    ngcBasicButton
+    icon="close"
+    [ngcTooltip]="'WGC.LABEL.CLOSE' | translate"
+    (click)="close()">
+  </button>
+</div>
+
+<form autocomplete="off">
+  <emoji-mart
+    class="ngc-emoji-picker__mart"
+    [perLine]="perLine"
+    [isNative]="true"
+    [darkMode]="false"
+    [showPreview]="false"
+    (emojiClick)="pick($event?.emoji)">
+  </emoji-mart>
+</form>
