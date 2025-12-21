@@ -1,0 +1,8 @@
+<div class="ngc-page__header" [class.ngc-page__header--has-divider]="pageHeader?.divider">
+	<ng-content select="[ngcPageHeader]"></ng-content>
+</div>
+
+<div class="ngc-page__content" ngcScrollBar detectScroll [suppressScrollX]="suppressScrollX"
+	[suppressScrollY]="suppressScrollY" [mode]="scrollBarMode" (scrolling)="isScrolling = $event?.scrollTop > 0">
+	<ng-content select="[ngcPageContent]"></ng-content>
+</div>
