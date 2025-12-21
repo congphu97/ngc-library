@@ -1,0 +1,156 @@
+<!-- SEARCH BOX -->
+<div class="ngc-member-common-controls">
+  <ngc-search-box
+    class="ngc-member-common-controls__search-box"
+    autoFocusOn
+    trim
+    [data]="data"
+    (filtered)="filteredData = $event">
+  </ngc-search-box>
+</div>
+
+<!-- NOT FOUND -->
+<ng-container *ngIf="!filteredData?.length">
+  <ng-container
+    *ngTemplateOutlet="
+      searchBox?.notFoundTemplate;
+      context: { name: ('NGC.LABEL.MEMBERS' | translate) }
+    ">
+  </ng-container>
+</ng-container>
+
+<!-- MEMBER LIST -->
+<ng-container *ngIf="filteredData?.length">
+
+  <!-- VIRTUAL SCROLL -->
+  <cdk-virtual-scroll-viewport
+    *ngIf="useVirtualScroll; else NormalScroll"
+    [itemSize]="itemSize"
+    [minBufferPx]="itemSize * 5"
+    [maxBufferPx]="itemSize * 10"
+    [style.height.px]="400">
+
+    <ng-container
+      *cdkVirtualFor="
+        let member of filteredData | orderBy:'+order';
+        trackBy: trackByFn
+      ">
+
+      <!-- MEMBER ITEM -->
+      <div class="ngc-member">
+
+        <!-- TOOLTIP -->
+        <ngc-tooltip
+          ngcTooltip
+          #profileTooltip
+          minWidth="80px"
+          maxWidth="160px"
+          [color]="'WHITE' | color"
+          class="ngc-member-tooltip">
+
+          <div class="ngc-member-tooltip__name">
+            <h4 ngcTruncate limitLine="1">
+              {{ member?.name | empty }}
+            </h4>
+
+            <ng-container [ngSwitch]="member?.status">
+              <ng-container *ngSwitchCase="MEMBER_STATUS?.ACTIVE">
+                <img class="ngc-member-common__user-status" width="20" height="20"
+                  [lazyLoad]="'assets/images/icons/status-active.png'">
+              </ng-container>
+              <ng-container *ngSwitchCase="MEMBER_STATUS?.PENDING">
+                <img class="ngc-member-common__user-status" width="20" height="20"
+                  [lazyLoad]="'assets/images/icons/status-pending.png'">
+              </ng-container>
+              <ng-container *ngSwitchCase="MEMBER_STATUS?.INACTIVE">
+                <img class="ngc-member-common__user-status" width="20" height="20"
+                  [lazyLoad]="'assets/images/icons/status-inactive.png'">
+              </ng-container>
+            </ng-container>
+          </div>
+
+          <div class="ngc-member-tooltip__status" [ngSwitch]="member?.status">
+            <ng-container *ngSwitchCase="MEMBER_STATUS?.ACTIVE">
+              {{ 'NGC.LABEL.ACTIVE' | translate }}
+            </ng-container>
+            <ng-container *ngSwitchCase="MEMBER_STATUS?.PENDING">
+              {{ 'NGC.LABEL.PENDING' | translate }}
+            </ng-container>
+            <ng-container *ngSwitchCase="MEMBER_STATUS?.INACTIVE">
+              {{ 'NGC.LABEL.INACTIVE' | translate }}
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              {{ 'NGC.LABEL.UNKNOWN' | translate }}
+            </ng-container>
+          </div>
+
+          <button
+            class="ngc-member-tooltip__btn-view-profile"
+            ngcButton
+            color="primary"
+            size="28px"
+            *ngIf="canViewProfile"
+            (click)="viewProfile(member)">
+            {{ 'NGC.LABEL.VIEW_PROFILE' | translate }}
+          </button>
+
+        </ngc-tooltip>
+
+        <!-- AVATAR -->
+        <ngc-avatar
+          class="ngc-member__avatar"
+          panelClass="ngc-member"
+          [class.ngc-member__avatar--scaleable]="hasViewProfile"
+          [scrolling$]="scrolling$"
+          [size]="size"
+          [ngcTooltip]="hasViewProfile ? profileTooltip : undefined"
+          [label]="member?.name"
+          [avatar]="member?.avatar">
+        </ngc-avatar>
+
+        <!-- NAME + STATUS -->
+        <ng-container *ngIf="!hasViewProfile || displayMemberName">
+          <ngc-truncate class="ngc-member__name" limitLine="1">
+            <span
+              [innerHtml]="member?.name | markText : searchBox?.searchQuery : true">
+            </span>
+          </ngc-truncate>
+
+          <ng-container *ngIf="!hasViewProfile">
+            <ng-container [ngSwitch]="member?.status">
+              <ng-container *ngSwitchCase="MEMBER_STATUS?.ACTIVE">
+                <img class="ngc-member-common__user-status" width="20" height="20"
+                  [lazyLoad]="'assets/images/icons/status-active.png'">
+              </ng-container>
+              <ng-container *ngSwitchCase="MEMBER_STATUS?.PENDING">
+                <img class="ngc-member-common__user-status" width="20" height="20"
+                  [lazyLoad]="'assets/images/icons/status-pending.png'">
+              </ng-container>
+              <ng-container *ngSwitchCase="MEMBER_STATUS?.INACTIVE">
+                <img class="ngc-member-common__user-status" width="20" height="20"
+                  [lazyLoad]="'assets/images/icons/status-inactive.png'">
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+      </div>
+      <!-- END MEMBER ITEM -->
+
+    </ng-container>
+  </cdk-virtual-scroll-viewport>
+
+  <!-- NORMAL SCROLL -->
+  <ng-template #NormalScroll>
+    <ngc-scroll-bar suppressScrollX>
+      <ng-container
+        *ngFor="
+          let member of filteredData | orderBy:'+order';
+          trackBy: trackByFn
+        ">
+        <!-- y chang MEMBER ITEM ở trên -->
+      </ng-container>
+    </ngc-scroll-bar>
+  </ng-template>
+
+</ng-container>

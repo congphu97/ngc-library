@@ -1,0 +1,42 @@
+@import 'src/scss/partials/variable';
+
+.ngc-member {
+	display: flex;
+	align-items: center;
+
+	.ngc-member-tooltip {
+		.ngc-member-tooltip__name {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			margin-bottom: 3px;
+		}
+
+		.ngc-member-tooltip__status {
+			color: $color-label;
+			font-size: 13px;
+			font-weight: 600;
+		}
+
+		.ngc-member-tooltip__btn-view-profile {
+			margin-top: 15px;
+		}
+	}
+
+	.ngc-member__avatar {
+		z-index: 1;
+		background-color: $color-white;
+		border-radius: 50%;
+		padding: 1px;
+
+		&.ngc-member__avatar--scaleable:hover {
+			z-index: 2;
+			transition: all 100ms ease-in-out;
+			transform: scale(1.4);
+		}
+	}
+
+	.ngc-member__name {
+		margin-left: 5px;
+	}
+}

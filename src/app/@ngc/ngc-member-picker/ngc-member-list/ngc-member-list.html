@@ -1,0 +1,153 @@
+<!-- MORE MENU -->
+<ngc-menu class="ngc-member-list ngc-member-list-menu" #moreMenu maxHeight="400px" [hasScrollBar]="false"
+	[width]="availableStatus?.length < 2 ? '290px' : '360px'" [title]="'NGC.PLACEHOLDER.SELECTED' | translate"
+	(opened)="onMoreMenuOpened()" (closed)="onMoreMenuClosed()">
+
+	<ngc-menu-content>
+		<ng-template ngcMenuContent>
+
+			<ngc-tab-group stretch stretchTab contentPaddingHorizontal="0" contentPaddingBottom="0"
+				[contentPaddingTop]="availableStatus?.length < 2 ? 0 : 10" [ngSwitch]="true" [hasScrollBar]="false"
+				[(selectedIndex)]="selectedIndex">
+
+				<!-- ================= ACTIVE ================= -->
+				<ng-container *ngSwitchCase="availableStatus | includes : MEMBER_STATUS?.ACTIVE">
+					<ngc-tab [label]="'NGC.LABEL.ACTIVE_COUNT' | translate : {
+              count: ((selectedMembersClone | filter : 'status' : MEMBER_STATUS?.ACTIVE)?.length | commas) || 0
+            }">
+
+						<ng-template ngcTabContent>
+
+							<!-- SEARCH + REMOVE ALL -->
+							<div class="ngc-member-common-controls">
+								<ngc-search-box class="ngc-member-common-controls__search-box" autoFocusOn
+									[data]="selectedMembersClone | filter : 'status' : MEMBER_STATUS?.ACTIVE"
+									(filtered)="filteredSelectedMembers = $event">
+								</ngc-search-box>
+
+								<button class="ngc-member-common-controls__btn-toogle-all" ngcBasicButton
+									*ngIf="!readonly && filteredSelectedMembers?.length" [disabled]="disabled"
+									(click)="removeAllMembers()">
+									{{ 'NGC.LABEL.REMOVE_ALL' | translate }}
+								</button>
+							</div>
+
+							<!-- NOT FOUND -->
+							<ng-container *ngTemplateOutlet="searchBox?.notFoundTemplate;
+                  context: { name: 'NGC.LABEL.MEMBERS' | translate }">
+							</ng-container>
+
+							<!-- LIST -->
+							<ng-container *ngIf="filteredSelectedMembers?.length">
+
+								<ng-container *ngIf="useVirtualScroll; else ActiveScroll">
+									<cdk-virtual-scroll-viewport [itemSize]="itemSize" [minBufferPx]="itemSize * 5"
+										[maxBufferPx]="itemSize * 10" [style.height.px]="400">
+
+										<ng-container
+											*cdkVirtualFor="let member of filteredSelectedMembers | orderBy:'+order'; trackBy: trackByFn">
+
+											<button ngcMenuItem [autoClose]="false">
+
+												<ngc-member [hasViewProfile]="false"
+													[scrolling$]="moreMenu?.scroller?.scrolling$" [member]="member"
+													[canViewProfile]="canViewProfile">
+												</ngc-member>
+
+												<button ngcBasicButton ngcMenuItemSuffix icon="external"
+													*ngIf="canViewProfile" [color]="'LABEL' | color"
+													[ngcTooltip]="'NGC.LABEL.VIEW_PROFILE' | translate"
+													(click)="$event.stopPropagation(); viewProfile(member)">
+												</button>
+
+												<button ngcMenuItemSuffix ngcBasicButton icon="trash" *ngIf="!readonly"
+													[disabled]="disabled" [color]="'DANGER' | color"
+													[ngcTooltip]="'NGC.LABEL.REMOVE' | translate"
+													(click)="removeMember(member)">
+												</button>
+
+											</button>
+
+										</ng-container>
+									</cdk-virtual-scroll-viewport>
+								</ng-container>
+
+								<ng-template #ActiveScroll>
+									<ngc-scroll-bar suppressScrollX>
+										<ng-container
+											*ngFor="let member of filteredSelectedMembers | orderBy:'+order'; trackBy: trackByFn">
+											<!-- same member block -->
+										</ng-container>
+									</ngc-scroll-bar>
+								</ng-template>
+
+							</ng-container>
+
+						</ng-template>
+					</ngc-tab>
+				</ng-container>
+
+				<!-- ================= INACTIVE ================= -->
+				<ng-container *ngSwitchCase="availableStatus | includes : MEMBER_STATUS?.INACTIVE">
+					<!-- Y CHANG ACTIVE – KHÁC STATUS -->
+				</ng-container>
+
+				<!-- ================= PENDING ================= -->
+				<ng-container *ngSwitchCase="availableStatus | includes : MEMBER_STATUS?.PENDING">
+					<!-- Y CHANG ACTIVE – KHÁC STATUS -->
+				</ng-container>
+
+			</ngc-tab-group>
+		</ng-template>
+	</ngc-menu-content>
+</ngc-menu>
+
+<!-- LABEL -->
+<label class="ngc-member-list__label" ngcTruncate [attr.required]="required || undefined">
+	{{ label }}
+</label>
+
+<!-- SELECTED MEMBERS -->
+<div class="ngc-member-list__content" ngcBlockTruncate #blockTruncate="ngcBlockTruncate" [limit]="limit"
+	[length]="selectedMembers?.length" [parent]="elementRef?.nativeElement?.parentElement">
+
+	<div class="ngc-member-list__content-item"
+		*ngFor="let member of selectedMembers | slice : 0 : blockTruncate?.maxDisplay; trackBy: trackByFn">
+
+		<ngc-member [member]="member" [canViewProfile]="canViewProfile"
+			[displayMemberName]="readonly && selectedMembers?.length === 1" (viewDetail)="viewProfile($event)">
+		</ngc-member>
+
+		<button class="ngc-member-list__content-item__btn-remove" ngcIconButton icon="close" iconSize="12px" size="16px"
+			*ngIf="!readonly && !disabled" [color]="'BLACK' | color" [ngcTooltip]="'NGC.LABEL.REMOVE' | translate"
+			(click)="$event.stopPropagation(); removeMember(member, true)">
+		</button>
+
+	</div>
+
+	<div class="ngc-member-list__content-item" *ngIf="blockTruncate?.isTruncated">
+		<button ngcBasicButton [ngcMenuTriggerFor]="moreMenu" (menuOpened)="cdRef?.detectChanges()">
+			<ngc-avatar [avatar]="{ color: 'BLACK' | color }" [label]="blockTruncate?.moreDisplay < 10
+          ? '+' + blockTruncate?.moreDisplay
+          : '9+'">
+			</ngc-avatar>
+		</button>
+	</div>
+
+</div>
+
+<!-- ADD BUTTON -->
+<button class="ngc-member-list__btn-add" ngcIconButton ngcMemberPicker icon="user-plus" *ngIf="!readonly"
+	[class.ngc-member-list__btn-add--focusing]="isOpened" [class.ngc-member-list__btn-add--required]="required"
+	[itemSize]="itemSize" [isAutoOpen]="isAutoOpen" [disabled]="disabled" [required]="required" [name]="name"
+	[label]="label" [scrolling$]="scrolling$" [context]="context" [canViewProfile]="canViewProfile" [members]="_members"
+	[includesStatus]="includesStatus" [(selectedMembers)]="selectedMembers" [(selected)]="selected"
+	(opened)="onPickerMenuOpened($event)" (closed)="onPickerMenuClosed($event)" (added)="added?.emit($event)"
+	(removed)="removed?.emit($event)" (viewDetail)="viewDetail?.emit($event)"
+	(selectedChange)="selectedChange?.emit($event)" (selectedMembersChange)="selectedMembersChange?.emit($event)">
+</button>
+
+<!-- EMPTY -->
+<div class="ngc-member-list__no-id" *ngIf="readonly && !selectedMembers?.length">
+	{{ undefined | empty }}
+</div>

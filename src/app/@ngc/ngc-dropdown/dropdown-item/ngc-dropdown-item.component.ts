@@ -7,7 +7,7 @@ import { DefaultValue, CoerceBoolean, CoerceNumber } from '@core';
 
 @Component({
 	selector		: 'ngc-dropdown-item',
-	templateUrl		: './ngc-dropdown-item.pug',
+	templateUrl		: './ngc-dropdown-item.html',
 	host			: { class: 'ngc-dropdown-item' },
 	changeDetection	: ChangeDetectionStrategy.OnPush,
 })

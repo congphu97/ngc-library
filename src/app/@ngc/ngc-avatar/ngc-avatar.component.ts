@@ -19,7 +19,7 @@ import {
 import { NgcPageComponent } from '../ngc-page';
 import { NgcMenuComponent } from '../ngc-menu';
 import { NgcGridComponent } from '../ngc-grid';
-import { NgcTabGroupComponent } from '../ngc-tab';
+import { NgcTabGroupComponent } from '../ngc-tabs';
 
 export type NgcIAvatarMode = 'auto' | 'text' | 'photo' | 'icon';
 export type NgcIAvatarSize = 'xlarge' | 'large' | 'medium' | 'small';

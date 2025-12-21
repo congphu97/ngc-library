@@ -48,7 +48,7 @@
 //   }
 // }
 
-import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
 import hljs from 'highlight.js/lib/core';
 
 // Import các language cần dùng, ví dụ typescript, css, html
@@ -66,6 +66,8 @@ hljs.registerLanguage('html', xml);
   styleUrls: ['./ngc-code-block.component.scss']
 })
 export class NgcCodeBlockComponent implements AfterViewInit, OnChanges {
+
+  @Input() codeTemplate?: TemplateRef<any>;
   @Input() code = '';
   @Input() language = 'typescript';
 

@@ -23,13 +23,14 @@ import { NgcMenuTriggerForDirective } from '../../ngc-menu';
 // import { NgcSearchBoxComponent } from '../../ngc-search-box';
 import { NgcDropdownGroupItemComponent } from '../dropdown-group-item/ngc-dropdown-group-item.component';
 import { NgcDropdownItemComponent } from '../dropdown-item/ngc-dropdown-item.component';
+import { NgcSearchBoxComponent } from '@app/@ngc/ngc-search-box';
 
 type NgcDropdownInternalItem = NgcDropdownGroupItemComponent | NgcDropdownItemComponent;
 
 @Unsubscriber()
 @Component({
 	selector		: 'ngc-dropdown',
-	templateUrl		: './ngc-dropdown.pug',
+	templateUrl		: './ngc-dropdown.html',
 	styleUrls		: [ './ngc-dropdown.scss' ],
 	host			: { class: 'ngc-dropdown' },
 	encapsulation	: ViewEncapsulation.None,
@@ -98,7 +99,7 @@ export class NgcDropdownComponent implements AfterContentInit, OnChanges {
 	get availableItems(): NgcDropdownItemComponent[] {
 		return !this.strictDisplay
 			? _.unionBy( this.items, this.selected ? [ this.selected ] : [], 'value' )
-			: this.items;
+			: this.items as any;
 	}
 
 	/**

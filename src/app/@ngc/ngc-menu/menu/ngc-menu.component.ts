@@ -27,7 +27,7 @@ export type NgcIMenuDirection = 'start' | 'end' | 'center';
 @Component({
 	selector		: 'ngc-menu',
 	templateUrl		: './ngc-menu.html',
-	styleUrls		: [ './ngc-menu.scss' ],
+	styleUrls		: [ './ngc-menu.scss' ], 
 	encapsulation	: ViewEncapsulation.None,
 	changeDetection	: ChangeDetectionStrategy.OnPush,
 })

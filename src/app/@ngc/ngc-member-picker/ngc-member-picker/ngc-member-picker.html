@@ -1,0 +1,221 @@
+<!-- ================= TEMPLATES ================= -->
+
+<ng-template #memberActions>
+  <ng-container
+    *ngVar="{
+      isSelectedAll:
+        filteredMembers?.length ===
+        (filteredMembers | filter:'id':selected)?.length
+    } as localVar">
+
+    <button
+      class="ngc-member-common-controls__btn-toogle-all"
+      ngcBasicButton
+      *ngIf="filteredMembers?.length"
+      (click)="localVar.isSelectedAll ? deselectAllMembers() : selectAllMembers()">
+      {{ 'NGC.LABEL.' + (localVar.isSelectedAll ? 'DESELECT_ALL' : 'SELECT_ALL') | translate }}
+    </button>
+
+  </ng-container>
+</ng-template>
+
+<ng-template #btnViewProfile let-member>
+  <button
+    ngcBasicButton
+    ngcMenuItemSuffix
+    icon="external"
+    *ngIf="canViewProfile"
+    [color]="'LABEL' | color"
+    [ngcTooltip]="'NGC.LABEL.VIEW_PROFILE' | translate"
+    (click)="$event.stopPropagation(); viewProfile(member)">
+  </button>
+</ng-template>
+
+<ng-template #memberItem let-member>
+  <button ngcMenuItem [autoClose]="false" (click)="toggleMember(member)">
+    <ngc-member
+      [hasViewProfile]="false"
+      [scrolling$]="scrolling$"
+      [member]="member"
+      [canViewProfile]="canViewProfile">
+    </ngc-member>
+
+    <ng-container
+      *ngTemplateOutlet="btnViewProfile; context:{ $implicit: member }">
+    </ng-container>
+
+    <ng-container
+      *ngVar="{ isSelected: selected | includes : member?.id } as localVar">
+
+      <button
+        ngcBasicButton
+        ngcMenuItemSuffix
+        [icon]="localVar.isSelected ? 'trash' : 'circle-plus'"
+        [color]="(localVar.isSelected ? 'DANGER' : 'LABEL') | color"
+        [ngcTooltip]="'NGC.LABEL.' + (localVar.isSelected ? 'REMOVE' : 'ADD') | translate">
+      </button>
+
+    </ng-container>
+
+  </button>
+</ng-template>
+
+<ng-template #notFoundMembers>
+  <ng-container
+    *ngTemplateOutlet="searchBox?.notFoundTemplate;
+      context:{ name: 'NGC.LABEL.MEMBERS' | translate }">
+  </ng-container>
+</ng-template>
+
+<ng-template #membersSearchBox let-data>
+  <div class="ngc-member-common-controls">
+
+    <ngc-search-box
+      class="ngc-member-common-controls__search-box"
+      autoFocusOn
+      [data]="data"
+      (filtered)="filteredMembers = $event">
+    </ngc-search-box>
+
+    <ng-container *ngTemplateOutlet="memberActions"></ng-container>
+
+  </div>
+</ng-template>
+
+<ng-template #memberLists let-data>
+  <ng-container *ngIf="data?.length">
+
+    <ng-container *ngIf="useVirtualScroll; else ScrollMembers">
+      <cdk-virtual-scroll-viewport
+        [itemSize]="itemSize"
+        [minBufferPx]="itemSize * 5"
+        [maxBufferPx]="itemSize * 10"
+        [style.height.px]="400">
+
+        <ng-container
+          *cdkVirtualFor="let member of data | orderBy:'+order'; trackBy: trackByFn">
+
+          <ng-container
+            *ngTemplateOutlet="memberItem; context:{ $implicit: member }">
+          </ng-container>
+
+        </ng-container>
+
+      </cdk-virtual-scroll-viewport>
+    </ng-container>
+
+    <ng-template #ScrollMembers>
+      <ngc-scroll-bar suppressScrollX>
+        <ng-container
+          *ngFor="let member of data | orderBy:'+order'; trackBy: trackByFn">
+
+          <ng-container
+            *ngTemplateOutlet="memberItem; context:{ $implicit: member }">
+          </ng-container>
+
+        </ng-container>
+      </ngc-scroll-bar>
+    </ng-template>
+
+  </ng-container>
+</ng-template>
+
+<!-- ================= MAIN ================= -->
+
+<div class="ngc-member-picker__header" *ngIf="mode !== 'inline'">
+  <div class="ngc-member-picker__header-title">
+    {{ 'NGC.PLACEHOLDER.SELECT' | translate }}
+  </div>
+
+  <button
+    ngcBasicButton
+    icon="close"
+    [ngcTooltip]="'NGC.LABEL.CLOSE' | translate"
+    (click)="close()">
+  </button>
+</div>
+
+<ngc-tab-group
+  class="ngc-member-picker__content"
+  stretch
+  stretchTab
+  contentPaddingHorizontal="0"
+  contentPaddingBottom="0"
+  [contentPaddingTop]="availableStatus?.length < 2 ? 0 : 10"
+  [ngSwitch]="true"
+  [hasScrollBar]="false"
+  [(selectedIndex)]="selectedIndex">
+
+  <!-- ACTIVE -->
+  <ngc-tab
+    *ngSwitchCase="availableStatus | includes : MEMBER_STATUS?.ACTIVE"
+    [label]="'NGC.LABEL.ACTIVE_COUNT' | translate : {
+      count: ((_members | filter:'status':MEMBER_STATUS?.ACTIVE)?.length | commas) || 0
+    }">
+
+    <ng-template ngcTabContent>
+
+      <ng-container
+        *ngTemplateOutlet="membersSearchBox;
+          context:{ $implicit: _members | filter:'status':MEMBER_STATUS?.ACTIVE }">
+      </ng-container>
+
+      <ng-container *ngTemplateOutlet="notFoundMembers"></ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="memberLists;
+          context:{ $implicit: filteredMembers }">
+      </ng-container>
+
+    </ng-template>
+  </ngc-tab>
+
+  <!-- INACTIVE -->
+  <ngc-tab
+    *ngSwitchCase="availableStatus | includes : MEMBER_STATUS?.INACTIVE"
+    [label]="'NGC.LABEL.INACTIVE_COUNT' | translate : {
+      count: ((_members | filter:'status':MEMBER_STATUS?.INACTIVE)?.length | commas) || 0
+    }">
+
+    <ng-template ngcTabContent>
+
+      <ng-container
+        *ngTemplateOutlet="membersSearchBox;
+          context:{ $implicit: _members | filter:'status':MEMBER_STATUS?.INACTIVE }">
+      </ng-container>
+
+      <ng-container *ngTemplateOutlet="notFoundMembers"></ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="memberLists;
+          context:{ $implicit: filteredMembers }">
+      </ng-container>
+
+    </ng-template>
+  </ngc-tab>
+
+  <!-- PENDING -->
+  <ngc-tab
+    *ngSwitchCase="availableStatus | includes : MEMBER_STATUS?.PENDING"
+    [label]="'NGC.LABEL.PENDING_COUNT' | translate : {
+      count: ((_members | filter:'status':MEMBER_STATUS?.PENDING)?.length | commas) || 0
+    }">
+
+    <ng-template ngcTabContent>
+
+      <ng-container
+        *ngTemplateOutlet="membersSearchBox;
+          context:{ $implicit: _members | filter:'status':MEMBER_STATUS?.PENDING }">
+      </ng-container>
+
+      <ng-container *ngTemplateOutlet="notFoundMembers"></ng-container>
+
+      <ng-container
+        *ngTemplateOutlet="memberLists;
+          context:{ $implicit: filteredMembers }">
+      </ng-container>
+
+    </ng-template>
+  </ngc-tab>
+
+</ngc-tab-group>
