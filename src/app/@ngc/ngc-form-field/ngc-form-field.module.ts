@@ -6,7 +6,6 @@ import { NgcButtonModule } from '../ngc-button';
 import { NgcIconModule } from '../ngc-icon';
 import { NgcColorPickerModule } from '../ngc-color-picker';
 import { NgcTooltipModule } from '../ngc-tooltip';
-import { NgcSliderModule } from '../ngc-slider';
 import { NgcTruncateModule } from '../ngc-truncate';
 
 import { NgcFormFieldComponent } from './form-field/ngc-form-field.component';
@@ -23,7 +22,7 @@ import { NgcFormFieldDescriptionDirective } from './form-field-description/ngc-f
 		FormModule, CoreModule,
 
 		NgcButtonModule, NgcIconModule, NgcColorPickerModule,
-		NgcTooltipModule, NgcSliderModule, NgcTruncateModule,
+		NgcTooltipModule, NgcTruncateModule,
 	],
 	exports: [
 		NgcFormFieldComponent, NgcFormFieldErrorDirective, NgcFormFieldInputDirective,

@@ -171,13 +171,13 @@
     </div>
   </div>
 
-  <ngc-slider
+  <ngc-range-input
     class="ngc-form-field__password-validation__slider"
     readonly
     tabindex="-1"
     [ngModel]="passwordRule?.percent"
     [color]="passwordHighlight[passwordRule?.percent]?.color">
-  </ngc-slider>
+  </ngc-range-input>
 
   <div class="ngc-form-field__password-validation__message">
     {{ passwordHighlight[passwordRule?.percent]?.message }}
