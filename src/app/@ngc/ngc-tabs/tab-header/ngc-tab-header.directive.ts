@@ -10,4 +10,3 @@ export class NgcTabHeaderDirective {
 	constructor( public templateRef: TemplateRef<any> ) {}
 
 }
-
