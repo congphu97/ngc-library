@@ -1,0 +1,122 @@
+<!-- Search Box Menu -->
+<ngc-menu #searchBoxMenu class="ngc-search-box" maxHeight="400px" [hasScrollBar]="!useVirtualScroll"
+	[width]="elementRef?.nativeElement?.offsetWidth | unit">
+	1
+	<ngc-menu-content>
+		<ng-template ngcMenuContent>
+			<ng-container *ngIf="suggestionData?.length; else elseBlock">
+				2
+				<ng-container *ngIf="useVirtualScroll; else elseBlock">
+					<cdk-virtual-scroll-viewport [itemSize]="itemSize" [minBufferPx]="itemSize * 5"
+						[maxBufferPx]="itemSize * 10" [style.height.px]="400">
+					
+						<ng-container
+							*cdkVirtualFor="let item of suggestionData; let index = index; trackBy: searchKey | trackByFn">
+							1
+							<button class="ngc-search-box-item" ngcMenuItem [focusing]="focusIndex === index"
+								(click)="chooseSuggestItem($event, index)">
+
+								<img *ngIf="item[fieldImage]" class="ngc-search-box__avatar"
+									[lazyLoad]="item[fieldImage]" />
+
+								<ngc-avatar *ngIf="item[fieldAvatar]" class="ngc-search-box__avatar" size="medium"
+									color="auto" [label]="item[fieldName]" [avatar]="item[fieldAvatar]">
+								</ngc-avatar>
+
+								<div class="ngc-search-box__content">
+									<ngc-truncate class="ngc-search-box__title">
+										{{ item[fieldName] | empty }}
+										1
+									</ngc-truncate>
+									<ngc-truncate class="ngc-search-box__description">
+										{{ item[fieldDescription] | empty }}
+										2
+									</ngc-truncate>
+								</div>
+							</button>
+						</ng-container>
+					</cdk-virtual-scroll-viewport>
+				</ng-container>
+			</ng-container>
+
+			<ng-template #elseBlock>
+				<ng-container *ngFor="let item of suggestionData; let index = index; trackBy: searchKey | trackByFn">
+					<button class="ngc-search-box-item" ngcMenuItem [focusing]="focusIndex === index"
+						(click)="chooseSuggestItem($event, index)">
+					2
+						<img *ngIf="item[fieldImage]" class="ngc-search-box__avatar" [lazyLoad]="item[fieldImage]" />
+
+						<ngc-avatar *ngIf="item[fieldAvatar]" class="ngc-search-box__avatar" size="medium" color="auto"
+							[label]="item[fieldName]" [avatar]="item[fieldAvatar]">
+						</ngc-avatar>
+
+						<div class="ngc-search-box__content">
+							<ngc-truncate class="ngc-search-box__title">
+								{{ item[fieldName] | empty }}
+							</ngc-truncate>
+							<ngc-truncate class="ngc-search-box__description">
+								{{ item[fieldDescription] | empty }}
+							</ngc-truncate>
+						</div>
+					</button>
+				</ng-container>
+
+				<ng-template #elseBlock>
+					<not-found [mode]="searchQuery ? 'search' : 'empty'"></not-found>
+				</ng-template>
+			</ng-template>
+		</ng-template>
+	</ngc-menu-content>
+</ngc-menu>
+
+<!-- Search Box Input Field -->
+<ngc-form-field class="ngc-search-box__form-field" programmatically originX="start" originY="bottom" overlayX="start"
+	overlayY="top" position="undefined" [offsetY]="formControl ? -20 : 0" [label]="label" [appearance]="appearance"
+	[errorDisplayMode]="errorDisplayMode" [ngcMenuTriggerFor]="searchBoxMenu">
+
+	<ng-container *ngIf="formControl; else elseBlock">
+		<input ngcFormFieldInput clearable [name]="name" [autoFocusOn]="autoFocusOn" [autoReset]="autoReset"
+			[trim]="trim" [placeholder]="placeholder || ('NGC.PLACEHOLDER.SEARCH' | translate)"
+			[formControl]="formControl" [disableControl]="disableControl" [readonly]="readonly" [required]="required"
+			[(ngModel)]="ngModel" (ngModelChange)="ngModelChange?.emit($event)"
+			(keydown.arrowup)="focusPreviousSuggestItem($event)" (keydown.arrowdown)="focusNextSuggestItem($event)"
+			(keydown.enter)="chooseSuggestItem($event, focusIndex)"
+			(input)="onInput($event); onSearch($any($event?.target)?.value)" (focus)="onFocus($event)"
+			(blur)="onBlur($event)" (cleared)="onClear($event)" />
+	</ng-container>
+
+	<ng-template #elseBlock>
+		<input ngcFormFieldInput clearable [name]="name" [autoFocusOn]="autoFocusOn" [autoReset]="autoReset"
+			[trim]="trim" [placeholder]="placeholder || ('NGC.PLACEHOLDER.SEARCH' | translate)" [disabled]="disabled"
+			[readonly]="readonly" [required]="required" [(ngModel)]="ngModel"
+			(ngModelChange)="ngModelChange?.emit($event)" (keydown.arrowup)="focusPreviousSuggestItem($event)"
+			(keydown.arrowdown)="focusNextSuggestItem($event)" (keydown.enter)="chooseSuggestItem($event, focusIndex)"
+			(input)="onInput($event); onSearch($any($event?.target)?.value)" (focus)="onFocus($event)"
+			(blur)="onBlur($event)" (cleared)="onClear($event)" />
+	</ng-template>
+
+	<div *ngIf="prefixIcon" ngcFormFieldPrefix>
+		<button ngcBasicButton tabindex="-1" [icon]="prefixIcon" (click)="prefixIconClicked?.emit()">
+		</button>
+	</div>
+
+	<div *ngIf="suffixIcon" ngcFormFieldSuffix>
+		<button ngcBasicButton tabindex="-1" [icon]="suffixIcon" (click)="suffixIconClicked?.emit()">
+		</button>
+	</div>
+</ngc-form-field>
+
+<!-- Not Found Template -->
+<ng-template #notFoundTemplate let-name="name" let-size="size" let-debounceTime="debounceTime"
+	let-emptyImage="emptyImage" let-emptyImageSize="emptyImageSize" let-emptyTitle="emptyTitle"
+	let-emptyDescription="emptyDescription" [ngIf]="displayNotFound">
+
+	<not-found *ngIf="!filteredData?.length" [mode]="searchQuery?.length ? 'search' : 'empty'"
+		[name]="name || notFoundData?.name" [size]="size || notFoundData?.size"
+		[debounceTime]="debounceTime || notFoundData?.debounceTime || undefined"
+		[emptyImage]="emptyImage || notFoundData?.emptyImage"
+		[emptyImageSize]="emptyImageSize || notFoundData?.emptyImageSize"
+		[emptyTitle]="emptyTitle || notFoundData?.emptyTitle"
+		[emptyDescription]="emptyDescription || notFoundData?.emptyDescription">
+	</not-found>
+</ng-template>
