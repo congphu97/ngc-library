@@ -1,2 +1,2 @@
-export * from './ngc-slider.component';
-export * from './ngc-slider.module';
+export * from './ngc-range-input.component';
+export * from './ngc-range-input.module';
