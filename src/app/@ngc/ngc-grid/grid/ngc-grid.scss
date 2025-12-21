@@ -1,0 +1,124 @@
+@import 'src/scss/partials/variable';
+@import 'src/scss/partials/mixin';
+
+@mixin grid-item {
+	background-color: $color-secondary;
+	padding: 15px;
+	border-radius: 6px;
+	position: relative;
+	border: 1px solid rgba($color-white, 0);
+	height: 100%;
+	min-height: 0;
+
+	&:not(.ngc-grid-item--disabled) {
+		&:focus-visible,
+		&:hover,
+		&.ngc-grid-item--active,
+		&.ngc-grid-item--focusing,
+		&.ngc-grid-item--hovering {
+			.ngc-grid-item__radio {
+				opacity: 1;
+			}
+		}
+
+		&:focus-visible,
+		&:hover,
+		&.ngc-grid-item--focusing,
+		&.ngc-grid-item--hovering,
+		&.ngc-grid-item--dragging {
+			.ngc-grid-item__drag-handle {
+				opacity: 1;
+			}
+		}
+
+		&:focus-visible,
+		&:hover,
+		&.ngc-grid-item--focusing,
+		&.ngc-grid-item--hovering {
+			background-color: $color-default;
+		}
+
+		&.ngc-grid-item--active,
+		&.ngc-grid-item--dragging {
+			background-color: var(--grid-item-active-color, $color-white);
+			border-color: $color-border;
+		}
+	}
+
+	&.ngc-grid-item--disabled {
+		@include cursor-not-allowed;
+		opacity: .4;
+	}
+
+	.ngc-grid-item__drag-handle,
+	.ngc-grid-item__radio {
+		position: absolute;
+		opacity: 0;
+	}
+
+	.ngc-grid-item__drag-handle {
+		color: $color-placeholder;
+		top: 5px;
+		left: -22px;
+	}
+
+	.ngc-grid-item__radio {
+		top: 10px;
+		right: 10px;
+	}
+}
+
+.ngc-grid {
+	display: flex;
+	flex-direction: column;
+
+	&.ngc-grid--stretch {
+		width: 100%;
+		min-width: 0;
+		max-width: 100vw;
+		height: 100%;
+		min-height: 0;
+		max-height: 100vh;
+	}
+
+	.ngc-grid-wrapper {
+		@include scroll(hidden);
+		display: flex;
+		width: 100%;
+		min-width: 0;
+		height: 100%;
+		min-height: 0;
+	}
+
+	.ngc-grid-list-item {
+		display: flex;
+		flex-direction: row;
+		margin-left: -15px;
+		margin-right: -15px;
+		flex-wrap: wrap;
+		align-content: flex-start;
+	}
+
+	.ngc-grid-item {
+		@include grid-item;
+
+		&-container {
+			display: flex;
+			flex-direction: column;
+			padding: 10px 15px;
+			width: var(--grid-item-width);
+		}
+	}
+}
+
+.cdk-drag-preview {
+	&.ngc-grid-item {
+		@include grid-item;
+		background-color: $color-white !important;
+		box-shadow: $box-shadow;
+
+		.ngc-grid-item__drag-handle {
+			opacity: 1;
+		}
+	}
+}
