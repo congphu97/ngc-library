@@ -1,0 +1,45 @@
+@import 'src/scss/partials/variable';
+
+.ngc-phone-field {
+	display: flex;
+	flex-direction: column;
+
+	&.ngc-phone-field--disabled {
+		.ngc-phone-field__country-picker {
+			// opacity: .4;
+		}
+	}
+
+	.ngc-phone-field-wrapper {
+		display: flex;
+	}
+
+	.ngc-phone-field__label {
+		margin-bottom: 5px;
+	}
+
+	.ngc-phone-field__country-picker {
+		display: flex;
+		align-items: center;
+
+		.ngc-phone-field__country-picker__preview-image {
+			margin-right: 5px;
+		}
+
+		.ngc-phone-field__country-picker__preview-text {
+			white-space: nowrap;
+			font-weight: $font-weight-semibold;
+		}
+
+		.ngc-phone-field__country-picker__divider {
+			margin-left: 10px;
+			margin-right: 10px;
+			height: 18px;
+		}
+	}
+
+	.ngc-phone-field__input {
+		width: 100%;
+		min-width: 0;
+	}
+}
