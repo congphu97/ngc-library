@@ -13,6 +13,7 @@ import { NgcDialogService, NgcIDialogPagerType, NgcIDialogRef } from '@app/@ngc/
 import { MyDialogComponent } from './partial/my-dialog.component';
 import { Observable, Observer } from 'rxjs';
 import { NgcIToastType } from '@app/@ngc/ngc-toast/toast/ngc-toast.component';
+import { NgcIMember } from '@app/@ngc/ngc-member-picker';
 @Component({
 	selector: 'guideline',
 	templateUrl: './guideline.html',
@@ -29,16 +30,16 @@ export class GuidelineComponent implements OnInit {
 	public currentDateRange: Moment[] = [this.currentDate.clone(), this.currentDate.clone().add(3, 'd')];
 	public minDate: Moment = this.currentDate.clone().subtract(10, 'd');
 	public maxDate: Moment = this.currentDate.clone().add(10, 'd');
-	public suggestionFn: typeof this.suggestion = this.suggestion.bind( this );
-	public suggestionServerSideFn: typeof this.suggestionServerSide = this.suggestionServerSide.bind( this );
-	
+	public suggestionFn: typeof this.suggestion = this.suggestion.bind(this);
+	public suggestionServerSideFn: typeof this.suggestionServerSide = this.suggestionServerSide.bind(this);
+
 	exampleCode: string = `
-			@Component({
+		@Component({
 			selector: 'app-example',
 			templateUrl: './example.component.html'
 			})
-			export class ExampleComponent {}
-		`;
+		export class ExampleComponent {}
+	`;
 
 	@ViewChildren('compTemplate', { read: TemplateRef }) public compTemplates: QueryList<TemplateRef<any>>;
 
@@ -67,6 +68,7 @@ export class GuidelineComponent implements OnInit {
 				untilCmpDestroyed(this) as any
 			)
 			.subscribe(() => {
+				console.log('Comp templates', this.compTemplatesArr);
 				forEach(this.compTemplatesArr, (item: TemplateRef<any>) => {
 					(item as IObject).label = (item as IObject)._declarationTContainer.attrs[1];
 				});
@@ -190,110 +192,123 @@ export class GuidelineComponent implements OnInit {
 		},
 	];
 
+	public members: NgcIMember[] = [
+		{ id: 1, name: 'Member 1', status: 1 },
+		{ id: 2, name: 'Member 2', status: 1 },
+		{ id: 3, name: 'Member 3', status: 2 },
+		{ id: 4, name: 'Member 4', status: 2 },
+		{ id: 5, name: 'Member 5', status: 3 },
+		{ id: 6, name: 'Member 6', status: 1 },
+		{ id: 7, name: 'Member 7', status: 1 },
+	];
+	public members$: Observable<NgcIMember[]> = new Observable((observer: Observer<NgcIMember[]>) => {
+		observer.next(this.members);
+	});
+
 	public positions: IObject[] = [
 		{
-			id			: 1,
-			order		: 1,
-			name		: 'CEO',
-			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			noOfMembers	: 1,
-			status		: 'Active',
-			email		: 'ceo@example.com',
-			website		: 'https://example.com',
-			done		: true,
-			money		: 100000,
-			assignees	: [ 1 ],
-			priorities	: [ 'Urgent' ],
+			id: 1,
+			order: 1,
+			name: 'CEO',
+			description: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers: 1,
+			status: 'Active',
+			email: 'ceo@example.com',
+			website: 'https://example.com',
+			done: true,
+			money: 100000,
+			assignees: [1],
+			priorities: ['Urgent'],
 		},
 		{
-			id			: 2,
-			order		: 2,
-			name		: 'Vice President',
-			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			noOfMembers	: 1,
-			status		: 'Active',
-			email		: 'vice@example.com',
-			website		: 'https://example.com',
-			done		: true,
-			money		: 100000,
-			assignees	: [ 1 ],
-			priorities	: [ 'Urgent' ],
+			id: 2,
+			order: 2,
+			name: 'Vice President',
+			description: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers: 1,
+			status: 'Active',
+			email: 'vice@example.com',
+			website: 'https://example.com',
+			done: true,
+			money: 100000,
+			assignees: [1],
+			priorities: ['Urgent'],
 		},
 		{
-			id			: 3,
-			order		: 3,
-			name		: 'Head of Department',
-			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			noOfMembers	: 5,
-			status		: 'Active',
-			email		: 'head@example.com',
-			website		: 'https://example.com',
-			done		: true,
-			money		: 100000,
-			assignees	: [ 1 ],
-			priorities	: [ 'Urgent' ],
+			id: 3,
+			order: 3,
+			name: 'Head of Department',
+			description: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers: 5,
+			status: 'Active',
+			email: 'head@example.com',
+			website: 'https://example.com',
+			done: true,
+			money: 100000,
+			assignees: [1],
+			priorities: ['Urgent'],
 		},
 		{
-			id			: 4,
-			order		: 4,
-			name		: 'CFO',
-			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			noOfMembers	: 2,
-			status		: 'Active',
-			email		: 'cfo@example.com',
-			website		: 'https://example.com',
-			done		: true,
-			money		: 100000,
-			assignees	: [ 1 ],
-			priorities	: [ 'Urgent' ],
+			id: 4,
+			order: 4,
+			name: 'CFO',
+			description: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers: 2,
+			status: 'Active',
+			email: 'cfo@example.com',
+			website: 'https://example.com',
+			done: true,
+			money: 100000,
+			assignees: [1],
+			priorities: ['Urgent'],
 		},
 		{
-			id			: 5,
-			order		: 5,
-			name		: 'CCO',
-			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			noOfMembers	: undefined,
-			status		: 'Active',
-			email		: 'cco@example.com',
-			website		: 'https://example.com',
-			done		: true,
-			money		: 100000,
-			assignees	: [ 1 ],
-			priorities	: [ 'Urgent' ],
+			id: 5,
+			order: 5,
+			name: 'CCO',
+			description: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers: undefined,
+			status: 'Active',
+			email: 'cco@example.com',
+			website: 'https://example.com',
+			done: true,
+			money: 100000,
+			assignees: [1],
+			priorities: ['Urgent'],
 		},
 		{
-			id			: 6,
-			order		: 6,
-			name		: 'CMO',
-			description	: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			kpi			: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
-			noOfMembers	: undefined,
-			status		: 'Active',
-			email		: 'cmo@example.com',
-			website		: 'https://example.com',
-			done		: true,
-			money		: 100000,
-			assignees	: [ 1 ],
-			priorities	: [ 'Urgent' ],
+			id: 6,
+			order: 6,
+			name: 'CMO',
+			description: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			kpi: 'Lorem Ipsum is simply dummy text of the printing and typesetting',
+			noOfMembers: undefined,
+			status: 'Active',
+			email: 'cmo@example.com',
+			website: 'https://example.com',
+			done: true,
+			money: 100000,
+			assignees: [1],
+			priorities: ['Urgent'],
 		},
 		{
-			id			: 7,
-			order		: 7,
-			name		: 'WFO',
-			description	: undefined,
-			kpi			: undefined,
-			noOfMembers	: undefined,
-			status		: undefined,
-			email		: undefined,
-			done		: false,
-			money		: undefined,
-			assignees	: undefined,
-			priorities	: undefined,
+			id: 7,
+			order: 7,
+			name: 'WFO',
+			description: undefined,
+			kpi: undefined,
+			noOfMembers: undefined,
+			status: undefined,
+			email: undefined,
+			done: false,
+			money: undefined,
+			assignees: undefined,
+			priorities: undefined,
 		},
 	];
 
@@ -341,24 +356,24 @@ export class GuidelineComponent implements OnInit {
 	 * @param {string} searchStr
 	 * @return {IObject}
 	 */
-	public suggestion( searchStr: string ): IObject[] {
-		return filter( this.positions, ( position: IObject ) => {
-			return search( position.name, searchStr );
-		} );
+	public suggestion(searchStr: string): IObject[] {
+		return filter(this.positions, (position: IObject) => {
+			return search(position.name, searchStr);
+		});
 	}
 
 	/**
 	 * @param {string} searchStr
 	 * @return {Observable}
 	 */
-	public suggestionServerSide( searchStr: string ): Observable<IObject[]> {
-		return new Observable( ( observer: Observer<IObject[]> ) => {
+	public suggestionServerSide(searchStr: string): Observable<IObject[]> {
+		return new Observable((observer: Observer<IObject[]>) => {
 			observer.next(
-				filter( this.positions, ( position: IObject ) => {
-					return search( position.name, searchStr );
-				} )
+				filter(this.positions, (position: IObject) => {
+					return search(position.name, searchStr);
+				})
 			);
-		} );
+		});
 	}
 
 	// /**

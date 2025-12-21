@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { routing } from './app-routing.module';
 import { GuidelineModule } from './@guideline/guideline.module';
 import { NgcModule } from './@ngc/ngc.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NgcModule } from './@ngc/ngc.module';
   imports: [
     BrowserModule, CoreModule, GuidelineModule,
     TranslateModule.forRoot(), I18nTranslateModule, NgcModule,
+    BrowserAnimationsModule,
 
     routing
   ],

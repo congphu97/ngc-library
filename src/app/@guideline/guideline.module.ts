@@ -12,7 +12,6 @@ import { NgcToastModule } from '@app/@ngc/ngc-toast/ngc-toast.module';
 import { GuidelineComponent } from './guideline.component';
 import { NgcIconModule } from '@app/@ngc/ngc-icon/ngc-icon.module';
 import { NgcTruncateModule } from '@app/@ngc/ngc-truncate/ngc-truncate.module';
-import { NgcTabModule } from '@app/@ngc/ngc-tab/ngc-tab.module';
 import { NgcBreadcrumbModule } from '@app/@ngc/ngc-breadcrumb/ngc-breadcrumb.module';
 import { NgcProgressBarModule } from '@app/@ngc/ngc-progress-bar/ngc-progress-bar.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
@@ -42,8 +41,13 @@ import { NgcSearchBoxModule } from '@app/@ngc/ngc-search-box';
 import { NgcAvatarModule } from '@app/@ngc/ngc-avatar';
 import { NgcEmojiPickerModule } from '@app/@ngc/ngc-emoji-picker';
 import { NgcAvatarPickerModule } from '@app/@ngc/ngc-avatar-picker';
+import { NgcDropdownModule } from '@app/@ngc/ngc-dropdown';
+import { NgcMemberPickerModule } from '@app/@ngc/ngc-member-picker';
+import { NgcTabsModule } from '@app/@ngc/ngc-tabs';
+import { NgcFormFieldModule } from '@app/@ngc/ngc-form-field';
+import { NgcPhoneFieldModule } from '@app/@ngc/ngc-phone-field';
 
-// import { NgcSliderModule } from '@app/@ngc/ngc-slider';
+// import { NgcSliderModule } from '@app/@ngc/ngc-range-input';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -54,12 +58,13 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     BrowserModule, CoreModule,
 
     NgcTooltipModule, NgcColorPickerModule, NgcSwitchModule, NgcCheckboxModule, NgcRadioModule, NgcClipboardCopyModule, NgcDividerModule,
-    NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabModule, NgcBreadcrumbModule, NgcProgressBarModule,
+    NgcLoadingModule, NgcToastModule, NgcIconModule, NgcTruncateModule, NgcTabsModule, NgcBreadcrumbModule, NgcProgressBarModule,
     NgcButtonModule, NgcRangeInputModule, NgcBadgeModule, NgcCalendarModule, NgcDatePickerModule, NgcButtonToggleModule,
     NgcCodeBlockModule, NgcPaginationModule, NgcTextareaModule, NgcSelectModule,
     NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
     NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
-    NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule,
+    NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule, NgcDropdownModule, NgcMemberPickerModule, NgcFormFieldModule,
+    NgcPhoneFieldModule, NgcRangeInputModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

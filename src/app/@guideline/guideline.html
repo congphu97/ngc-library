@@ -1,17 +1,12 @@
 <ngc-drawer-container stretch>
 	<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px" paddingLeft="20px"
 		[bgColor]="'WHITE' | color">
-
-		<!-- <ngc-search-box
-      [autoFocusOn]="autoFocusOn"
-      [displayNotFound]="displayNotFound"
-      #searchBox
-      searchKey="label"
-      [data]="compTemplatesArr">
-    </ngc-search-box> -->
+		<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox searchKey="label"
+			[data]="compTemplatesArr">
+		</ngc-search-box>
 
 		<ngc-list class="mt-5" stretch>
-			<ngc-list-item *ngFor="let component of compTemplatesArr">
+			<ngc-list-item *ngFor="let component of searchBox?.filteredData">
 				<button class="content-component" ngcButton
 					(click)="selectCompTemplate(component)">{{component?.label}}</button>
 			</ngc-list-item>
@@ -203,11 +198,7 @@
 </ng-template>
 
 <ng-template #compTemplate label="Avatar Picker">
-  <ngc-avatar-picker
-    class="w-500"
-    label="Avatar"
-    (picked)="console.log('Avatar Picked', $event)"
-  ></ngc-avatar-picker>
+	<ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"></ngc-avatar-picker>
 </ng-template>
 
 <ng-template #compTemplate label="Badge">
@@ -244,13 +235,13 @@
 		<ngc-breadcrumb-item>
 			Home
 		</ngc-breadcrumb-item>
-		<ngc-breadcrumb-item [commands]='[ "/" ]'>
+		<ngc-breadcrumb-item [commands]='[ "/breadcrumb1" ]'>
 			Breadcrumb 1
 		</ngc-breadcrumb-item>
-		<ngc-breadcrumb-item [commands]='[ "/" ]'>
+		<ngc-breadcrumb-item [commands]='[ "/breadcrumb2" ]'>
 			Breadcrumb 2
 		</ngc-breadcrumb-item>
-		<ngc-breadcrumb-item [commands]='[ "/" ]'>
+		<ngc-breadcrumb-item [commands]='[ "/breadcrumb3" ]'>
 			Breadcrumb 3
 		</ngc-breadcrumb-item>
 	</ngc-breadcrumb>
@@ -395,8 +386,8 @@
 			Button 3
 		</ngc-button-toggle-item>
 	</ngc-button-toggle>
-
 </ng-template>
+
 <ng-template #compTemplate label="Calendar">
 	<ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
 		(periodChange)="console.log('Period change', $event)"
@@ -471,11 +462,12 @@
 		</div>
 	</ngc-collapse>
 </ng-template>
+
 <ng-template #compTemplate label="Checkbox">
 	<h3 class="mb-20">Checkbox</h3>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
-			<div class="mb-10" g>
+			<div class="mb-10">
 				<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
 			</div>
 			<div class="mb-10">
@@ -489,10 +481,8 @@
 			<ngc-code-block>
 				<pre><code #codeContent><div>123123</div></code></pre>
 			</ngc-code-block>
-
 		</ngc-tab>
 	</ngc-tab-group>
-
 </ng-template>
 
 <ng-template #compTemplate label="List">
@@ -594,9 +584,23 @@
 	<ng-template #dialog let-data="data">
 		<div class="p-30">{{ data?.content }}</div>
 	</ng-template>toast
-
 </ng-template>
-<ng-template #compTemplate label="Dropdown"></ng-template>
+
+<ng-template #compTemplate label="Dropdown">
+	<div class="mr-10 mb-20">
+		<ngc-dropdown class="w-300" label="Default">
+			<ngc-dropdown-item *ngFor="let position of positions; let first = first" [label]="position?.name"
+				[value]="position?.id" [disabled]="first">
+			</ngc-dropdown-item>
+
+			<ngc-dropdown-group-item label="Group" title="Select Group Children">
+				<ngc-dropdown-item label="Group Item 1" [value]="100"></ngc-dropdown-item>
+				<ngc-dropdown-item label="Group Item 2" [value]="101"></ngc-dropdown-item>
+			</ngc-dropdown-group-item>
+		</ngc-dropdown>
+	</div>
+</ng-template>
+
 <ng-template #compTemplate label="Emoji Picker">
 	<h3 class="mb-20">Directive</h3>
 	<button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)">
@@ -676,6 +680,8 @@
 		(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
 	</ngc-search-box>
 </ng-template>
+
+
 <ng-template #compTemplate label="Loading">
 	<div class="mb-15">Loading</div>
 	<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
@@ -683,6 +689,201 @@
 	<ngc-loading class="mb-10" color='#primary'></ngc-loading>
 	<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
 </ng-template>
+
+<ng-template #compTemplate label="Form Field">
+	<h3 class="mb-20">Input</h3>
+	<div class="layout-row layout-align-start-center layout-wrap">
+
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300">
+				<div ngcFormFieldLabel>Input With Prefix</div>
+				<div ngcFormFieldPrefix>
+					<ngc-icon name="document" size="20px"></ngc-icon>
+				</div>
+				<input ngcFormFieldInput autoFocusOn placeholder="Placeholder" />
+			</ngc-form-field>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Input With Suffix">
+				<input ngcFormFieldInput placeholder="Placeholder" />
+				<div ngcFormFieldSuffix>
+					<ngc-icon name="document" size="20px"></ngc-icon>
+				</div>
+			</ngc-form-field>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Input Disabled">
+				<input ngcFormFieldInput disabled placeholder="Placeholder" />
+			</ngc-form-field>
+		</div>
+	</div>
+
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Range">
+				<input ngcFormFieldInput type="range" min="1" max="5" step="1" />
+			</ngc-form-field>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Select">
+				<select ngcFormFieldInput placeholder="Choose">
+					<option>Item 1</option>
+					<option>Item 2</option>
+					<option>Item 3</option>
+				</select>
+			</ngc-form-field>
+		</div>
+	</div>
+
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Input With Form Control">
+				<input ngcFormFieldInput required placeholder="Placeholder" [formControl]="requiredFormControl" />
+			</ngc-form-field>
+		</div>
+	</div>
+
+	<div class="layout-row layout-align-start-center layout-wrap">
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Input Appearance Standard" appearance="standard">
+				<div ngcFormFieldPrefix>$</div>
+				<input ngcFormFieldInput placeholder="Placeholder" />
+			</ngc-form-field>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-form-field class="w-300" label="Input Appearance Legacy" appearance="legacy">
+				<input ngcFormFieldInput placeholder="Placeholder" />
+			</ngc-form-field>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Dropdown</h3>
+	<div class="layout-row layout-wrap">
+		<div class="mr-10 mb-20">
+			<ngc-dropdown class="w-300" label="Default">
+				<ngc-dropdown-item *ngFor="let position of positions; let first = first" [label]="position?.name"
+					[value]="position?.id" [disabled]="first">
+				</ngc-dropdown-item>
+				<ngc-dropdown-group-item label="Group" title="Select Group Children">
+					<ngc-dropdown-item label="Group Item 1" [value]="100"></ngc-dropdown-item>
+					<ngc-dropdown-item label="Group Item 2" [value]="101"></ngc-dropdown-item>
+				</ngc-dropdown-group-item>
+			</ngc-dropdown>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-dropdown class="w-300" label="Dropdown With Icon">
+				<ngc-dropdown-item *ngFor="let position of positions" icon="document" [label]="position?.name"
+					[value]="position?.id">
+				</ngc-dropdown-item>
+			</ngc-dropdown>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-dropdown class="w-300" label="Dropdown With Dot Color">
+				<ngc-dropdown-item *ngFor="let position of positions" dotColor="#ff0000" [label]="position?.name"
+					[value]="position?.id">
+				</ngc-dropdown-item>
+			</ngc-dropdown>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-dropdown class="w-300" label="Dropdown Multiple Select" multiple>
+				<ngc-dropdown-item *ngFor="let position of positions" icon="document" [label]="position?.name"
+					[value]="position?.id">
+				</ngc-dropdown-item>
+			</ngc-dropdown>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-dropdown class="w-300" required ngDefaultControl label="Dropdown Required"
+				[formControl]="requiredFormControl">
+				<ngc-dropdown-item *ngFor="let position of positions" [label]="position?.name" [value]="position?.id">
+				</ngc-dropdown-item>
+			</ngc-dropdown>
+		</div>
+
+		<div class="mr-10 mb-20">
+			<ngc-dropdown class="w-300" disabled label="Dropdown Disabled">
+				<ngc-dropdown-item *ngFor="let position of positions" [label]="position?.name" [value]="position?.id">
+				</ngc-dropdown-item>
+			</ngc-dropdown>
+		</div>
+	</div>
+
+	<h3 class="mv-20">Textarea</h3>
+	<ngc-form-field label="Textarea">
+		<textarea ngcFormFieldInput placeholder="Placeholder"></textarea>
+	</ngc-form-field>
+
+	<h3 class="mv-20">Inline Input</h3>
+	<h4 class="stick" ngDefaultControl ngcInlineInput id="ngcInlineInput" label="Inline" placeholder="Placeholder"
+		[(ngModel)]="inline" (ngModelChange)="console.log($event)" (saved)="console.log('Saved', $event)"
+		(cancelled)="console.log('Cancelled', $event)">
+		{{ inline }}
+		<span class="stick-right">
+			<button ngcBasicButton (click)="ngcInlineInput?.edit()">
+				<ngc-icon name="edit" size="20px"></ngc-icon>
+			</button>
+		</span>
+	</h4>
+
+	<h3 class="mv-20">Range Input</h3>
+	<ngc-range-input class="w-300" required label="Range" [(ngModel)]="range" (ngModelChange)="console.log($event)">
+	</ngc-range-input>
+
+	<h3 class="mv-20">Phone Field</h3>
+	<ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone" (ngModelChange)="console.log($event)">
+	</ngc-phone-field>
+</ng-template>
+
+<ng-template #compTemplate label="Member Picker">
+	<ngc-member-picker class="mv-20" canViewProfile required label="Member Picker Directive" limit="3" mode="inline"
+		[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
+		(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
+		(selectedMembersChange)="console.log('Selected Members Change', $event)"
+		(viewDetail)="console.log('View detail', $event)">
+	</ngc-member-picker>
+
+	<button class="w-fit-content mv-20" ngcButton ngcMemberPicker canViewProfile required
+		label="Member Picker Directive" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"
+		(added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
+		(selectedChange)="console.log('Selected Change', $event)"
+		(selectedMembersChange)="console.log('Selected Members Change', $event)"
+		(viewDetail)="console.log('View detail', $event)">
+		Member Picker
+	</button>
+
+	<ngc-member-list class="mv-20" label="Member Picker" [members]="members" [(selected)]="selected"
+		(added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
+		(selectedChange)="console.log('Selected Change', $event)">
+	</ngc-member-list>
+
+	<ngc-member-list class="mv-20" label="Member Picker Lazy List" [strictDisplay]="false" [members]="members$"
+		[selectedMembers]="[
+      { id: 1, name: 'Member 1' },
+      { id: 2, name: 'Member 2' }
+    ]" [(selected)]="selected" (added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
+		(selectedChange)="console.log('Selected Change', $event)">
+	</ngc-member-list>
+	<ngc-member-list class="mv-20" canViewProfile required label="Member Picker Have Pending/Inactive Status" limit="3"
+		[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
+		(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
+		(selectedMembersChange)="console.log('Selected Members Change', $event)"
+		(viewDetail)="console.log('View detail', $event)">
+	</ngc-member-list>
+
+	<ngc-member-list class="mv-20" readonly label="Member picker readonly" [members]="members" [(selected)]="selected">
+	</ngc-member-list>
+
+	<ngc-member-list class="mv-20" disabled label="Member picker disabled" [members]="members" [(selected)]="selected">
+	</ngc-member-list>
+</ng-template>
+
 <ng-template #compTemplate label="Pagination">
 	<h3 class="mb-20">Pagination</h3>
 	<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
@@ -756,11 +957,6 @@
 <ng-template #compTemplate label="Sheet">38</ng-template>
 <ng-template #compTemplate label="Sidebar">39</ng-template>
 <ng-template #compTemplate label="Skeleton">40</ng-template>
-<ng-template #compTemplate label="Slider">
-	<div class="mb-15">Slider</div>
-	<ngc-slider></ngc-slider>
-
-</ng-template>
 <ng-template #compTemplate label="Sonner">42</ng-template>
 <ng-template #compTemplate label="Switch">
 	<div class="mb-15">Switch</div>

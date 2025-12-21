@@ -139,6 +139,7 @@
 	&.cdk-overlay-backdrop-showing {
 		visibility: visible;
 		opacity: 1;
+		background: #eee;
 	}
 
 	&.cdk-overlay-transparent-backdrop,
