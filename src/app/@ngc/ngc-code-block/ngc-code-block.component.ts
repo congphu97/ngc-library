@@ -48,7 +48,7 @@
 //   }
 // }
 
-import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, TemplateRef } from '@angular/core';
+import { Component, Input, AfterViewInit, ElementRef, ViewChild, OnChanges, SimpleChanges, TemplateRef, ContentChild, AfterContentInit, OnInit, ChangeDetectorRef } from '@angular/core';
 import hljs from 'highlight.js/lib/core';
 
 // Import các language cần dùng, ví dụ typescript, css, html
@@ -65,15 +65,31 @@ hljs.registerLanguage('html', xml);
   templateUrl: './ngc-code-block.component.html',
   styleUrls: ['./ngc-code-block.component.scss']
 })
-export class NgcCodeBlockComponent implements AfterViewInit, OnChanges {
+export class NgcCodeBlockComponent implements OnInit, AfterContentInit, AfterViewInit, OnChanges {
 
   @Input() codeTemplate?: TemplateRef<any>;
   @Input() code = '';
   @Input() language = 'typescript';
 
   @ViewChild('codeElem') codeElem!: ElementRef<HTMLElement>;
+  @ContentChild('codeContent', { read: ElementRef }) codeContent?: ElementRef<HTMLElement>;
+
+  projectedCode = '';
+  copied = false;
+
+  constructor(
+    private elementRef: ElementRef,
+    private cdr: ChangeDetectorRef
+  ) {}
+
+  ngOnInit() {}
+
+  ngAfterContentInit() {
+    this.detectAndHighlightProjectedCode();
+  }
 
   ngAfterViewInit() {
+    this.detectAndHighlightProjectedCode();
     this.highlight();
   }
 
@@ -83,10 +99,78 @@ export class NgcCodeBlockComponent implements AfterViewInit, OnChanges {
     }
   }
 
+  private detectAndHighlightProjectedCode() {
+    // If we have contentChild `#codeContent`
+    if (this.codeContent) {
+      this.projectedCode = this.codeContent.nativeElement.textContent || '';
+      hljs.highlightElement(this.codeContent.nativeElement);
+    } else {
+      // Find any <code> tag in projected content
+      const codeEl = this.elementRef.nativeElement.querySelector('.projected-content code');
+      if (codeEl) {
+        this.codeContent = new ElementRef(codeEl);
+        this.projectedCode = codeEl.textContent || '';
+        hljs.highlightElement(codeEl);
+      }
+    }
+    this.cdr.detectChanges();
+  }
+
   highlight() {
-    if (this.codeElem) {
+    if (this.code && this.codeElem) {
       hljs.highlightElement(this.codeElem.nativeElement);
     }
+  }
+
+  getLanguageLabel(): string {
+    const lang = this.language || 'code';
+    if (lang.toLowerCase() === 'typescript') return 'TypeScript';
+    if (lang.toLowerCase() === 'javascript') return 'JavaScript';
+    if (lang.toLowerCase() === 'html') return 'HTML';
+    if (lang.toLowerCase() === 'css') return 'CSS';
+    if (lang.toLowerCase() === 'scss') return 'SCSS';
+    if (lang.toLowerCase() === 'json') return 'JSON';
+    return lang;
+  }
+
+  getLanguageColor(): string {
+    const lang = (this.language || '').toLowerCase();
+    switch (lang) {
+      case 'typescript':
+      case 'ts':
+        return '#3178c6';
+      case 'javascript':
+      case 'js':
+        return '#f7df1e';
+      case 'html':
+      case 'xml':
+        return '#e34c26';
+      case 'css':
+        return '#563d7c';
+      case 'scss':
+      case 'sass':
+        return '#c6538c';
+      case 'json':
+        return '#29beb0';
+      default:
+        return '#8e8e93';
+    }
+  }
+
+  copyCode() {
+    const textToCopy = this.code || this.projectedCode;
+    if (!textToCopy) return;
+
+    navigator.clipboard.writeText(textToCopy).then(() => {
+      this.copied = true;
+      this.cdr.detectChanges();
+      setTimeout(() => {
+        this.copied = false;
+        this.cdr.detectChanges();
+      }, 2000);
+    }).catch(err => {
+      console.error('Failed to copy code: ', err);
+    });
   }
 }
 

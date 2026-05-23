@@ -1,0 +1,14 @@
+<div class="guideline-header-bar">
+	<div class="header-logo">
+		<span class="logo-symbol">//</span>
+		<span class="logo-title">Components</span>
+	</div>
+	<div class="header-menu">
+		<button ngcButton class="menu-btn" routerLink="/components" (click)="onComponentClick()">Component</button>
+		<button ngcButton class="menu-btn" routerLink="/contact">Contact</button>
+		<button ngcButton class="menu-btn dark-mode-btn" (click)="toggleDarkMode()">
+			<ngc-icon [name]="isDarkMode ? 'sunny' : 'moon'" size="16px"></ngc-icon>
+			<span class="ml-5">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>
+		</button>
+	</div>
+</div>

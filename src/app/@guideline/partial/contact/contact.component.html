@@ -1,0 +1,193 @@
+<div class="contact-page-layout">
+  <guideline-header [isDarkMode]="isDarkMode" (toggleTheme)="onThemeToggle($event)"></guideline-header>
+  <div class="profile-page-wrapper">
+  <div class="profile-container">
+    
+    <!-- LEFT COLUMN -->
+    <div class="profile-left">
+      <h1 class="profile-name">TRAN<br>CONG PHU</h1>
+      
+      <div class="profile-badges">
+        <span class="badge-pill active">SENIOR SOFTWARE ENGINEER</span>
+        <span class="badge-pill">FRONTEND ARCHITECT</span>
+      </div>
+      
+      <p class="profile-bio">
+        <strong>5+ years</strong> building <strong>scalable web platforms</strong>, <strong>modern UI/UX components</strong> and <strong>AI-driven</strong> frontend systems. Based in <strong>Ho Chi Minh City, Vietnam</strong> — working globally across enterprise SaaS, dashboard ecosystems and responsive layouts. Architect of interactive component libraries, design systems and real-time frontend interfaces trusted by startups and enterprises.
+      </p>
+      
+      <!-- Social Links Section -->
+      <div class="social-links-container">
+        <a href="mailto:congphu2210@gmail.com" class="social-link-item email" title="Email: congphu2210@gmail.com">
+          <ngc-icon name="mail-outline" size="20px"></ngc-icon>
+        </a>
+        <a href="https://github.com/congphu97" target="_blank" class="social-link-item github" title="GitHub: congphu97">
+          <ngc-icon name="logo-github" size="20px"></ngc-icon>
+        </a>
+        <a href="https://www.linkedin.com/in/phu-tran-20269416a" target="_blank" class="social-link-item linkedin" title="LinkedIn: Phu Tran">
+          <ngc-icon name="logo-linkedin" size="20px"></ngc-icon>
+        </a>
+        <a href="tel:0937800847" class="social-link-item phone" title="Phone: 0937800847">
+          <ngc-icon name="call-outline" size="20px"></ngc-icon>
+        </a>
+      </div>
+      
+      <!-- Metrics Section -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-icon">⚡</div>
+          <div class="metric-value">5+</div>
+          <div class="metric-label">YEARS BUILDING</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">🏢</div>
+          <div class="metric-value">4</div>
+          <div class="metric-label">COMPANIES</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">🔧</div>
+          <div class="metric-value">35+</div>
+          <div class="metric-label">TECHNOLOGIES</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">🌐</div>
+          <div class="metric-value">3</div>
+          <div class="metric-label">DOMAINS</div>
+        </div>
+      </div>
+      
+      <!-- Skills Section -->
+      <div class="skills-section">
+        <div class="skills-categories">
+          <span *ngFor="let cat of categories" 
+                class="category-tab" 
+                [class.active]="cat === activeCategory"
+                (click)="setActiveCategory(cat)">
+            {{ cat }}
+          </span>
+        </div>
+        <div class="skills-tags">
+          <span *ngFor="let skill of skillsData[activeCategory]" class="skill-tag">
+            {{ skill }}
+          </span>
+        </div>
+      </div>
+      
+      <!-- Company Summary Section (appears under tab area when clicked) -->
+      <div class="company-summary-container" *ngIf="selectedCompany && companySummaries[selectedCompany]">
+        <div class="summary-card">
+          <div class="summary-header">
+            <div class="summary-company-title">
+              <span class="company-glow-dot"></span>
+              <h4>{{ selectedCompany }}</h4>
+            </div>
+            <span class="summary-period">{{ companySummaries[selectedCompany].period }}</span>
+          </div>
+          <div class="summary-role">{{ companySummaries[selectedCompany].role }}</div>
+          <div class="summary-details">{{ companySummaries[selectedCompany].details }}</div>
+          <ul class="summary-highlights">
+            <li *ngFor="let highlight of companySummaries[selectedCompany].highlights">
+              {{ highlight }}
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Mascot & Chat Bubble -->
+      <div class="mascot-container">
+        <div class="chat-bubble">
+          <p>He builds component libraries with Angular, Sass and design tokens like LEGO blocks 🧩</p>
+          <div class="chat-bubble-arrow"></div>
+        </div>
+        <div class="mascot-cat">
+          🐱
+        </div>
+      </div>
+      
+      <!-- Also Into Section -->
+      <div class="also-into-section">
+        <span class="also-label">ALSO INTO</span>
+        <div class="also-icons">
+          <span class="also-icon" title="Motorbiking">🏍️</span>
+          <span class="also-icon" title="Coding">💻</span>
+          <span class="also-icon" title="Traveling">🧳</span>
+          <span class="also-icon" title="Reading">📚</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- RIGHT COLUMN -->
+    <div class="profile-right">
+      <!-- Glowing Avatar Profile -->
+      <div class="avatar-container">
+        <div class="avatar-ring"></div>
+        <div class="avatar-image-wrapper">
+          <img src="assets/images/programmer_avatar.png" alt="Nguyen Cong Phu" class="avatar-img">
+        </div>
+        <div class="availability-badge">
+          <span class="badge-dot"></span>
+          <span class="badge-text">Available for work</span>
+        </div>
+      </div>
+      
+      <!-- Experience Timeline -->
+      <div class="experience-section">
+        <h3 class="section-title">EXPERIENCE</h3>
+        <div class="timeline">
+          <div class="timeline-item clickable" (click)="selectCompany('Mercatus Technologies Inc.')" [class.selected]="selectedCompany === 'Mercatus Technologies Inc.'">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">Sep 2023 - Present</span>
+              <h4 class="timeline-role">Frontend Developer</h4>
+              <p class="timeline-details">Mercatus Technologies Inc. · Full-time (Canada)</p>
+            </div>
+          </div>
+          <div class="timeline-item clickable" (click)="selectCompany('Stor.ai, a Relationship Company')" [class.selected]="selectedCompany === 'Stor.ai, a Relationship Company'">
+            <div class="timeline-dot active"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">Mar 2023 - Present</span>
+              <h4 class="timeline-role">Frontend Developer</h4>
+              <p class="timeline-details">Stor.ai, a Relationship Company · Full-time (United States)</p>
+            </div>
+          </div>
+          <div class="timeline-item clickable" (click)="selectCompany('Cubable')" [class.selected]="selectedCompany === 'Cubable'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">Apr 2021 - Mar 2023</span>
+              <h4 class="timeline-role">Frontend Developer</h4>
+              <p class="timeline-details">Cubable · Full-time (Vietnam)</p>
+            </div>
+          </div>
+          <div class="timeline-item clickable" (click)="selectCompany('FPT Information System')" [class.selected]="selectedCompany === 'FPT Information System'">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <span class="timeline-date">Jan 2020 - Apr 2021</span>
+              <h4 class="timeline-role">Full Stack Developer</h4>
+              <p class="timeline-details">FPT Information System · Full-time (Vietnam)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Education Block -->
+      <div class="education-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-info">
+          <h4 class="edu-degree">Information Technology</h4>
+          <p class="edu-university">Industrial University of Ho Chi Minh City (IUH)</p>
+          <span class="edu-date">2016 - 2020</span>
+        </div>
+      </div>
+      
+      <!-- Additional tags -->
+      <div class="additional-tags">
+        <span class="tag-pill">🔒 Cyber Security</span>
+        <span class="tag-pill">💻 IEEE Member</span>
+        <span class="tag-pill">⚙️ Agile / Scrum</span>
+        <span class="tag-pill">🐧 Linux Admin</span>
+      </div>
+    </div>
+    
+  </div>
+</div>
+</div>

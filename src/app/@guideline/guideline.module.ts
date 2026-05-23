@@ -10,6 +10,9 @@ import { NgcSwitchModule } from '@app/@ngc/ngc-switch/ngc-switch.module';
 import { NgcTooltipModule } from '@app/@ngc/ngc-tooltip';
 import { NgcToastModule } from '@app/@ngc/ngc-toast/ngc-toast.module';
 import { GuidelineComponent } from './guideline.component';
+import { ContactComponent } from './partial/contact/contact.component';
+import { GuidelineHeaderComponent } from './partial/header/header.component';
+import { RouterModule } from '@angular/router';
 import { NgcIconModule } from '@app/@ngc/ngc-icon/ngc-icon.module';
 import { NgcTruncateModule } from '@app/@ngc/ngc-truncate/ngc-truncate.module';
 import { NgcBreadcrumbModule } from '@app/@ngc/ngc-breadcrumb/ngc-breadcrumb.module';
@@ -32,7 +35,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CoreModule } from '@app/@core';
 import { NgcListModule } from '@app/@ngc/ngc-list';
 import { NgcDialogModule } from '@app/@ngc/ngc-dialog';
-import { MyDialogComponent } from './partial/my-dialog.component';
+import { MyDialogComponent } from './partial/dialog/my-dialog.component';
 import { NgcCarouselModule } from '@app/@ngc/ngc-carousel';
 import { NgcDrawerModule } from '@app/@ngc/ngc-drawer';
 import { NgcScrollBarModule } from '@app/@ngc/ngc-scroll-bar';
@@ -46,14 +49,16 @@ import { NgcMemberPickerModule } from '@app/@ngc/ngc-member-picker';
 import { NgcTabsModule } from '@app/@ngc/ngc-tabs';
 import { NgcFormFieldModule } from '@app/@ngc/ngc-form-field';
 import { NgcPhoneFieldModule } from '@app/@ngc/ngc-phone-field';
+import { NgcSkeletonModule } from '@app/@ngc/ngc-skeleton/ngc-skeleton.module';
 
 // import { NgcSliderModule } from '@app/@ngc/ngc-range-input';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
-  declarations: [ GuidelineComponent, MyDialogComponent ],
+  declarations: [ GuidelineComponent, MyDialogComponent, ContactComponent, GuidelineHeaderComponent ],
   imports: [
+		RouterModule,
 		DragDropModule,
     BrowserModule, CoreModule,
 
@@ -64,7 +69,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
     NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
     NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule, NgcDropdownModule, NgcMemberPickerModule, NgcFormFieldModule,
-    NgcPhoneFieldModule, NgcRangeInputModule,
+    NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

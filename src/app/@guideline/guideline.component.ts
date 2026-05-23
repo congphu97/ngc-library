@@ -10,7 +10,7 @@ import { COLOR } from '@app/@resources';
 import { NgcICalendarEvent } from '@app/@ngc/ngc-calendar';
 import { untilCmpDestroyed } from 'angular-core';
 import { NgcDialogService, NgcIDialogPagerType, NgcIDialogRef } from '@app/@ngc/ngc-dialog';
-import { MyDialogComponent } from './partial/my-dialog.component';
+import { MyDialogComponent } from './partial/dialog/my-dialog.component';
 import { Observable, Observer } from 'rxjs';
 import { NgcIToastType } from '@app/@ngc/ngc-toast/toast/ngc-toast.component';
 import { NgcIMember } from '@app/@ngc/ngc-member-picker';
@@ -22,6 +22,30 @@ import { NgcIMember } from '@app/@ngc/ngc-member-picker';
 export class GuidelineComponent implements OnInit {
 
 	public title = 'Components';
+	public opened = true;
+	public isDarkMode = false;
+
+	public toggleDrawer() {
+		this.opened = !this.opened;
+		this._cdr.detectChanges();
+	}
+
+	public onThemeToggle(isDark: boolean) {
+		this.isDarkMode = isDark;
+		this._cdr.detectChanges();
+	}
+
+	public scrollToContact() {
+		this.opened = true;
+		this._cdr.detectChanges();
+		setTimeout(() => {
+			const el = document.getElementById('guideline-contact-header');
+			if (el) {
+				el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+			}
+		}, 100);
+	}
+
 	public currentCompTemplate: TemplateRef<any>;
 	public selectedCompIndex: number = 0;
 	public console = console;
@@ -54,6 +78,7 @@ export class GuidelineComponent implements OnInit {
 	) { };
 
 	ngOnInit() {
+		this.isDarkMode = document.body.classList.contains('dark-theme');
 		this.connectionSocket();
 		this.selectedCompIndex = +this._route.snapshot.fragment || 0;
 	};

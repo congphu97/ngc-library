@@ -4,3 +4,237 @@
   width: 100%;
   text-align: left;
 }
+
+.guideline-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: $font-family-body;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.guideline-main-content {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+  background-color: #fafafa;
+  transition: background-color 0.3s ease;
+
+  ::ng-deep {
+    .ngc-drawer-container--stretch {
+      height: 100% !important;
+      max-height: 100% !important;
+    }
+  }
+}
+
+@keyframes logoPulse {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+/* ==========================================
+   DARK THEME STYLES
+   ========================================== */
+.guideline-layout.dark-theme {
+  background-color: #0d1117;
+  color: #c9d1d9;
+
+  .guideline-main-content {
+    background-color: #0d1117;
+  }
+
+  ::ng-deep {
+    // Drawer sidebar dark theme
+    .ngc-drawer {
+      border-right: 1px solid #21262d !important;
+      
+      h3 {
+        color: #8b949e;
+      }
+      
+      div {
+        color: #c9d1d9;
+      }
+
+      // Search box overrides
+      .ngc-search-box {
+        background-color: #161b22 !important;
+        border: 1px solid #30363d !important;
+        
+        input {
+          color: #c9d1d9 !important;
+          background: transparent !important;
+          
+          &::placeholder {
+            color: #484f58 !important;
+          }
+        }
+        
+        ngc-icon {
+          --icon-color: #8b949e !important;
+        }
+      }
+      
+      // List items inside drawer
+      .ngc-list-item {
+        background: transparent !important;
+        
+        .content-component {
+          --button-color: transparent !important;
+          --button-text-color: #8b949e !important;
+          
+          &:hover {
+            --button-text-color: #58a6ff !important;
+            background-color: #161b22 !important;
+          }
+        }
+      }
+    }
+
+    // Scrollbar overrides
+    ::-webkit-scrollbar {
+      background-color: #161b22;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #30363d;
+      border-radius: 4px;
+      
+      &:hover {
+        background-color: #484f58;
+      }
+    }
+
+    // Dynamic templates titles
+    h1, h2, h3, h4, h5, h6 {
+      color: #f0f6fc;
+    }
+    
+    // Tab Group Dark Mode
+    .ngc-tab-group {
+      .ngc-tab-group__header {
+        border-bottom-color: #21262d;
+        
+        .ngc-tab-header-item {
+          color: #8b949e;
+          
+          &.ngc-tab-header-item--active {
+            color: #58a6ff;
+            border-bottom-color: #58a6ff;
+          }
+        }
+      }
+    }
+
+    // Accordion / Expansion panel Dark Mode
+    .ngc-expansion-panel {
+      background-color: #161b22 !important;
+      border: 1px solid #30363d !important;
+      color: #c9d1d9 !important;
+      
+      .ngc-expansion-panel__header {
+        background-color: #161b22 !important;
+        color: #f0f6fc !important;
+        border-bottom: 1px solid #30363d !important;
+        
+        button {
+          --button-text-color: #8b949e !important;
+          
+          &:hover {
+            --button-text-color: #ffffff !important;
+          }
+        }
+      }
+
+      .ngc-expansion-panel__body {
+        color: #c9d1d9 !important;
+        background-color: #0d1117 !important;
+      }
+    }
+    
+    // Card component Dark Mode
+    .ngc-card {
+      background-color: #161b22 !important;
+      border: 1px solid #30363d !important;
+      color: #c9d1d9 !important;
+      
+      .ngc-card__header {
+        border-bottom: 1px solid #30363d !important;
+        color: #f0f6fc !important;
+      }
+      
+      .ngc-card__footer {
+        border-top: 1px solid #30363d !important;
+        color: #8b949e !important;
+      }
+    }
+
+    // Code Block component inside Dark Mode
+    .ngc-code-block-container {
+      border-color: #30363d !important;
+      background-color: #0d1117 !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+
+      .ngc-code-block-header {
+        background-color: #161b22 !important;
+        border-bottom-color: #30363d !important;
+
+        .lang-text {
+          color: #8b949e !important;
+        }
+
+        .ngc-code-block-copy-btn {
+          color: #c9d1d9 !important;
+
+          &:hover {
+            background-color: #21262d !important;
+            color: #ffffff !important;
+          }
+
+          &.copied {
+            color: #58a6ff !important;
+            border-color: rgba(88, 166, 255, 0.2) !important;
+            background-color: rgba(88, 166, 255, 0.05) !important;
+            
+            ngc-icon {
+              --icon-color: #58a6ff !important;
+            }
+          }
+        }
+      }
+
+      .ngc-code-block-body {
+        background-color: #0d1117 !important;
+        
+        pre, pre code {
+          color: #c9d1d9 !important;
+          background-color: transparent !important;
+        }
+      }
+    }
+    
+    // Clipboard copy button Dark Mode helper
+    .ngc-button {
+      &.ngc-white {
+        background-color: #21262d !important;
+        border-color: #30363d !important;
+        color: #c9d1d9 !important;
+        
+        &:hover {
+          background-color: #30363d !important;
+          border-color: #8b949e !important;
+          color: #ffffff !important;
+        }
+      }
+    }
+  }
+}

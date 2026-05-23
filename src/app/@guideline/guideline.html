@@ -1,25 +1,33 @@
-<ngc-drawer-container stretch>
-	<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px" paddingLeft="20px"
-		[bgColor]="'WHITE' | color">
-		<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox searchKey="label"
-			[data]="compTemplatesArr">
-		</ngc-search-box>
+<div class="guideline-layout" [class.dark-theme]="isDarkMode">
+	<guideline-header [isDarkMode]="isDarkMode" (toggleTheme)="onThemeToggle($event)" (componentClick)="opened = true"></guideline-header>
+	<div class="guideline-main-content">
+		<ngc-drawer-container stretch>
+			<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px" paddingLeft="20px"
+				[bgColor]="(isDarkMode ? 'darkGray.700' : 'WHITE') | color">
+				<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox searchKey="label"
+					[data]="compTemplatesArr">
+				</ngc-search-box>
+				<h3 class="mv-20">Components</h3>
+				<ngc-list class="mt-5" stretch>
+					<ngc-list-item *ngFor="let component of searchBox?.filteredData">
+						<button class="content-component" ngcButton
+							(click)="selectCompTemplate(component)">{{component?.label}}</button>
+					</ngc-list-item>
+				</ngc-list>
+				<div>
+					Version: 1.0.0
+				</div>
 
-		<ngc-list class="mt-5" stretch>
-			<ngc-list-item *ngFor="let component of searchBox?.filteredData">
-				<button class="content-component" ngcButton
-					(click)="selectCompTemplate(component)">{{component?.label}}</button>
-			</ngc-list-item>
-		</ngc-list>
+			</ngc-drawer>
 
-	</ngc-drawer>
-
-	<ngc-drawer-content paddingVertical="20px" paddingHorizontal="20px">
-		<ngc-scroll-bar>
-			<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
-		</ngc-scroll-bar>
-	</ngc-drawer-content>
-</ngc-drawer-container>
+			<ngc-drawer-content paddingVertical="20px" paddingHorizontal="20px">
+				<ngc-scroll-bar>
+					<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
+				</ngc-scroll-bar>
+			</ngc-drawer-content>
+		</ngc-drawer-container>
+	</div>
+</div>
 
 <ng-template #compTemplate label="Accordion">
 	<h3 class="mb-20">Default</h3>
@@ -434,6 +442,7 @@
 	</ngc-card>
 </ng-template>
 <ng-template #compTemplate label="Carousel">
+	<h3 class="mv-20">Carousel</h3>
 	<ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'"
 		[photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)">
 	</ngc-carousel>
@@ -683,7 +692,7 @@
 
 
 <ng-template #compTemplate label="Loading">
-	<div class="mb-15">Loading</div>
+	<h3 class="mb-20">Loading</h3>
 	<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
 	<ngc-loading class="mb-10" color='#0000ff'></ngc-loading>
 	<ngc-loading class="mb-10" color='#primary'></ngc-loading>
@@ -842,6 +851,7 @@
 </ng-template>
 
 <ng-template #compTemplate label="Member Picker">
+	<h3 class="mv-20">Member Picker</h3>
 	<ngc-member-picker class="mv-20" canViewProfile required label="Member Picker Directive" limit="3" mode="inline"
 		[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
 		(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
@@ -890,14 +900,11 @@
 </ng-template>
 <ng-template #compTemplate label="Popover">31</ng-template>
 <ng-template #compTemplate label="Progress">
-	<div class="mb-15">Progress</div>
-	<div class="mb-10">
-		<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
-	</div>
-	<div class="mb-10">
-		<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
-			[statusText]="'Uploading .... '"></ngc-progress-bar>
-	</div>
+	<h3 class="mv-20">Progress</h3>
+	<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
+	<h3 class="mv-20">Progress with Text</h3>
+	<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
+		[statusText]="'Uploading .... '"></ngc-progress-bar>
 </ng-template>
 <ng-template #compTemplate label="Radio Group">
 	<h3 class="mb-20">Radio Group</h3>
@@ -956,7 +963,20 @@
 </ng-template>
 <ng-template #compTemplate label="Sheet">38</ng-template>
 <ng-template #compTemplate label="Sidebar">39</ng-template>
-<ng-template #compTemplate label="Skeleton">40</ng-template>
+<ng-template #compTemplate label="Skeleton">
+	<!-- Skeleton cho text -->
+	<h3 class="mv-20">Skeleton Text</h3>
+	<ngc-skeleton width="200px" height="20px"></ngc-skeleton>
+
+	<!-- Skeleton hình tròn -->
+	<h3 class="mv-20">Skeleton Circle</h3>
+	<ngc-skeleton width="50px" height="50px" [circle]="true"></ngc-skeleton>
+
+	<!-- Skeleton full width -->
+	<h3 class="mv-20">Skeleton Full Width</h3>
+	<ngc-skeleton height="40px"></ngc-skeleton>
+
+</ng-template>
 <ng-template #compTemplate label="Sonner">42</ng-template>
 <ng-template #compTemplate label="Switch">
 	<div class="mb-15">Switch</div>
@@ -1096,4 +1116,174 @@
 	</div>
 
 </ng-template>
-<ng-template #compTemplate label="Typography">51</ng-template>
+<ng-template #compTemplate label="Color & Typography">
+
+	<!-- System Color -->
+	<h3 class="mb-20">System Color</h3>
+	<div class="layout-row layout-align-start-center layout-wrap flex-noshrink">
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'WHITE' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>White<br>{{ 'WHITE' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'BLACK' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Black<br>{{ 'BLACK' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'PRIMARY' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Primary<br>{{ 'PRIMARY' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'SECONDARY' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Secondary<br>{{ 'SECONDARY' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'DEFAULT' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Default<br>{{ 'DEFAULT' | color }}</h6>
+		</div>
+
+	</div>
+
+	<!-- Main Color -->
+	<h3 class="mv-20">Main Color</h3>
+	<div class="layout-row layout-align-start-center layout-wrap flex-noshrink">
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'INFO' | color" [style.outlineColor]="'BORDER' | color"
+				style="outline: 1px solid;"></div>
+			<h6>Info<br>{{ 'INFO' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'SUCCESS' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Success<br>{{ 'SUCCESS' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'WARNING' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Warning<br>{{ 'WARNING' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'DANGER' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Danger<br>{{ 'DANGER' | color }}</h6>
+		</div>
+
+	</div>
+
+	<!-- Text Color -->
+	<h3 class="mv-20">Text Color</h3>
+	<div class="layout-row layout-align-start-center layout-wrap flex-noshrink">
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'TEXT' | color" [style.outlineColor]="'BORDER' | color"
+				style="outline: 1px solid;"></div>
+			<h6>Text<br>{{ 'TEXT' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'LABEL' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Label<br>{{ 'LABEL' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'PLACEHOLDER' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Placeholder<br>{{ 'PLACEHOLDER' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'DISABLED' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Disabled<br>{{ 'DISABLED' | color }}</h6>
+		</div>
+
+	</div>
+
+	<!-- Border Color -->
+	<h3 class="mv-20">Border Color</h3>
+	<div class="layout-row layout-align-start-center layout-wrap flex-noshrink">
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'BORDER' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Border<br>{{ 'BORDER' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'BORDER_THICK' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Thick<br>{{ 'BORDER_THICK' | color }}</h6>
+		</div>
+
+		<div class="mr-10">
+			<div class="w-50 h-50 mb-5" [style.backgroundColor]="'BORDER_SUPER_THICK' | color"
+				[style.outlineColor]="'BORDER' | color" style="outline: 1px solid;"></div>
+			<h6>Super Thick<br>{{ 'BORDER_SUPER_THICK' | color }}</h6>
+		</div>
+
+	</div>
+
+	<!-- Color Palette -->
+	<h3 class="mv-20">Color Palette</h3>
+	<div class="layout-row layout-align-start-center layout-wrap flex-noshrink">
+
+		<!-- Example for Blue -->
+		<div class="mb-10 mr-10 layout-column">
+			<div class="w-170 h-25 p-5" [style.backgroundColor]="'BLUE' | color:700">
+				<h6 class="text-center" [style.color]="'BLUE' | color:700 | contrast">
+					color(blue, 700) | {{ 'BLUE' | color:700 }}
+				</h6>
+			</div>
+			<div class="w-170 h-25 p-5" [style.backgroundColor]="'BLUE' | color:500">
+				<h6 class="text-center" [style.color]="'BLUE' | color:500 | contrast">
+					color(blue, 500) | {{ 'BLUE' | color:500 }}
+				</h6>
+			</div>
+			<div class="w-170 h-25 p-5" [style.backgroundColor]="'BLUE' | color:400">
+				<h6 class="text-center" [style.color]="'BLUE' | color:400 | contrast">
+					color(blue, 400) | {{ 'BLUE' | color:400 }}
+				</h6>
+			</div>
+		</div>
+
+		<!-- Các màu khác tương tự: GREEN, YELLOW, RED, ORANGE, PURPLE, PINK, INDIGO, TEAL, MINT, DARK_GRAY, LIGHT_GRAY -->
+		<!-- Có thể tạo loop để render ngắn gọn hơn -->
+
+	</div>
+
+	<!-- Typography -->
+	<h3 class="mv-20">Typography</h3>
+	<div>
+		<div>Body 14px</div>
+		<a class="mt-20">Anchor 14px</a>
+		<label class="mt-20">Label 13px</label>
+		<h1 class="mt-20">h1 24px <span class="h1">&nbsp;24px</span></h1>
+		<h2 class="mt-20">h2 20px <span class="h2">&nbsp;20px</span></h2>
+		<h3 class="mt-20">h3 18px <span class="h3">&nbsp;18px</span></h3>
+		<h4 class="mt-20">h4 16px <span class="h4">&nbsp;16px</span></h4>
+		<h5 class="mt-20">h5 13px <span class="h5">&nbsp;13px</span></h5>
+		<h6 class="mt-20">h6 12px <span class="h6">&nbsp;12px</span></h6>
+		<wgc-code-block class="mt-20">Code</wgc-code-block>
+	</div>
+
+	<!-- Font Family -->
+	<h3 class="mv-20">Font Family</h3>
+	<div>Default: AvertaStdCY, Helvetica, sans-serif</div>
+	<div>Code: SourceCodePro, Helvetica, sans-serif</div>
+
+</ng-template>
