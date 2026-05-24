@@ -1,51 +1,73 @@
 @import 'src/scss/partials/variable';
 
 .ngc-toast {
-	$self: &;
-	width: 300px;
-	overflow: hidden;
-	border-radius: 8px;
-	border: 1px solid $color-border;
-	display: flex;
-	padding: 15px 20px;
-	margin: 30px;
-	background-color: var(--toast-color, color(darkGray, 700));
-	color: var(--toast-text-color, $color-white);
+	display: block;
+	width: 500px;
+	max-width: 100%;
+	margin: 12px 24px;
 	animation: $popup-animation;
+	box-sizing: border-box;
 
-	&#{ $self }-info {
-		background-color: $color-info;
-	}
+	.ngc-alert {
+		margin-bottom: 0;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+		border-radius: 8px;
+		width: 100%;
+		align-items: flex-start;
 
-	&#{ $self }-success {
-		background-color: $color-success;
-	}
+		.ngc-alert-icon {
+			margin-top: -1px;
+		}
 
-	&#{ $self }-warning {
-		background-color: $color-warning;
-	}
-
-	&#{ $self }-danger {
-		background-color: $color-danger;
+		.ngc-alert-close-btn {
+			margin-top: -6px;
+		}
 	}
 
 	.ngc-toast-container {
-		align-items: center;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
 		width: 100%;
 		min-width: 0;
 		cursor: pointer;
 
-
 		.ngc-toast-header {
-			display: flex;
-			justify-content: space-between;
-			font-size: $font-size-large;
+			font-size: $font-size-base;
 			font-weight: $font-weight-bold;
+			line-height: 1.4;
 		}
 
 		.ngc-toast-description {
-			font-size: $font-size-base;
+			font-size: $font-size-small;
 			font-weight: $font-weight-normal;
+			line-height: 1.4;
+			opacity: 0.9;
+		}
+
+		.ngc-toast-button {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-top: 8px;
+
+			button {
+				background: transparent;
+				border: 1px solid currentColor;
+				color: inherit;
+				font-size: $font-size-small;
+				font-weight: $font-weight-semibold;
+				padding: 4px 12px;
+				border-radius: 4px;
+				cursor: pointer;
+				opacity: 0.85;
+				transition: all 0.2s ease;
+
+				&:hover {
+					opacity: 1;
+					background: rgba(0, 0, 0, 0.05);
+				}
+			}
 		}
 	}
 }

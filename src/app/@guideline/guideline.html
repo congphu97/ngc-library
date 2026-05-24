@@ -1,11 +1,12 @@
 <div class="guideline-layout" [class.dark-theme]="isDarkMode">
-	<guideline-header [isDarkMode]="isDarkMode" (toggleTheme)="onThemeToggle($event)" (componentClick)="opened = true"></guideline-header>
+	<guideline-header [isDarkMode]="isDarkMode" (toggleTheme)="onThemeToggle($event)"
+		(componentClick)="opened = true"></guideline-header>
 	<div class="guideline-main-content">
 		<ngc-drawer-container stretch>
-			<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px" paddingLeft="20px"
-				[bgColor]="(isDarkMode ? 'darkGray.700' : 'WHITE') | color">
-				<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox searchKey="label"
-					[data]="compTemplatesArr">
+			<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px"
+				paddingLeft="20px" [bgColor]="(isDarkMode ? 'darkGray.700' : 'WHITE') | color">
+				<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox
+					searchKey="label" [data]="compTemplatesArr">
 				</ngc-search-box>
 				<h3 class="mv-20">Components</h3>
 				<ngc-list class="mt-5" stretch>
@@ -30,450 +31,848 @@
 </div>
 
 <ng-template #compTemplate label="Accordion">
+	<p class="component-description">
+		<strong>Accordion</strong> organizes content into collapsible panels. Users can toggle the visibility of individual sections, which is ideal for presenting FAQs, settings sections, or grouping detailed information without cluttering the screen.
+	</p>
 	<h3 class="mb-20">Default</h3>
-	<ngc-accordion>
-		<ngc-expansion-panel theme="background" expanded>
-			<ngc-expansion-panel-header>
-				<ngc-truncate limitLine="1">Header</ngc-truncate>
-				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-accordion>
+				<ngc-expansion-panel theme="background" expanded>
+					<ngc-expansion-panel-header>
+						<ngc-truncate limitLine="1">Header</ngc-truncate>
+						<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+							<ngc-icon name="edit" size="20px"></ngc-icon>
+						</button>
+					</ngc-expansion-panel-header>
+					Body
+				</ngc-expansion-panel>
 
-		<ngc-expansion-panel>
-			<ngc-expansion-panel-header>
-				<ngc-truncate limitLine="1">Header</ngc-truncate>
-				<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="circle-plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
-	</ngc-accordion>
+				<ngc-expansion-panel>
+					<ngc-expansion-panel-header>
+						<ngc-truncate limitLine="1">Header</ngc-truncate>
+						<button class="ml-5" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+							<ngc-icon name="circle-plus" size="20px"></ngc-icon>
+						</button>
+					</ngc-expansion-panel-header>
+					Body
+				</ngc-expansion-panel>
+			</ngc-accordion>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-accordion&gt;
+	&lt;ngc-expansion-panel theme="background" expanded&gt;
+		&lt;ngc-expansion-panel-header&gt;
+			&lt;ngc-truncate limitLine="1"&gt;Header&lt;/ngc-truncate&gt;
+			&lt;button class="ml-5" ngcBasicButton&gt;
+				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+		&lt;/ngc-expansion-panel-header&gt;
+		Body
+	&lt;/ngc-expansion-panel&gt;
 
-	<h3 class="mv-20">Background Theme</h3>
-	<div cdkDropList (cdkDropListDropped)="console.log('Expansion Dropped', $event)">
-		<ngc-expansion-panel theme="background" cdkDrag draggable>
-			<ngc-expansion-panel-header>
-				<ngc-truncate limitLine="1">Header 1</ngc-truncate>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
-					<ngc-icon name="trash" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
+	&lt;ngc-expansion-panel&gt;
+		&lt;ngc-expansion-panel-header&gt;
+			&lt;ngc-truncate limitLine="1"&gt;Header&lt;/ngc-truncate&gt;
+			&lt;button class="ml-5" ngcBasicButton&gt;
+				&lt;ngc-icon name="circle-plus" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+		&lt;/ngc-expansion-panel-header&gt;
+		Body
+	&lt;/ngc-expansion-panel&gt;
+&lt;/ngc-accordion&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
-			<ngc-expansion-panel-header [color]="'GREEN' | color: 400">
-				<ngc-truncate limitLine="1">Header 2</ngc-truncate>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
-					<ngc-icon name="trash" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
+	<h3 class="mb-20">Background Theme</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div cdkDropList (cdkDropListDropped)="console.log('Expansion Dropped', $event)">
+				<ngc-expansion-panel theme="background" cdkDrag draggable>
+					<ngc-expansion-panel-header>
+						<ngc-truncate limitLine="1">Header 1</ngc-truncate>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+							<ngc-icon name="edit" size="20px"></ngc-icon>
+						</button>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+							<ngc-icon name="trash" size="20px"></ngc-icon>
+						</button>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+							<ngc-icon name="plus" size="20px"></ngc-icon>
+						</button>
+					</ngc-expansion-panel-header>
+					Body
+				</ngc-expansion-panel>
 
-		<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
-			<ngc-expansion-panel-header [color]="'RED' | color: 700">
-				<ngc-truncate limitLine="1">Header 3</ngc-truncate>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
-					<ngc-icon name="edit" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
-					<ngc-icon name="trash" size="20px"></ngc-icon>
-				</button>
-				<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
-					<ngc-icon name="plus" size="20px"></ngc-icon>
-				</button>
-			</ngc-expansion-panel-header>
-			Body
-		</ngc-expansion-panel>
-	</div>
+				<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
+					<ngc-expansion-panel-header [color]="'GREEN' | color: 400">
+						<ngc-truncate limitLine="1">Header 2</ngc-truncate>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+							<ngc-icon name="edit" size="20px"></ngc-icon>
+						</button>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+							<ngc-icon name="trash" size="20px"></ngc-icon>
+						</button>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+							<ngc-icon name="plus" size="20px"></ngc-icon>
+						</button>
+					</ngc-expansion-panel-header>
+					Body
+				</ngc-expansion-panel>
+
+				<ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable>
+					<ngc-expansion-panel-header [color]="'RED' | color: 700">
+						<ngc-truncate limitLine="1">Header 3</ngc-truncate>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Edit');">
+							<ngc-icon name="edit" size="20px"></ngc-icon>
+						</button>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Delete');">
+							<ngc-icon name="trash" size="20px"></ngc-icon>
+						</button>
+						<button class="ml-10" ngcBasicButton (click)="$event?.stopPropagation(); console.log('Add');">
+							<ngc-icon name="plus" size="20px"></ngc-icon>
+						</button>
+					</ngc-expansion-panel-header>
+					Body
+				</ngc-expansion-panel>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;div cdkDropList&gt;
+	&lt;ngc-expansion-panel theme="background" cdkDrag draggable&gt;
+		&lt;ngc-expansion-panel-header&gt;
+			&lt;ngc-truncate limitLine="1"&gt;Header 1&lt;/ngc-truncate&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+		&lt;/ngc-expansion-panel-header&gt;
+		Body
+	&lt;/ngc-expansion-panel&gt;
+
+	&lt;ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable&gt;
+		&lt;ngc-expansion-panel-header [color]="'GREEN' | color: 400"&gt;
+			&lt;ngc-truncate limitLine="1"&gt;Header 2&lt;/ngc-truncate&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+		&lt;/ngc-expansion-panel-header&gt;
+		Body
+	&lt;/ngc-expansion-panel&gt;
+
+	&lt;ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable&gt;
+		&lt;ngc-expansion-panel-header [color]="'RED' | color: 700"&gt;
+			&lt;ngc-truncate limitLine="1"&gt;Header 3&lt;/ngc-truncate&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+			&lt;button class="ml-10" ngcBasicButton&gt;
+				&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
+			&lt;/button&gt;
+		&lt;/ngc-expansion-panel-header&gt;
+		Body
+	&lt;/ngc-expansion-panel&gt;
+&lt;/div&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Avatar">
-	<div class="mb-15">Avatar</div>
-	<h3 class="mb-20">XLarge (72px)</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-avatar size="xlarge" label="AB"
-				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="xlarge" label="AB"
-				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="xlarge" label="AB"
-				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="xlarge" label="AB"
-				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-	</div>
+	<h3 class="mb-20">Avatar</h3>
+	<p class="component-description">
+		<strong>Avatar</strong> is a visual representation of a user, supporting images, text initials, and status indicators. It automatically fallbacks to initials if the image is missing and displays user status dots.
+	</p>
 
-	<h3 class="mv-20">Large (56px)</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-avatar size="large" label="AB"
-				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="large" label="AB"
-				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="large" label="AB"
-				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="large" label="AB"
-				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-	</div>
+	<h3 class="mb-20">Avatar Sizes</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<h4 class="mb-10">XLarge (72px)</h4>
+			<div class="layout-row layout-wrap mb-15">
+				<div class="mr-10">
+					<ngc-avatar size="xlarge" label="AB"
+						[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="xlarge" label="AB"
+						[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="xlarge" label="AB"
+						[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="xlarge" label="AB"
+						[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+			</div>
 
-	<h3 class="mv-20">Medium (40px)</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-avatar size="medium" label="AB"
-				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="medium" label="AB"
-				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="medium" label="AB"
-				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="medium" label="AB"
-				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-	</div>
+			<h4 class="mb-10">Large (56px)</h4>
+			<div class="layout-row layout-wrap mb-15">
+				<div class="mr-10">
+					<ngc-avatar size="large" label="AB"
+						[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="large" label="AB"
+						[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="large" label="AB"
+						[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="large" label="AB"
+						[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+			</div>
 
-	<h3 class="mv-20">Small (32px)</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-avatar size="small" label="AB"
-				[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="small" label="AB"
-				[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="small" label="AB"
-				[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="small" label="AB"
-				[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
-		</div>
-	</div>
+			<h4 class="mb-10">Medium (40px)</h4>
+			<div class="layout-row layout-wrap mb-15">
+				<div class="mr-10">
+					<ngc-avatar size="medium" label="AB"
+						[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="medium" label="AB"
+						[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="medium" label="AB"
+						[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="medium" label="AB"
+						[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+			</div>
 
-	<h3 class="mv-20">Custom Color &amp; Size</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#ff0000' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#0000ff' }"></ngc-avatar>
-		</div>
-		<div class="mr-10">
-			<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#008000' }"></ngc-avatar>
-		</div>
-	</div>
+			<h4 class="mb-10">Small (32px)</h4>
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<ngc-avatar size="small" label="AB"
+						[avatar]="{ mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="small" label="AB"
+						[avatar]="{ mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="small" label="AB"
+						[avatar]="{ mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="small" label="AB"
+						[avatar]="{ mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' }"></ngc-avatar>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- XLarge (72px) --&gt;
+&lt;ngc-avatar size="xlarge" label="AB" [avatar]="{{ '{' }} mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
 
-	<h3 class="mv-20">Custom Avatar</h3>
-	<ngc-avatar size="medium">
-		<ngc-icon name="collection" color="white"></ngc-icon>
-	</ngc-avatar>
+&lt;!-- Large (56px) --&gt;
+&lt;ngc-avatar size="large" label="AB" [avatar]="{{ '{' }} mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+
+&lt;!-- Medium (40px) --&gt;
+&lt;ngc-avatar size="medium" label="AB" [avatar]="{{ '{' }} mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+
+&lt;!-- Small (32px) --&gt;
+&lt;ngc-avatar size="small" label="AB" [avatar]="{{ '{' }} mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Custom Color &amp; Size</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#ff0000' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#0000ff' }"></ngc-avatar>
+				</div>
+				<div class="mr-10">
+					<ngc-avatar size="36px" label="AB" [avatar]="{ color: '#008000' }"></ngc-avatar>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#ff0000' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#0000ff' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#008000' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Custom Avatar</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-avatar size="medium">
+				<ngc-icon name="collection" color="white"></ngc-icon>
+			</ngc-avatar>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-avatar size="medium"&gt;
+	&lt;ngc-icon name="collection" color="white"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-avatar&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Avatar Picker">
-	<ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"></ngc-avatar-picker>
+	<h3 class="mb-20">Avatar Picker</h3>
+	<p class="component-description">
+		<strong>Avatar Picker</strong> is an interactive component that lets users select, upload, or crop their profile images, and set custom display backgrounds or initials.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"></ngc-avatar-picker>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"&gt;&lt;/ngc-avatar-picker&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Badge">
+	<p class="component-description">
+		<strong>Badge</strong> renders small visual status flags, tags, or numeric notification overlays on top of child elements to alert users to dynamic counts, actions, or states.
+	</p>
 	<h3 class="mb-20">Default</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center mt-20">
+				<ngc-badge class="mr-30" ngcBadge="2">
+					<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+				</ngc-badge>
+				<ngc-badge class="mr-30" count="199" color="primary">
+					<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+				</ngc-badge>
+				<ngc-badge class="mr-30" [count]="1000 | kUnit">
+					<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+				</ngc-badge>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-badge ngcBadge="2"&gt;
+	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-badge&gt;
 
-	<div class="layout-row layout-wrap layout-align-start-center mt-20">
-		<ngc-badge class="mr-30" ngcBadge="2">
-			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-		</ngc-badge>
-		<ngc-badge class="mr-30" count="199" color="primary">
-			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-		</ngc-badge>
-		<ngc-badge class="mr-30" [count]="1000 | kUnit">
-			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-		</ngc-badge>
-	</div>
+&lt;ngc-badge count="199" color="primary"&gt;
+	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-badge&gt;
 
-	<h3 class="mt-20 mb-20">Background Theme</h3>
-	<div class="layout-row layout-wrap layout-align-start-center mt-20">
-		<ngc-badge class="mr-30" ngcBadge="2" background="primary" color="white">
-			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-		</ngc-badge>
-		<ngc-badge class="mr-30" count="199" background="secondary" color="primary">
-			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-		</ngc-badge>
-		<ngc-badge class="mr-30" background="default" color="default" [count]="1000 | kUnit">
-			<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
-		</ngc-badge>
-	</div>
+&lt;ngc-badge [count]="1000 | kUnit"&gt;
+	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-badge&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Background Theme</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center mt-20">
+				<ngc-badge class="mr-30" ngcBadge="2" background="primary" color="white">
+					<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+				</ngc-badge>
+				<ngc-badge class="mr-30" count="199" background="secondary" color="primary">
+					<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+				</ngc-badge>
+				<ngc-badge class="mr-30" background="default" color="default" [count]="1000 | kUnit">
+					<ngc-icon name="document-text-outline" size="20px"></ngc-icon>
+				</ngc-badge>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-badge ngcBadge="2" background="primary" color="white"&gt;
+	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-badge&gt;
+
+&lt;ngc-badge count="199" background="secondary" color="primary"&gt;
+	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-badge&gt;
+
+&lt;ngc-badge background="default" color="default" [count]="1000 | kUnit"&gt;
+	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+&lt;/ngc-badge&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Breadcrumb">
+	<p class="component-description">
+		<strong>Breadcrumb</strong> provides a path indicator that shows the current location in a hierarchical structure, enabling convenient backtracking navigation.
+	</p>
 	<h3 class="mb-20">Default</h3>
-	<ngc-breadcrumb>
-		<ngc-breadcrumb-item>
-			Home
-		</ngc-breadcrumb-item>
-		<ngc-breadcrumb-item [commands]='[ "/breadcrumb1" ]'>
-			Breadcrumb 1
-		</ngc-breadcrumb-item>
-		<ngc-breadcrumb-item [commands]='[ "/breadcrumb2" ]'>
-			Breadcrumb 2
-		</ngc-breadcrumb-item>
-		<ngc-breadcrumb-item [commands]='[ "/breadcrumb3" ]'>
-			Breadcrumb 3
-		</ngc-breadcrumb-item>
-	</ngc-breadcrumb>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-breadcrumb>
+				<ngc-breadcrumb-item>
+					Home
+				</ngc-breadcrumb-item>
+				<ngc-breadcrumb-item [commands]='[ "/breadcrumb1" ]'>
+					Breadcrumb 1
+				</ngc-breadcrumb-item>
+				<ngc-breadcrumb-item [commands]='[ "/breadcrumb2" ]'>
+					Breadcrumb 2
+				</ngc-breadcrumb-item>
+				<ngc-breadcrumb-item [commands]='[ "/breadcrumb3" ]'>
+					Breadcrumb 3
+				</ngc-breadcrumb-item>
+			</ngc-breadcrumb>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-breadcrumb&gt;
+	&lt;ngc-breadcrumb-item&gt;
+		Home
+	&lt;/ngc-breadcrumb-item&gt;
+	&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb1" ]'&gt;
+		Breadcrumb 1
+	&lt;/ngc-breadcrumb-item&gt;
+	&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb2" ]'&gt;
+		Breadcrumb 2
+	&lt;/ngc-breadcrumb-item&gt;
+	&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb3" ]'&gt;
+		Breadcrumb 3
+	&lt;/ngc-breadcrumb-item&gt;
+&lt;/ngc-breadcrumb&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Button">
-	<h3 class="mv-20">Basic Button</h3>
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10">
-			<button ngcBasicButton (click)="console.log($event)">
-				Default
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcBasicButton color="primary" (click)="console.log($event)">
-				Primary
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcBasicButton color="primary" disabled (click)="console.log($event)">
-				Disabled
-			</button>
-		</div>
-	</div>
+	<p class="component-description">
+		<strong>Button</strong> directive enhances standard buttons with specific color styling (primary, white, danger, default), custom sizes, loading state indicators, prefix/suffix icons, and square icon-button variations.
+	</p>
+	<h3 class="mb-20">Basic Button</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10">
+					<button ngcBasicButton (click)="console.log($event)">
+						Default
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcBasicButton color="primary" (click)="console.log($event)">
+						Primary
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcBasicButton color="primary" disabled (click)="console.log($event)">
+						Disabled
+					</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcBasicButton&gt;Default&lt;/button&gt;
+&lt;button ngcBasicButton color="primary"&gt;Primary&lt;/button&gt;
+&lt;button ngcBasicButton color="primary" disabled&gt;Disabled&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<h3 class="mv-20">Button</h3>
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10">
-			<button ngcButton (click)="console.log($event)">Default</button>
-		</div>
-		<div class="mr-10">
-			<button ngcButton color="primary" (click)="console.log($event)">Primary</button>
-		</div>
-		<div class="mr-10">
-			<button ngcButton color="white" (click)="console.log($event)">White</button>
-		</div>
-		<div class="mr-10">
-			<button ngcButton color="primary" disabled (click)="console.log($event)">Disabled</button>
-		</div>
-	</div>
+	<h3 class="mb-20">Button</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10">
+					<button ngcButton (click)="console.log($event)">Default</button>
+				</div>
+				<div class="mr-10">
+					<button ngcButton color="primary" (click)="console.log($event)">Primary</button>
+				</div>
+				<div class="mr-10">
+					<button ngcButton color="white" (click)="console.log($event)">White</button>
+				</div>
+				<div class="mr-10">
+					<button ngcButton color="primary" disabled (click)="console.log($event)">Disabled</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton&gt;Default&lt;/button&gt;
+&lt;button ngcButton color="primary"&gt;Primary&lt;/button&gt;
+&lt;button ngcButton color="white"&gt;White&lt;/button&gt;
+&lt;button ngcButton color="primary" disabled&gt;Disabled&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<h3 class="mv-20">Button with Icon</h3>
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10">
-			<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
-		</div>
+	<h3 class="mb-20">Button with Icon</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10">
+					<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton icon="calendar" (click)="console.log($event)">Default</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton color="primary" icon="calendar" (click)="console.log($event)">Primary</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton color="primary" icon="calendar" (click)="console.log($event)">Primary</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton color="white" icon="calendar" (click)="console.log($event)">White</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton color="white" icon="calendar" (click)="console.log($event)">White</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton color="primary" disabled (click)="console.log($event)">
-				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
-				Disabled
-			</button>
-		</div>
-	</div>
+				<div class="mr-10">
+					<button ngcButton color="primary" disabled (click)="console.log($event)">
+						<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+						Disabled
+					</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton icon="calendar"&gt;Default&lt;/button&gt;
+&lt;button ngcButton color="primary" icon="calendar"&gt;Primary&lt;/button&gt;
+&lt;button ngcButton color="white" icon="calendar"&gt;White&lt;/button&gt;
+&lt;button ngcButton color="primary" disabled&gt;
+	&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
+	Disabled
+&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<h3 class="mv-20">Button with Loading</h3>
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10">
-			<button ngcButton loading (click)="console.log($event)"></button>
-		</div>
-		<div class="mr-10">
-			<button ngcButton loading color="primary" (click)="console.log($event)"></button>
-		</div>
-		<div class="mr-10">
-			<button ngcButton loading color="white" (click)="console.log($event)"></button>
-		</div>
-	</div>
-	<h3 class="mv-20">Icon Button</h3>
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10">
-			<button ngcIconButton icon="calendar" (click)="console.log($event)"></button>
-		</div>
-		<div class="mr-10">
-			<button ngcIconButton color="primary" icon="calendar" (click)="console.log($event)"></button>
-		</div>
-		<!-- <div class="mr-10">
-			<button ngcIconButton [color]="'LIGHT_GRAY' | color:700" icon="calendar" (click)="console.log($event)"></button>
-		</div> -->
-		<div class="mr-10">
-			<button ngcIconButton disabled (click)="console.log($event)">
-				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcIconButton color="#ff0000" hoverColor="green" (click)="console.log($event)">
-				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcIconButton iconColor="yellow" color="#ff0000" hoverColor="green" (click)="console.log($event)">
-				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcIconButton size="40px" (click)="console.log($event)">
-				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcIconButton square size="40px" (click)="console.log($event)">
-				<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
-			</button>
-		</div>
-	</div>
+	<h3 class="mb-20">Button with Loading</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10">
+					<button ngcButton loading (click)="console.log($event)"></button>
+				</div>
+				<div class="mr-10">
+					<button ngcButton loading color="primary" (click)="console.log($event)"></button>
+				</div>
+				<div class="mr-10">
+					<button ngcButton loading color="white" (click)="console.log($event)"></button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton loading&gt;&lt;/button&gt;
+&lt;button ngcButton loading color="primary"&gt;&lt;/button&gt;
+&lt;button ngcButton loading color="white"&gt;&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
+	<h3 class="mb-20">Icon Button</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10">
+					<button ngcIconButton icon="calendar" (click)="console.log($event)"></button>
+				</div>
+				<div class="mr-10">
+					<button ngcIconButton color="primary" icon="calendar" (click)="console.log($event)"></button>
+				</div>
+				<div class="mr-10">
+					<button ngcIconButton disabled (click)="console.log($event)">
+						<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcIconButton color="#ff0000" hoverColor="green" (click)="console.log($event)">
+						<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcIconButton iconColor="yellow" color="#ff0000" hoverColor="green" (click)="console.log($event)">
+						<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcIconButton size="40px" (click)="console.log($event)">
+						<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcIconButton square size="40px" (click)="console.log($event)">
+						<ngc-icon ngcButtonIcon name="calendar"></ngc-icon>
+					</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcIconButton icon="calendar"&gt;&lt;/button&gt;
+&lt;button ngcIconButton color="primary" icon="calendar"&gt;&lt;/button&gt;
+&lt;button ngcIconButton disabled&gt;
+	&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
+&lt;/button&gt;
+&lt;button ngcIconButton color="#ff0000" hoverColor="green"&gt;
+	&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
+&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Button Toggle">
+	<p class="component-description">
+		<strong>Button Toggle</strong> creates a grouped selection row where users can select a single active option. It supports standard and background styling themes, index tracking, and icon configurations.
+	</p>
 	<h3 class="mb-20">Default</h3>
-	<ngc-button-toggle [selectedIndex]="0" (selectedIndexChange)="console.log($event)" (changes)="console.log($event)">
-		<ngc-button-toggle-item icon="list">
-			Button 1
-		</ngc-button-toggle-item>
-		<ngc-button-toggle-item icon="grid">
-			Button 2
-		</ngc-button-toggle-item>
-		<ngc-button-toggle-item icon="more-vertical">
-			Button 3
-		</ngc-button-toggle-item>
-	</ngc-button-toggle>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-button-toggle [selectedIndex]="0" (selectedIndexChange)="console.log($event)" (changes)="console.log($event)">
+				<ngc-button-toggle-item icon="list">
+					Button 1
+				</ngc-button-toggle-item>
+				<ngc-button-toggle-item icon="grid">
+					Button 2
+				</ngc-button-toggle-item>
+				<ngc-button-toggle-item icon="more-vertical">
+					Button 3
+				</ngc-button-toggle-item>
+			</ngc-button-toggle>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-button-toggle [selectedIndex]="0"&gt;
+	&lt;ngc-button-toggle-item icon="list"&gt;Button 1&lt;/ngc-button-toggle-item&gt;
+	&lt;ngc-button-toggle-item icon="grid"&gt;Button 2&lt;/ngc-button-toggle-item&gt;
+	&lt;ngc-button-toggle-item icon="more-vertical"&gt;Button 3&lt;/ngc-button-toggle-item&gt;
+&lt;/ngc-button-toggle&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<h3 class="mv-20">Background</h3>
-	<ngc-button-toggle class="mb-20" theme="background" [selectedIndex]="0" (selectedIndexChange)="console.log($event)"
-		(changes)="console.log($event)">
-		<ngc-button-toggle-item icon="list">
-			Button 1
-		</ngc-button-toggle-item>
-		<ngc-button-toggle-item icon="grid">
-			Button 2
-		</ngc-button-toggle-item>
-		<ngc-button-toggle-item icon="more-vertical">
-			Button 3
-		</ngc-button-toggle-item>
-	</ngc-button-toggle>
+	<h3 class="mb-20">Background</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-button-toggle class="mb-20" theme="background" [selectedIndex]="0" (selectedIndexChange)="console.log($event)"
+				(changes)="console.log($event)">
+				<ngc-button-toggle-item icon="list">
+					Button 1
+				</ngc-button-toggle-item>
+				<ngc-button-toggle-item icon="grid">
+					Button 2
+				</ngc-button-toggle-item>
+				<ngc-button-toggle-item icon="more-vertical">
+					Button 3
+				</ngc-button-toggle-item>
+			</ngc-button-toggle>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-button-toggle theme="background" [selectedIndex]="0"&gt;
+	&lt;ngc-button-toggle-item icon="list"&gt;Button 1&lt;/ngc-button-toggle-item&gt;
+	&lt;ngc-button-toggle-item icon="grid"&gt;Button 2&lt;/ngc-button-toggle-item&gt;
+	&lt;ngc-button-toggle-item icon="more-vertical"&gt;Button 3&lt;/ngc-button-toggle-item&gt;
+&lt;/ngc-button-toggle&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Calendar">
-	<ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
-		(periodChange)="console.log('Period change', $event)"
-		(selectedEventIDChange)="console.log('Selected event', $event)"
-		(eventChange)="console.log('Event change', $event)"
-		(eventCreate)="console.log('Event create', $event)"></ngc-calendar>
-
+	<p class="component-description">
+		<strong>Calendar</strong> is a scheduling component providing views for periods, first-day setup, event binding, drag selection creation, and visual highlight features.
+	</p>
+	<h3 class="mb-20">Calendar</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
+				(periodChange)="console.log('Period change', $event)"
+				(selectedEventIDChange)="console.log('Selected event', $event)"
+				(eventChange)="console.log('Event change', $event)"
+				(eventCreate)="console.log('Event create', $event)"></ngc-calendar>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
+	(periodChange)="console.log('Period change', $event)"
+	(selectedEventIDChange)="console.log('Selected event', $event)"
+	(eventChange)="console.log('Event change', $event)"
+	(eventCreate)="console.log('Event create', $event)"&gt;&lt;/ngc-calendar&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Card">
+	<p class="component-description">
+		<strong>Card</strong> provides structured boxed containers with custom borders and shadows. Content can be distributed using directives like `ngcCardHeader`, `ngcCardContent`, and `ngcCardFooter`.
+	</p>
 	<h3 class="mb-20">Card</h3>
-	<ngc-card>
-		<div ngcCardContent class="layout-column">
-			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
-				Utility Types
-			</a>
-			<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
-				target="_blank">
-				CSS Naming Conventions that Will Save You Hours of Debugging
-			</a>
-			<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
-				API reference for Angular CDK drag-drop
-			</a>
-		</div>
-	</ngc-card>
-	<ngc-card class="mt-20">
-		<div ngcCardHeader>
-			Header
-		</div>
-		<div ngcCardContent class="layout-column">
-			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
-				Utility Types
-			</a>
-			<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
-				target="_blank">
-				CSS Naming Conventions that Will Save You Hours of Debugging
-			</a>
-			<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
-				API reference for Angular CDK drag-drop
-			</a>
-		</div>
-		<div ngcCardFooter>
-			Footer
-		</div>
-	</ngc-card>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-card>
+				<div ngcCardContent class="layout-column">
+					<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
+						Utility Types
+					</a>
+					<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
+						target="_blank">
+						CSS Naming Conventions that Will Save You Hours of Debugging
+					</a>
+					<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
+						API reference for Angular CDK drag-drop
+					</a>
+				</div>
+			</ngc-card>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-card&gt;
+	&lt;div ngcCardContent class="layout-column"&gt;
+		&lt;a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank"&gt;Utility Types&lt;/a&gt;
+		&lt;a href="..."&gt;CSS Naming Conventions&lt;/a&gt;
+		&lt;a href="..."&gt;API reference&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/ngc-card&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Card with Header &amp; Footer</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-card class="mt-20">
+				<div ngcCardHeader>
+					Header
+				</div>
+				<div ngcCardContent class="layout-column">
+					<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
+						Utility Types
+					</a>
+					<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
+						target="_blank">
+						CSS Naming Conventions that Will Save You Hours of Debugging
+					</a>
+					<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
+						API reference for Angular CDK drag-drop
+					</a>
+				</div>
+				<div ngcCardFooter>
+					Footer
+				</div>
+			</ngc-card>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-card&gt;
+	&lt;div ngcCardHeader&gt;
+		Header
+	&lt;/div&gt;
+	&lt;div ngcCardContent class="layout-column"&gt;
+		&lt;a href="..."&gt;Utility Types&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div ngcCardFooter&gt;
+		Footer
+	&lt;/div&gt;
+&lt;/ngc-card&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Carousel">
-	<h3 class="mv-20">Carousel</h3>
-	<ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'"
-		[photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)">
-	</ngc-carousel>
-
+	<p class="component-description">
+		<strong>Carousel</strong> allows sliding and viewing collections of media assets (e.g. photos) supporting sizing constraints, fullscreen toggle options, and close listeners.
+	</p>
+	<h3 class="mb-20">Carousel</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'"
+				[photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)">
+			</ngc-carousel>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'" [photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)"&gt;&lt;/ngc-carousel&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Collapse">
+	<p class="component-description">
+		<strong>Collapse</strong> component displays contents that can be toggled open or closed with standard border customizability, headers, body zones, and footer options.
+	</p>
 	<h3 class="mb-20">Collapse</h3>
-	<ngc-collapse class="mb-20" [active]="true" borderWidth="1px">
-		<div ngcCollapseHeader>
-			Header
-		</div>
-		<div ngcCollapseContent class="layout-column">
-			<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
-				Utility Types
-			</a>
-			<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
-				target="_blank">
-				CSS Naming Conventions that Will Save You Hours of Debugging
-			</a>
-			<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
-				API reference for Angular CDK drag-drop
-			</a>
-		</div>
-		<div ngcCollapseFooter>
-			Footer
-		</div>
-	</ngc-collapse>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-collapse class="mb-20" [active]="true" borderWidth="1px">
+				<div ngcCollapseHeader>
+					Header
+				</div>
+				<div ngcCollapseContent class="layout-column">
+					<a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank">
+						Utility Types
+					</a>
+					<a href="https://www.freecodecamp.org/news/css-naming-conventions-that-will-save-you-hours-of-debugging-35cea737d849/"
+						target="_blank">
+						CSS Naming Conventions that Will Save You Hours of Debugging
+					</a>
+					<a href="https://material.angular.io/cdk/drag-drop/api" target="_blank">
+						API reference for Angular CDK drag-drop
+					</a>
+				</div>
+				<div ngcCollapseFooter>
+					Footer
+				</div>
+			</ngc-collapse>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-collapse [active]="true" borderWidth="1px"&gt;
+	&lt;div ngcCollapseHeader&gt;
+		Header
+	&lt;/div&gt;
+	&lt;div ngcCollapseContent class="layout-column"&gt;
+		&lt;a href="..."&gt;Content&lt;/a&gt;
+	&lt;/div&gt;
+	&lt;div ngcCollapseFooter&gt;
+		Footer
+	&lt;/div&gt;
+&lt;/ngc-collapse&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Checkbox">
 	<h3 class="mb-20">Checkbox</h3>
+	<p class="component-description">
+		<strong>Checkbox</strong> is a form selection control representing binary choices. It supports custom label text, checked states, and disabled states.
+	</p>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
 			<div class="mb-10">
@@ -487,8 +886,16 @@
 			</div>
 		</ngc-tab>
 		<ngc-tab [label]="'Code'">
-			<ngc-code-block>
-				<pre><code #codeContent><div>123123</div></code></pre>
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;div class="mb-10"&gt;
+	&lt;ngc-checkbox [label]="'Checkbox 1'"&gt;&lt;/ngc-checkbox&gt;
+&lt;/div&gt;
+&lt;div class="mb-10"&gt;
+	&lt;ngc-checkbox [label]="'Checkbox 2'" [checked]="true"&gt;&lt;/ngc-checkbox&gt;
+&lt;/div&gt;
+&lt;div class="mb-10"&gt;
+	&lt;ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"&gt;&lt;/ngc-checkbox&gt;
+&lt;/div&gt;</code></pre>
 			</ngc-code-block>
 		</ngc-tab>
 	</ngc-tab-group>
@@ -496,625 +903,1253 @@
 
 <ng-template #compTemplate label="List">
 	<h3 class="mb-20">List</h3>
-	<ngc-menu #actionMenu>
-		<ngc-menu-content>
-			<ng-template ngcMenuContent let-listItemComp="listItemComp">
-				<button ngcMenuItem icon="text-input" (click)="listItemComp?.edit()">Rename</button>
-				<button ngcMenuItem icon="trash" [color]="'DANGER' | color">Delete</button>
-			</ng-template>
-		</ngc-menu-content>
-	</ngc-menu>
+	<p class="component-description">
+		<strong>List</strong> is a layout for lists of interactive rows. It supports drag-and-drop order manipulation, item editing and renaming triggers, customized status dots, and popup actions.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-menu #actionMenu>
+				<ngc-menu-content>
+					<ng-template ngcMenuContent let-listItemComp="listItemComp">
+						<button ngcMenuItem icon="text-input" (click)="listItemComp?.edit()">Rename</button>
+						<button ngcMenuItem icon="trash" [color]="'DANGER' | color">Delete</button>
+					</ng-template>
+				</ngc-menu-content>
+			</ngc-menu>
 
-	<ngc-list displayColorDot name="Name" placeholder="Type a name..." [activeColor]="'SUB' | color"
-		(itemsMoved)="console.log('Items Moved', $event)" (loadMore)="console.log('Load More', $event)">
+			<ngc-list displayColorDot name="Name" placeholder="Type a name..." [activeColor]="'SUB' | color"
+				(itemsMoved)="console.log('Items Moved', $event)" (loadMore)="console.log('Load More', $event)">
 
-		<ngc-list-item draggable #listItemComp
-			*ngFor="let item of [ { id: 1, name: 'A' }, { id: 2, name: 'B' }, { id: 3, name: 'C' } ]; let first = first"
-			[id]="item?.id" [label]="item?.name" [description]="'12 items'" [active]="!!first"
-			(dotColorChange)="console.log('Item Dot Color Change', $event)"
-			(editing)="console.log('Item Editing', $event)" (saved)="console.log('Edit Item Saved', $event)"
-			(cancelled)="console.log('Edit Item Cancelled', $event)" (click)="console.log('Item Clicked', $event)">
+				<ngc-list-item draggable #listItemComp
+					*ngFor="let item of [ { id: 1, name: 'A' }, { id: 2, name: 'B' }, { id: 3, name: 'C' } ]; let first = first"
+					[id]="item?.id" [label]="item?.name" [description]="'12 items'" [active]="!!first"
+					(dotColorChange)="console.log('Item Dot Color Change', $event)"
+					(editing)="console.log('Item Editing', $event)" (saved)="console.log('Edit Item Saved', $event)"
+					(cancelled)="console.log('Edit Item Cancelled', $event)" (click)="console.log('Item Clicked', $event)">
 
-			<button ngcBasicButton icon="more-vertical" [ngcMenuTriggerFor]="actionMenu"
-				[menuData]="{ listItemComp: listItemComp }"
-				[class.hidden]="!listItemComp?.focusing && !listItemComp?.hovering" (menuOpened)="listItemComp?.focus()"
-				(menuClosed)="listItemComp?.blur()" (click)="$event?.stopPropagation()">
-			</button>
-		</ngc-list-item>
-	</ngc-list>
+					<button ngcBasicButton icon="more-vertical" [ngcMenuTriggerFor]="actionMenu"
+						[menuData]="{ listItemComp: listItemComp }"
+						[class.hidden]="!listItemComp?.focusing && !listItemComp?.hovering" (menuOpened)="listItemComp?.focus()"
+						(menuClosed)="listItemComp?.blur()" (click)="$event?.stopPropagation()">
+					</button>
+				</ngc-list-item>
+			</ngc-list>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-list displayColorDot name="Name" placeholder="Type a name..."&gt;
+	&lt;ngc-list-item draggable #listItemComp
+		*ngFor="let item of items"
+		[id]="item?.id" [label]="item?.name" [description]="'12 items'"&gt;
+		&lt;button ngcBasicButton icon="more-vertical"&gt;&lt;/button&gt;
+	&lt;/ngc-list-item&gt;
+&lt;/ngc-list&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Code Block">
 	<h3 class="mb-20">Code Block</h3>
+	<p class="component-description">
+		<strong>Code Block</strong> displays formatted code with syntax highlighting (e.g. for HTML, typescript) and features an interactive click-to-copy button header.
+	</p>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
 			<ngc-code-block [code]="exampleCode" language="typescript"></ngc-code-block>
 		</ngc-tab>
 		<ngc-tab [label]="'Code'">
-			<ngc-code-block [code]="123213" language="typescript"></ngc-code-block>
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-code-block [code]="exampleCode" language="typescript"&gt;&lt;/ngc-code-block&gt;</code></pre>
+			</ngc-code-block>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Clipboard">
 	<h3 class="mb-20">Clipboard</h3>
-
-	<button ngcButton [ngcClipboardCopy]="'Click to Clipboard'">Click to Clipboard</button>
+	<p class="component-description">
+		<strong>Clipboard</strong> directive copy text contents directly to the system clipboard upon clicking the trigger element.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div>
+				<button ngcButton [ngcClipboardCopy]="'Click to Clipboard'">Click to Clipboard</button>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton [ngcClipboardCopy]="'Click to Clipboard'"&gt;Click to Clipboard&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Color Picker">
 	<h3 class="mb-20">Color Picker</h3>
+	<p class="component-description">
+		<strong>Color Picker</strong> is an interface for selecting custom colors, supporting standard trigger button popup mode or mode='inline' configurations.
+	</p>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="mb-10">
+				<ngc-color-picker></ngc-color-picker>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-color-picker&gt;&lt;/ngc-color-picker&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<div class="mb-10">
-		<ngc-color-picker></ngc-color-picker>
-	</div>
 	<h3 class="mb-20">Color Picker Inline</h3>
-
-	<div class="mb-10">
-		<ngc-color-picker mode='inline'></ngc-color-picker>
-	</div>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="mb-10">
+				<ngc-color-picker mode='inline'></ngc-color-picker>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-color-picker mode="inline"&gt;&lt;/ngc-color-picker&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Data Table">18</ng-template>
 <ng-template #compTemplate label="Date Picker">
+	<p class="component-description">
+		<strong>Date Picker</strong> provides direct date select dropdown popups on buttons or inputs, with range select mode, and an inline date picker panel component.
+	</p>
 	<h3 class="mb-20">Directive</h3>
-	<div class="layout-row">
-		<div class="mr-10">
-			<button ngcButton ngcDatePicker [pickedDate]="currentDate" [minDate]="minDate" [maxDate]="maxDate"
-				(picked)="console.log('Date Picked', $event)">
-				Date Picker
-			</button>
-		</div>
-		<div class="mr-10">
-			<button ngcButton ngcDatePicker dateRange [pickedDate]="currentDateRange" [minDate]="minDate"
-				[maxDate]="maxDate" (picked)="console.log('Date Range Picked', $event)">
-				Date Range Picker
-			</button>
-		</div>
-	</div>
-	<h3 class="mv-20">Component</h3>
-	<ngc-date-picker class="w-300" mode="inline"></ngc-date-picker>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row">
+				<div class="mr-10">
+					<button ngcButton ngcDatePicker [pickedDate]="currentDate" [minDate]="minDate" [maxDate]="maxDate"
+						(picked)="console.log('Date Picked', $event)">
+						Date Picker
+					</button>
+				</div>
+				<div class="mr-10">
+					<button ngcButton ngcDatePicker dateRange [pickedDate]="currentDateRange" [minDate]="minDate"
+						[maxDate]="maxDate" (picked)="console.log('Date Range Picked', $event)">
+						Date Range Picker
+					</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Date Picker --&gt;
+&lt;button ngcButton ngcDatePicker [pickedDate]="currentDate"&gt;Date Picker&lt;/button&gt;
 
+&lt;!-- Date Range Picker --&gt;
+&lt;button ngcButton ngcDatePicker dateRange [pickedDate]="currentDateRange"&gt;Date Range Picker&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Component</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-date-picker class="w-300" mode="inline"></ngc-date-picker>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-date-picker class="w-300" mode="inline"&gt;&lt;/ngc-date-picker&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Dialog">
 	<h3 class="mb-20">Dialog</h3>
+	<p class="component-description">
+		<strong>Dialog</strong> wraps visual overlay modal containers opened dynamically from components or angular templates using Dialog Service.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<button ngcButton (click)="openDialog()">
+						Open Dialog Component
+					</button>
+				</div>
 
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<button ngcButton (click)="openDialog()">
-				Open Dialog Component
-			</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton (click)="openDialog(dialog)">
+						Open Dialog Template
+					</button>
+				</div>
+			</div>
 
-		<div class="mr-10">
-			<button ngcButton (click)="openDialog(dialog)">
-				Open Dialog Template
-			</button>
-		</div>
-	</div>
+			<ng-template #dialog let-data="data">
+				<div class="p-30">{{ data?.content }}</div>
+			</ng-template>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- In component.ts --&gt;
+&lt;!-- this.ngcDialogService.open(MyDialogComponent, {{ '{' }} ... {{ '}' }}) --&gt;
+&lt;button ngcButton (click)="openDialog()"&gt;Open Dialog Component&lt;/button&gt;
 
-	<ng-template #dialog let-data="data">
-		<div class="p-30">{{ data?.content }}</div>
-	</ng-template>toast
+&lt;!-- In component.html --&gt;
+&lt;ng-template #dialog let-data="data"&gt;
+	&lt;div class="p-30"&gt;{{ '{{' }} data?.content {{ '}}' }}&lt;/div&gt;
+&lt;/ng-template&gt;
+&lt;button ngcButton (click)="openDialog(dialog)"&gt;Open Dialog Template&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Dropdown">
-	<div class="mr-10 mb-20">
-		<ngc-dropdown class="w-300" label="Default">
-			<ngc-dropdown-item *ngFor="let position of positions; let first = first" [label]="position?.name"
-				[value]="position?.id" [disabled]="first">
-			</ngc-dropdown-item>
+	<h3 class="mb-20">Dropdown</h3>
+	<p class="component-description">
+		<strong>Dropdown</strong> selection panel supporting disabled states, nested selection grouping headers, and values bindings.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="mr-10 mb-20">
+				<ngc-dropdown class="w-300" label="Default">
+					<ngc-dropdown-item *ngFor="let position of positions; let first = first" [label]="position?.name"
+						[value]="position?.id" [disabled]="first">
+					</ngc-dropdown-item>
 
-			<ngc-dropdown-group-item label="Group" title="Select Group Children">
-				<ngc-dropdown-item label="Group Item 1" [value]="100"></ngc-dropdown-item>
-				<ngc-dropdown-item label="Group Item 2" [value]="101"></ngc-dropdown-item>
-			</ngc-dropdown-group-item>
-		</ngc-dropdown>
-	</div>
+					<ngc-dropdown-group-item label="Group" title="Select Group Children">
+						<ngc-dropdown-item label="Group Item 1" [value]="100"></ngc-dropdown-item>
+						<ngc-dropdown-item label="Group Item 2" [value]="101"></ngc-dropdown-item>
+					</ngc-dropdown-group-item>
+				</ngc-dropdown>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-dropdown class="w-300" label="Default"&gt;
+	&lt;ngc-dropdown-item *ngFor="let pos of positions" [label]="pos?.name" [value]="pos?.id"&gt;&lt;/ngc-dropdown-item&gt;
+	&lt;ngc-dropdown-group-item label="Group" title="Select Group Children"&gt;
+		&lt;ngc-dropdown-item label="Group Item 1" [value]="100"&gt;&lt;/ngc-dropdown-item&gt;
+	&lt;/ngc-dropdown-group-item&gt;
+&lt;/ngc-dropdown&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Emoji Picker">
+	<p class="component-description">
+		<strong>Emoji Picker</strong> is a comprehensive emoji selection panel that can be embedded inline or activated as a directive on buttons.
+	</p>
 	<h3 class="mb-20">Directive</h3>
-	<button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)">
-		Emoji Picker
-	</button>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div>
+				<button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)">
+					Emoji Picker
+				</button>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)"&gt;Emoji Picker&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<h3 class="mv-20">Component</h3>
-	<ngc-emoji-picker class="w-300" mode="inline"></ngc-emoji-picker>
-
+	<h3 class="mb-20">Component</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-emoji-picker class="w-300" mode="inline"></ngc-emoji-picker>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-emoji-picker class="w-300" mode="inline"&gt;&lt;/ngc-emoji-picker&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Menu">
 	<h3 class="mb-20">Menu</h3>
-	<div class="layout-row layout-wrap layout-align-center-center" style="height: 800px;">
-		<div class="mr-10">
-			<button ngcButton position="before" [ngcMenuTriggerFor]="menu">
-				Menu Before
-			</button>
-		</div>
+	<p class="component-description">
+		<strong>Menu</strong> represents contextual popup action menus anchored to trigger buttons, supporting customizable placements and menu items with icons.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<button ngcButton position="before" [ngcMenuTriggerFor]="menu">
+						Menu Before
+					</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="after" [ngcMenuTriggerFor]="menu">
-				Menu After
-			</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton position="after" [ngcMenuTriggerFor]="menu">
+						Menu After
+					</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="above" [ngcMenuTriggerFor]="menu">
-				Menu Above
-			</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton position="above" [ngcMenuTriggerFor]="menu">
+						Menu Above
+					</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="below" [ngcMenuTriggerFor]="menu">
-				Menu Below
-			</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton position="below" [ngcMenuTriggerFor]="menu">
+						Menu Below
+					</button>
+				</div>
+			</div>
 
-	</div>
-
-	<ngc-menu #menu>
-		<ngc-menu-content>
-			<button ngcMenuItem icon="trending-up-outline">
-				Item 1
-			</button>
-			<button ngcMenuItem icon="trending-down-outline">
-				Item 2
-			</button>
-			<button ngcMenuItem icon="eye-off">
-				Item 3
-			</button>
-		</ngc-menu-content>
-	</ngc-menu>
-
+			<ngc-menu #menu>
+				<ngc-menu-content>
+					<button ngcMenuItem icon="trending-up-outline">
+						Item 1
+					</button>
+					<button ngcMenuItem icon="trending-down-outline">
+						Item 2
+					</button>
+					<button ngcMenuItem icon="eye-off">
+						Item 3
+					</button>
+				</ngc-menu-content>
+			</ngc-menu>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton [ngcMenuTriggerFor]="menu" position="below"&gt;Menu Trigger&lt;/button&gt;
+&lt;ngc-menu #menu&gt;
+	&lt;ngc-menu-content&gt;
+		&lt;button ngcMenuItem icon="trending-up-outline"&gt;Item 1&lt;/button&gt;
+		&lt;button ngcMenuItem icon="trending-down-outline"&gt;Item 2&lt;/button&gt;
+	&lt;/ngc-menu-content&gt;
+&lt;/ngc-menu&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Divide">
 	<h3 class="mb-20">Divider</h3>
-	<ngc-divider></ngc-divider>
-	<ngc-divider vertical></ngc-divider>
+	<p class="component-description">
+		<strong>Divider</strong> renders horizontal or vertical rules to visually segment structural spaces inside components or layouts.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-divider></ngc-divider>
+			<br/>
+			<div style="height: 30px; display: inline-block;">
+				<ngc-divider vertical></ngc-divider>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Horizontal Divider --&gt;
+&lt;ngc-divider&gt;&lt;/ngc-divider&gt;
+
+&lt;!-- Vertical Divider --&gt;
+&lt;ngc-divider vertical&gt;&lt;/ngc-divider&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Input">25</ng-template>
 <ng-template #compTemplate label="Search Box ">
+	<h3 class="mb-20">Search Box</h3>
+	<p class="component-description">
+		<strong>Search Box</strong> renders input boxes for searching collections, complete with not-found templates, client-side auto-suggest lists, or server-side fetch suggestions.
+	</p>
 	<h3 class="mb-20">Default</h3>
-	<ngc-search-box class="w-300" autoFocusOn displayNotFound #searchBox (searching)="console.log('Searching', $event)"
-		(cleared)="console.log('Cleared', $event)">
-	</ngc-search-box>
-	<div class="w-300">
-		<ng-container
-			*ngTemplateOutlet="searchBox?.notFoundTemplate; context: { emptyImage: 'assets/images/icons/video-empty.png' }">
-		</ng-container>
-	</div>
-	<h3 class="mv-20">Suggestion</h3>
-	<ngc-search-box class="w-300" [suggestion]="suggestionFn" (searching)="console.log('Searching', $event)"
-		(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
-	</ngc-search-box>
-	<h3 class="mv-20">Suggestion Server Side</h3>
-	<ngc-search-box class="w-300" [suggestion]="suggestionServerSideFn" (searching)="console.log('Searching', $event)"
-		(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
-	</ngc-search-box>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-search-box class="w-300" autoFocusOn displayNotFound #searchBox (searching)="console.log('Searching', $event)"
+				(cleared)="console.log('Cleared', $event)">
+			</ngc-search-box>
+			<div class="w-300">
+				<ng-container
+					*ngTemplateOutlet="searchBox?.notFoundTemplate; context: { emptyImage: 'assets/images/icons/video-empty.png' }">
+				</ng-container>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-search-box class="w-300" autoFocusOn displayNotFound #searchBox (searching)="console.log($event)"&gt;
+&lt;/ngc-search-box&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Suggestion</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-search-box class="w-300" [suggestion]="suggestionFn" (searching)="console.log('Searching', $event)"
+				(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
+			</ngc-search-box>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-search-box class="w-300" [suggestion]="suggestionFn" (searching)="console.log($event)"&gt;&lt;/ngc-search-box&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Suggestion Server Side</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-search-box class="w-300" [suggestion]="suggestionServerSideFn" (searching)="console.log('Searching', $event)"
+				(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
+			</ngc-search-box>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-search-box class="w-300" [suggestion]="suggestionServerSideFn" (searching)="console.log($event)"&gt;&lt;/ngc-search-box&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 
 <ng-template #compTemplate label="Loading">
 	<h3 class="mb-20">Loading</h3>
-	<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
-	<ngc-loading class="mb-10" color='#0000ff'></ngc-loading>
-	<ngc-loading class="mb-10" color='#primary'></ngc-loading>
-	<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
+	<p class="component-description">
+		<strong>Loading</strong> is a spinner element indicates working actions, supporting customized colors and sizes.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-loading class="mb-10" color='#ff0000'></ngc-loading>
+			<ngc-loading class="mb-10" color='#0000ff'></ngc-loading>
+			<ngc-loading class="mb-10" color='#primary'></ngc-loading>
+			<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-loading color="#ff0000"&gt;&lt;/ngc-loading&gt;
+&lt;ngc-loading color="#primary"&gt;&lt;/ngc-loading&gt;
+&lt;ngc-loading [size]="'12px'"&gt;&lt;/ngc-loading&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Form Field">
+	<p class="component-description">
+		<strong>Form Field</strong> wraps various input types (text input, select, range, textarea) and adds premium layouts, prefixes/suffixes, and validation feedback messages.
+	</p>
 	<h3 class="mb-20">Input</h3>
-	<div class="layout-row layout-align-start-center layout-wrap">
-
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300">
-				<div ngcFormFieldLabel>Input With Prefix</div>
-				<div ngcFormFieldPrefix>
-					<ngc-icon name="document" size="20px"></ngc-icon>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300">
+						<div ngcFormFieldLabel>Input With Prefix</div>
+						<div ngcFormFieldPrefix>
+							<ngc-icon name="document" size="20px"></ngc-icon>
+						</div>
+						<input ngcFormFieldInput autoFocusOn placeholder="Placeholder" />
+					</ngc-form-field>
 				</div>
-				<input ngcFormFieldInput autoFocusOn placeholder="Placeholder" />
-			</ngc-form-field>
-		</div>
 
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Input With Suffix">
-				<input ngcFormFieldInput placeholder="Placeholder" />
-				<div ngcFormFieldSuffix>
-					<ngc-icon name="document" size="20px"></ngc-icon>
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Input With Suffix">
+						<input ngcFormFieldInput placeholder="Placeholder" />
+						<div ngcFormFieldSuffix>
+							<ngc-icon name="document" size="20px"></ngc-icon>
+						</div>
+					</ngc-form-field>
 				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Input Disabled">
+						<input ngcFormFieldInput disabled placeholder="Placeholder" />
+					</ngc-form-field>
+				</div>
+			</div>
+
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Range">
+						<input ngcFormFieldInput type="range" min="1" max="5" step="1" />
+					</ngc-form-field>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Select">
+						<select ngcFormFieldInput placeholder="Choose">
+							<option>Item 1</option>
+							<option>Item 2</option>
+							<option>Item 3</option>
+						</select>
+					</ngc-form-field>
+				</div>
+			</div>
+
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Input With Form Control">
+						<input ngcFormFieldInput required placeholder="Placeholder" [formControl]="requiredFormControl" />
+					</ngc-form-field>
+				</div>
+			</div>
+
+			<div class="layout-row layout-align-start-center layout-wrap">
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Input Appearance Standard" appearance="standard">
+						<div ngcFormFieldPrefix>$</div>
+						<input ngcFormFieldInput placeholder="Placeholder" />
+					</ngc-form-field>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-form-field class="w-300" label="Input Appearance Legacy" appearance="legacy">
+						<input ngcFormFieldInput placeholder="Placeholder" />
+					</ngc-form-field>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Input With Prefix &lt;ngc-form-field class="w-300"&gt; --&gt;
+&lt;ngc-form-field class="w-300"&gt;
+	&lt;div ngcFormFieldLabel&gt;Input With Prefix&lt;/div&gt;
+	&lt;div ngcFormFieldPrefix&gt;
+		&lt;ngc-icon name="document" size="20px"&gt;&lt;/ngc-icon&gt;
+	&lt;/div&gt;
+	&lt;input ngcFormFieldInput autoFocusOn placeholder="Placeholder" /&gt;
+&lt;/ngc-form-field&gt;
+
+&lt;!-- Input Appearance Standard --&gt;
+&lt;ngc-form-field class="w-300" label="Input Appearance Standard" appearance="standard"&gt;
+	&lt;div ngcFormFieldPrefix&gt;$&lt;/div&gt;
+	&lt;input ngcFormFieldInput placeholder="Placeholder" /&gt;
+&lt;/ngc-form-field&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Dropdown</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10 mb-20">
+					<ngc-dropdown class="w-300" label="Default">
+						<ngc-dropdown-item *ngFor="let position of positions; let first = first" [label]="position?.name"
+							[value]="position?.id" [disabled]="first">
+						</ngc-dropdown-item>
+						<ngc-dropdown-group-item label="Group" title="Select Group Children">
+							<ngc-dropdown-item label="Group Item 1" [value]="100"></ngc-dropdown-item>
+							<ngc-dropdown-item label="Group Item 2" [value]="101"></ngc-dropdown-item>
+						</ngc-dropdown-group-item>
+					</ngc-dropdown>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-dropdown class="w-300" label="Dropdown With Icon">
+						<ngc-dropdown-item *ngFor="let position of positions" icon="document" [label]="position?.name"
+							[value]="position?.id">
+						</ngc-dropdown-item>
+					</ngc-dropdown>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-dropdown class="w-300" label="Dropdown With Dot Color">
+						<ngc-dropdown-item *ngFor="let position of positions" dotColor="#ff0000" [label]="position?.name"
+							[value]="position?.id">
+						</ngc-dropdown-item>
+					</ngc-dropdown>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-dropdown class="w-300" label="Dropdown Multiple Select" multiple>
+						<ngc-dropdown-item *ngFor="let position of positions" icon="document" [label]="position?.name"
+							[value]="position?.id">
+						</ngc-dropdown-item>
+					</ngc-dropdown>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-dropdown class="w-300" required ngDefaultControl label="Dropdown Required"
+						[formControl]="requiredFormControl">
+						<ngc-dropdown-item *ngFor="let position of positions" [label]="position?.name" [value]="position?.id">
+						</ngc-dropdown-item>
+					</ngc-dropdown>
+				</div>
+
+				<div class="mr-10 mb-20">
+					<ngc-dropdown class="w-300" disabled label="Dropdown Disabled">
+						<ngc-dropdown-item *ngFor="let position of positions" [label]="position?.name" [value]="position?.id">
+						</ngc-dropdown-item>
+					</ngc-dropdown>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-dropdown class="w-300" label="Dropdown Multiple Select" multiple&gt;
+	&lt;ngc-dropdown-item *ngFor="let item of positions" icon="document" [label]="item?.name" [value]="item?.id"&gt;&lt;/ngc-dropdown-item&gt;
+&lt;/ngc-dropdown&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Textarea</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-form-field label="Textarea">
+				<textarea ngcFormFieldInput placeholder="Placeholder"></textarea>
 			</ngc-form-field>
-		</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-form-field label="Textarea"&gt;
+	&lt;textarea ngcFormFieldInput placeholder="Placeholder"&gt;&lt;/textarea&gt;
+&lt;/ngc-form-field&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Input Disabled">
-				<input ngcFormFieldInput disabled placeholder="Placeholder" />
-			</ngc-form-field>
-		</div>
-	</div>
+	<h3 class="mb-20">Inline Input</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<h4 class="stick" ngDefaultControl ngcInlineInput id="ngcInlineInput" label="Inline" placeholder="Placeholder"
+				[(ngModel)]="inline" (ngModelChange)="console.log($event)" (saved)="console.log('Saved', $event)"
+				(cancelled)="console.log('Cancelled', $event)">
+				{{ inline }}
+				<span class="stick-right">
+					<button ngcBasicButton (click)="ngcInlineInput?.edit()">
+						<ngc-icon name="edit" size="20px"></ngc-icon>
+					</button>
+				</span>
+			</h4>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;h4 class="stick" ngDefaultControl ngcInlineInput id="ngcInlineInput" label="Inline" [(ngModel)]="inline"&gt;
+	{{ '{{' }} inline {{ '}}' }}
+	&lt;span class="stick-right"&gt;
+		&lt;button ngcBasicButton (click)="ngcInlineInput?.edit()"&gt;
+			&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+		&lt;/button&gt;
+	&lt;/span&gt;
+&lt;/h4&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Range">
-				<input ngcFormFieldInput type="range" min="1" max="5" step="1" />
-			</ngc-form-field>
-		</div>
+	<h3 class="mb-20">Range Input</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-range-input class="w-300" required label="Range" [(ngModel)]="range" (ngModelChange)="console.log($event)">
+			</ngc-range-input>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-range-input class="w-300" required label="Range" [(ngModel)]="range"&gt;&lt;/ngc-range-input&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Select">
-				<select ngcFormFieldInput placeholder="Choose">
-					<option>Item 1</option>
-					<option>Item 2</option>
-					<option>Item 3</option>
-				</select>
-			</ngc-form-field>
-		</div>
-	</div>
-
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Input With Form Control">
-				<input ngcFormFieldInput required placeholder="Placeholder" [formControl]="requiredFormControl" />
-			</ngc-form-field>
-		</div>
-	</div>
-
-	<div class="layout-row layout-align-start-center layout-wrap">
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Input Appearance Standard" appearance="standard">
-				<div ngcFormFieldPrefix>$</div>
-				<input ngcFormFieldInput placeholder="Placeholder" />
-			</ngc-form-field>
-		</div>
-
-		<div class="mr-10 mb-20">
-			<ngc-form-field class="w-300" label="Input Appearance Legacy" appearance="legacy">
-				<input ngcFormFieldInput placeholder="Placeholder" />
-			</ngc-form-field>
-		</div>
-	</div>
-
-	<h3 class="mv-20">Dropdown</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10 mb-20">
-			<ngc-dropdown class="w-300" label="Default">
-				<ngc-dropdown-item *ngFor="let position of positions; let first = first" [label]="position?.name"
-					[value]="position?.id" [disabled]="first">
-				</ngc-dropdown-item>
-				<ngc-dropdown-group-item label="Group" title="Select Group Children">
-					<ngc-dropdown-item label="Group Item 1" [value]="100"></ngc-dropdown-item>
-					<ngc-dropdown-item label="Group Item 2" [value]="101"></ngc-dropdown-item>
-				</ngc-dropdown-group-item>
-			</ngc-dropdown>
-		</div>
-
-		<div class="mr-10 mb-20">
-			<ngc-dropdown class="w-300" label="Dropdown With Icon">
-				<ngc-dropdown-item *ngFor="let position of positions" icon="document" [label]="position?.name"
-					[value]="position?.id">
-				</ngc-dropdown-item>
-			</ngc-dropdown>
-		</div>
-
-		<div class="mr-10 mb-20">
-			<ngc-dropdown class="w-300" label="Dropdown With Dot Color">
-				<ngc-dropdown-item *ngFor="let position of positions" dotColor="#ff0000" [label]="position?.name"
-					[value]="position?.id">
-				</ngc-dropdown-item>
-			</ngc-dropdown>
-		</div>
-
-		<div class="mr-10 mb-20">
-			<ngc-dropdown class="w-300" label="Dropdown Multiple Select" multiple>
-				<ngc-dropdown-item *ngFor="let position of positions" icon="document" [label]="position?.name"
-					[value]="position?.id">
-				</ngc-dropdown-item>
-			</ngc-dropdown>
-		</div>
-
-		<div class="mr-10 mb-20">
-			<ngc-dropdown class="w-300" required ngDefaultControl label="Dropdown Required"
-				[formControl]="requiredFormControl">
-				<ngc-dropdown-item *ngFor="let position of positions" [label]="position?.name" [value]="position?.id">
-				</ngc-dropdown-item>
-			</ngc-dropdown>
-		</div>
-
-		<div class="mr-10 mb-20">
-			<ngc-dropdown class="w-300" disabled label="Dropdown Disabled">
-				<ngc-dropdown-item *ngFor="let position of positions" [label]="position?.name" [value]="position?.id">
-				</ngc-dropdown-item>
-			</ngc-dropdown>
-		</div>
-	</div>
-
-	<h3 class="mv-20">Textarea</h3>
-	<ngc-form-field label="Textarea">
-		<textarea ngcFormFieldInput placeholder="Placeholder"></textarea>
-	</ngc-form-field>
-
-	<h3 class="mv-20">Inline Input</h3>
-	<h4 class="stick" ngDefaultControl ngcInlineInput id="ngcInlineInput" label="Inline" placeholder="Placeholder"
-		[(ngModel)]="inline" (ngModelChange)="console.log($event)" (saved)="console.log('Saved', $event)"
-		(cancelled)="console.log('Cancelled', $event)">
-		{{ inline }}
-		<span class="stick-right">
-			<button ngcBasicButton (click)="ngcInlineInput?.edit()">
-				<ngc-icon name="edit" size="20px"></ngc-icon>
-			</button>
-		</span>
-	</h4>
-
-	<h3 class="mv-20">Range Input</h3>
-	<ngc-range-input class="w-300" required label="Range" [(ngModel)]="range" (ngModelChange)="console.log($event)">
-	</ngc-range-input>
-
-	<h3 class="mv-20">Phone Field</h3>
-	<ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone" (ngModelChange)="console.log($event)">
-	</ngc-phone-field>
+	<h3 class="mb-20">Phone Field</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone" (ngModelChange)="console.log($event)">
+			</ngc-phone-field>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone"&gt;&lt;/ngc-phone-field&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Member Picker">
-	<h3 class="mv-20">Member Picker</h3>
-	<ngc-member-picker class="mv-20" canViewProfile required label="Member Picker Directive" limit="3" mode="inline"
-		[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
-		(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
-		(selectedMembersChange)="console.log('Selected Members Change', $event)"
-		(viewDetail)="console.log('View detail', $event)">
-	</ngc-member-picker>
+	<h3 class="mv-20">Member Picker Component</h3>
+	<p class="component-description">
+		<strong>Member Picker</strong> allows selection of project/organization members, featuring profile preview, multi-selection limits, role/status inclusions (active, pending, inactive), readonly modes, and disabled configurations.
+	</p>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-member-picker class="mv-20" canViewProfile required label="Member Picker Directive" limit="3" mode="inline"
+				[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
+				(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
+				(selectedMembersChange)="console.log('Selected Members Change', $event)"
+				(viewDetail)="console.log('View detail', $event)">
+			</ngc-member-picker>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-member-picker canViewProfile required label="Member Picker Directive" limit="3" mode="inline" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-picker&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<button class="w-fit-content mv-20" ngcButton ngcMemberPicker canViewProfile required
-		label="Member Picker Directive" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"
-		(added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
-		(selectedChange)="console.log('Selected Change', $event)"
-		(selectedMembersChange)="console.log('Selected Members Change', $event)"
-		(viewDetail)="console.log('View detail', $event)">
-		Member Picker
-	</button>
+	<h3 class="mv-20">Member Picker Directive</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<button class="w-fit-content mv-20" ngcButton ngcMemberPicker canViewProfile required
+				label="Member Picker Directive" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"
+				(added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
+				(selectedChange)="console.log('Selected Change', $event)"
+				(selectedMembersChange)="console.log('Selected Members Change', $event)"
+				(viewDetail)="console.log('View detail', $event)">
+				Member Picker
+			</button>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton ngcMemberPicker canViewProfile required label="Member Picker Directive" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;Member Picker&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<ngc-member-list class="mv-20" label="Member Picker" [members]="members" [(selected)]="selected"
-		(added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
-		(selectedChange)="console.log('Selected Change', $event)">
-	</ngc-member-list>
+	<h3 class="mv-20">Member List</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-member-list class="mv-20" label="Member Picker" [members]="members" [(selected)]="selected"
+				(added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
+				(selectedChange)="console.log('Selected Change', $event)">
+			</ngc-member-list>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-member-list label="Member Picker" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<ngc-member-list class="mv-20" label="Member Picker Lazy List" [strictDisplay]="false" [members]="members$"
-		[selectedMembers]="[
-      { id: 1, name: 'Member 1' },
-      { id: 2, name: 'Member 2' }
-    ]" [(selected)]="selected" (added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
-		(selectedChange)="console.log('Selected Change', $event)">
-	</ngc-member-list>
-	<ngc-member-list class="mv-20" canViewProfile required label="Member Picker Have Pending/Inactive Status" limit="3"
-		[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
-		(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
-		(selectedMembersChange)="console.log('Selected Members Change', $event)"
-		(viewDetail)="console.log('View detail', $event)">
-	</ngc-member-list>
+	<h3 class="mv-20">Member List Lazy List</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-member-list class="mv-20" label="Member Picker Lazy List" [strictDisplay]="false" [members]="members$"
+				[selectedMembers]="[
+					{ id: 1, name: 'Member 1' },
+					{ id: 2, name: 'Member 2' }
+				]" [(selected)]="selected" (added)="console.log('Added', $event)" (removed)="console.log('Removed', $event)"
+				(selectedChange)="console.log('Selected Change', $event)">
+			</ngc-member-list>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-member-list label="Member Picker Lazy List" [strictDisplay]="false" [members]="members$" [selectedMembers]="[{{ '{' }} id: 1, name: 'Member 1' {{ '}' }}, {{ '{' }} id: 2, name: 'Member 2' {{ '}' }}]" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<ngc-member-list class="mv-20" readonly label="Member picker readonly" [members]="members" [(selected)]="selected">
-	</ngc-member-list>
+	<h3 class="mv-20">Member List Pending/Inactive Status</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-member-list class="mv-20" canViewProfile required label="Member Picker Have Pending/Inactive Status" limit="3"
+				[includesStatus]="[2, 3]" [members]="members" [(selected)]="selected" (added)="console.log('Added', $event)"
+				(removed)="console.log('Removed', $event)" (selectedChange)="console.log('Selected Change', $event)"
+				(selectedMembersChange)="console.log('Selected Members Change', $event)"
+				(viewDetail)="console.log('View detail', $event)">
+			</ngc-member-list>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-member-list canViewProfile required label="Member Picker Have Pending/Inactive Status" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
-	<ngc-member-list class="mv-20" disabled label="Member picker disabled" [members]="members" [(selected)]="selected">
-	</ngc-member-list>
+	<h3 class="mv-20">Member List Readonly</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-member-list class="mv-20" readonly label="Member picker readonly" [members]="members" [(selected)]="selected">
+			</ngc-member-list>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-member-list readonly label="Member picker readonly" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mv-20">Member List Disabled</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-member-list class="mv-20" disabled label="Member picker disabled" [members]="members" [(selected)]="selected">
+			</ngc-member-list>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-member-list disabled label="Member picker disabled" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 
 <ng-template #compTemplate label="Pagination">
 	<h3 class="mb-20">Pagination</h3>
-	<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
+	<p class="component-description">
+		<strong>Pagination</strong> renders standard control bars representing page indicators, page navigation buttons, and item count limits.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"&gt;&lt;/ngc-pagination&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Popover">31</ng-template>
 <ng-template #compTemplate label="Progress">
 	<h3 class="mv-20">Progress</h3>
-	<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
+	<p class="component-description">
+		<strong>Progress Bar</strong> displays progress status for loading operations, file uploads, or processes, with text-label support.
+	</p>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="10" [value]="2"&gt;&lt;/ngc-progress-bar&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
 	<h3 class="mv-20">Progress with Text</h3>
-	<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
-		[statusText]="'Uploading .... '"></ngc-progress-bar>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
+				[statusText]="'Uploading .... '"></ngc-progress-bar>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" labelText="File 1" statusText="Uploading .... "&gt;&lt;/ngc-progress-bar&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Radio Group">
-	<h3 class="mb-20">Radio Group</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-radio [checked]="true">Default</ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [checked]="true" label="Primary" color="primary"></ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [checked]="true" [disabled]="true" label="Checked & Disabled" color="primary"></ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [disabled]="true" label="Disabled" color="primary"></ngc-radio>
-		</div>
-	</div>
+	<h3 class="mb-20">Radio</h3>
+	<p class="component-description">
+		<strong>Radio</strong> is a binary selection option. <strong>Radio Group</strong> enables users to select a single choice from a collection of radio components.
+	</p>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<ngc-radio [checked]="true">Default</ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [checked]="true" label="Primary" color="primary"></ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [checked]="true" [disabled]="true" label="Checked & Disabled" color="primary"></ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [disabled]="true" label="Disabled" color="primary"></ngc-radio>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-radio [checked]="true"&gt;Default&lt;/ngc-radio&gt;
+&lt;ngc-radio [checked]="true" label="Primary" color="primary"&gt;&lt;/ngc-radio&gt;
+&lt;ngc-radio [checked]="true" [disabled]="true" label="Checked &amp; Disabled" color="primary"&gt;&lt;/ngc-radio&gt;
+&lt;ngc-radio [disabled]="true" label="Disabled" color="primary"&gt;&lt;/ngc-radio&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
 	<h3 class="mv-20">Radio Custom Color</h3>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-radio [checked]="true" label="Red" color="#ff0000" labelColor="red"></ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [checked]="true" label="Blue" color="#0000ff" labelColor="blue"></ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [checked]="true" label="Green" color="#008000" labelColor="green"></ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [checked]="true" [disabled]="true" label="Checked & Disabled" color="#008000"></ngc-radio>
-		</div>
-		<div class="mr-10">
-			<ngc-radio [disabled]="true" label="Disabled" color="#008000"></ngc-radio>
-		</div>
-	</div>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<ngc-radio [checked]="true" label="Red" color="#ff0000" labelColor="red"></ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [checked]="true" label="Blue" color="#0000ff" labelColor="blue"></ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [checked]="true" label="Green" color="#008000" labelColor="green"></ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [checked]="true" [disabled]="true" label="Checked & Disabled" color="#008000"></ngc-radio>
+				</div>
+				<div class="mr-10">
+					<ngc-radio [disabled]="true" label="Disabled" color="#008000"></ngc-radio>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-radio [checked]="true" label="Red" color="#ff0000" labelColor="red"&gt;&lt;/ngc-radio&gt;
+&lt;ngc-radio [checked]="true" label="Blue" color="#0000ff" labelColor="blue"&gt;&lt;/ngc-radio&gt;
+&lt;ngc-radio [checked]="true" label="Green" color="#008000" labelColor="green"&gt;&lt;/ngc-radio&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
 	<h3 class="mv-20">Radio Group</h3>
-	<ngc-radio-group ngDefaultControl label="Label" [(ngModel)]="radioGroupValue">
-		<ngc-radio [value]="1">Radio 1</ngc-radio>
-		<ngc-radio [value]="2">Radio 2</ngc-radio>
-	</ngc-radio-group>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-radio-group ngDefaultControl label="Label" [(ngModel)]="radioGroupValue">
+				<ngc-radio [value]="1">Radio 1</ngc-radio>
+				<ngc-radio [value]="2">Radio 2</ngc-radio>
+			</ngc-radio-group>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-radio-group ngDefaultControl label="Label" [(ngModel)]="radioGroupValue"&gt;
+	&lt;ngc-radio [value]="1"&gt;Radio 1&lt;/ngc-radio&gt;
+	&lt;ngc-radio [value]="2"&gt;Radio 2&lt;/ngc-radio&gt;
+&lt;/ngc-radio-group&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
 	<h3 class="mv-20">Radio Group Disabled</h3>
-	<ngc-radio-group ngDefaultControl [disabled]="true" label="Label" [(ngModel)]="radioGroupValue">
-		<ngc-radio [value]="1">Radio 1</ngc-radio>
-		<ngc-radio [value]="2">Radio 2</ngc-radio>
-	</ngc-radio-group>
-
-
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-radio-group ngDefaultControl [disabled]="true" label="Label" [(ngModel)]="radioGroupValue">
+				<ngc-radio [value]="1">Radio 1</ngc-radio>
+				<ngc-radio [value]="2">Radio 2</ngc-radio>
+			</ngc-radio-group>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-radio-group ngDefaultControl [disabled]="true" label="Label" [(ngModel)]="radioGroupValue"&gt;
+	&lt;ngc-radio [value]="1"&gt;Radio 1&lt;/ngc-radio&gt;
+	&lt;ngc-radio [value]="2"&gt;Radio 2&lt;/ngc-radio&gt;
+&lt;/ngc-radio-group&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Select">
 	<h3 class="mb-20">Select</h3>
-	<ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions"
-		(selectionChange)="console?.log($event)"></ngc-select>
+	<p class="component-description">
+		<strong>Select</strong> is a selection dropdown component supporting options list rendering, default selected value bindings, and change listeners.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions"
+				(selectionChange)="console?.log($event)"></ngc-select>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions" (selectionChange)="console?.log($event)"&gt;&lt;/ngc-select&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Sheet">38</ng-template>
 <ng-template #compTemplate label="Sidebar">39</ng-template>
 <ng-template #compTemplate label="Skeleton">
+	<p class="component-description">
+		<strong>Skeleton</strong> serves as a placeholder loading animation representing textual data, circular avatar icons, or card blocks during active content fetching.
+	</p>
 	<!-- Skeleton cho text -->
 	<h3 class="mv-20">Skeleton Text</h3>
-	<ngc-skeleton width="200px" height="20px"></ngc-skeleton>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-skeleton width="200px" height="20px"></ngc-skeleton>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-skeleton width="200px" height="20px"&gt;&lt;/ngc-skeleton&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
 	<!-- Skeleton hình tròn -->
 	<h3 class="mv-20">Skeleton Circle</h3>
-	<ngc-skeleton width="50px" height="50px" [circle]="true"></ngc-skeleton>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-skeleton width="50px" height="50px" [circle]="true"></ngc-skeleton>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-skeleton width="50px" height="50px" [circle]="true"&gt;&lt;/ngc-skeleton&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 
 	<!-- Skeleton full width -->
 	<h3 class="mv-20">Skeleton Full Width</h3>
-	<ngc-skeleton height="40px"></ngc-skeleton>
-
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-skeleton height="40px"></ngc-skeleton>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-skeleton height="40px"&gt;&lt;/ngc-skeleton&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Sonner">42</ng-template>
 <ng-template #compTemplate label="Switch">
-	<div class="mb-15">Switch</div>
-	<div class="layout-row layout-wrap">
-		<div class="mr-10">
-			<ngc-switch ngDefaultControl [ngModel]="true">
-				Default
-			</ngc-switch>
-		</div>
-		<div class="mr-10">
-			<ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true">
-			</ngc-switch>
-		</div>
-		<div class="mr-10">
-			<ngc-switch ngDefaultControl disabled label="Active & Disabled" [ngModel]="true">
-			</ngc-switch>
-		</div>
-		<div class="mr-10">
-			<ngc-switch [disabled]="true" label="Disabled">
-			</ngc-switch>
-		</div>
-	</div>
-
+	<h3 class="mb-20">Switch</h3>
+	<p class="component-description">
+		<strong>Switch</strong> is an interactive sliding binary toggle button that supports color customizability and active/disabled states.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap">
+				<div class="mr-10">
+					<ngc-switch ngDefaultControl [ngModel]="true">
+						Default
+					</ngc-switch>
+				</div>
+				<div class="mr-10">
+					<ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true">
+					</ngc-switch>
+				</div>
+				<div class="mr-10">
+					<ngc-switch ngDefaultControl disabled label="Active & Disabled" [ngModel]="true">
+					</ngc-switch>
+				</div>
+				<div class="mr-10">
+					<ngc-switch [disabled]="true" label="Disabled">
+					</ngc-switch>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-switch ngDefaultControl [ngModel]="true"&gt;Default&lt;/ngc-switch&gt;
+&lt;ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true"&gt;&lt;/ngc-switch&gt;
+&lt;ngc-switch ngDefaultControl disabled label="Active &amp; Disabled" [ngModel]="true"&gt;&lt;/ngc-switch&gt;
+&lt;ngc-switch [disabled]="true" label="Disabled"&gt;&lt;/ngc-switch&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Table">44</ng-template>
 <ng-template #compTemplate label="Tabs">
 	<h3 class="mb-20">Tabs</h3>
+	<p class="component-description">
+		<strong>Tabs</strong> displays tabbed headings to switch context, toggle sections visibility, or structure pages into different categories.
+	</p>
 	<ngc-tab-group>
-		<ngc-tab [label]="'Tab 1'">
-			What is Lorem Ipsum? 1
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-			into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-			release of
-			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
-			Aldus PageMaker including versions of Lorem Ipsum.
+		<ngc-tab [label]="'Preview'">
+			<ngc-tab-group>
+				<ngc-tab [label]="'Tab 1'">
+					What is Lorem Ipsum? 1
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+					scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+					into
+					electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+					release of
+					Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+					Aldus PageMaker including versions of Lorem Ipsum.
 
-			Why do we use it?
-			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-			of
-			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
-			evolved
-			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+					Why do we use it?
+					It is a long established fact that a reader will be distracted by the readable content of a page when
+					looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+					of
+					letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+					desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
+					search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+					evolved
+					over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+				</ngc-tab>
+				<ngc-tab [label]="'Tab 2'">
+					What is Lorem Ipsum? 2
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+					scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+					into
+					electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+					release of
+					Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+					Aldus PageMaker including versions of Lorem Ipsum.
+
+					Why do we use it?
+					It is a long established fact that a reader will be distracted by the readable content of a page when
+					looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+					of
+					letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+					desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
+					search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+					evolved
+					over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+				</ngc-tab>
+				<ngc-tab [label]="'Tab 3'">
+					What is Lorem Ipsum? 3
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+					industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+					scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
+					into
+					electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
+					release of
+					Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+					Aldus PageMaker including versions of Lorem Ipsum.
+
+					Why do we use it?
+					It is a long established fact that a reader will be distracted by the readable content of a page when
+					looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+					of
+					letters, as opposed to using 'Content here, content here', making it look like readable English. Many
+					desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
+					search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
+					evolved
+					over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+				</ngc-tab>
+			</ngc-tab-group>
 		</ngc-tab>
-		<ngc-tab [label]="'Tab 2'">
-			What is Lorem Ipsum? 2
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-			into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-			release of
-			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
-			Aldus PageMaker including versions of Lorem Ipsum.
-
-			Why do we use it?
-			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-			of
-			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
-			evolved
-			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
-		</ngc-tab>
-		<ngc-tab [label]="'Tab 3'">
-			What is Lorem Ipsum? 3
-			Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-			industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-			scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap
-			into
-			electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the
-			release of
-			Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
-			Aldus PageMaker including versions of Lorem Ipsum.
-
-			Why do we use it?
-			It is a long established fact that a reader will be distracted by the readable content of a page when
-			looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution
-			of
-			letters, as opposed to using 'Content here, content here', making it look like readable English. Many
-			desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a
-			search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have
-			evolved
-			over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-tab-group&gt;
+	&lt;ngc-tab [label]="'Tab 1'"&gt;
+		Content 1
+	&lt;/ngc-tab&gt;
+	&lt;ngc-tab [label]="'Tab 2'"&gt;
+		Content 2
+	&lt;/ngc-tab&gt;
+	&lt;ngc-tab [label]="'Tab 3'"&gt;
+		Content 3
+	&lt;/ngc-tab&gt;
+&lt;/ngc-tab-group&gt;</code></pre>
+			</ngc-code-block>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Textarea">
 	<h3 class="mb-20">Textarea</h3>
-	<ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"></ngc-textarea>
+	<p class="component-description">
+		<strong>Textarea</strong> is an input selector component supporting text area rows and column configurations.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"></ngc-textarea>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"&gt;&lt;/ngc-textarea&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Toast">
 	<h3 class="mb-20">Toast</h3>
-	<div class="layout-row">
-		<div class="m-10">
-			<button ngcButton (click)="openToast( 'success' )">Open toast success</button>
-		</div>
-		<div class="m-10">
-			<button ngcButton (click)="openToast( 'info' )">Open toast infor</button>
-		</div>
-		<div class="m-10">
-			<button ngcButton (click)="openToast( 'warning' )">Open toast warning</button>
-		</div>
-		<div class="m-10">
-			<button ngcButton (click)="openToast( 'danger' )">Open toast danger</button>
-		</div>
-	</div>
+	<p class="component-description">
+		<strong>Toast</strong> is a temporary notification message overlay supporting success, info, warning, and danger severity types.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row">
+				<div class="m-10">
+					<button ngcButton (click)="openToast( 'success' )">Open toast success</button>
+				</div>
+				<div class="m-10">
+					<button ngcButton (click)="openToast( 'info' )">Open toast infor</button>
+				</div>
+				<div class="m-10">
+					<button ngcButton (click)="openToast( 'warning' )">Open toast warning</button>
+				</div>
+				<div class="m-10">
+					<button ngcButton (click)="openToast( 'danger' )">Open toast danger</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- In component.ts --&gt;
+&lt;!-- this.ngcToastService.show('Message', {{ '{' }} type: 'success' {{ '}' }}) --&gt;
+&lt;button ngcButton (click)="openToast('success')"&gt;Open toast success&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Tooltip">
 	<h3 class="mb-20">Tooltip</h3>
-	<div class="layout-row layout-wrap layout-align-start-center">
-		<div class="mr-10">
-			<button ngcButton position="above" [ngcTooltip]="'Tooltip'">Tooltip Above</button>
-		</div>
+	<p class="component-description">
+		<strong>Tooltip</strong> directive adds contextual popup text prompts upon hovering elements, supporting placements (above, below, before, after) and custom HTML content.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center">
+				<div class="mr-10">
+					<button ngcButton position="above" [ngcTooltip]="'Tooltip'">Tooltip Above</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="below" [ngcTooltip]="'Tooltip'">Tooltip Below</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton position="below" [ngcTooltip]="'Tooltip'">Tooltip Below</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="before" [ngcTooltip]="'Tooltip'">Tooltip Before</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton position="before" [ngcTooltip]="'Tooltip'">Tooltip Before</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="after" [ngcTooltip]="'Tooltip'">Tooltip After</button>
-		</div>
+				<div class="mr-10">
+					<button ngcButton position="after" [ngcTooltip]="'Tooltip'">Tooltip After</button>
+				</div>
 
-		<div class="mr-10">
-			<button ngcButton position="below" [ngcTooltip]="tooltip">Tooltip Custom</button>
-		</div>
-	</div>
+				<div class="mr-10">
+					<button ngcButton position="below" [ngcTooltip]="tooltip">Tooltip Custom</button>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;button ngcButton position="above" [ngcTooltip]="'Tooltip'"&gt;Tooltip Above&lt;/button&gt;
+&lt;button ngcButton position="below" [ngcTooltip]="'Tooltip'"&gt;Tooltip Below&lt;/button&gt;
+&lt;button ngcButton position="before" [ngcTooltip]="'Tooltip'"&gt;Tooltip Before&lt;/button&gt;
+&lt;button ngcButton position="after" [ngcTooltip]="'Tooltip'"&gt;Tooltip After&lt;/button&gt;
+&lt;button ngcButton position="below" [ngcTooltip]="tooltip"&gt;Tooltip Custom&lt;/button&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
+<ng-template #compTemplate label="Alert">
+	<h3 class="mb-20">Alert</h3>
+	<p class="component-description">
+		<strong>Alert</strong> component provides feedback messages for typical user actions, supporting color presets (primary, info, success, warning, danger), custom hex colors, leading icon configurations, and close triggers. It can be used both as an element (`&lt;ngc-alert&gt;`) or as an attribute directive (`[ngcAlert]`).
+	</p>
 
+	<h3 class="mb-20">Alert Presets</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-alert color="primary" icon="info">This is a primary alert.</ngc-alert>
+			<ngc-alert color="info" icon="info">This is an info alert.</ngc-alert>
+			<ngc-alert color="success" icon="check-circle">This is a success alert.</ngc-alert>
+			<ngc-alert color="warning" icon="alert-triangle">This is a warning alert.</ngc-alert>
+			<ngc-alert color="danger" icon="alert-circle">This is a danger alert.</ngc-alert>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-alert color="primary" icon="info"&gt;This is a primary alert.&lt;/ngc-alert&gt;
+&lt;ngc-alert color="info" icon="info"&gt;This is an info alert.&lt;/ngc-alert&gt;
+&lt;ngc-alert color="success" icon="check-circle"&gt;This is a success alert.&lt;/ngc-alert&gt;
+&lt;ngc-alert color="warning" icon="alert-triangle"&gt;This is a warning alert.&lt;/ngc-alert&gt;
+&lt;ngc-alert color="danger" icon="alert-circle"&gt;This is a danger alert.&lt;/ngc-alert&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Alert Custom Color & Closeable</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-alert color="#af52de" icon="bell" closeable>This is a custom purple alert (#af52de) with a close button.</ngc-alert>
+			<ngc-alert color="#ff9500" icon="star" closeable>This is a custom orange alert (#ff9500) with a close button.</ngc-alert>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-alert color="#af52de" icon="bell" closeable&gt;This is a custom purple alert (#af52de) with a close button.&lt;/ngc-alert&gt;
+&lt;ngc-alert color="#ff9500" icon="star" closeable&gt;This is a custom orange alert (#ff9500) with a close button.&lt;/ngc-alert&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Alert Directive</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div ngcAlert color="success" icon="check-circle">This is a div styled with the ngcAlert directive.</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;div ngcAlert color="success" icon="check-circle"&gt;This is a div styled with the ngcAlert directive.&lt;/div&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Color & Typography">
 

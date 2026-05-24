@@ -4,6 +4,8 @@
     [color]='toast?.config?.color'
     [textColor]='toast?.config?.textColor'
     [type]="toast?.config?.type"
+    [icon]="toast?.config?.icon"
+    [canClose]="toast?.config?.canClose"
     [buttons]="toast?.config?.buttons"
     (closed)="deleteToast( toast?.id )">
 </ngc-toast>

@@ -9,11 +9,11 @@
 	min-height: var(--button-size, 40px);
 	max-height: var(--button-size, 40px);
 	font-weight: $font-weight-semibold;
-	color: var(--button-text-color, $color-label);
-	background-color: var(--button-color, $color-default);
+	color: var(--button-text-color, $color-text);
+	background-color: var(--button-color, $color-white);
 	border-width: var(--button-border-width, 1px);
 	border-style: var(--button-border-style, solid);
-	border-color: var(--button-border-color, $color-default);
+	border-color: var(--button-border-color, $color-border-thick);
 	border-radius: 8px;
 
 	&.ngc-primary {

@@ -7,11 +7,11 @@
 	flex-direction: column;
 	width: 320px;
 	background-color: $color-white;
+	padding: 15px;
+	border-radius: 10px;
+	border: solid 1px $color-border;
 
 	&:not(.ngc-date-picker--inline) {
-		padding: 15px;
-		border-radius: 10px;
-		border: solid 1px $color-border;
 		box-shadow: $box-shadow;
 		animation: $popup-animation;
 	}

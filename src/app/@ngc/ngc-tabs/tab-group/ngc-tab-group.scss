@@ -4,6 +4,9 @@
 .ngc-tab-group {
 	display: flex;
 	flex-direction: column;
+	border: 1px solid $color-border;
+	border-radius: 10px;
+	overflow: hidden;
 
 	&.ngc-tab-group--stretch {
 		width: 100%;
@@ -12,6 +15,8 @@
 		height: 100%;
 		min-height: 0;
 		max-height: 100vh;
+		border: none;
+		border-radius: 0;
 
 		// > .ngc-tab-group__content {
 		// 	@include scroll;
@@ -116,10 +121,10 @@
 	> .ngc-tab-group__content {
 		display: flex;
 		flex-direction: column;
-		padding-top: var(--tab-group-content-padding-top, 10px);
-		padding-bottom: var(--tab-group-content-padding-bottom, 10px);
-		padding-left: var(--tab-group-content-padding-left, 10px);
-		padding-right: var(--tab-group-content-padding-right, 10px);
+		padding-top: var(--tab-group-content-padding-top, 15px);
+		padding-bottom: var(--tab-group-content-padding-bottom, 15px);
+		padding-left: var(--tab-group-content-padding-left, 15px);
+		padding-right: var(--tab-group-content-padding-right, 15px);
 		width: 100%;
 		min-width: 0;
 		height: 100%;

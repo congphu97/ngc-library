@@ -1,21 +1,72 @@
-select {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ccc;         // viền mỏng xám
-  border-radius: 6px;             // bo góc
-  background-color: #fff;
-  font-size: 14px;
-  font-family: inherit;
-  appearance: none;              // ẩn icon mặc định trình duyệt
-  background-image: url('data:image/svg+xml;utf8,<svg fill="gray" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-  background-size: 16px;
-  cursor: pointer;
+@import 'src/scss/partials/variable';
 
-  &:focus {
+select {
+  box-sizing: border-box;
+  width: 100%;
+  height: 40px;
+  padding: 10px 36px 10px 14px;  // Extra padding-right to prevent text overlapping arrow
+  border: 1px solid var(--select-border-color, $color-border);
+  border-radius: 8px;
+  background-color: var(--select-bg-color, $color-white);
+  color: var(--select-text-color, $color-text);
+  font-size: var(--select-font-size, $font-size-base);
+  font-family: $font-family-body;
+  font-weight: $font-weight-semibold;
+  appearance: none;              // Hides native browser arrow
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%238e8e93' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+  cursor: pointer;
+  transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover:not(:disabled) {
+    border-color: var(--select-hover-border-color, $color-border-thick);
+  }
+
+  &:focus:not(:disabled) {
     outline: none;
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    border-color: var(--select-focus-border-color, $color-border-super-thick);
+    box-shadow: var(--select-focus-box-shadow, $box-shadow-focus);
+  }
+
+  &:disabled {
+    background-color: var(--select-disabled-bg-color, $color-secondary);
+    color: var(--select-disabled-text-color, $color-disabled);
+    border-color: var(--select-disabled-border-color, $color-border);
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 }
+
+:host-context(.dark-theme) {
+  select {
+    --select-bg-color: #161b22;
+    --select-border-color: #30363d;
+    --select-text-color: #c9d1d9;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%238b949e' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+
+    &:hover:not(:disabled) {
+      --select-hover-border-color: #8b949e;
+      --select-hover-bg-color: #1f242c;
+    }
+
+    &:focus:not(:disabled) {
+      --select-focus-border-color: #58a6ff;
+      --select-focus-bg-color: #1f242c;
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+    }
+
+    &:disabled {
+      --select-disabled-bg-color: #0d1117;
+      --select-disabled-text-color: #484f58;
+      --select-disabled-border-color: #21262d;
+    }
+  }
+
+  option {
+    background-color: #161b22;
+    color: #c9d1d9;
+  }
+}
+
