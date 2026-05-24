@@ -102,6 +102,10 @@ export class GuidelineComponent implements OnInit {
 			});
 	}
 
+	get currentCompLabel(): string {
+		return (this.currentCompTemplate as any)?.label || '';
+	}
+
 	public selectCompTemplate(compTemplate: TemplateRef<any>) {
 		const index: number = indexOf(this.compTemplatesArr, compTemplate);
 

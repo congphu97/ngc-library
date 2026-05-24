@@ -35,7 +35,7 @@
 		padding-bottom: var(--collapse-padding-bottom, 15px);
 		padding-left: var(--collapse-padding-left, 15px);
 		padding-right: var(--collapse-padding-right, 15px);
-		background: #f6f6f6;
+		background: $color-default;
 		font-weight: bold;
 		border-bottom: 1px solid $color-border;
 
@@ -59,7 +59,7 @@
 		padding-bottom: var(--collapse-padding-bottom, 15px);
 		padding-left: var(--collapse-padding-left, 15px);
 		padding-right: var(--collapse-padding-right, 15px);
-		background: #f6f6f6;
+		background: $color-default;
 		font-weight: bold;
 		border-top: 1px solid $color-border;
 

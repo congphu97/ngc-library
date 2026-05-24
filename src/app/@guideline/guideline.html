@@ -23,6 +23,9 @@
 
 			<ngc-drawer-content paddingVertical="20px" paddingHorizontal="20px">
 				<ngc-scroll-bar>
+					<h2 class="guideline-component-main-title" *ngIf="currentCompLabel">
+						{{ currentCompLabel }}
+					</h2>
 					<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
 				</ngc-scroll-bar>
 			</ngc-drawer-content>
@@ -879,7 +882,7 @@
 				<ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
 			</div>
 			<div class="mb-10">
-				<ngc-checkbox [label]="'Checkbox 2'" [checked]="true"></ngc-checkbox>
+				<ngc-checkbox [label]="'Checkbox 2'" [ngModel]="true"></ngc-checkbox>
 			</div>
 			<div class="mb-10">
 				<ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"></ngc-checkbox>
@@ -891,7 +894,7 @@
 	&lt;ngc-checkbox [label]="'Checkbox 1'"&gt;&lt;/ngc-checkbox&gt;
 &lt;/div&gt;
 &lt;div class="mb-10"&gt;
-	&lt;ngc-checkbox [label]="'Checkbox 2'" [checked]="true"&gt;&lt;/ngc-checkbox&gt;
+	&lt;ngc-checkbox [label]="'Checkbox 2'" [ngModel]="true"&gt;&lt;/ngc-checkbox&gt;
 &lt;/div&gt;
 &lt;div class="mb-10"&gt;
 	&lt;ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"&gt;&lt;/ngc-checkbox&gt;
@@ -2013,17 +2016,225 @@
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Textarea">
-	<h3 class="mb-20">Textarea</h3>
 	<p class="component-description">
-		<strong>Textarea</strong> is an input selector component supporting text area rows and column configurations.
+		<strong>Textarea</strong> is an input field component supporting standard labels, placeholders, disabled states, character limits with reactive counters, and customizable validation error triggers.
 	</p>
-	<ngc-tab-group>
+	
+	<h3 class="mb-20">Default & Character Counter</h3>
+	<ngc-tab-group class="mb-30">
 		<ngc-tab [label]="'Preview'">
-			<ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"></ngc-textarea>
+			<div class="layout-column max-w-500">
+				<ngc-textarea 
+					label="Feedback Comment" 
+					placeholder="Share your thoughts with us..." 
+					[rows]="4" 
+					maxLength="200" 
+					showCounter="true">
+				</ngc-textarea>
+			</div>
 		</ngc-tab>
 		<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-textarea [label]="'Textarea'" [rows]="10" [cols]="10" (valueChange)="console.log($event)"&gt;&lt;/ngc-textarea&gt;</code></pre>
+				<pre><code #codeContent>&lt;ngc-textarea 
+  label="Feedback Comment" 
+  placeholder="Share your thoughts with us..." 
+  [rows]="4" 
+  maxLength="200" 
+  showCounter="true"&gt;
+&lt;/ngc-textarea&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Disabled State</h3>
+	<ngc-tab-group class="mb-30">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-column max-w-500">
+				<ngc-textarea 
+					label="Read-Only / Disabled Notes" 
+					placeholder="Cannot type anything here..." 
+					[rows]="3" 
+					disabled="true">
+				</ngc-textarea>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-textarea 
+  label="Read-Only / Disabled Notes" 
+  placeholder="Cannot type anything here..." 
+  [rows]="3" 
+  disabled="true"&gt;
+&lt;/ngc-textarea&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Invalid State</h3>
+	<ngc-tab-group class="mb-30">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-column max-w-500">
+				<ngc-textarea 
+					label="Invalid Textarea" 
+					placeholder="Something is wrong..." 
+					[rows]="3" 
+					[invalid]="true"
+					errorMessage="The entered value is not valid.">
+				</ngc-textarea>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-textarea 
+  label="Invalid Textarea" 
+  [rows]="3" 
+  [invalid]="hasError"
+  errorMessage="The entered value is not valid."&gt;
+&lt;/ngc-textarea&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<!-- Appearance Modes -->
+	<h3 class="mb-20">Appearance Modes</h3>
+	<ngc-tab-group class="mb-30">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-column max-w-500">
+				<div class="mb-25">
+					<ngc-textarea 
+						label="Default Appearance" 
+						placeholder="Solid border all around..." 
+						appearance="default"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+				<div class="mb-25">
+					<ngc-textarea 
+						label="Filled Appearance" 
+						placeholder="Background filled with bottom border..." 
+						appearance="filled"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+				<div class="mb-25">
+					<ngc-textarea 
+						label="Underlined Appearance" 
+						placeholder="Only bottom border..." 
+						appearance="underlined"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+				<div>
+					<ngc-textarea 
+						label="Borderless Appearance" 
+						placeholder="No borders at all..." 
+						appearance="borderless"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Default appearance --&gt;
+&lt;ngc-textarea 
+  label="Default Appearance" 
+  appearance="default"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;
+
+&lt;!-- Filled appearance --&gt;
+&lt;ngc-textarea 
+  label="Filled Appearance" 
+  appearance="filled"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;
+
+&lt;!-- Underlined appearance --&gt;
+&lt;ngc-textarea 
+  label="Underlined Appearance" 
+  appearance="underlined"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;
+
+&lt;!-- Borderless appearance --&gt;
+&lt;ngc-textarea 
+  label="Borderless Appearance" 
+  appearance="borderless"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<!-- Resize Options -->
+	<h3 class="mb-20">Resize Modes</h3>
+	<ngc-tab-group class="mb-30">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-column max-w-500">
+				<div class="mb-25">
+					<ngc-textarea 
+						label="Resize Vertical (Default)" 
+						placeholder="Can only drag to resize vertically..." 
+						resize="vertical"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+				<div class="mb-25">
+					<ngc-textarea 
+						label="Resize Both" 
+						placeholder="Can drag to resize both vertically and horizontally..." 
+						resize="both"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+				<div class="mb-25">
+					<ngc-textarea 
+						label="Resize Horizontal" 
+						placeholder="Can only drag to resize horizontally..." 
+						resize="horizontal"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+				<div>
+					<ngc-textarea 
+						label="No Resize" 
+						placeholder="Resize handle is hidden..." 
+						resize="none"
+						[rows]="3">
+					</ngc-textarea>
+				</div>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Vertical resize --&gt;
+&lt;ngc-textarea 
+  label="Resize Vertical" 
+  resize="vertical"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;
+
+&lt;!-- Both directions --&gt;
+&lt;ngc-textarea 
+  label="Resize Both" 
+  resize="both"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;
+
+&lt;!-- Horizontal resize --&gt;
+&lt;ngc-textarea 
+  label="Resize Horizontal" 
+  resize="horizontal"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;
+
+&lt;!-- No resize allowed --&gt;
+&lt;ngc-textarea 
+  label="No Resize" 
+  resize="none"
+  [rows]="3"&gt;
+&lt;/ngc-textarea&gt;</code></pre>
 			</ngc-code-block>
 		</ngc-tab>
 	</ngc-tab-group>

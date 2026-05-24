@@ -28,6 +28,20 @@
       height: 100% !important;
       max-height: 100% !important;
     }
+    
+    .guideline-component-main-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #202124;
+      margin-top: 10px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+
+      & + h3 {
+        display: none !important;
+      }
+    }
+
     .component-description {
       font-size: 14px;
       line-height: 1.6;

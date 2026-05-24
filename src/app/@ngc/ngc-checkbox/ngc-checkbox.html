@@ -4,6 +4,7 @@
         [disabled]="disabled"
         [(ngModel)]="ngModel"
         (ngModelChange)="ngModelChange?.emit( $event )"/>
+    <i *ngIf="ngModel" class="ngc-checkbox__icon icon-check"></i>
 </div>
 <div class="ngc-checkbox__label">
     {{ label }}

@@ -41,32 +41,32 @@ select {
 
 :host-context(.dark-theme) {
   select {
-    --select-bg-color: #161b22;
-    --select-border-color: #30363d;
-    --select-text-color: #c9d1d9;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%238b949e' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    --select-bg-color: #{$color-black};
+    --select-border-color: #{color(darkGray, 400)};
+    --select-text-color: #{$color-secondary};
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%238e8e93' stroke-width='1.5'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
 
     &:hover:not(:disabled) {
-      --select-hover-border-color: #8b949e;
-      --select-hover-bg-color: #1f242c;
+      --select-hover-border-color: #{$color-label};
+      --select-hover-bg-color: #{color(darkGray, 500)};
     }
 
     &:focus:not(:disabled) {
-      --select-focus-border-color: #58a6ff;
-      --select-focus-bg-color: #1f242c;
-      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+      --select-focus-border-color: #{$color-info};
+      --select-focus-bg-color: #{color(darkGray, 500)};
+      box-shadow: 0 0 0 3px rgba($color-info, 0.15);
     }
 
     &:disabled {
-      --select-disabled-bg-color: #0d1117;
-      --select-disabled-text-color: #484f58;
-      --select-disabled-border-color: #21262d;
+      --select-disabled-bg-color: #{$color-black};
+      --select-disabled-text-color: #{$color-disabled};
+      --select-disabled-border-color: #{color(darkGray, 500)};
     }
   }
 
   option {
-    background-color: #161b22;
-    color: #c9d1d9;
+    background-color: $color-black;
+    color: $color-secondary;
   }
 }
 

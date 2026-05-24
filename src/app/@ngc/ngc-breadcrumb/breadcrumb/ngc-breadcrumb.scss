@@ -68,12 +68,12 @@
 
 			&.ngc-breadcrumb__item--active {
 				&:hover {
-					color: #ffffff;
+					color: $color-white;
 				}
 			}
 
 			&.ngc-breadcrumb__item--last {
-				color: #ffffff;
+				color: $color-white;
 			}
 
 			&.ngc-breadcrumb__item--disabled {

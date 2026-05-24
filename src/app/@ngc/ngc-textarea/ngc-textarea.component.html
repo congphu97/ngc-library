@@ -1,2 +1,31 @@
-<textarea [ngModel]="message" (ngModelChange)="contentChanged($event)" [rows]="rows" [cols]="cols" placeholder="Nhập nội dung..."></textarea>
-<p>Bạn đã nhập: {{ message }}</p>
+<div class="ngc-textarea-wrapper" 
+     [class.ngc-textarea--disabled]="disabled" 
+     [class.ngc-textarea--invalid]="isInvalid"
+     [class.ngc-textarea--filled]="appearance === 'filled'"
+     [class.ngc-textarea--underlined]="appearance === 'underlined'"
+     [class.ngc-textarea--borderless]="appearance === 'borderless'">
+  <label class="ngc-textarea-label" *ngIf="label">
+    {{ label }}
+  </label>
+  
+  <div class="ngc-textarea-field-container">
+    <textarea 
+      [ngModel]="message" 
+      (ngModelChange)="contentChanged($event)" 
+      [rows]="rows" 
+      [cols]="cols" 
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [maxLength]="maxLength"
+      [style.resize]="resize">
+    </textarea>
+    
+    <div class="ngc-textarea-counter" *ngIf="showCounter && maxLength">
+      {{ message?.length || 0 }} / {{ maxLength }}
+    </div>
+  </div>
+  
+  <div class="ngc-textarea-error-text" *ngIf="isInvalid">
+    {{ errorMessage }}
+  </div>
+</div>

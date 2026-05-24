@@ -5,7 +5,7 @@
   flex-direction: column;
   border: 1px solid $color-border;
   border-radius: 8px;
-  background-color: #f8f9fa;
+  background-color: $color-default;
   overflow: hidden;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   font-family: $font-family-body;
@@ -17,7 +17,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    background-color: #f6f8fa;
+    background-color: $color-default;
     border-bottom: 1px solid $color-border;
     user-select: none;
 
@@ -60,21 +60,21 @@
       ngc-icon {
         display: flex;
         align-items: center;
-        --icon-color: #8e8e93;
+          --icon-color: #{$color-label};
         transition: var(--icon-color) 0.2s ease-in-out;
       }
 
       &:hover {
-        background-color: #ebf0f4;
+        background-color: color(lightGray, 200);
         color: $color-black;
 
         ngc-icon {
-          --icon-color: #242426;
+          --icon-color: #{$color-text};
         }
       }
 
       &:active {
-        background-color: #e1e4e8;
+        background-color: $color-border;
       }
 
       &.copied {
@@ -83,7 +83,7 @@
         background-color: rgba($color-success, 0.05);
 
         ngc-icon {
-          --icon-color: #34c759;
+          --icon-color: #{$color-success};
         }
       }
     }
@@ -91,7 +91,7 @@
 
   .ngc-code-block-body {
     position: relative;
-    background-color: #f8f9fa;
+    background-color: $color-default;
     
     pre, ::ng-deep pre {
       margin: 0;
