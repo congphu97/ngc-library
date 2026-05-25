@@ -8,7 +8,7 @@ ngc-icon {
 	font-size: var(--icon-font-size, inherit);
 	line-height: var(--icon-line-height, inherit);
 
-	i {
+	i, ion-icon {
 		font-size: inherit;
 		line-height: inherit;
 		color: inherit;

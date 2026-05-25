@@ -20,6 +20,15 @@ export class NgcIconComponent implements OnInit {
     @Input() public color: string;
 	@Input() public size: string;
 
+	get isIonic(): boolean {
+		return this.name && (
+			this.name.endsWith('-outline') ||
+			this.name.endsWith('-sharp') ||
+			this.name.endsWith('-fill') ||
+			this.name.startsWith('logo-')
+		);
+	}
+
     constructor() { }
 
     ngOnInit() { }
