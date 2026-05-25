@@ -159,6 +159,10 @@
 	flex-direction: column;
 	min-width: 1px;
 	min-height: 1px;
+
+	&:has(.cdk-overlay-highest-pane) {
+		z-index: $z-level-4;
+	}
 }
 
 .cdk-overlay-pane {

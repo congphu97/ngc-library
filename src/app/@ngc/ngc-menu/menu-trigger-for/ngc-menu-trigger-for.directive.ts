@@ -72,7 +72,7 @@ export class NgcMenuTriggerForDirective implements OnDestroy {
 
 	get isMenuOpened(): boolean { return this._isMenuOpened; }
 	set isMenuOpened( value: boolean ) {
-		if ( !this.menu ) return;
+		if ( !this.menu || this.menu.isOpened === value ) return;
 
 		this._isMenuOpened = this.menu.isOpened = value;
 	}

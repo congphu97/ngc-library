@@ -171,7 +171,11 @@ export class NgcMenuComponent {
 
 		this.opened.emit();
 		this.markForCheck();
-		this.detach();
+		// this.detach();
+
+		setTimeout( () => {
+			this.detectChanges();
+		} );
 	}
 
 	/**

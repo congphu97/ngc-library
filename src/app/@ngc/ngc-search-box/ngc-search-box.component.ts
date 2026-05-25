@@ -265,22 +265,23 @@ export class NgcSearchBoxComponent implements OnChanges, OnDestroy {
 		if ( !this.suggestion ) return;
 
 		const suggestion: any = this.suggestion( this.searchQuery );
-		console.log({suggestion})
+		console.log({suggestion}, 'searchQuery:', this.searchQuery, 'menuTrigger:', this.menuTrigger);
 		if ( isObservable( suggestion ) ) {
 			suggestion
 			.pipe( untilCmpDestroyed( this ) )
 			.subscribe( ( data: any[] ) => {
 				this.suggestionData = data;
-
-
+				console.log('async suggestionData updated:', this.suggestionData);
 				this._toggleMenu();
+				this._cdRef.markForCheck();
 			} );
 			return;
 		}
 
 		this.suggestionData = suggestion;
-
+		console.log('sync suggestionData updated:', this.suggestionData);
 		this._toggleMenu();
+		this._cdRef.markForCheck();
 	}
 
 	/**

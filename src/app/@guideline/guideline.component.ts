@@ -144,7 +144,9 @@ export class GuidelineComponent implements OnInit {
 			.subscribe(() => {
 				console.log('Comp templates', this.compTemplatesArr);
 				forEach(this.compTemplatesArr, (item: TemplateRef<any>) => {
-					(item as IObject).label = (item as IObject)._declarationTContainer.attrs[1];
+					const label: string = (item as IObject)._declarationTContainer.attrs[1];
+					(item as IObject).label = label;
+					(item as IObject).icon = COMPONENT_ICON_MAP[label] || 'collection';
 				});
 
 				this._cdr.detectChanges();

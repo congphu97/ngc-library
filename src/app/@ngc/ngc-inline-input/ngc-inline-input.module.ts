@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { CoreModule, FormModule } from '@core';
 
-// import { NgcFormFieldModule } from '../wgc-form-field';
+import { NgcFormFieldModule } from '../ngc-form-field';
 
 import { NgcInlineInputComponent } from './ngc-inline-input.component';
 
@@ -10,7 +10,7 @@ import { NgcInlineInputComponent } from './ngc-inline-input.component';
 	imports: [
 		CoreModule, FormModule,
 
-		// NgcFormFieldModule,
+		NgcFormFieldModule,
 	],
 	exports		: [ NgcInlineInputComponent ],
 	declarations: [ NgcInlineInputComponent ],

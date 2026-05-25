@@ -1,6 +1,6 @@
 import { Directive, TemplateRef } from '@angular/core';
 
-@Directive({ selector: '[wgcMenuContent]', exportAs: 'wgcMenuContent' })
+@Directive({ selector: '[ngcMenuContent]', exportAs: 'ngcMenuContent' })
 export class NgcMenuContentDirective {
 
 	/**
