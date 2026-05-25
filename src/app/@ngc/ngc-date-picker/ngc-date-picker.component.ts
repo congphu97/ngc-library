@@ -2,7 +2,8 @@ import {
 	Component, Input, ViewEncapsulation,
 	Output, EventEmitter, OnChanges,
 	SimpleChanges, AfterViewInit, Optional,
-	Inject, ChangeDetectionStrategy, HostBinding
+	Inject, ChangeDetectionStrategy, HostBinding,
+	ChangeDetectorRef
 } from '@angular/core';
 import moment, { Moment } from 'moment-timezone';
 import _ from 'lodash';
@@ -104,9 +105,13 @@ export class NgcDatePickerComponent implements AfterViewInit, OnChanges {
 
 	/**
 	 * @constructor
+	 * @param {ChangeDetectorRef} _cdRef
 	 * @param {DateTimeConfig} _dateTimeConfig
 	 */
-	constructor( @Optional() @Inject( DATE_TIME_CONFIG ) private _dateTimeConfig: DateTimeConfig ) {}
+	constructor(
+		private _cdRef: ChangeDetectorRef,
+		@Optional() @Inject( DATE_TIME_CONFIG ) private _dateTimeConfig: DateTimeConfig
+	) {}
 
 	/**
 	 * @constructor
@@ -336,6 +341,7 @@ export class NgcDatePickerComponent implements AfterViewInit, OnChanges {
 			this.dateInMonth,
 			( item: NgcIDateInMonth ): NgcIDateInMonth => ({ ...item, ...this._getDateStates( item ) })
 		);
+		this._cdRef.markForCheck();
 	}
 
 	/**

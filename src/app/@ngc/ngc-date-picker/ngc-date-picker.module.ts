@@ -6,8 +6,8 @@ import { CoreModule } from '@core';
 
 import { NgcButtonModule } from '../ngc-button';
 import { NgcIconModule } from '../ngc-icon';
-// import { NgcMenuModule } from '../ngc-menu';
-// import { NgcFormFieldModule } from '../ngc-form-field';
+import { NgcMenuModule } from '../ngc-menu';
+import { NgcFormFieldModule } from '../ngc-form-field';
 import { NgcTooltipModule } from '../ngc-tooltip';
 
 import { NgcDatePickerComponent } from './ngc-date-picker.component';
@@ -21,9 +21,8 @@ import { NgcSwitchModule } from '../ngc-switch/ngc-switch.module';
 		CoreModule,
 
 		NgcButtonModule, NgcIconModule, NgcSwitchModule,
-		//  NgcMenuModule,
-		// NgcSwitchModule, NgcFormFieldModule,
-		 NgcTooltipModule,
+		NgcMenuModule, NgcFormFieldModule,
+		NgcTooltipModule,
 	],
 	exports		: [ NgcDatePickerComponent, NgcDatePickerDirective ],
 	declarations: [ NgcDatePickerComponent, NgcDatePickerDirective ],
