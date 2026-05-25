@@ -44,8 +44,8 @@ export interface NgcIFormFieldConvertedEvent {
 }
 
 @Directive({
-	selector	: '[wgcFormFieldInput]',
-	exportAs	: 'wgcFormFieldInput',
+	selector	: '[ngcFormFieldInput]',
+	exportAs	: 'ngcFormFieldInput',
 	providers	: [ TRIM_VALUE_ACCESSOR ],
 })
 export class NgcFormFieldInputDirective extends DefaultValueAccessor implements OnChanges, AfterViewInit {

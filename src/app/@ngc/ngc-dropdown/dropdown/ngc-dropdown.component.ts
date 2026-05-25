@@ -39,7 +39,18 @@ type NgcDropdownInternalItem = NgcDropdownGroupItemComponent | NgcDropdownItemCo
 export class NgcDropdownComponent implements AfterContentInit, OnChanges {
 
 	@ViewChild( NgcMenuTriggerForDirective ) public dropdownMenuTrigger: NgcMenuTriggerForDirective;
-	@ViewChild( NgcSearchBoxComponent ) public searchBox: NgcSearchBoxComponent;
+
+	private _searchBox: NgcSearchBoxComponent;
+	@ViewChild( NgcSearchBoxComponent ) set searchBox( value: NgcSearchBoxComponent ) {
+		this._searchBox = value;
+		if ( value ) {
+			this._cdRef.markForCheck();
+		}
+	}
+	get searchBox(): NgcSearchBoxComponent {
+		return this._searchBox;
+	}
+
 	@ViewChild( CdkVirtualScrollViewport ) public viewPort: CdkVirtualScrollViewport;
 
 	@ContentChild( 'ngcDropdownDisplay' ) public displayTemp: TemplateRef<any>;
@@ -93,6 +104,7 @@ export class NgcDropdownComponent implements AfterContentInit, OnChanges {
 	}
 
 	get filteredItems(): NgcDropdownInternalItem[] {
+		console.log('dropdown filteredItems:', this.searchBox?.filteredData, 'searchBox:', this.searchBox);
 		return this.searchBox?.filteredData;
 	}
 
@@ -142,10 +154,18 @@ export class NgcDropdownComponent implements AfterContentInit, OnChanges {
 	 */
 	public onOpened( event: Event ) {
 		this.isOpened = true;
+		console.log('dropdown onOpened items:', this.items);
+		if (this.items) {
+			this.items.forEach((item, index) => {
+				console.log(`item ${index} label:`, (item as any).label, 'value:', (item as any).value);
+			});
+		}
+		console.log('dropdown onOpened query list:', this.dropdownItems?.toArray());
 
 		this.selected?.parent && this.selectGroup( this.selected?.parent );
 		this.scrollToItem( this.ngModel );
 		this.opened.emit( event );
+		this._cdRef.markForCheck();
 	}
 
 	/**
@@ -159,6 +179,7 @@ export class NgcDropdownComponent implements AfterContentInit, OnChanges {
 		this.unselectGroup();
 		this.closed.emit( event );
 		this.formControl?.markAsTouched();
+		this._cdRef.markForCheck();
 	}
 
 	/**
@@ -339,6 +360,13 @@ export class NgcDropdownComponent implements AfterContentInit, OnChanges {
 	 */
 	public reopen() {
 		this.dropdownMenuTrigger.reopen();
+	}
+
+	/**
+	 * @return {void}
+	 */
+	public markForCheck() {
+		this._cdRef.markForCheck();
 	}
 
 	/**
