@@ -2,28 +2,32 @@
 @import 'src/scss/partials/mixin';
 
 .ngc-button-toggle {
-	display: flex;
-	background-color: $color-white;
+	display: inline-flex;
+	align-items: center;
+	background-color: rgba(120, 120, 128, 0.08);
 	border-radius: 20px;
-	border: 1px solid $color-border;
+	border: none;
 	width: fit-content;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 4px;
+	box-sizing: border-box;
 
 	&.ngc-button-toggle--stretch {
 		width: 100%;
 		min-width: 0;
 
 		.ngc-button-toggle-item {
+			flex: 1;
 			width: 100%;
 			min-width: 0;
 		}
 	}
 
+	// "background" theme — same pill capsule, slightly smaller items
 	&.ngc-button-toggle--theme-background {
-		padding: 5px;
-		border-radius: 10px;
-		background-color: $color-default;
+		background-color: rgba(120, 120, 128, 0.08);
+		border-radius: 16px;
+		padding: 4px;
+		border: none;
 
 		&:not(.ngc-button-toggle--has-border) {
 			border: none;
@@ -38,25 +42,40 @@
 		}
 
 		&.ngc-button-toggle--reverse {
-			background-color: $color-white;
+			background-color: rgba(255, 255, 255, 0.6);
+			backdrop-filter: blur(8px);
 
 			.ngc-button-toggle-item {
 				&.ngc-button-toggle-item--active {
-					background-color: $color-default;
+					background-color: rgba(120, 120, 128, 0.12);
+					box-shadow: none;
 				}
 			}
 		}
 
 		.ngc-button-toggle-item {
-			font-size: $font-size-body;
-			border-radius: 6px;
-			min-height: 30px;
+			font-size: $font-size-small;
+			border-radius: 12px;
+			min-height: 28px;
+			padding: 0 12px;
+
+			&:not(.ngc-button-toggle-item--only-icon) {
+				min-width: 80px;
+				min-height: 28px;
+			}
 
 			&.ngc-button-toggle-item--active {
-				box-shadow: $box-shadow;
-				background-color: $color-white;
+				background-color: #ffffff;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+				color: rgba(0, 0, 0, 0.9);
+				font-weight: 600;
 			}
 		}
+	}
+
+	// has-border modifier keeps a subtle border on the track
+	&.ngc-button-toggle--has-border {
+		border: 1px solid rgba(0, 0, 0, 0.08);
 	}
 
 	.ngc-button-toggle-item {
@@ -64,28 +83,38 @@
 		align-items: center;
 		justify-content: center;
 		text-align: center;
-		padding: 5px;
-		border-radius: 20px;
-		font-size: 16px;
-		font-weight: $font-weight-semibold;
+		padding: 0 16px;
+		height: 32px;
+		border-radius: 16px;
+		font-size: 13px;
+		font-weight: 500;
 		cursor: pointer;
-		transition: background 200ms ease-in-out, color 200ms ease-in-out;
-		color: $color-label;
+		transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+		            color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+		            box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+		color: rgba(0, 0, 0, 0.55);
 		white-space: nowrap;
+		box-sizing: border-box;
 
 		&:not(.ngc-button-toggle-item--disabled) {
-			&:hover,
+			&:hover:not(.ngc-button-toggle-item--active) {
+				color: rgba(0, 0, 0, 0.85);
+			}
+
 			&.ngc-button-toggle-item--active {
-				color: $color-text;
+				background-color: #ffffff;
+				color: rgba(0, 0, 0, 0.9);
+				font-weight: 600;
+				box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
 			}
 		}
 
 		&:not(.ngc-button-toggle-item--only-icon) {
-			min-width: 115px;
-			min-height: 38px;
+			min-width: 80px;
+			min-height: 32px;
 
 			.ngc-button-toggle-item__icon {
-				margin-right: 5px;
+				margin-right: 6px;
 			}
 		}
 
@@ -97,6 +126,8 @@
 		&.ngc-button-toggle-item--only-icon {
 			width: 32px;
 			height: 32px;
+			min-width: 32px;
+			padding: 0;
 		}
 	}
 }
