@@ -1887,28 +1887,28 @@
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Sonner">42</ng-template>
-<ng-template #compTemplate label="Switch">
+<ng-template #compTemplate label="Swit	ch">
 	<h3 class="mb-20">Switch</h3>
 	<p class="component-description">
 		<strong>Switch</strong> is an interactive sliding binary toggle button that supports color customizability and active/disabled states.
 	</p>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
-			<div class="layout-row layout-wrap">
-				<div class="mr-10">
+			<div class="layout-column">
+				<div class="mb-15">
 					<ngc-switch ngDefaultControl [ngModel]="true">
 						Default
 					</ngc-switch>
 				</div>
-				<div class="mr-10">
+				<div class="mb-15">
 					<ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true">
 					</ngc-switch>
 				</div>
-				<div class="mr-10">
+				<div class="mb-15">
 					<ngc-switch ngDefaultControl disabled label="Active & Disabled" [ngModel]="true">
 					</ngc-switch>
 				</div>
-				<div class="mr-10">
+				<div class="mb-15">
 					<ngc-switch [disabled]="true" label="Disabled">
 					</ngc-switch>
 				</div>
