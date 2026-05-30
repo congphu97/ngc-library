@@ -55,6 +55,10 @@ export class NgcTooltipComponent {
 		this._elementRef.nativeElement.className = '';
 	}
 
+	get nativeElement(): HTMLElement {
+		return this._elementRef.nativeElement;
+	}
+
 	/**
 	 * @constructor
 	 * @param {ElementRef} _elementRef

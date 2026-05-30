@@ -1,8 +1,12 @@
 @import 'src/scss/partials/variable';
 
-// ngc-tooltip {
-// 	display: none;
-// }
+ngc-tooltip {
+	display: none;
+}
+
+.cdk-overlay-pane ngc-tooltip {
+	display: flex;
+}
 
 .ngc-tooltip {
 	display: flex;
@@ -12,6 +16,7 @@
 	width: 100%;
 	word-break: break-word;
 	border-radius: 8px;
+	border: none;
 	box-shadow: $box-shadow;
 	animation: $popup-animation;
 	background-color: var(--tooltip-color, black);
@@ -148,6 +153,9 @@
 
 	pre {
 		margin: 0;
+		padding: 0;
+		border: none;
+		background: transparent;
 		font-family: inherit;
 	}
 }
