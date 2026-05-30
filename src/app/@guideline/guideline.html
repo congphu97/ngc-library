@@ -27,6 +27,61 @@
 						{{ currentCompLabel }}
 					</h2>
 					<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
+					<div class="guideline-api-reference mt-40" *ngIf="getComponentDocs(currentCompLabel) && (getComponentDocs(currentCompLabel).inputs?.length || getComponentDocs(currentCompLabel).outputs?.length)">
+						<h3 class="mb-20">API Reference</h3>
+						
+						<div class="mb-35" *ngIf="getComponentDocs(currentCompLabel).inputs?.length">
+							<h4 class="mb-15" style="color: var(--button-text-color, #202124);">Inputs</h4>
+							<div style="max-height: 600px;" ngcScrollBar detectScroll suppressScrollX>
+								<table ngcTable>
+									<thead>
+										<tr>
+											<th style="width: 20%;" align="left">Property</th>
+											<th style="width: 25%;" align="left">Type</th>
+											<th style="width: 20%;" align="left">Default</th>
+											<th style="width: 35%;" align="left">Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let input of getComponentDocs(currentCompLabel).inputs">
+											<td class="text-semibold" align="left"><code>{{ input.name }}</code></td>
+											<td align="left"><code>{{ input.type }}</code></td>
+											<td align="left"><code>{{ input.default }}</code></td>
+											<td align="left">{{ input.description }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+
+						<div class="mb-35" *ngIf="getComponentDocs(currentCompLabel).outputs?.length">
+							<h4 class="mb-15" style="color: var(--button-text-color, #202124);">Outputs</h4>
+							<div style="max-height: 600px;" ngcScrollBar detectScroll suppressScrollX>
+								<table ngcTable>
+									<thead>
+										<tr>
+											<th style="width: 20%;" align="left">Event</th>
+											<th style="width: 45%;" align="left">Type</th>
+											<th style="width: 35%;" align="left">Description</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr *ngFor="let output of getComponentDocs(currentCompLabel).outputs">
+											<td class="text-semibold" align="left"><code>{{ output.name }}</code></td>
+											<td align="left"><code>{{ output.type }}</code></td>
+											<td align="left">{{ output.description }}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<guideline-navigator
+						[prevLabel]="prevComponent?.label"
+						[nextLabel]="nextComponent?.label"
+						(navigatePrev)="navigateToPrev()"
+						(navigateNext)="navigateToNext()">
+					</guideline-navigator>
 				</ngc-scroll-bar>
 			</ngc-drawer-content>
 		</ngc-drawer-container>
@@ -62,30 +117,33 @@
 				</ngc-expansion-panel>
 			</ngc-accordion>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-accordion&gt;
-	&lt;ngc-expansion-panel theme="background" expanded&gt;
-		&lt;ngc-expansion-panel-header&gt;
-			&lt;ngc-truncate limitLine="1"&gt;Header&lt;/ngc-truncate&gt;
-			&lt;button class="ml-5" ngcBasicButton&gt;
-				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-		&lt;/ngc-expansion-panel-header&gt;
-		Body
-	&lt;/ngc-expansion-panel&gt;
-
-	&lt;ngc-expansion-panel&gt;
-		&lt;ngc-expansion-panel-header&gt;
-			&lt;ngc-truncate limitLine="1"&gt;Header&lt;/ngc-truncate&gt;
-			&lt;button class="ml-5" ngcBasicButton&gt;
-				&lt;ngc-icon name="circle-plus" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-		&lt;/ngc-expansion-panel-header&gt;
-		Body
-	&lt;/ngc-expansion-panel&gt;
-&lt;/ngc-accordion&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-accordion&gt;
+						&lt;ngc-expansion-panel theme="background" expanded&gt;
+							&lt;ngc-expansion-panel-header&gt;
+								&lt;ngc-truncate limitLine="1"&gt;Header&lt;/ngc-truncate&gt;
+								&lt;button class="ml-5" ngcBasicButton&gt;
+									&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+							&lt;/ngc-expansion-panel-header&gt;
+							Body
+						&lt;/ngc-expansion-panel&gt;
+					
+						&lt;ngc-expansion-panel&gt;
+							&lt;ngc-expansion-panel-header&gt;
+								&lt;ngc-truncate limitLine="1"&gt;Header&lt;/ngc-truncate&gt;
+								&lt;button class="ml-5" ngcBasicButton&gt;
+									&lt;ngc-icon name="circle-plus" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+							&lt;/ngc-expansion-panel-header&gt;
+							Body
+						&lt;/ngc-expansion-panel&gt;
+					&lt;/ngc-accordion&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Accordion')">
+				<ngc-code-block [code]="getComponentTsCode('Accordion')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -142,58 +200,61 @@
 				</ngc-expansion-panel>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;div cdkDropList&gt;
-	&lt;ngc-expansion-panel theme="background" cdkDrag draggable&gt;
-		&lt;ngc-expansion-panel-header&gt;
-			&lt;ngc-truncate limitLine="1"&gt;Header 1&lt;/ngc-truncate&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-		&lt;/ngc-expansion-panel-header&gt;
-		Body
-	&lt;/ngc-expansion-panel&gt;
-
-	&lt;ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable&gt;
-		&lt;ngc-expansion-panel-header [color]="'GREEN' | color: 400"&gt;
-			&lt;ngc-truncate limitLine="1"&gt;Header 2&lt;/ngc-truncate&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-		&lt;/ngc-expansion-panel-header&gt;
-		Body
-	&lt;/ngc-expansion-panel&gt;
-
-	&lt;ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable&gt;
-		&lt;ngc-expansion-panel-header [color]="'RED' | color: 700"&gt;
-			&lt;ngc-truncate limitLine="1"&gt;Header 3&lt;/ngc-truncate&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-			&lt;button class="ml-10" ngcBasicButton&gt;
-				&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
-			&lt;/button&gt;
-		&lt;/ngc-expansion-panel-header&gt;
-		Body
-	&lt;/ngc-expansion-panel&gt;
-&lt;/div&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;div cdkDropList&gt;
+						&lt;ngc-expansion-panel theme="background" cdkDrag draggable&gt;
+							&lt;ngc-expansion-panel-header&gt;
+								&lt;ngc-truncate limitLine="1"&gt;Header 1&lt;/ngc-truncate&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+							&lt;/ngc-expansion-panel-header&gt;
+							Body
+						&lt;/ngc-expansion-panel&gt;
+					
+						&lt;ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable&gt;
+							&lt;ngc-expansion-panel-header [color]="'GREEN' | color: 400"&gt;
+								&lt;ngc-truncate limitLine="1"&gt;Header 2&lt;/ngc-truncate&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+							&lt;/ngc-expansion-panel-header&gt;
+							Body
+						&lt;/ngc-expansion-panel&gt;
+					
+						&lt;ngc-expansion-panel class="mt-20" theme="background" cdkDrag draggable&gt;
+							&lt;ngc-expansion-panel-header [color]="'RED' | color: 700"&gt;
+								&lt;ngc-truncate limitLine="1"&gt;Header 3&lt;/ngc-truncate&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="trash" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+								&lt;button class="ml-10" ngcBasicButton&gt;
+									&lt;ngc-icon name="plus" size="20px"&gt;&lt;/ngc-icon&gt;
+								&lt;/button&gt;
+							&lt;/ngc-expansion-panel-header&gt;
+							Body
+						&lt;/ngc-expansion-panel&gt;
+					&lt;/div&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Accordion')">
+				<ngc-code-block [code]="getComponentTsCode('Accordion')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -286,20 +347,23 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- XLarge (72px) --&gt;
-&lt;ngc-avatar size="xlarge" label="AB" [avatar]="{{ '{' }} mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
-
-&lt;!-- Large (56px) --&gt;
-&lt;ngc-avatar size="large" label="AB" [avatar]="{{ '{' }} mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
-
-&lt;!-- Medium (40px) --&gt;
-&lt;ngc-avatar size="medium" label="AB" [avatar]="{{ '{' }} mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
-
-&lt;!-- Small (32px) --&gt;
-&lt;ngc-avatar size="small" label="AB" [avatar]="{{ '{' }} mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- XLarge (72px) --&gt;
+					&lt;ngc-avatar size="xlarge" label="AB" [avatar]="{{ '{' }} mode: 'auto', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+					
+					&lt;!-- Large (56px) --&gt;
+					&lt;ngc-avatar size="large" label="AB" [avatar]="{{ '{' }} mode: 'photo', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+					
+					&lt;!-- Medium (40px) --&gt;
+					&lt;ngc-avatar size="medium" label="AB" [avatar]="{{ '{' }} mode: 'text', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+					
+					&lt;!-- Small (32px) --&gt;
+					&lt;ngc-avatar size="small" label="AB" [avatar]="{{ '{' }} mode: 'icon', photo: 'assets/images/no-avatar.png', icon: '1F600' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Avatar')">
+				<ngc-code-block [code]="getComponentTsCode('Avatar')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -318,12 +382,15 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#ff0000' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
-&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#0000ff' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
-&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#008000' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#ff0000' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+					&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#0000ff' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;
+					&lt;ngc-avatar size="36px" label="AB" [avatar]="{{ '{' }} color: '#008000' {{ '}' }}"&gt;&lt;/ngc-avatar&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Avatar')">
+				<ngc-code-block [code]="getComponentTsCode('Avatar')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -334,12 +401,15 @@
 				<ngc-icon name="collection" color="white"></ngc-icon>
 			</ngc-avatar>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-avatar size="medium"&gt;
-	&lt;ngc-icon name="collection" color="white"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-avatar&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-avatar size="medium"&gt;
+						&lt;ngc-icon name="collection" color="white"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-avatar&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Avatar')">
+				<ngc-code-block [code]="getComponentTsCode('Avatar')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -353,10 +423,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"></ngc-avatar-picker>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"&gt;&lt;/ngc-avatar-picker&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-avatar-picker class="w-500" label="Avatar" (picked)="console.log('Avatar Picked', $event)"&gt;&lt;/ngc-avatar-picker&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Avatar Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Avatar Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -380,20 +453,23 @@
 				</ngc-badge>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-badge ngcBadge="2"&gt;
-	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-badge&gt;
-
-&lt;ngc-badge count="199" color="primary"&gt;
-	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-badge&gt;
-
-&lt;ngc-badge [count]="1000 | kUnit"&gt;
-	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-badge&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-badge ngcBadge="2"&gt;
+						&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-badge&gt;
+					
+					&lt;ngc-badge count="199" color="primary"&gt;
+						&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-badge&gt;
+					
+					&lt;ngc-badge [count]="1000 | kUnit"&gt;
+						&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-badge&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Badge')">
+				<ngc-code-block [code]="getComponentTsCode('Badge')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -412,20 +488,23 @@
 				</ngc-badge>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-badge ngcBadge="2" background="primary" color="white"&gt;
-	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-badge&gt;
-
-&lt;ngc-badge count="199" background="secondary" color="primary"&gt;
-	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-badge&gt;
-
-&lt;ngc-badge background="default" color="default" [count]="1000 | kUnit"&gt;
-	&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
-&lt;/ngc-badge&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-badge ngcBadge="2" background="primary" color="white"&gt;
+						&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-badge&gt;
+					
+					&lt;ngc-badge count="199" background="secondary" color="primary"&gt;
+						&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-badge&gt;
+					
+					&lt;ngc-badge background="default" color="default" [count]="1000 | kUnit"&gt;
+						&lt;ngc-icon name="document-text-outline" size="20px"&gt;&lt;/ngc-icon&gt;
+					&lt;/ngc-badge&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Badge')">
+				<ngc-code-block [code]="getComponentTsCode('Badge')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -451,23 +530,26 @@
 				</ngc-breadcrumb-item>
 			</ngc-breadcrumb>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-breadcrumb&gt;
-	&lt;ngc-breadcrumb-item&gt;
-		Home
-	&lt;/ngc-breadcrumb-item&gt;
-	&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb1" ]'&gt;
-		Breadcrumb 1
-	&lt;/ngc-breadcrumb-item&gt;
-	&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb2" ]'&gt;
-		Breadcrumb 2
-	&lt;/ngc-breadcrumb-item&gt;
-	&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb3" ]'&gt;
-		Breadcrumb 3
-	&lt;/ngc-breadcrumb-item&gt;
-&lt;/ngc-breadcrumb&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-breadcrumb&gt;
+						&lt;ngc-breadcrumb-item&gt;
+							Home
+						&lt;/ngc-breadcrumb-item&gt;
+						&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb1" ]'&gt;
+							Breadcrumb 1
+						&lt;/ngc-breadcrumb-item&gt;
+						&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb2" ]'&gt;
+							Breadcrumb 2
+						&lt;/ngc-breadcrumb-item&gt;
+						&lt;ngc-breadcrumb-item [commands]='[ "/breadcrumb3" ]'&gt;
+							Breadcrumb 3
+						&lt;/ngc-breadcrumb-item&gt;
+					&lt;/ngc-breadcrumb&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Breadcrumb')">
+				<ngc-code-block [code]="getComponentTsCode('Breadcrumb')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -496,12 +578,15 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcBasicButton&gt;Default&lt;/button&gt;
-&lt;button ngcBasicButton color="primary"&gt;Primary&lt;/button&gt;
-&lt;button ngcBasicButton color="primary" disabled&gt;Disabled&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcBasicButton&gt;Default&lt;/button&gt;
+					&lt;button ngcBasicButton color="primary"&gt;Primary&lt;/button&gt;
+					&lt;button ngcBasicButton color="primary" disabled&gt;Disabled&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button')">
+				<ngc-code-block [code]="getComponentTsCode('Button')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -523,13 +608,16 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton&gt;Default&lt;/button&gt;
-&lt;button ngcButton color="primary"&gt;Primary&lt;/button&gt;
-&lt;button ngcButton color="white"&gt;White&lt;/button&gt;
-&lt;button ngcButton color="primary" disabled&gt;Disabled&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton&gt;Default&lt;/button&gt;
+					&lt;button ngcButton color="primary"&gt;Primary&lt;/button&gt;
+					&lt;button ngcButton color="white"&gt;White&lt;/button&gt;
+					&lt;button ngcButton color="primary" disabled&gt;Disabled&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button')">
+				<ngc-code-block [code]="getComponentTsCode('Button')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -561,16 +649,19 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton icon="calendar"&gt;Default&lt;/button&gt;
-&lt;button ngcButton color="primary" icon="calendar"&gt;Primary&lt;/button&gt;
-&lt;button ngcButton color="white" icon="calendar"&gt;White&lt;/button&gt;
-&lt;button ngcButton color="primary" disabled&gt;
-	&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
-	Disabled
-&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton icon="calendar"&gt;Default&lt;/button&gt;
+					&lt;button ngcButton color="primary" icon="calendar"&gt;Primary&lt;/button&gt;
+					&lt;button ngcButton color="white" icon="calendar"&gt;White&lt;/button&gt;
+					&lt;button ngcButton color="primary" disabled&gt;
+						&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
+						Disabled
+					&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button')">
+				<ngc-code-block [code]="getComponentTsCode('Button')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -589,12 +680,15 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton loading&gt;&lt;/button&gt;
-&lt;button ngcButton loading color="primary"&gt;&lt;/button&gt;
-&lt;button ngcButton loading color="white"&gt;&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton loading&gt;&lt;/button&gt;
+					&lt;button ngcButton loading color="primary"&gt;&lt;/button&gt;
+					&lt;button ngcButton loading color="white"&gt;&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button')">
+				<ngc-code-block [code]="getComponentTsCode('Button')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -635,17 +729,20 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcIconButton icon="calendar"&gt;&lt;/button&gt;
-&lt;button ngcIconButton color="primary" icon="calendar"&gt;&lt;/button&gt;
-&lt;button ngcIconButton disabled&gt;
-	&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
-&lt;/button&gt;
-&lt;button ngcIconButton color="#ff0000" hoverColor="green"&gt;
-	&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
-&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcIconButton icon="calendar"&gt;&lt;/button&gt;
+					&lt;button ngcIconButton color="primary" icon="calendar"&gt;&lt;/button&gt;
+					&lt;button ngcIconButton disabled&gt;
+						&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
+					&lt;/button&gt;
+					&lt;button ngcIconButton color="#ff0000" hoverColor="green"&gt;
+						&lt;ngc-icon ngcButtonIcon name="calendar"&gt;&lt;/ngc-icon&gt;
+					&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button')">
+				<ngc-code-block [code]="getComponentTsCode('Button')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -668,14 +765,17 @@
 				</ngc-button-toggle-item>
 			</ngc-button-toggle>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-button-toggle [selectedIndex]="0"&gt;
-	&lt;ngc-button-toggle-item icon="list"&gt;Button 1&lt;/ngc-button-toggle-item&gt;
-	&lt;ngc-button-toggle-item icon="grid"&gt;Button 2&lt;/ngc-button-toggle-item&gt;
-	&lt;ngc-button-toggle-item icon="more-vertical"&gt;Button 3&lt;/ngc-button-toggle-item&gt;
-&lt;/ngc-button-toggle&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-button-toggle [selectedIndex]="0"&gt;
+						&lt;ngc-button-toggle-item icon="list"&gt;Button 1&lt;/ngc-button-toggle-item&gt;
+						&lt;ngc-button-toggle-item icon="grid"&gt;Button 2&lt;/ngc-button-toggle-item&gt;
+						&lt;ngc-button-toggle-item icon="more-vertical"&gt;Button 3&lt;/ngc-button-toggle-item&gt;
+					&lt;/ngc-button-toggle&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button Toggle')">
+				<ngc-code-block [code]="getComponentTsCode('Button Toggle')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -695,14 +795,17 @@
 				</ngc-button-toggle-item>
 			</ngc-button-toggle>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-button-toggle theme="background" [selectedIndex]="0"&gt;
-	&lt;ngc-button-toggle-item icon="list"&gt;Button 1&lt;/ngc-button-toggle-item&gt;
-	&lt;ngc-button-toggle-item icon="grid"&gt;Button 2&lt;/ngc-button-toggle-item&gt;
-	&lt;ngc-button-toggle-item icon="more-vertical"&gt;Button 3&lt;/ngc-button-toggle-item&gt;
-&lt;/ngc-button-toggle&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-button-toggle theme="background" [selectedIndex]="0"&gt;
+						&lt;ngc-button-toggle-item icon="list"&gt;Button 1&lt;/ngc-button-toggle-item&gt;
+						&lt;ngc-button-toggle-item icon="grid"&gt;Button 2&lt;/ngc-button-toggle-item&gt;
+						&lt;ngc-button-toggle-item icon="more-vertical"&gt;Button 3&lt;/ngc-button-toggle-item&gt;
+					&lt;/ngc-button-toggle&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Button Toggle')">
+				<ngc-code-block [code]="getComponentTsCode('Button Toggle')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -720,14 +823,17 @@
 				(eventChange)="console.log('Event change', $event)"
 				(eventCreate)="console.log('Event create', $event)"></ngc-calendar>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
-	(periodChange)="console.log('Period change', $event)"
-	(selectedEventIDChange)="console.log('Selected event', $event)"
-	(eventChange)="console.log('Event change', $event)"
-	(eventCreate)="console.log('Event create', $event)"&gt;&lt;/ngc-calendar&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-calendar stretch creatable firstWeekDay="0" view="week" [displayHighlight]="true" [events]="calendarEvents"
+						(periodChange)="console.log('Period change', $event)"
+						(selectedEventIDChange)="console.log('Selected event', $event)"
+						(eventChange)="console.log('Event change', $event)"
+						(eventCreate)="console.log('Event create', $event)"&gt;&lt;/ngc-calendar&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Calendar')">
+				<ngc-code-block [code]="getComponentTsCode('Calendar')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -753,16 +859,19 @@
 				</div>
 			</ngc-card>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-card&gt;
-	&lt;div ngcCardContent class="layout-column"&gt;
-		&lt;a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank"&gt;Utility Types&lt;/a&gt;
-		&lt;a href="..."&gt;CSS Naming Conventions&lt;/a&gt;
-		&lt;a href="..."&gt;API reference&lt;/a&gt;
-	&lt;/div&gt;
-&lt;/ngc-card&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-card&gt;
+						&lt;div ngcCardContent class="layout-column"&gt;
+							&lt;a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank"&gt;Utility Types&lt;/a&gt;
+							&lt;a href="..."&gt;CSS Naming Conventions&lt;/a&gt;
+							&lt;a href="..."&gt;API reference&lt;/a&gt;
+						&lt;/div&gt;
+					&lt;/ngc-card&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Card')">
+				<ngc-code-block [code]="getComponentTsCode('Card')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -790,20 +899,23 @@
 				</div>
 			</ngc-card>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-card&gt;
-	&lt;div ngcCardHeader&gt;
-		Header
-	&lt;/div&gt;
-	&lt;div ngcCardContent class="layout-column"&gt;
-		&lt;a href="..."&gt;Utility Types&lt;/a&gt;
-	&lt;/div&gt;
-	&lt;div ngcCardFooter&gt;
-		Footer
-	&lt;/div&gt;
-&lt;/ngc-card&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-card&gt;
+						&lt;div ngcCardHeader&gt;
+							Header
+						&lt;/div&gt;
+						&lt;div ngcCardContent class="layout-column"&gt;
+							&lt;a href="..."&gt;Utility Types&lt;/a&gt;
+						&lt;/div&gt;
+						&lt;div ngcCardFooter&gt;
+							Footer
+						&lt;/div&gt;
+					&lt;/ngc-card&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Card')">
+				<ngc-code-block [code]="getComponentTsCode('Card')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -818,10 +930,13 @@
 				[photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)">
 			</ngc-carousel>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'" [photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)"&gt;&lt;/ngc-carousel&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-carousel [canClose]="canClose" [canFullscreen]="canFullscreen" [mode]="'contain'" [size]="'700px'" [photo]="photo" (selected)="console.log($event)" (closed)="console.log($event)"&gt;&lt;/ngc-carousel&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Carousel')">
+				<ngc-code-block [code]="getComponentTsCode('Carousel')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -853,20 +968,23 @@
 				</div>
 			</ngc-collapse>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-collapse [active]="true" borderWidth="1px"&gt;
-	&lt;div ngcCollapseHeader&gt;
-		Header
-	&lt;/div&gt;
-	&lt;div ngcCollapseContent class="layout-column"&gt;
-		&lt;a href="..."&gt;Content&lt;/a&gt;
-	&lt;/div&gt;
-	&lt;div ngcCollapseFooter&gt;
-		Footer
-	&lt;/div&gt;
-&lt;/ngc-collapse&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-collapse [active]="true" borderWidth="1px"&gt;
+						&lt;div ngcCollapseHeader&gt;
+							Header
+						&lt;/div&gt;
+						&lt;div ngcCollapseContent class="layout-column"&gt;
+							&lt;a href="..."&gt;Content&lt;/a&gt;
+						&lt;/div&gt;
+						&lt;div ngcCollapseFooter&gt;
+							Footer
+						&lt;/div&gt;
+					&lt;/ngc-collapse&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Collapse')">
+				<ngc-code-block [code]="getComponentTsCode('Collapse')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -888,18 +1006,21 @@
 				<ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"></ngc-checkbox>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;div class="mb-10"&gt;
-	&lt;ngc-checkbox [label]="'Checkbox 1'"&gt;&lt;/ngc-checkbox&gt;
-&lt;/div&gt;
-&lt;div class="mb-10"&gt;
-	&lt;ngc-checkbox [label]="'Checkbox 2'" [ngModel]="true"&gt;&lt;/ngc-checkbox&gt;
-&lt;/div&gt;
-&lt;div class="mb-10"&gt;
-	&lt;ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"&gt;&lt;/ngc-checkbox&gt;
-&lt;/div&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;div class="mb-10"&gt;
+						&lt;ngc-checkbox [label]="'Checkbox 1'"&gt;&lt;/ngc-checkbox&gt;
+					&lt;/div&gt;
+					&lt;div class="mb-10"&gt;
+						&lt;ngc-checkbox [label]="'Checkbox 2'" [ngModel]="true"&gt;&lt;/ngc-checkbox&gt;
+					&lt;/div&gt;
+					&lt;div class="mb-10"&gt;
+						&lt;ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"&gt;&lt;/ngc-checkbox&gt;
+					&lt;/div&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Checkbox')">
+				<ngc-code-block [code]="getComponentTsCode('Checkbox')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -938,16 +1059,19 @@
 				</ngc-list-item>
 			</ngc-list>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-list displayColorDot name="Name" placeholder="Type a name..."&gt;
-	&lt;ngc-list-item draggable #listItemComp
-		*ngFor="let item of items"
-		[id]="item?.id" [label]="item?.name" [description]="'12 items'"&gt;
-		&lt;button ngcBasicButton icon="more-vertical"&gt;&lt;/button&gt;
-	&lt;/ngc-list-item&gt;
-&lt;/ngc-list&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-list displayColorDot name="Name" placeholder="Type a name..."&gt;
+						&lt;ngc-list-item draggable #listItemComp
+							*ngFor="let item of items"
+							[id]="item?.id" [label]="item?.name" [description]="'12 items'"&gt;
+							&lt;button ngcBasicButton icon="more-vertical"&gt;&lt;/button&gt;
+						&lt;/ngc-list-item&gt;
+					&lt;/ngc-list&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('List')">
+				<ngc-code-block [code]="getComponentTsCode('List')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -961,10 +1085,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-code-block [code]="exampleCode" language="typescript"></ngc-code-block>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-code-block [code]="exampleCode" language="typescript"&gt;&lt;/ngc-code-block&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-code-block [code]="exampleCode" language="typescript"&gt;&lt;/ngc-code-block&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Code Block')">
+				<ngc-code-block [code]="getComponentTsCode('Code Block')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -979,10 +1106,13 @@
 				<button ngcButton [ngcClipboardCopy]="'Click to Clipboard'">Click to Clipboard</button>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton [ngcClipboardCopy]="'Click to Clipboard'"&gt;Click to Clipboard&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton [ngcClipboardCopy]="'Click to Clipboard'"&gt;Click to Clipboard&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Clipboard')">
+				<ngc-code-block [code]="getComponentTsCode('Clipboard')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -997,10 +1127,13 @@
 				<ngc-color-picker></ngc-color-picker>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-color-picker&gt;&lt;/ngc-color-picker&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-color-picker&gt;&lt;/ngc-color-picker&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Color Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Color Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1011,10 +1144,13 @@
 				<ngc-color-picker mode='inline'></ngc-color-picker>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-color-picker mode="inline"&gt;&lt;/ngc-color-picker&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-color-picker mode="inline"&gt;&lt;/ngc-color-picker&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Color Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Color Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1041,14 +1177,17 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- Date Picker --&gt;
-&lt;button ngcButton ngcDatePicker [pickedDate]="currentDate"&gt;Date Picker&lt;/button&gt;
-
-&lt;!-- Date Range Picker --&gt;
-&lt;button ngcButton ngcDatePicker dateRange [pickedDate]="currentDateRange"&gt;Date Range Picker&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- Date Picker --&gt;
+					&lt;button ngcButton ngcDatePicker [pickedDate]="currentDate"&gt;Date Picker&lt;/button&gt;
+					
+					&lt;!-- Date Range Picker --&gt;
+					&lt;button ngcButton ngcDatePicker dateRange [pickedDate]="currentDateRange"&gt;Date Range Picker&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Date Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Date Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1057,10 +1196,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-date-picker class="w-300" mode="inline"></ngc-date-picker>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-date-picker class="w-300" mode="inline"&gt;&lt;/ngc-date-picker&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-date-picker class="w-300" mode="inline"&gt;&lt;/ngc-date-picker&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Date Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Date Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1089,18 +1231,21 @@
 				<div class="p-30">{{ data?.content }}</div>
 			</ng-template>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- In component.ts --&gt;
-&lt;!-- this.ngcDialogService.open(MyDialogComponent, {{ '{' }} ... {{ '}' }}) --&gt;
-&lt;button ngcButton (click)="openDialog()"&gt;Open Dialog Component&lt;/button&gt;
-
-&lt;!-- In component.html --&gt;
-&lt;ng-template #dialog let-data="data"&gt;
-	&lt;div class="p-30"&gt;{{ '{{' }} data?.content {{ '}}' }}&lt;/div&gt;
-&lt;/ng-template&gt;
-&lt;button ngcButton (click)="openDialog(dialog)"&gt;Open Dialog Template&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- In component.ts --&gt;
+					&lt;!-- this.ngcDialogService.open(MyDialogComponent, {{ '{' }} ... {{ '}' }}) --&gt;
+					&lt;button ngcButton (click)="openDialog()"&gt;Open Dialog Component&lt;/button&gt;
+					
+					&lt;!-- In component.html --&gt;
+					&lt;ng-template #dialog let-data="data"&gt;
+						&lt;div class="p-30"&gt;{{ '{{' }} data?.content {{ '}}' }}&lt;/div&gt;
+					&lt;/ng-template&gt;
+					&lt;button ngcButton (click)="openDialog(dialog)"&gt;Open Dialog Template&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Dialog')">
+				<ngc-code-block [code]="getComponentTsCode('Dialog')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1125,15 +1270,18 @@
 				</ngc-dropdown>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-dropdown class="w-300" label="Default"&gt;
-	&lt;ngc-dropdown-item *ngFor="let pos of positions" [label]="pos?.name" [value]="pos?.id"&gt;&lt;/ngc-dropdown-item&gt;
-	&lt;ngc-dropdown-group-item label="Group" title="Select Group Children"&gt;
-		&lt;ngc-dropdown-item label="Group Item 1" [value]="100"&gt;&lt;/ngc-dropdown-item&gt;
-	&lt;/ngc-dropdown-group-item&gt;
-&lt;/ngc-dropdown&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-dropdown class="w-300" label="Default"&gt;
+						&lt;ngc-dropdown-item *ngFor="let pos of positions" [label]="pos?.name" [value]="pos?.id"&gt;&lt;/ngc-dropdown-item&gt;
+						&lt;ngc-dropdown-group-item label="Group" title="Select Group Children"&gt;
+							&lt;ngc-dropdown-item label="Group Item 1" [value]="100"&gt;&lt;/ngc-dropdown-item&gt;
+						&lt;/ngc-dropdown-group-item&gt;
+					&lt;/ngc-dropdown&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Dropdown')">
+				<ngc-code-block [code]="getComponentTsCode('Dropdown')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1151,10 +1299,13 @@
 				</button>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)"&gt;Emoji Picker&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton ngcEmojiPicker (picked)="console.log('Emoji Picked', $event)"&gt;Emoji Picker&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Emoji Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Emoji Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1163,10 +1314,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-emoji-picker class="w-300" mode="inline"></ngc-emoji-picker>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-emoji-picker class="w-300" mode="inline"&gt;&lt;/ngc-emoji-picker&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-emoji-picker class="w-300" mode="inline"&gt;&lt;/ngc-emoji-picker&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Emoji Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Emoji Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1217,16 +1371,19 @@
 				</ngc-menu-content>
 			</ngc-menu>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton [ngcMenuTriggerFor]="menu" position="below"&gt;Menu Trigger&lt;/button&gt;
-&lt;ngc-menu #menu&gt;
-	&lt;ngc-menu-content&gt;
-		&lt;button ngcMenuItem icon="trending-up-outline"&gt;Item 1&lt;/button&gt;
-		&lt;button ngcMenuItem icon="trending-down-outline"&gt;Item 2&lt;/button&gt;
-	&lt;/ngc-menu-content&gt;
-&lt;/ngc-menu&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton [ngcMenuTriggerFor]="menu" position="below"&gt;Menu Trigger&lt;/button&gt;
+					&lt;ngc-menu #menu&gt;
+						&lt;ngc-menu-content&gt;
+							&lt;button ngcMenuItem icon="trending-up-outline"&gt;Item 1&lt;/button&gt;
+							&lt;button ngcMenuItem icon="trending-down-outline"&gt;Item 2&lt;/button&gt;
+						&lt;/ngc-menu-content&gt;
+					&lt;/ngc-menu&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Menu')">
+				<ngc-code-block [code]="getComponentTsCode('Menu')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1243,14 +1400,17 @@
 				<ngc-divider vertical></ngc-divider>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- Horizontal Divider --&gt;
-&lt;ngc-divider&gt;&lt;/ngc-divider&gt;
-
-&lt;!-- Vertical Divider --&gt;
-&lt;ngc-divider vertical&gt;&lt;/ngc-divider&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- Horizontal Divider --&gt;
+					&lt;ngc-divider&gt;&lt;/ngc-divider&gt;
+					
+					&lt;!-- Vertical Divider --&gt;
+					&lt;ngc-divider vertical&gt;&lt;/ngc-divider&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Divide')">
+				<ngc-code-block [code]="getComponentTsCode('Divide')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1272,11 +1432,14 @@
 				</ng-container>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-search-box class="w-300" autoFocusOn displayNotFound #searchBox (searching)="console.log($event)"&gt;
-&lt;/ngc-search-box&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-search-box class="w-300" autoFocusOn displayNotFound #searchBox (searching)="console.log($event)"&gt;
+					&lt;/ngc-search-box&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Search Box ')">
+				<ngc-code-block [code]="getComponentTsCode('Search Box ')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1287,10 +1450,13 @@
 				(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
 			</ngc-search-box>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-search-box class="w-300" [suggestion]="suggestionFn" (searching)="console.log($event)"&gt;&lt;/ngc-search-box&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-search-box class="w-300" [suggestion]="suggestionFn" (searching)="console.log($event)"&gt;&lt;/ngc-search-box&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Search Box ')">
+				<ngc-code-block [code]="getComponentTsCode('Search Box ')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1301,10 +1467,13 @@
 				(cleared)="console.log('Cleared', $event)" (suggested)="console.log('Suggested', $event)">
 			</ngc-search-box>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-search-box class="w-300" [suggestion]="suggestionServerSideFn" (searching)="console.log($event)"&gt;&lt;/ngc-search-box&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-search-box class="w-300" [suggestion]="suggestionServerSideFn" (searching)="console.log($event)"&gt;&lt;/ngc-search-box&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Search Box ')">
+				<ngc-code-block [code]="getComponentTsCode('Search Box ')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1322,12 +1491,15 @@
 			<ngc-loading class="mb-10" color='#primary'></ngc-loading>
 			<ngc-loading class="mb-10" [size]="'12px'"></ngc-loading>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-loading color="#ff0000"&gt;&lt;/ngc-loading&gt;
-&lt;ngc-loading color="#primary"&gt;&lt;/ngc-loading&gt;
-&lt;ngc-loading [size]="'12px'"&gt;&lt;/ngc-loading&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-loading color="#ff0000"&gt;&lt;/ngc-loading&gt;
+					&lt;ngc-loading color="#primary"&gt;&lt;/ngc-loading&gt;
+					&lt;ngc-loading [size]="'12px'"&gt;&lt;/ngc-loading&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Loading')">
+				<ngc-code-block [code]="getComponentTsCode('Loading')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1407,7 +1579,20 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;!-- Input With Prefix &lt;ngc-form-field class="w-300"&gt; --&gt;
+					&lt;ngc-form-field class="w-300"&gt;
+						&lt;div ngcFormFieldLabel&gt;Input With Prefix&lt;/div&gt;
+						&lt;div ngcFormFieldPrefix&gt;
+							&lt;ngc-icon name="document" size="20px"&gt;&lt;/ngc-icon&gt;
+						&lt;/div&gt;
+						&lt;input ngcFormFieldInput autoFocusOn placeholder="Placeholder" /&gt;
+					&lt;/ngc-form-field&gt;
+					
+					&lt;!-- Input Appearance Standard --&gt;
+					&lt;ngc-form-field class="w-300" label="Input Appearance Standard" appearance="standard"&gt;
+						&lt;div ngcFormFieldPrefix&gt;<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
 				<pre><code #codeContent>&lt;!-- Input With Prefix &lt;ngc-form-field class="w-300"&gt; --&gt;
 &lt;ngc-form-field class="w-300"&gt;
@@ -1424,6 +1609,13 @@
 	&lt;input ngcFormFieldInput placeholder="Placeholder" /&gt;
 &lt;/ngc-form-field&gt;</code></pre>
 			</ngc-code-block>
+		</ngc-tab>lt;/div&gt;
+						&lt;input ngcFormFieldInput placeholder="Placeholder" /&gt;
+					&lt;/ngc-form-field&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Form Field')">
+				<ngc-code-block [code]="getComponentTsCode('Form Field')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1483,12 +1675,15 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-dropdown class="w-300" label="Dropdown Multiple Select" multiple&gt;
-	&lt;ngc-dropdown-item *ngFor="let item of positions" icon="document" [label]="item?.name" [value]="item?.id"&gt;&lt;/ngc-dropdown-item&gt;
-&lt;/ngc-dropdown&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-dropdown class="w-300" label="Dropdown Multiple Select" multiple&gt;
+						&lt;ngc-dropdown-item *ngFor="let item of positions" icon="document" [label]="item?.name" [value]="item?.id"&gt;&lt;/ngc-dropdown-item&gt;
+					&lt;/ngc-dropdown&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Form Field')">
+				<ngc-code-block [code]="getComponentTsCode('Form Field')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1499,12 +1694,15 @@
 				<textarea ngcFormFieldInput placeholder="Placeholder"></textarea>
 			</ngc-form-field>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-form-field label="Textarea"&gt;
-	&lt;textarea ngcFormFieldInput placeholder="Placeholder"&gt;&lt;/textarea&gt;
-&lt;/ngc-form-field&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-form-field label="Textarea"&gt;
+						&lt;textarea ngcFormFieldInput placeholder="Placeholder"&gt;&lt;/textarea&gt;
+					&lt;/ngc-form-field&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Form Field')">
+				<ngc-code-block [code]="getComponentTsCode('Form Field')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1522,17 +1720,20 @@
 				</span>
 			</h4>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;h4 class="stick" ngDefaultControl ngcInlineInput id="ngcInlineInput" label="Inline" [(ngModel)]="inline"&gt;
-	{{ '{{' }} inline {{ '}}' }}
-	&lt;span class="stick-right"&gt;
-		&lt;button ngcBasicButton (click)="ngcInlineInput?.edit()"&gt;
-			&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
-		&lt;/button&gt;
-	&lt;/span&gt;
-&lt;/h4&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;h4 class="stick" ngDefaultControl ngcInlineInput id="ngcInlineInput" label="Inline" [(ngModel)]="inline"&gt;
+						{{ '{{' }} inline {{ '}}' }}
+						&lt;span class="stick-right"&gt;
+							&lt;button ngcBasicButton (click)="ngcInlineInput?.edit()"&gt;
+								&lt;ngc-icon name="edit" size="20px"&gt;&lt;/ngc-icon&gt;
+							&lt;/button&gt;
+						&lt;/span&gt;
+					&lt;/h4&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Form Field')">
+				<ngc-code-block [code]="getComponentTsCode('Form Field')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1542,10 +1743,13 @@
 			<ngc-range-input class="w-300" required label="Range" [(ngModel)]="range" (ngModelChange)="console.log($event)">
 			</ngc-range-input>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-range-input class="w-300" required label="Range" [(ngModel)]="range"&gt;&lt;/ngc-range-input&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-range-input class="w-300" required label="Range" [(ngModel)]="range"&gt;&lt;/ngc-range-input&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Form Field')">
+				<ngc-code-block [code]="getComponentTsCode('Form Field')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1555,12 +1759,213 @@
 			<ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone" (ngModelChange)="console.log($event)">
 			</ngc-phone-field>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone"&gt;&lt;/ngc-phone-field&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-phone-field class="w-300" required label="Phone" [(ngModel)]="phone"&gt;&lt;/ngc-phone-field&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Form Field')">
+				<ngc-code-block [code]="getComponentTsCode('Form Field')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
+</ng-template>
+
+<ng-template #compTemplate label="Icon">
+	<p class="component-description">
+		<strong>Icon</strong> renders icons from two sources: <strong>Icomoon</strong> (local icon font, used by default) and <strong>Ionic Icons</strong> (detected by suffix <code>-outline</code>, <code>-sharp</code>, <code>-fill</code>, or prefix <code>logo-</code>). Supports custom <code>color</code> and <code>size</code> via CSS custom properties.
+	</p>
+
+	<h3 class="mb-20">Icomoon Icons</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center">
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="edit" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">edit</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="trash" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">trash</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="plus" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">plus</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="search" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">search</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="calendar" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">calendar</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="user" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">user</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="bell-on" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">bell-on</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="settings" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">settings</span>
+				</div>
+			</div>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;ngc-icon name="edit" size="24px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="trash" size="24px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="plus" size="24px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="search" size="24px"&gt;&lt;/ngc-icon&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Icon')">
+				<ngc-code-block [code]="getComponentTsCode('Icon')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Ionic Icons</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center">
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="document-text-outline" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">document-text-outline</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="home-outline" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">home-outline</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="heart-outline" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">heart-outline</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="star-outline" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">star-outline</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="logo-github" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">logo-github</span>
+				</div>
+			</div>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;!-- Ionic: suffix -outline, -sharp, -fill or prefix logo- --&gt;
+					&lt;ngc-icon name="document-text-outline" size="24px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="home-outline" size="24px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="logo-github" size="24px"&gt;&lt;/ngc-icon&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Icon')">
+				<ngc-code-block [code]="getComponentTsCode('Icon')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Custom Size</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center">
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="bell-on" size="16px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">16px</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="bell-on" size="24px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">24px</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="bell-on" size="36px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">36px</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="bell-on" size="48px"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">48px</span>
+				</div>
+			</div>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;ngc-icon name="bell-on" size="16px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="bell-on" size="24px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="bell-on" size="36px"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="bell-on" size="48px"&gt;&lt;/ngc-icon&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Icon')">
+				<ngc-code-block [code]="getComponentTsCode('Icon')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Custom Color</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<div class="layout-row layout-wrap layout-align-start-center">
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="star-outline" size="36px" color="#4f8ef7"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">#4f8ef7</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="star-outline" size="36px" color="#e74c3c"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">#e74c3c</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="star-outline" size="36px" color="#2ecc71"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">#2ecc71</span>
+				</div>
+				<div class="mr-20 layout-column layout-align-center-center">
+					<ngc-icon name="star-outline" size="36px" [color]="'PRIMARY' | color"></ngc-icon>
+					<span class="mt-5" style="font-size: 11px; opacity: 0.6;">primary</span>
+				</div>
+			</div>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;ngc-icon name="star-outline" size="28px" color="#4f8ef7"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="star-outline" size="28px" color="#e74c3c"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="star-outline" size="28px" color="#2ecc71"&gt;&lt;/ngc-icon&gt;
+					&lt;ngc-icon name="star-outline" size="28px" [color]="'PRIMARY' | color"&gt;&lt;/ngc-icon&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Icon')">
+				<ngc-code-block [code]="getComponentTsCode('Icon')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">API</h3>
+	<table class="guideline-table">
+		<thead>
+			<tr>
+				<th>Input</th>
+				<th>Type</th>
+				<th>Default</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><code>name</code></td>
+				<td><code>string</code></td>
+				<td>—</td>
+				<td>Icon name. Icomoon by default; Ionic if suffix is <code>-outline</code>, <code>-sharp</code>, <code>-fill</code> or prefix <code>logo-</code></td>
+			</tr>
+			<tr>
+				<td><code>size</code></td>
+				<td><code>string</code></td>
+				<td><code>inherit</code></td>
+				<td>Icon font-size &amp; line-height (e.g. <code>20px</code>, <code>1.5rem</code>)</td>
+			</tr>
+			<tr>
+				<td><code>color</code></td>
+				<td><code>string</code></td>
+				<td><code>inherit</code></td>
+				<td>Icon color. Accepts any CSS color value or color pipe output</td>
+			</tr>
+		</tbody>
+	</table>
 </ng-template>
 
 <ng-template #compTemplate label="Member Picker">
@@ -1577,10 +1982,13 @@
 				(viewDetail)="console.log('View detail', $event)">
 			</ngc-member-picker>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-member-picker canViewProfile required label="Member Picker Directive" limit="3" mode="inline" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-picker&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-member-picker canViewProfile required label="Member Picker Directive" limit="3" mode="inline" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-picker&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1596,10 +2004,13 @@
 				Member Picker
 			</button>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton ngcMemberPicker canViewProfile required label="Member Picker Directive" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;Member Picker&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton ngcMemberPicker canViewProfile required label="Member Picker Directive" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;Member Picker&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1611,10 +2022,13 @@
 				(selectedChange)="console.log('Selected Change', $event)">
 			</ngc-member-list>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-member-list label="Member Picker" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-member-list label="Member Picker" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1629,10 +2043,13 @@
 				(selectedChange)="console.log('Selected Change', $event)">
 			</ngc-member-list>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-member-list label="Member Picker Lazy List" [strictDisplay]="false" [members]="members$" [selectedMembers]="[{{ '{' }} id: 1, name: 'Member 1' {{ '}' }}, {{ '{' }} id: 2, name: 'Member 2' {{ '}' }}]" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-member-list label="Member Picker Lazy List" [strictDisplay]="false" [members]="members$" [selectedMembers]="[{{ '{' }} id: 1, name: 'Member 1' {{ '}' }}, {{ '{' }} id: 2, name: 'Member 2' {{ '}' }}]" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1646,10 +2063,13 @@
 				(viewDetail)="console.log('View detail', $event)">
 			</ngc-member-list>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-member-list canViewProfile required label="Member Picker Have Pending/Inactive Status" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-member-list canViewProfile required label="Member Picker Have Pending/Inactive Status" limit="3" [includesStatus]="[2, 3]" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1659,10 +2079,13 @@
 			<ngc-member-list class="mv-20" readonly label="Member picker readonly" [members]="members" [(selected)]="selected">
 			</ngc-member-list>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-member-list readonly label="Member picker readonly" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-member-list readonly label="Member picker readonly" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1672,10 +2095,13 @@
 			<ngc-member-list class="mv-20" disabled label="Member picker disabled" [members]="members" [(selected)]="selected">
 			</ngc-member-list>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-member-list disabled label="Member picker disabled" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-member-list disabled label="Member picker disabled" [members]="members" [(selected)]="selected"&gt;&lt;/ngc-member-list&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Member Picker')">
+				<ngc-code-block [code]="getComponentTsCode('Member Picker')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1689,10 +2115,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"></ngc-pagination>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"&gt;&lt;/ngc-pagination&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-pagination [length]="100" [pageSize]="10" (pageChange)="console.log($event)"&gt;&lt;/ngc-pagination&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Pagination')">
+				<ngc-code-block [code]="getComponentTsCode('Pagination')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1706,10 +2135,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-progress-bar [min]="0" [max]="10" [value]="2"></ngc-progress-bar>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="10" [value]="2"&gt;&lt;/ngc-progress-bar&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="10" [value]="2"&gt;&lt;/ngc-progress-bar&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Progress')">
+				<ngc-code-block [code]="getComponentTsCode('Progress')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1719,10 +2151,13 @@
 			<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
 				[statusText]="'Uploading .... '"></ngc-progress-bar>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" labelText="File 1" statusText="Uploading .... "&gt;&lt;/ngc-progress-bar&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" labelText="File 1" statusText="Uploading .... "&gt;&lt;/ngc-progress-bar&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Progress')">
+				<ngc-code-block [code]="getComponentTsCode('Progress')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1748,13 +2183,16 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-radio [checked]="true"&gt;Default&lt;/ngc-radio&gt;
-&lt;ngc-radio [checked]="true" label="Primary" color="primary"&gt;&lt;/ngc-radio&gt;
-&lt;ngc-radio [checked]="true" [disabled]="true" label="Checked &amp; Disabled" color="primary"&gt;&lt;/ngc-radio&gt;
-&lt;ngc-radio [disabled]="true" label="Disabled" color="primary"&gt;&lt;/ngc-radio&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-radio [checked]="true"&gt;Default&lt;/ngc-radio&gt;
+					&lt;ngc-radio [checked]="true" label="Primary" color="primary"&gt;&lt;/ngc-radio&gt;
+					&lt;ngc-radio [checked]="true" [disabled]="true" label="Checked &amp; Disabled" color="primary"&gt;&lt;/ngc-radio&gt;
+					&lt;ngc-radio [disabled]="true" label="Disabled" color="primary"&gt;&lt;/ngc-radio&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Radio Group')">
+				<ngc-code-block [code]="getComponentTsCode('Radio Group')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1779,12 +2217,15 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-radio [checked]="true" label="Red" color="#ff0000" labelColor="red"&gt;&lt;/ngc-radio&gt;
-&lt;ngc-radio [checked]="true" label="Blue" color="#0000ff" labelColor="blue"&gt;&lt;/ngc-radio&gt;
-&lt;ngc-radio [checked]="true" label="Green" color="#008000" labelColor="green"&gt;&lt;/ngc-radio&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-radio [checked]="true" label="Red" color="#ff0000" labelColor="red"&gt;&lt;/ngc-radio&gt;
+					&lt;ngc-radio [checked]="true" label="Blue" color="#0000ff" labelColor="blue"&gt;&lt;/ngc-radio&gt;
+					&lt;ngc-radio [checked]="true" label="Green" color="#008000" labelColor="green"&gt;&lt;/ngc-radio&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Radio Group')">
+				<ngc-code-block [code]="getComponentTsCode('Radio Group')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1796,13 +2237,16 @@
 				<ngc-radio [value]="2">Radio 2</ngc-radio>
 			</ngc-radio-group>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-radio-group ngDefaultControl label="Label" [(ngModel)]="radioGroupValue"&gt;
-	&lt;ngc-radio [value]="1"&gt;Radio 1&lt;/ngc-radio&gt;
-	&lt;ngc-radio [value]="2"&gt;Radio 2&lt;/ngc-radio&gt;
-&lt;/ngc-radio-group&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-radio-group ngDefaultControl label="Label" [(ngModel)]="radioGroupValue"&gt;
+						&lt;ngc-radio [value]="1"&gt;Radio 1&lt;/ngc-radio&gt;
+						&lt;ngc-radio [value]="2"&gt;Radio 2&lt;/ngc-radio&gt;
+					&lt;/ngc-radio-group&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Radio Group')">
+				<ngc-code-block [code]="getComponentTsCode('Radio Group')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1814,13 +2258,16 @@
 				<ngc-radio [value]="2">Radio 2</ngc-radio>
 			</ngc-radio-group>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-radio-group ngDefaultControl [disabled]="true" label="Label" [(ngModel)]="radioGroupValue"&gt;
-	&lt;ngc-radio [value]="1"&gt;Radio 1&lt;/ngc-radio&gt;
-	&lt;ngc-radio [value]="2"&gt;Radio 2&lt;/ngc-radio&gt;
-&lt;/ngc-radio-group&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-radio-group ngDefaultControl [disabled]="true" label="Label" [(ngModel)]="radioGroupValue"&gt;
+						&lt;ngc-radio [value]="1"&gt;Radio 1&lt;/ngc-radio&gt;
+						&lt;ngc-radio [value]="2"&gt;Radio 2&lt;/ngc-radio&gt;
+					&lt;/ngc-radio-group&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Radio Group')">
+				<ngc-code-block [code]="getComponentTsCode('Radio Group')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1834,10 +2281,13 @@
 			<ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions"
 				(selectionChange)="console?.log($event)"></ngc-select>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions" (selectionChange)="console?.log($event)"&gt;&lt;/ngc-select&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions" (selectionChange)="console?.log($event)"&gt;&lt;/ngc-select&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Select')">
+				<ngc-code-block [code]="getComponentTsCode('Select')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -1853,10 +2303,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-skeleton width="200px" height="20px"></ngc-skeleton>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-skeleton width="200px" height="20px"&gt;&lt;/ngc-skeleton&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-skeleton width="200px" height="20px"&gt;&lt;/ngc-skeleton&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Skeleton')">
+				<ngc-code-block [code]="getComponentTsCode('Skeleton')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1866,10 +2319,13 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-skeleton width="50px" height="50px" [circle]="true"></ngc-skeleton>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-skeleton width="50px" height="50px" [circle]="true"&gt;&lt;/ngc-skeleton&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-skeleton width="50px" height="50px" [circle]="true"&gt;&lt;/ngc-skeleton&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Skeleton')">
+				<ngc-code-block [code]="getComponentTsCode('Skeleton')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -1879,15 +2335,18 @@
 		<ngc-tab [label]="'Preview'">
 			<ngc-skeleton height="40px"></ngc-skeleton>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-skeleton height="40px"&gt;&lt;/ngc-skeleton&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-skeleton height="40px"&gt;&lt;/ngc-skeleton&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Skeleton')">
+				<ngc-code-block [code]="getComponentTsCode('Skeleton')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Sonner">42</ng-template>
-<ng-template #compTemplate label="Swit	ch">
+<ng-template #compTemplate label="Switch">
 	<h3 class="mb-20">Switch</h3>
 	<p class="component-description">
 		<strong>Switch</strong> is an interactive sliding binary toggle button that supports color customizability and active/disabled states.
@@ -1914,17 +2373,252 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-switch ngDefaultControl [ngModel]="true"&gt;Default&lt;/ngc-switch&gt;
-&lt;ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true"&gt;&lt;/ngc-switch&gt;
-&lt;ngc-switch ngDefaultControl disabled label="Active &amp; Disabled" [ngModel]="true"&gt;&lt;/ngc-switch&gt;
-&lt;ngc-switch [disabled]="true" label="Disabled"&gt;&lt;/ngc-switch&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-switch ngDefaultControl [ngModel]="true"&gt;Default&lt;/ngc-switch&gt;
+					&lt;ngc-switch ngDefaultControl label="Primary" color="primary" [ngModel]="true"&gt;&lt;/ngc-switch&gt;
+					&lt;ngc-switch ngDefaultControl disabled label="Active &amp; Disabled" [ngModel]="true"&gt;&lt;/ngc-switch&gt;
+					&lt;ngc-switch [disabled]="true" label="Disabled"&gt;&lt;/ngc-switch&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Switch')">
+				<ngc-code-block [code]="getComponentTsCode('Switch')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
-<ng-template #compTemplate label="Table">44</ng-template>
+<ng-template #compTemplate label="Table">
+	<h3 class="mb-20">Table</h3>
+	<ngc-tab-group class="mb-40">
+		<ngc-tab [label]="'Preview'">
+			<table ngcTable>
+				<thead>
+					<tr>
+						<th class="w-300" sticky="left" align="left">Positions</th>
+						<th class="w-200" sticky="left" [style.left.px]="300">Description</th>
+						<th class="w-200">KPI</th>
+						<th class="w-200">Number Of Members</th>
+						<th class="w-150">Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let position of positions; let first = first;" [attr.active]="first || undefined">
+						<td class="w-300 text-semibold" sticky="left" align="left">
+							<ngc-truncate>{{ position?.name }}</ngc-truncate>
+						</td>
+						<td class="w-200" sticky="left" [style.left.px]="300">
+							<ngc-truncate>{{ position?.description }}</ngc-truncate>
+						</td>
+						<td class="w-200">
+							<ngc-truncate>{{ position?.kpi }}</ngc-truncate>
+						</td>
+						<td class="w-200">
+							<ngc-truncate>{{ position?.noOfMembers }}</ngc-truncate>
+						</td>
+						<td class="w-150">
+							<ngc-tag *ngIf="position?.status" [color]="'PRIMARY' | color" [label]="position?.status"></ngc-tag>
+							<ng-container *ngIf="!position?.status">
+								{{ undefined | empty }}
+							</ng-container>
+						</td>
+					</tr>
+				</tbody>
+				<tfoot>
+					<tr>
+						<td align="left" colspan="5">
+							<button class="btn-normal" ngcBasicButton icon="circle-plus">Add row</button>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;table ngcTable&gt;
+					  &lt;thead&gt;
+					    &lt;tr&gt;
+					      &lt;th class="w-300" sticky="left" align="left"&gt;Positions&lt;/th&gt;
+					      &lt;th class="w-200" sticky="left" [style.left.px]="300"&gt;Description&lt;/th&gt;
+					      &lt;th class="w-200"&gt;KPI&lt;/th&gt;
+					      &lt;th class="w-200"&gt;Number Of Members&lt;/th&gt;
+					      &lt;th class="w-150"&gt;Status&lt;/th&gt;
+					    &lt;/tr&gt;
+					  &lt;/thead&gt;
+					  &lt;tbody&gt;
+					    &lt;tr *ngFor="let position of positions; let first = first;" [attr.active]="first || undefined"&gt;
+					      &lt;td class="w-300 text-semibold" sticky="left" align="left"&gt;
+					        &lt;ngc-truncate&gt;{{ '{{' }} position?.name {{ '}}' }}&lt;/ngc-truncate&gt;
+					      &lt;/td&gt;
+					      &lt;td class="w-200" sticky="left" [style.left.px]="300"&gt;
+					        &lt;ngc-truncate&gt;{{ '{{' }} position?.description {{ '}}' }}&lt;/ngc-truncate&gt;
+					      &lt;/td&gt;
+					      &lt;td class="w-200"&gt;
+					        &lt;ngc-truncate&gt;{{ '{{' }} position?.kpi {{ '}}' }}&lt;/ngc-truncate&gt;
+					      &lt;/td&gt;
+					      &lt;td class="w-200"&gt;
+					        &lt;ngc-truncate&gt;{{ '{{' }} position?.noOfMembers {{ '}}' }}&lt;/ngc-truncate&gt;
+					      &lt;/td&gt;
+					      &lt;td class="w-150"&gt;
+					        &lt;ngc-truncate&gt;{{ '{{' }} position?.status || '—' {{ '}}' }}&lt;/ngc-truncate&gt;
+					      &lt;/td&gt;
+					    &lt;/tr&gt;
+					  &lt;/tbody&gt;
+					  &lt;tfoot&gt;
+					    &lt;tr&gt;
+					      &lt;td align="left" colspan="5"&gt;
+					        &lt;button class="btn-normal" ngcBasicButton icon="circle-plus"&gt;Add row&lt;/button&gt;
+					      &lt;/td&gt;
+					    &lt;/tr&gt;
+					  &lt;/tfoot&gt;
+					&lt;/table&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Table')">
+				<ngc-code-block [code]="getComponentTsCode('Table')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">CDK Table</h3>
+	<ngc-tab-group class="mb-40">
+		<ngc-tab [label]="'Preview'">
+			<table ngcCdkTable [dataSource]="dataSource" cdkDropList (cdkDropListDropped)="onRowDropped($event)">
+				<ng-container cdkColumnDef="positions">
+					<th cdk-header-cell align="left" *cdkHeaderCellDef>Positions</th>
+					<td class="text-semibold" cdk-cell align="left" *cdkCellDef="let element">
+						<ngc-truncate>{{ element?.name }}</ngc-truncate>
+					</td>
+					<td cdk-footer-cell align="left" colspan="5" *cdkFooterCellDef>
+						<button class="btn-normal" ngcBasicButton icon="circle-plus">Add row</button>
+					</td>
+				</ng-container>
+				<ng-container cdkColumnDef="description">
+					<th class="w-200" cdk-header-cell *cdkHeaderCellDef>Description</th>
+					<td class="w-200" cdk-cell *cdkCellDef="let element">
+						<ngc-truncate>{{ element?.description }}</ngc-truncate>
+					</td>
+					<td class="w-200 hide" cdk-footer-cell *cdkFooterCellDef></td>
+				</ng-container>
+				<ng-container cdkColumnDef="kpi">
+					<th class="w-200" cdk-header-cell *cdkHeaderCellDef>KPI</th>
+					<td class="w-200" cdk-cell *cdkCellDef="let element">
+						<ngc-truncate>{{ element?.kpi }}</ngc-truncate>
+					</td>
+					<td class="w-200 hide" cdk-footer-cell *cdkFooterCellDef></td>
+				</ng-container>
+				<ng-container cdkColumnDef="numberOfMembers">
+					<th class="w-200" cdk-header-cell *cdkHeaderCellDef>Number Of Members</th>
+					<td class="w-200" cdk-cell *cdkCellDef="let element">
+						<ngc-truncate>{{ element?.noOfMembers }}</ngc-truncate>
+					</td>
+					<td class="w-200 hide" cdk-footer-cell *cdkFooterCellDef></td>
+				</ng-container>
+				<ng-container cdkColumnDef="status">
+					<th class="w-150" cdk-header-cell *cdkHeaderCellDef>Status</th>
+					<td class="w-150" cdk-cell *cdkCellDef="let element">
+						<ngc-tag *ngIf="element?.status" [color]="'PRIMARY' | color" [label]="element?.status"></ngc-tag>
+						<ng-container *ngIf="!element?.status">
+							{{ undefined | empty }}
+						</ng-container>
+					</td>
+					<td class="w-150 hide" cdk-footer-cell *cdkFooterCellDef></td>
+				</ng-container>
+				<tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
+				<tr cdk-row *cdkRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row"></tr>
+				<tr cdk-footer-row *cdkFooterRowDef="displayedColumns"></tr>
+			</table>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;table ngcCdkTable [dataSource]="dataSource"&gt;
+					  &lt;ng-container cdkColumnDef="positions"&gt;
+					    &lt;th cdk-header-cell align="left" *cdkHeaderCellDef&gt;Positions&lt;/th&gt;
+					    &lt;td class="text-semibold" cdk-cell align="left" *cdkCellDef="let element"&gt;
+					      &lt;ngc-truncate&gt;{{ '{{' }} element?.name {{ '}}' }}&lt;/ngc-truncate&gt;
+					    &lt;/td&gt;
+					    &lt;td cdk-footer-cell align="left" colspan="5" *cdkFooterCellDef&gt;
+					      &lt;button class="btn-normal" ngcBasicButton icon="circle-plus"&gt;Add row&lt;/button&gt;
+					    &lt;/td&gt;
+					  &lt;/ng-container&gt;
+					  &lt;!-- ... other columns ... --&gt;
+					  &lt;tr cdk-header-row *cdkHeaderRowDef="displayedColumns"&gt;&lt;/tr&gt;
+					  &lt;tr cdk-row *cdkRowDef="let row; columns: displayedColumns;"&gt;&lt;/tr&gt;
+					  &lt;tr cdk-footer-row *cdkFooterRowDef="displayedColumns"&gt;&lt;/tr&gt;
+					&lt;/table&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Table')">
+				<ngc-code-block [code]="getComponentTsCode('Table')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mb-20">Excel Table</h3>
+	<ngc-tab-group class="mb-40">
+		<ngc-tab [label]="'Preview'">
+			<table ngcExcelTable>
+				<thead>
+					<tr>
+						<td class="w-50" ngcExcelHeaderCell index></td>
+						<th ngcExcelHeaderCell>Text</th>
+						<th ngcExcelHeaderCell required>Required</th>
+						<th ngcExcelHeaderCell>Email</th>
+						<th ngcExcelHeaderCell>Website</th>
+						<th ngcExcelHeaderCell>Number</th>
+						<th ngcExcelHeaderCell>List</th>
+						<th ngcExcelHeaderCell>Strict List</th>
+						<th ngcExcelHeaderCell>Multi List</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let item of arr">
+						<td class="w-50" ngcExcelCell index readonly>{{ item }}</td>
+						<td ngcExcelCell>Content</td>
+						<td ngcExcelCell required>Content</td>
+						<td ngcExcelCell type="email">mail@example.com</td>
+						<td ngcExcelCell type="website">https://example.com</td>
+						<td ngcExcelCell type="number">1</td>
+						<td ngcExcelCell type="list" [list]='[ "Item 1", "Item 2", "Item 3" ]'>Item 1</td>
+						<td ngcExcelCell type="strict-list" [list]='[ "Item 1", "Item 2", "Item 3" ]'>Item 1</td>
+						<td ngcExcelCell type="multi-list" [list]='[ "Item 1", "Item 2", "Item 3" ]'>Item 1</td>
+					</tr>
+				</tbody>
+			</table>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;table ngcExcelTable&gt;
+					  &lt;thead&gt;
+					    &lt;tr&gt;
+					      &lt;td class="w-50" ngcExcelHeaderCell index&gt;&lt;/td&gt;
+					      &lt;th ngcExcelHeaderCell&gt;Text&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell required&gt;Required&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell&gt;Email&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell&gt;Website&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell&gt;Number&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell&gt;List&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell&gt;Strict List&lt;/th&gt;
+					      &lt;th ngcExcelHeaderCell&gt;Multi List&lt;/th&gt;
+					    &lt;/tr&gt;
+					  &lt;/thead&gt;
+					  &lt;tbody&gt;
+					    &lt;tr *ngFor="let item of arr"&gt;
+					      &lt;td class="w-50" ngcExcelCell index readonly&gt;{{ '{{' }} item {{ '}}' }}&lt;/td&gt;
+					      &lt;td ngcExcelCell&gt;Content&lt;/td&gt;
+					      &lt;td ngcExcelCell required&gt;Content&lt;/td&gt;
+					      &lt;td ngcExcelCell type="email"&gt;mail@example.com&lt;/td&gt;
+					      &lt;td ngcExcelCell type="website"&gt;https://example.com&lt;/td&gt;
+					      &lt;td ngcExcelCell type="number"&gt;1&lt;/td&gt;
+					      &lt;td ngcExcelCell type="list" [list]='[ "Item 1", "Item 2", "Item 3" ]'&gt;Item 1&lt;/td&gt;
+					      &lt;td ngcExcelCell type="strict-list" [list]='[ "Item 1", "Item 2", "Item 3" ]'&gt;Item 1&lt;/td&gt;
+					      &lt;td ngcExcelCell type="multi-list" [list]='[ "Item 1", "Item 2", "Item 3" ]'&gt;Item 1&lt;/td&gt;
+					    &lt;/tr&gt;
+					  &lt;/tbody&gt;
+					&lt;/table&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Table')">
+				<ngc-code-block [code]="getComponentTsCode('Table')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
 <ng-template #compTemplate label="Tabs">
 	<h3 class="mb-20">Tabs</h3>
 	<p class="component-description">
@@ -1998,20 +2692,23 @@
 				</ngc-tab>
 			</ngc-tab-group>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-tab-group&gt;
-	&lt;ngc-tab [label]="'Tab 1'"&gt;
-		Content 1
-	&lt;/ngc-tab&gt;
-	&lt;ngc-tab [label]="'Tab 2'"&gt;
-		Content 2
-	&lt;/ngc-tab&gt;
-	&lt;ngc-tab [label]="'Tab 3'"&gt;
-		Content 3
-	&lt;/ngc-tab&gt;
-&lt;/ngc-tab-group&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-tab-group&gt;
+						&lt;ngc-tab [label]="'Tab 1'"&gt;
+							Content 1
+						&lt;/ngc-tab&gt;
+						&lt;ngc-tab [label]="'Tab 2'"&gt;
+							Content 2
+						&lt;/ngc-tab&gt;
+						&lt;ngc-tab [label]="'Tab 3'"&gt;
+							Content 3
+						&lt;/ngc-tab&gt;
+					&lt;/ngc-tab-group&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Tabs')">
+				<ngc-code-block [code]="getComponentTsCode('Tabs')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -2033,16 +2730,19 @@
 				</ngc-textarea>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-textarea 
-  label="Feedback Comment" 
-  placeholder="Share your thoughts with us..." 
-  [rows]="4" 
-  maxLength="200" 
-  showCounter="true"&gt;
-&lt;/ngc-textarea&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-textarea 
+					  label="Feedback Comment" 
+					  placeholder="Share your thoughts with us..." 
+					  [rows]="4" 
+					  maxLength="200" 
+					  showCounter="true"&gt;
+					&lt;/ngc-textarea&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Textarea')">
+				<ngc-code-block [code]="getComponentTsCode('Textarea')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -2058,15 +2758,18 @@
 				</ngc-textarea>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-textarea 
-  label="Read-Only / Disabled Notes" 
-  placeholder="Cannot type anything here..." 
-  [rows]="3" 
-  disabled="true"&gt;
-&lt;/ngc-textarea&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-textarea 
+					  label="Read-Only / Disabled Notes" 
+					  placeholder="Cannot type anything here..." 
+					  [rows]="3" 
+					  disabled="true"&gt;
+					&lt;/ngc-textarea&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Textarea')">
+				<ngc-code-block [code]="getComponentTsCode('Textarea')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -2083,15 +2786,18 @@
 				</ngc-textarea>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-textarea 
-  label="Invalid Textarea" 
-  [rows]="3" 
-  [invalid]="hasError"
-  errorMessage="The entered value is not valid."&gt;
-&lt;/ngc-textarea&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-textarea 
+					  label="Invalid Textarea" 
+					  [rows]="3" 
+					  [invalid]="hasError"
+					  errorMessage="The entered value is not valid."&gt;
+					&lt;/ngc-textarea&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Textarea')">
+				<ngc-code-block [code]="getComponentTsCode('Textarea')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -2134,36 +2840,39 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- Default appearance --&gt;
-&lt;ngc-textarea 
-  label="Default Appearance" 
-  appearance="default"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;
-
-&lt;!-- Filled appearance --&gt;
-&lt;ngc-textarea 
-  label="Filled Appearance" 
-  appearance="filled"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;
-
-&lt;!-- Underlined appearance --&gt;
-&lt;ngc-textarea 
-  label="Underlined Appearance" 
-  appearance="underlined"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;
-
-&lt;!-- Borderless appearance --&gt;
-&lt;ngc-textarea 
-  label="Borderless Appearance" 
-  appearance="borderless"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- Default appearance --&gt;
+					&lt;ngc-textarea 
+					  label="Default Appearance" 
+					  appearance="default"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;
+					
+					&lt;!-- Filled appearance --&gt;
+					&lt;ngc-textarea 
+					  label="Filled Appearance" 
+					  appearance="filled"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;
+					
+					&lt;!-- Underlined appearance --&gt;
+					&lt;ngc-textarea 
+					  label="Underlined Appearance" 
+					  appearance="underlined"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;
+					
+					&lt;!-- Borderless appearance --&gt;
+					&lt;ngc-textarea 
+					  label="Borderless Appearance" 
+					  appearance="borderless"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Textarea')">
+				<ngc-code-block [code]="getComponentTsCode('Textarea')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -2206,36 +2915,39 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- Vertical resize --&gt;
-&lt;ngc-textarea 
-  label="Resize Vertical" 
-  resize="vertical"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;
-
-&lt;!-- Both directions --&gt;
-&lt;ngc-textarea 
-  label="Resize Both" 
-  resize="both"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;
-
-&lt;!-- Horizontal resize --&gt;
-&lt;ngc-textarea 
-  label="Resize Horizontal" 
-  resize="horizontal"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;
-
-&lt;!-- No resize allowed --&gt;
-&lt;ngc-textarea 
-  label="No Resize" 
-  resize="none"
-  [rows]="3"&gt;
-&lt;/ngc-textarea&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- Vertical resize --&gt;
+					&lt;ngc-textarea 
+					  label="Resize Vertical" 
+					  resize="vertical"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;
+					
+					&lt;!-- Both directions --&gt;
+					&lt;ngc-textarea 
+					  label="Resize Both" 
+					  resize="both"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;
+					
+					&lt;!-- Horizontal resize --&gt;
+					&lt;ngc-textarea 
+					  label="Resize Horizontal" 
+					  resize="horizontal"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;
+					
+					&lt;!-- No resize allowed --&gt;
+					&lt;ngc-textarea 
+					  label="No Resize" 
+					  resize="none"
+					  [rows]="3"&gt;
+					&lt;/ngc-textarea&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Textarea')">
+				<ngc-code-block [code]="getComponentTsCode('Textarea')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -2261,12 +2973,15 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;!-- In component.ts --&gt;
-&lt;!-- this.ngcToastService.show('Message', {{ '{' }} type: 'success' {{ '}' }}) --&gt;
-&lt;button ngcButton (click)="openToast('success')"&gt;Open toast success&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;!-- In component.ts --&gt;
+					&lt;!-- this.ngcToastService.show('Message', {{ '{' }} type: 'success' {{ '}' }}) --&gt;
+					&lt;button ngcButton (click)="openToast('success')"&gt;Open toast success&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Toast')">
+				<ngc-code-block [code]="getComponentTsCode('Toast')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -2299,16 +3014,27 @@
 				</div>
 			</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;button ngcButton position="above" [ngcTooltip]="'Tooltip'"&gt;Tooltip Above&lt;/button&gt;
-&lt;button ngcButton position="below" [ngcTooltip]="'Tooltip'"&gt;Tooltip Below&lt;/button&gt;
-&lt;button ngcButton position="before" [ngcTooltip]="'Tooltip'"&gt;Tooltip Before&lt;/button&gt;
-&lt;button ngcButton position="after" [ngcTooltip]="'Tooltip'"&gt;Tooltip After&lt;/button&gt;
-&lt;button ngcButton position="below" [ngcTooltip]="tooltip"&gt;Tooltip Custom&lt;/button&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;button ngcButton position="above" [ngcTooltip]="'Tooltip'"&gt;Tooltip Above&lt;/button&gt;
+					&lt;button ngcButton position="below" [ngcTooltip]="'Tooltip'"&gt;Tooltip Below&lt;/button&gt;
+					&lt;button ngcButton position="before" [ngcTooltip]="'Tooltip'"&gt;Tooltip Before&lt;/button&gt;
+					&lt;button ngcButton position="after" [ngcTooltip]="'Tooltip'"&gt;Tooltip After&lt;/button&gt;
+					&lt;button ngcButton position="below" [ngcTooltip]="tooltip"&gt;Tooltip Custom&lt;/button&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Tooltip')">
+				<ngc-code-block [code]="getComponentTsCode('Tooltip')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
+	<ngc-tooltip #tooltip theme="light">
+		<h4 class="mb-10">Need more informations?</h4>
+		<div class="layout-row layout-align-start-center">
+			Click on&nbsp;&nbsp;
+			<button ngcIconButton icon="plus"></button>
+			&nbsp;&nbsp;to create for fields
+		</div>
+	</ngc-tooltip>
 </ng-template>
 <ng-template #compTemplate label="Alert">
 	<h3 class="mb-20">Alert</h3>
@@ -2325,14 +3051,17 @@
 			<ngc-alert color="warning" icon="alert-triangle">This is a warning alert.</ngc-alert>
 			<ngc-alert color="danger" icon="alert-circle">This is a danger alert.</ngc-alert>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-alert color="primary" icon="info"&gt;This is a primary alert.&lt;/ngc-alert&gt;
-&lt;ngc-alert color="info" icon="info"&gt;This is an info alert.&lt;/ngc-alert&gt;
-&lt;ngc-alert color="success" icon="check-circle"&gt;This is a success alert.&lt;/ngc-alert&gt;
-&lt;ngc-alert color="warning" icon="alert-triangle"&gt;This is a warning alert.&lt;/ngc-alert&gt;
-&lt;ngc-alert color="danger" icon="alert-circle"&gt;This is a danger alert.&lt;/ngc-alert&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-alert color="primary" icon="info"&gt;This is a primary alert.&lt;/ngc-alert&gt;
+					&lt;ngc-alert color="info" icon="info"&gt;This is an info alert.&lt;/ngc-alert&gt;
+					&lt;ngc-alert color="success" icon="check-circle"&gt;This is a success alert.&lt;/ngc-alert&gt;
+					&lt;ngc-alert color="warning" icon="alert-triangle"&gt;This is a warning alert.&lt;/ngc-alert&gt;
+					&lt;ngc-alert color="danger" icon="alert-circle"&gt;This is a danger alert.&lt;/ngc-alert&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Alert')">
+				<ngc-code-block [code]="getComponentTsCode('Alert')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -2342,11 +3071,14 @@
 			<ngc-alert color="#af52de" icon="bell" closeable>This is a custom purple alert (#af52de) with a close button.</ngc-alert>
 			<ngc-alert color="#ff9500" icon="star" closeable>This is a custom orange alert (#ff9500) with a close button.</ngc-alert>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;ngc-alert color="#af52de" icon="bell" closeable&gt;This is a custom purple alert (#af52de) with a close button.&lt;/ngc-alert&gt;
-&lt;ngc-alert color="#ff9500" icon="star" closeable&gt;This is a custom orange alert (#ff9500) with a close button.&lt;/ngc-alert&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;ngc-alert color="#af52de" icon="bell" closeable&gt;This is a custom purple alert (#af52de) with a close button.&lt;/ngc-alert&gt;
+					&lt;ngc-alert color="#ff9500" icon="star" closeable&gt;This is a custom orange alert (#ff9500) with a close button.&lt;/ngc-alert&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Alert')">
+				<ngc-code-block [code]="getComponentTsCode('Alert')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 
@@ -2355,10 +3087,13 @@
 		<ngc-tab [label]="'Preview'">
 			<div ngcAlert color="success" icon="check-circle">This is a div styled with the ngcAlert directive.</div>
 		</ngc-tab>
-		<ngc-tab [label]="'Code'">
+						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-				<pre><code #codeContent>&lt;div ngcAlert color="success" icon="check-circle"&gt;This is a div styled with the ngcAlert directive.&lt;/div&gt;</code></pre>
-			</ngc-code-block>
+									<pre><code #codeContent>&lt;div ngcAlert color="success" icon="check-circle"&gt;This is a div styled with the ngcAlert directive.&lt;/div&gt;</code></pre>
+								</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Alert')">
+				<ngc-code-block [code]="getComponentTsCode('Alert')" language="typescript"></ngc-code-block>
+			</div>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>

@@ -1,0 +1,37 @@
+@import 'src/scss/partials/variable';
+
+:host {
+  display: block;
+  position: sticky;
+  bottom: -20px;
+  background-color: #fafafa;
+  z-index: 100;
+  width: 100%;
+}
+
+.guideline-navigator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 50px;
+  padding: 15px 0 20px 0;
+  border-top: 1px solid #e0e0e0;
+  width: 100%;
+
+  ::ng-deep {
+    .navigator-btn-next {
+      .ngc-button-wrapper {
+        flex-direction: row-reverse;
+      }
+    }
+  }
+}
+
+// Dark theme border override
+:host-context(.dark-theme) {
+  background-color: #0d1117;
+
+  .guideline-navigator {
+    border-top-color: #30363d;
+  }
+}

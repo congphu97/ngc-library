@@ -1,0 +1,18 @@
+<div class="guideline-navigator">
+  <button ngcButton
+          *ngIf="prevLabel"
+          icon="arrow-back-outline"
+          (click)="onPrevClick()">
+    {{ prevLabel }}
+  </button>
+  
+  <span *ngIf="!prevLabel"></span> <!-- Spacing placeholder -->
+
+  <button ngcButton
+          *ngIf="nextLabel"
+          icon="arrow-forward-outline"
+          class="navigator-btn-next"
+          (click)="onNextClick()">
+    {{ nextLabel }}
+  </button>
+</div>

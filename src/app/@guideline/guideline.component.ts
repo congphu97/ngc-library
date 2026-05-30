@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NgcToastService } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
 // import { untilCmpDestroyed } from 'angular-core';
 import { Socket } from 'ngx-socket-io';
@@ -14,6 +15,7 @@ import { MyDialogComponent } from './partial/dialog/my-dialog.component';
 import { Observable, Observer } from 'rxjs';
 import { NgcIToastType } from '@app/@ngc/ngc-toast/toast/ngc-toast.component';
 import { NgcIMember } from '@app/@ngc/ngc-member-picker';
+import { NgcCdkTableDataSource } from '@app/@ngc/ngc-table';
 
 const COMPONENT_ICON_MAP: Record<string, string> = {
 	'Accordion'          : 'collapse',
@@ -40,6 +42,7 @@ const COMPONENT_ICON_MAP: Record<string, string> = {
 	'Dropdown'           : 'dropdown',
 	'Emoji Picker'       : 'emoji',
 	'Form Field'         : 'form',
+	'Icon'               : 'image',
 	'Input'              : 'text-input',
 	'List'               : 'list',
 	'Loading'            : 'progress-auto',
@@ -73,6 +76,7 @@ export class GuidelineComponent implements OnInit {
 	public title = 'Components';
 	public opened = true;
 	public isDarkMode = false;
+	public componentDocs: any = {};
 
 	public toggleDrawer() {
 		this.opened = !this.opened;
@@ -130,7 +134,28 @@ export class GuidelineComponent implements OnInit {
 		this.isDarkMode = document.body.classList.contains('dark-theme');
 		this.connectionSocket();
 		this.selectedCompIndex = +this._route.snapshot.fragment || 0;
+		this.dataSource.data = this.positions;
+		this.loadComponentDocs();
 	};
+
+	public loadComponentDocs() {
+		fetch('assets/component-doc.json')
+			.then(res => res.json())
+			.then(data => {
+				this.componentDocs = data;
+				this._cdr.detectChanges();
+			})
+			.catch(err => console.error('Failed to load component docs', err));
+	}
+
+	public getComponentDocs(label: string): any {
+		return this.componentDocs ? this.componentDocs[label] : null;
+	}
+
+	public getComponentTsCode(label: string): string {
+		const doc = this.getComponentDocs(label);
+		return doc ? doc.sourceCode : '';
+	}
 
 	ngAfterViewInit() {
 		this.currentCompTemplate = this.compTemplatesArr[this.selectedCompIndex];
@@ -163,6 +188,36 @@ export class GuidelineComponent implements OnInit {
 		this.currentCompTemplate = compTemplate;
 		this.selectedCompIndex = index;
 		window.location.hash = this.selectedCompIndex?.toString();
+	}
+
+	get prevComponent(): any {
+		if (!this.compTemplatesArr || this.compTemplatesArr.length <= 1) {
+			return null;
+		}
+		const prevIndex = (this.selectedCompIndex - 1 + this.compTemplatesArr.length) % this.compTemplatesArr.length;
+		return this.compTemplatesArr[prevIndex];
+	}
+
+	get nextComponent(): any {
+		if (!this.compTemplatesArr || this.compTemplatesArr.length <= 1) {
+			return null;
+		}
+		const nextIndex = (this.selectedCompIndex + 1) % this.compTemplatesArr.length;
+		return this.compTemplatesArr[nextIndex];
+	}
+
+	public navigateToPrev(): void {
+		const prev = this.prevComponent;
+		if (prev) {
+			this.selectCompTemplate(prev);
+		}
+	}
+
+	public navigateToNext(): void {
+		const next = this.nextComponent;
+		if (next) {
+			this.selectCompTemplate(next);
+		}
 	}
 
 
@@ -284,6 +339,12 @@ export class GuidelineComponent implements OnInit {
 	public members$: Observable<NgcIMember[]> = new Observable((observer: Observer<NgcIMember[]>) => {
 		observer.next(this.members);
 	});
+
+	public arr: number[] = [ 1, 2, 3, 4, 5 ];
+
+	public displayedColumns: string[] = [ 'positions', 'description', 'kpi', 'numberOfMembers', 'status' ];
+
+	public dataSource: NgcCdkTableDataSource<any> = new NgcCdkTableDataSource<any>();
 
 	public positions: IObject[] = [
 		{
@@ -468,8 +529,10 @@ export class GuidelineComponent implements OnInit {
 	// 			avatar	: user.avatar,
 	// 		}) );
 
-	// 		observer.next( _mentionSource );
-	// 		observer.complete();
-	// 	} );
 	// }
+
+	public onRowDropped(event: CdkDragDrop<any[]>) {
+		moveItemInArray(this.positions, event.previousIndex, event.currentIndex);
+		this.dataSource.data = [...this.positions];
+	}
 }

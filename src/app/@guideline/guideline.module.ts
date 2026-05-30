@@ -12,6 +12,7 @@ import { NgcToastModule } from '@app/@ngc/ngc-toast/ngc-toast.module';
 import { GuidelineComponent } from './guideline.component';
 import { ContactComponent } from './partial/contact/contact.component';
 import { GuidelineHeaderComponent } from './partial/header/header.component';
+import { GuidelineNavigatorComponent } from './partial/navigator/navigator.component';
 import { RouterModule } from '@angular/router';
 import { NgcIconModule } from '@app/@ngc/ngc-icon/ngc-icon.module';
 import { NgcTruncateModule } from '@app/@ngc/ngc-truncate/ngc-truncate.module';
@@ -51,13 +52,15 @@ import { NgcFormFieldModule } from '@app/@ngc/ngc-form-field';
 import { NgcPhoneFieldModule } from '@app/@ngc/ngc-phone-field';
 import { NgcSkeletonModule } from '@app/@ngc/ngc-skeleton/ngc-skeleton.module';
 import { NgcAlertModule } from '@app/@ngc/ngc-alert';
+import { NGCTableModule } from '@app/@ngc/ngc-table/ngc-table.module';
+import { NgcTagModule } from '@app/@ngc/ngc-tag';
 
 // import { NgcSliderModule } from '@app/@ngc/ngc-range-input';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
-  declarations: [ GuidelineComponent, MyDialogComponent, ContactComponent, GuidelineHeaderComponent ],
+  declarations: [ GuidelineComponent, MyDialogComponent, ContactComponent, GuidelineHeaderComponent, GuidelineNavigatorComponent ],
   imports: [
 		RouterModule,
 		DragDropModule,
@@ -70,7 +73,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
     NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
     NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule, NgcDropdownModule, NgcMemberPickerModule, NgcFormFieldModule,
-    NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule, NgcAlertModule,
+    NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule, NgcAlertModule, NGCTableModule, NgcTagModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],
