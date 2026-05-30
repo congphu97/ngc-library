@@ -1,0 +1,16 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+<div class="ngc-tag-list-wrapper">
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+  <ngc-tag
+    class="ngc-tag--more"
+    *ngIf="isTruncated"
+    [truncate]="false"
+    [color]="tagColor"
+    [ngcMenuTriggerFor]="moreMenu"
+    (click)="showMore?.emit()">
+    +{{ moreDisplay | kUnit }}
+  </ngc-tag>
+</div>
