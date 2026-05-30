@@ -1,0 +1,8 @@
+<div
+  mwlResizable
+  [resizeEdges]="{ bottom: true, right: true }"
+  (resizing)="onResizing( $event )">
+  <ngc-truncate [limitLine]="1">
+    <ng-content></ng-content>
+  </ngc-truncate>
+</div>

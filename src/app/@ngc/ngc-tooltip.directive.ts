@@ -10,7 +10,7 @@ import {
 	ConnectedOverlayPositionChange, PositionStrategy
 } from '@angular/cdk/overlay';
 import { Direction } from '@angular/cdk/bidi';
-import { TemplatePortal, ComponentPortal } from '@angular/cdk/portal';
+import { ComponentPortal, DomPortal } from '@angular/cdk/portal';
 import { FocusMonitor } from '@angular/cdk/a11y';
 import ResizeObserver from 'resize-observer-polyfill';
 import _ from 'lodash';
@@ -270,7 +270,7 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 
 			this._setTooltipMessage();
 		} else if ( this.tooltip instanceof NgcTooltipComponent ) {
-			this._portal = this._portal || this._createTemplatePortal();
+			this._portal = this._portal || new DomPortal( this.tooltip.nativeElement );
 			this._instance = this.tooltip;
 
 			this._overlayRef.attach( this._portal );
@@ -329,16 +329,7 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 		_.forEach( overlayRefs, ( overlayRef: OverlayRef ) => { overlayRef.detach(); } );
 	}
 
-	/**
-	 * @return {TemplatePortal}
-	 */
-	private _createTemplatePortal(): TemplatePortal {
-		if ( !this._portal || this._portal.templateRef !== this.tooltip?.templateRef ) {
-			this._portal = new TemplatePortal( this.tooltip?.templateRef, this._vcRef );
-		}
 
-		return this._portal;
-	}
 
 	/**
 	 * @return {OverlayRef}

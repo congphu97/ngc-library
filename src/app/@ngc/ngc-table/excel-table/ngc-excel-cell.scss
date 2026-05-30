@@ -1,0 +1,62 @@
+@import 'src/scss/partials/variable';
+
+.ngc-excel-cell {
+	&:not(.ngc-menu) {
+		padding: 0 !important;
+		position: relative;
+
+		&:after {
+			content: attr(data-error);
+			background-color: $color-danger;
+			color: $color-white;
+			font-size: 11px;
+			bottom: 0;
+			right: 0;
+			position: absolute;
+			padding: 2px 5px;
+			font-weight: $font-weight-regular;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 100ms ease-in-out;
+		}
+
+		&.ngc-excel-cell--focusing {
+			border-color: var(--primary-color, $color-primary);
+		}
+
+		&.ngc-excel-cell--invalid {
+			&.ngc-excel-cell--touched,
+			&.ngc-excel-cell--dirty {
+				border-color: $color-danger;
+
+				&:not(.ngc-excel-cell--focusing):after {
+					visibility: visible;
+					opacity: 1;
+				}
+			}
+		}
+
+		&.ngc-excel-cell--has-list {
+			> div {
+				margin-right: 40px;
+			}
+		}
+
+		> div {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			left: 10px;
+			bottom: 10px;
+			white-space: nowrap;
+			overflow: hidden;
+		}
+
+		> button {
+			position: absolute;
+			right: 10px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+}
