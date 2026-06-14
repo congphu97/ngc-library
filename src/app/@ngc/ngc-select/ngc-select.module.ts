@@ -8,7 +8,8 @@ import { NgcSelectComponent } from './ngc-select.component';
     NgcSelectComponent
   ],
   imports: [
-    CommonModule, FormsModule
+    CommonModule,
+    FormsModule
   ],
   exports: [
     NgcSelectComponent,
