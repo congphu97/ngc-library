@@ -41,20 +41,21 @@
     </ngc-member>
 
     <ng-container
+      ngcMenuItemSuffix
       *ngTemplateOutlet="btnViewProfile; context:{ $implicit: member }">
     </ng-container>
-
+ 
     <ng-container
+      ngcMenuItemSuffix
       *ngVar="{ isSelected: selected | includes : member?.id } as localVar">
-
+ 
       <button
         ngcBasicButton
-        ngcMenuItemSuffix
         [icon]="localVar.isSelected ? 'trash' : 'circle-plus'"
         [color]="(localVar.isSelected ? 'DANGER' : 'LABEL') | color"
         [ngcTooltip]="'NGC.LABEL.' + (localVar.isSelected ? 'REMOVE' : 'ADD') | translate">
       </button>
-
+ 
     </ng-container>
 
   </button>

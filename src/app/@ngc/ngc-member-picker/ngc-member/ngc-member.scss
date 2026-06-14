@@ -5,6 +5,8 @@
 	align-items: center;
 
 	.ngc-member-tooltip {
+		display: none !important;
+
 		.ngc-member-tooltip__name {
 			display: flex;
 			flex-direction: row;

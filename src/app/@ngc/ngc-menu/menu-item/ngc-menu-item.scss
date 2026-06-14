@@ -51,6 +51,14 @@
 		}
 	}
 
+	.ngc-menu-item__suffix {
+		margin-left: auto;
+
+		& > *:not(:first-child) {
+			margin-left: 8px;
+		}
+	}
+
 	.ngc-menu-item__prefix [ngcMenuItemPrefix] {
 		margin-right: 5px;
 	}

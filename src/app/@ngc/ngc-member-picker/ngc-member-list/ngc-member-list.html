@@ -115,7 +115,7 @@
 		*ngFor="let member of selectedMembers | slice : 0 : blockTruncate?.maxDisplay; trackBy: trackByFn">
 
 		<ngc-member [member]="member" [canViewProfile]="canViewProfile"
-			[displayMemberName]="readonly && selectedMembers?.length === 1" (viewDetail)="viewProfile($event)">
+			[displayMemberName]="!!readonly && selectedMembers?.length === 1" (viewDetail)="viewProfile($event)">
 		</ngc-member>
 
 		<button class="ngc-member-list__content-item__btn-remove" ngcIconButton icon="close" iconSize="12px" size="16px"

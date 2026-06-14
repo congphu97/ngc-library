@@ -32,7 +32,7 @@ export class NgcMemberListComponent extends NgcMemberBase implements OnChanges {
 	@Input() @DefaultValue() @CoerceNumber() public limit: number = 4;
 	@Input() @CoerceBoolean() public toggleAddButton: boolean;
 	@Input() @CoerceBoolean() public isAutoOpen: boolean;
-	@Input() @CoerceBoolean() public readonly: boolean;
+	@Input() @CoerceBoolean() public readonly: boolean = false;
 
 	public isOpened: boolean;
 	public filteredSelectedMembers: NgcIMember[];

@@ -33,7 +33,7 @@
 		height: 100%;
 		min-height: 0;
 		overflow: hidden; // Fixes corner border-radius clipping bug
-		background-color: var(--card-color, $color-secondary);
+		background-color: var(--card-color, var(--ngc-component-card-bg, $color-white));
 		border-width: var(--card-border-width, 1px);
 		border-style: var(--card-border-style, solid);
 		border-color: var(--card-border-color, $color-border);
