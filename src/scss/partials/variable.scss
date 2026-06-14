@@ -1,15 +1,19 @@
 @import 'angular-core/lib/scss/partials/variable';
 
 @function hex-opacity($hex, $opacity: 1, $background: #fff) {
-	@return mix(
-		rgb(
-			red($hex),
-			green($hex),
-			blue($hex)
-		),
-		$background,
-		$opacity * 100%
-	);
+	@if type-of($hex) == 'color' {
+		@return mix(
+			rgb(
+				red($hex),
+				green($hex),
+				blue($hex)
+			),
+			$background,
+			$opacity * 100%
+		);
+	} @else {
+		@return color-mix(in srgb, #{$hex} #{$opacity * 100%}, #{$background});
+	}
 }
 
 $palettes: (
@@ -95,32 +99,32 @@ $palettes: (
 }
 
 /* FONTS */
-$font-family-body: AvertaStdCY, Helvetica, sans-serif;
-$font-family-code: SourceCodePro, Helvetica, sans-serif;
+$font-family-body: var(--ngc-font-body, AvertaStdCY, Helvetica, sans-serif);
+$font-family-code: var(--ngc-font-code, SourceCodePro, Helvetica, sans-serif);
 
 /* COLORS */
-$color-black: #0a0a0a;
-$color-primary: #444446;
-$color-secondary: #fafafa;
-$color-default: #f5f5f5;
-$color-white: #fff;
+$color-black: var(--ngc-color-neutral-black, #0a0a0a);
+$color-primary: var(--ngc-color-primary-default, #444446);
+$color-secondary: var(--ngc-color-neutral-background-canvas, #fafafa);
+$color-default: var(--ngc-color-neutral-background-disabled, #f5f5f5);
+$color-white: var(--ngc-color-neutral-white, #fff);
 
-$color-info: color(blue, 500);
-$color-success: color(green, 500);
-$color-warning: color(yellow, 500);
-$color-danger: color(red, 500);
+$color-info: var(--ngc-color-info-default, #0a84ff);
+$color-success: var(--ngc-color-success-default, #34c759);
+$color-warning: var(--ngc-color-warning-default, #dfbf00);
+$color-danger: var(--ngc-color-danger-default, #ff3130);
 
-$color-text: color(darkGray, 700);
-$color-label: color(lightGray, 700);
-$color-disabled: color(lightGray, 400);
-$color-placeholder: color(lightGray, 400);
+$color-text: var(--ngc-color-neutral-text-primary, #242426);
+$color-label: var(--ngc-color-neutral-text-tertiary, #8e8e93);
+$color-disabled: var(--ngc-color-neutral-text-disabled, #c4c4c6);
+$color-placeholder: var(--ngc-color-neutral-text-placeholder, #c4c4c6);
 
-$color-border-super-thick: color(lightGray, 700);
-$color-border-thick: color(lightGray, 500);
-$color-border: color(lightGray, 300);
+$color-border-super-thick: var(--ngc-color-neutral-border-strong, #8e8e93);
+$color-border-thick: var(--ngc-color-neutral-border-strong, #babcc0);
+$color-border: var(--ngc-color-neutral-border-default, #e4e4e6);
 
-$color-active: hex-opacity(color(blue, 400), .1); // #ecf5ff
-$color-highlight: hex-opacity(color(yellow, 700), .15); // #f4f0d9
+$color-active: var(--ngc-color-info-subtle, #ecf5ff);
+$color-highlight: var(--ngc-color-warning-subtle, #f4f0d9);
 
 $color-backdrop: rgba(207, 208, 210, .8);
 
@@ -136,6 +140,17 @@ $box-shadow-thick: 0 10px 23px 2px rgba(36, 36, 38, .4);
 $box-shadow-focus: 0 14px 24px -4px rgba(228, 228, 228, .4);
 $box-shadow-scroll-horizontal: 7px 0 7px -3px rgba(200, 200, 200, .5);
 $box-shadow-scroll-vertical: 0 14px 24px -4px rgba(187, 185, 185, .4);
+
+/* BORDER RADIUS */
+$radius-none: var(--ngc-radius-none, 0px);
+$radius-100: var(--ngc-radius-100, 2px);
+$radius-200: var(--ngc-radius-200, 4px);
+$radius-300: var(--ngc-radius-300, 6px);
+$radius-400: var(--ngc-radius-400, 8px);
+$radius-500: var(--ngc-radius-500, 12px);
+$radius-600: var(--ngc-radius-600, 16px);
+$radius-700: var(--ngc-radius-700, 24px);
+$radius-full: var(--ngc-radius-full, 9999px);
 
 /* ANIMATIONS */
 $popup-animation: 30ms ease-in forwards popupAnimation;

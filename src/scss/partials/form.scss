@@ -54,7 +54,7 @@ input[type='range'] {
 		height: 4px;
 		cursor: pointer;
 		background-color: $color-border;
-		border-radius: 2px;
+		border-radius: $radius-100;
 	}
 
 	&::-webkit-slider-thumb {
@@ -77,7 +77,7 @@ input[type='range'] {
 		height: 4px;
 		cursor: pointer;
 		background-color: $color-border;
-		border-radius: 2px;
+		border-radius: $radius-100;
 	}
 
 	&::-moz-range-thumb {
@@ -103,7 +103,7 @@ input[type='range'] {
 		height: 4px;
 		cursor: pointer;
 		background-color: $color-border;
-		border-radius: 2px;
+		border-radius: $radius-100;
 	}
 
 	&::-ms-fill-lower {
