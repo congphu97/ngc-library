@@ -54,6 +54,7 @@ import { NgcSkeletonModule } from '@app/@ngc/ngc-skeleton/ngc-skeleton.module';
 import { NgcAlertModule } from '@app/@ngc/ngc-alert';
 import { NGCTableModule } from '@app/@ngc/ngc-table/ngc-table.module';
 import { NgcTagModule } from '@app/@ngc/ngc-tag';
+import { NgcTimelineModule } from '@app/@ngc/ngc-timeline/ngc-timeline.module';
 
 // import { NgcSliderModule } from '@app/@ngc/ngc-range-input';
 
@@ -73,7 +74,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcCardModule, NgcMenuModule, NgcExpansionPanelModule, NgcListModule, NgcDialogModule, NgcCarouselModule,
     NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
     NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule, NgcDropdownModule, NgcMemberPickerModule, NgcFormFieldModule,
-    NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule, NgcAlertModule, NGCTableModule, NgcTagModule,
+    NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule, NgcAlertModule, NGCTableModule, NgcTagModule, NgcTimelineModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

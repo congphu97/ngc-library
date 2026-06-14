@@ -73,6 +73,20 @@
         }
       }
     }
+
+    .theme-dropdown {
+      width: 170px;
+      margin: 0 4px;
+      
+      --form-field-color: #30363d !important;
+      --form-field-text-color: #c9d1d9 !important;
+      --form-field-active-color: #8b949e !important;
+      --form-field-background-color: rgba(255, 255, 255, 0.03) !important;
+      --form-field-border-radius: 6px !important;
+      
+      font-size: 14px !important;
+      font-weight: $font-weight-semibold !important;
+    }
   }
 }
 

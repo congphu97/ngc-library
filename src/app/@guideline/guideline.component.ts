@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
+import { AppComponent } from '../app.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NgcToastService } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
 // import { untilCmpDestroyed } from 'angular-core';
@@ -128,6 +129,7 @@ export class GuidelineComponent implements OnInit {
 		private _socket: Socket,
 		private _cdr: ChangeDetectorRef,
 		private _ngcDialogService: NgcDialogService,
+		public appComponent: AppComponent,
 	) { };
 
 	ngOnInit() {
@@ -231,10 +233,13 @@ export class GuidelineComponent implements OnInit {
 	}
 
 	public selectOptions = [
-		{ label: 'Option 1', value: 'option1' },
-		{ label: 'Option 2', value: 'option2' },
-		{ label: 'Option 3', value: 'option3' }
+		{ label: 'USD — United States Dollar', value: 'USD' },
+		{ label: 'EUR — Euro', value: 'EUR' },
+		{ label: 'GBP — British Pound', value: 'GBP' },
+		{ label: 'JPY — Japanese Yen', value: 'JPY' },
+		{ label: 'VND — Vietnamese Dong', value: 'VND' },
 	];
+	public selectValue: string = 'USD';
 
 	public photo: string[] = [
 		'https://cdn.mos.cms.futurecdn.net/3maXWsbJ2mvMkeQSCMgXuT-1200-80.jpg',

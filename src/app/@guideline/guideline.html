@@ -2146,7 +2146,7 @@
 	</ngc-tab-group>
 
 	<h3 class="mv-20">Progress with Text</h3>
-	<ngc-tab-group>
+	<ngc-tab-group class="mb-20">
 		<ngc-tab [label]="'Preview'">
 			<ngc-progress-bar [min]="0" [max]="10" [value]="2" [mode]="1" [labelText]="'File 1'"
 				[statusText]="'Uploading .... '"></ngc-progress-bar>
@@ -2158,6 +2158,58 @@
 			<div class="mt-15" *ngIf="getComponentTsCode('Progress')">
 				<ngc-code-block [code]="getComponentTsCode('Progress')" language="typescript"></ngc-code-block>
 			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mv-20">Progress Bar with Percent Inline</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-progress-bar [min]="0" [max]="100" [value]="65" mode="percent-inline"></ngc-progress-bar>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;ngc-progress-bar [min]="0" [max]="100" [value]="65" mode="percent-inline"&gt;&lt;/ngc-progress-bar&gt;</code></pre>
+								</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mv-20">Progress Bar - Savings Targets (Premium Card Layout)</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div style="background-color: var(--ngc-color-neutral-background-canvas, #fafafa); padding: 40px; border-radius: 12px; display: inline-block;">
+				<ngc-card style="width: 450px; display: block; --card-padding-top: 24px; --card-padding-bottom: 24px; --card-padding-left: 24px; --card-padding-right: 24px;">
+					<div ngcCardContent class="layout-column">
+						<ngc-progress-bar 
+							[min]="0" 
+							[max]="420000" 
+							[value]="273000" 
+							mode="savings"
+							labelText="RETIREMENT"
+							targetText="$420,000"
+							currentValueText="$273,000"
+							statusText="65% achieved">
+						</ngc-progress-bar>
+					</div>
+				</ngc-card>
+			</div>
+		</ngc-tab>
+						<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+									<pre><code #codeContent>&lt;ngc-card style="width: 450px;"&gt;
+  &lt;div ngcCardContent&gt;
+    &lt;ngc-progress-bar 
+      [min]="0" 
+      [max]="420000" 
+      [value]="273000" 
+      mode="savings"
+      labelText="RETIREMENT"
+      targetText="$420,000"
+      currentValueText="$273,000"
+      statusText="65% achieved"&gt;
+    &lt;/ngc-progress-bar&gt;
+  &lt;/div&gt;
+&lt;/ngc-card&gt;</code></pre>
+								</ngc-code-block>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
@@ -2274,16 +2326,27 @@
 <ng-template #compTemplate label="Select">
 	<h3 class="mb-20">Select</h3>
 	<p class="component-description">
-		<strong>Select</strong> is a selection dropdown component supporting options list rendering, default selected value bindings, and change listeners.
+		<strong>Select</strong> is a premium custom dropdown component supporting option lists, selected value bindings, placeholder, label, and change listeners.
 	</p>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
-			<ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions"
-				(selectionChange)="console?.log($event)"></ngc-select>
+			<ngc-select
+				[selectedValue]="selectValue"
+				[options]="selectOptions"
+				label="Preferred Currency"
+				placeholder="Select a currency"
+				(selectionChange)="selectValue = $event">
+			</ngc-select>
 		</ngc-tab>
 						<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-									<pre><code #codeContent>&lt;ngc-select [selectedValue]="selectOptions[0]" [options]="selectOptions" (selectionChange)="console?.log($event)"&gt;&lt;/ngc-select&gt;</code></pre>
+									<pre><code #codeContent>&lt;ngc-select
+  [selectedValue]="selectValue"
+  [options]="selectOptions"
+  label="Preferred Currency"
+  placeholder="Select a currency"
+  (selectionChange)="selectValue = $event"&gt;
+&lt;/ngc-select&gt;</code></pre>
 								</ngc-code-block>
 			<div class="mt-15" *ngIf="getComponentTsCode('Select')">
 				<ngc-code-block [code]="getComponentTsCode('Select')" language="typescript"></ngc-code-block>
@@ -3094,6 +3157,162 @@
 			<div class="mt-15" *ngIf="getComponentTsCode('Alert')">
 				<ngc-code-block [code]="getComponentTsCode('Alert')" language="typescript"></ngc-code-block>
 			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
+<ng-template #compTemplate label="Timeline">
+	<h3 class="mb-20">Timeline</h3>
+	<p class="component-description">
+		<strong>Timeline</strong> displays a list of events in chronological order. It supports <strong>standard</strong> vertical layout, <strong>alternate</strong> (left-right) layout, and <strong>horizontal</strong> layout. Custom dot content can be projected using the <code>[ngcTimelineDot]</code> attribute.
+	</p>
+
+	<h3 class="mv-20">Standard Timeline</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-timeline>
+				<ngc-timeline-item time="09:00">
+					<strong>Project Kickoff</strong>
+					<p>Initial planning and requirements gathering for the new feature set.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="11:30" [color]="'var(--ngc-color-success-default, #34c759)'">
+					<strong>Design Review</strong>
+					<p>Reviewed UI/UX mockups with the product team and collected feedback.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="14:00" [color]="'var(--ngc-color-warning-default, #ff9500)'">
+					<strong>Development Sprint</strong>
+					<p>Started implementation of core components and business logic.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="17:00" [color]="'var(--ngc-color-danger-default, #ff3130)'">
+					<strong>Deployment</strong>
+					<p>Deployed to staging environment and conducted regression testing.</p>
+				</ngc-timeline-item>
+			</ngc-timeline>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-timeline&gt;
+  &lt;ngc-timeline-item time="09:00"&gt;
+    &lt;strong&gt;Project Kickoff&lt;/strong&gt;
+    &lt;p&gt;Initial planning and requirements gathering.&lt;/p&gt;
+  &lt;/ngc-timeline-item&gt;
+  &lt;ngc-timeline-item time="11:30" color="var(--ngc-color-success-default)"&gt;
+    &lt;strong&gt;Design Review&lt;/strong&gt;
+    &lt;p&gt;Reviewed UI/UX mockups with the product team.&lt;/p&gt;
+  &lt;/ngc-timeline-item&gt;
+&lt;/ngc-timeline&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mv-20">Alternate Timeline</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-timeline [alternate]="true">
+				<ngc-timeline-item>
+					<span ngcTimelineSide>Jan 2024</span>
+					<strong>Company Founded</strong>
+					<p>Started with a small team of 5 passionate developers in a co-working space.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item [color]="'var(--ngc-color-success-default, #34c759)'">
+					<span ngcTimelineSide>Jun 2024</span>
+					<strong>Series A Funding</strong>
+					<p>Secured $2M in Series A funding to accelerate product development.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item [color]="'var(--ngc-color-warning-default, #ff9500)'">
+					<span ngcTimelineSide>Dec 2024</span>
+					<strong>Product Launch</strong>
+					<p>Officially launched to 500+ beta users with stellar 4.8/5 rating.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item [color]="'var(--ngc-color-danger-default, #ff3130)'">
+					<span ngcTimelineSide>Now</span>
+					<strong>Global Expansion</strong>
+					<p>Expanding to 12 new markets with a team of 50+ across 3 countries.</p>
+				</ngc-timeline-item>
+			</ngc-timeline>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-timeline [alternate]="true"&gt;
+  &lt;ngc-timeline-item&gt;
+    &lt;span ngcTimelineSide&gt;Jan 2024&lt;/span&gt;
+    &lt;strong&gt;Company Founded&lt;/strong&gt;
+    &lt;p&gt;Started with a small team of 5 passionate developers.&lt;/p&gt;
+  &lt;/ngc-timeline-item&gt;
+&lt;/ngc-timeline&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mv-20">Horizontal Timeline</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-timeline [horizontal]="true">
+				<ngc-timeline-item time="Step 1">
+					<strong>Register</strong>
+					<p>Create your account.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="Step 2" [color]="'var(--ngc-color-success-default, #34c759)'">
+					<strong>Verify</strong>
+					<p>Confirm your email.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="Step 3" [color]="'var(--ngc-color-warning-default, #ff9500)'">
+					<strong>Setup</strong>
+					<p>Configure your workspace.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="Step 4" [color]="'var(--ngc-color-danger-default, #ff3130)'">
+					<strong>Launch</strong>
+					<p>Go live!</p>
+				</ngc-timeline-item>
+			</ngc-timeline>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-timeline [horizontal]="true"&gt;
+  &lt;ngc-timeline-item time="Step 1"&gt;
+    &lt;strong&gt;Register&lt;/strong&gt;
+    &lt;p&gt;Create your account.&lt;/p&gt;
+  &lt;/ngc-timeline-item&gt;
+&lt;/ngc-timeline&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+
+	<h3 class="mv-20">Custom Icon Dots</h3>
+	<ngc-tab-group class="mb-20">
+		<ngc-tab [label]="'Preview'">
+			<ngc-timeline>
+				<ngc-timeline-item time="09:00">
+					<ngc-icon ngcTimelineDot icon="check-circle" [size]="'18px'" [style.color]="'var(--ngc-color-success-default, #34c759)'"></ngc-icon>
+					<strong>Task Completed</strong>
+					<p>All unit tests passed with 97% coverage.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="11:00">
+					<ngc-icon ngcTimelineDot icon="alert-circle" [size]="'18px'" [style.color]="'var(--ngc-color-warning-default, #ff9500)'"></ngc-icon>
+					<strong>Warning Detected</strong>
+					<p>Memory usage exceeded recommended threshold.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="13:00">
+					<ngc-icon ngcTimelineDot icon="close-circle" [size]="'18px'" [style.color]="'var(--ngc-color-danger-default, #ff3130)'"></ngc-icon>
+					<strong>Build Failed</strong>
+					<p>Compilation error in module resolver. Rolling back.</p>
+				</ngc-timeline-item>
+				<ngc-timeline-item time="15:00">
+					<ngc-icon ngcTimelineDot icon="information-circle" [size]="'18px'" [style.color]="'var(--ngc-color-primary-default, #0a84ff)'"></ngc-icon>
+					<strong>Hotfix Deployed</strong>
+					<p>Critical patch applied to production environment.</p>
+				</ngc-timeline-item>
+			</ngc-timeline>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-timeline&gt;
+  &lt;ngc-timeline-item time="09:00"&gt;
+    &lt;ngc-icon ngcTimelineDot icon="check-circle" [size]="'18px'" [style.color]="'var(--ngc-color-success-default)'"&gt;&lt;/ngc-icon&gt;
+    &lt;strong&gt;Task Completed&lt;/strong&gt;
+    &lt;p&gt;All unit tests passed with 97% coverage.&lt;/p&gt;
+  &lt;/ngc-timeline-item&gt;
+&lt;/ngc-timeline&gt;</code></pre>
+			</ngc-code-block>
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>

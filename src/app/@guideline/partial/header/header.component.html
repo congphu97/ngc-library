@@ -1,11 +1,15 @@
 <div class="guideline-header-bar">
 	<div class="header-logo">
-		<span class="logo-symbol">//</span>
+		<span class="logo-symbol"></span>
 		<span class="logo-title">Components</span>
 	</div>
 	<div class="header-menu">
 		<button ngcButton class="menu-btn" routerLink="/components" (click)="onComponentClick()">Component</button>
 		<button ngcButton class="menu-btn" routerLink="/contact">Contact</button>
+		<ngc-dropdown *ngIf="app" class="theme-dropdown" [ngModel]="app.activeTheme" (ngModelChange)="app.setTheme($event)" [canSetNone]="false" required>
+			<ngc-dropdown-item label="Default Theme" value="default" icon="palette"></ngc-dropdown-item>
+			<ngc-dropdown-item label="Tokyo Night" value="tokyo-night" icon="palette"></ngc-dropdown-item>
+		</ngc-dropdown>
 		<button ngcButton class="menu-btn dark-mode-btn" (click)="toggleDarkMode()">
 			<ngc-icon [name]="isDarkMode ? 'sunny' : 'moon'" size="16px"></ngc-icon>
 			<span class="ml-5">{{ isDarkMode ? 'Light Mode' : 'Dark Mode' }}</span>

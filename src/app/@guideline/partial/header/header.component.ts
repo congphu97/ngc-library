@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output, Optional } from '@angular/core';
+import { AppComponent } from '../../../app.component';
 
 @Component({
   selector: 'guideline-header',
@@ -10,7 +11,10 @@ export class GuidelineHeaderComponent implements OnInit {
   @Output() toggleTheme = new EventEmitter<boolean>();
   @Output() componentClick = new EventEmitter<void>();
 
-  constructor(private _cdr: ChangeDetectorRef) {}
+  constructor(
+    private _cdr: ChangeDetectorRef,
+    @Optional() public app: AppComponent
+  ) {}
 
   ngOnInit() {
     // Synchronize initial dark mode state from document.body
@@ -23,6 +27,9 @@ export class GuidelineHeaderComponent implements OnInit {
       document.body.classList.add('dark-theme');
     } else {
       document.body.classList.remove('dark-theme');
+    }
+    if (this.app) {
+      this.app.setDarkMode(this.isDarkMode);
     }
     this.toggleTheme.emit(this.isDarkMode);
     this._cdr.detectChanges();
