@@ -1,0 +1,30 @@
+<div class="ngc-collapse-menu-container">
+	<!-- Group Title (Platform) -->
+	<div class="ngc-collapse-menu__group-title" *ngIf="groupTitle">
+		{{ groupTitle }}
+	</div>
+
+	<!-- Main Trigger Bar -->
+	<div class="ngc-collapse-menu__header" (click)="toggleExpanded()" [class.ngc-collapse-menu__header--expanded]="expanded">
+		<div class="ngc-collapse-menu__title-wrapper">
+			<ngc-icon *ngIf="icon" [name]="icon" size="18px" class="ngc-collapse-menu__main-icon"></ngc-icon>
+			<span class="ngc-collapse-menu__title">{{ title }}</span>
+		</div>
+		<ngc-icon name="chevron-down" size="14px" class="ngc-collapse-menu__arrow" [class.ngc-collapse-menu__arrow--rotated]="expanded"></ngc-icon>
+	</div>
+
+	<!-- Collapsible Content Items List -->
+	<div class="ngc-collapse-menu__body" [class.ngc-collapse-menu__body--expanded]="expanded">
+		<div class="ngc-collapse-menu__vertical-line"></div>
+		<ul class="ngc-collapse-menu__items-list">
+			<li *ngFor="let item of items" class="ngc-collapse-menu__item-wrapper">
+				<a href="javascript:void(0)" class="ngc-collapse-menu__item-link"
+					[class.ngc-collapse-menu__item-link--active]="activeItemLabel === item.label"
+					(click)="selectItemAction(item)">
+					<ngc-icon *ngIf="item.icon" [name]="item.icon" size="14px" class="mr-5"></ngc-icon>
+					{{ item.label }}
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
