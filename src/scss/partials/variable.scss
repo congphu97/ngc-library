@@ -135,11 +135,11 @@ $gradient-secondary: linear-gradient(to right, rgba(#fff, 0) 1%, #fafafa 81%);
 $gradient-secondary-vertical: linear-gradient(to bottom, rgba(#fff, 0) 1%, #fafafa 81%);
 
 /* BOX SHADOWS */
-$box-shadow: 0 8px 10px -2px rgba(0, 0, 0, .15);
-$box-shadow-thick: 0 10px 23px 2px rgba(36, 36, 38, .4);
-$box-shadow-focus: 0 14px 24px -4px rgba(228, 228, 228, .4);
-$box-shadow-scroll-horizontal: 7px 0 7px -3px rgba(200, 200, 200, .5);
-$box-shadow-scroll-vertical: 0 14px 24px -4px rgba(187, 185, 185, .4);
+$box-shadow                  : var(--ngc-box-shadow,                  0 8px 10px -2px rgba(0, 0, 0, .15));
+$box-shadow-thick            : var(--ngc-box-shadow-thick,             0 10px 23px 2px rgba(36, 36, 38, .4));
+$box-shadow-focus            : var(--ngc-box-shadow-focus,             0 14px 24px -4px rgba(228, 228, 228, .4));
+$box-shadow-scroll-horizontal: var(--ngc-box-shadow-scroll-horizontal, 7px 0 7px -3px rgba(200, 200, 200, .5));
+$box-shadow-scroll-vertical  : var(--ngc-box-shadow-scroll-vertical,   0 14px 24px -4px rgba(187, 185, 185, .4));
 
 /* BORDER RADIUS */
 $radius-none: var(--ngc-radius-none, 0px);
@@ -157,20 +157,20 @@ $popup-animation: 30ms ease-in forwards popupAnimation;
 $spin-animation: 2s linear infinite spin;
 
 /* Z-INDEX LEVELS */
-$z-level-1: 100;
-$z-level-2: 1000;
-$z-level-3: 10000;
-$z-level-4: 2147483647;
+$z-level-1: var(--ngc-z-level-1, 100);
+$z-level-2: var(--ngc-z-level-2, 1000);
+$z-level-3: var(--ngc-z-level-3, 10000);
+$z-level-4: var(--ngc-z-level-4, 2147483647);
 
 /* FONT SIZES */
-$font-size-mini: 10px;
-$font-size-small: 12px;
-$font-size-base: 14px;
-$font-size-large: 16px;
-$font-size-xlarge: 18px;
-$font-size-xxlarge: 20px;
+$font-size-mini    : var(--ngc-font-size-mini,    10px);
+$font-size-small   : var(--ngc-font-size-small,   12px);
+$font-size-base    : var(--ngc-font-size-base,    14px);
+$font-size-large   : var(--ngc-font-size-large,   16px);
+$font-size-xlarge  : var(--ngc-font-size-xlarge,  18px);
+$font-size-xxlarge : var(--ngc-font-size-xxlarge, 20px);
 
 /* FONT WEIGHTS */
-$font-weight-normal: 400;
-$font-weight-semibold: 600;
-$font-weight-bold: 700;
+$font-weight-normal   : var(--ngc-font-weight-normal,   400);
+$font-weight-semibold : var(--ngc-font-weight-semibold, 600);
+$font-weight-bold     : var(--ngc-font-weight-bold,     700);

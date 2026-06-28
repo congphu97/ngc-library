@@ -1,4 +1,53 @@
 {
+  "Collapse Menu": {
+    "inputs": [
+      {
+        "name": "groupTitle",
+        "type": "string",
+        "default": "'Platform'",
+        "description": "Optional group title small text shown at the top of the menu."
+      },
+      {
+        "name": "title",
+        "type": "string",
+        "default": "'Playground'",
+        "description": "Main title string label for the collapse menu header."
+      },
+      {
+        "name": "icon",
+        "type": "string",
+        "default": "'code-block'",
+        "description": "Left icon name to display on the collapse menu header."
+      },
+      {
+        "name": "expanded",
+        "type": "boolean",
+        "default": "true",
+        "description": "Whether the collapse sub-menu items are visible initially."
+      },
+      {
+        "name": "activeItemLabel",
+        "type": "string",
+        "default": "''",
+        "description": "Active item label name to highlight a sub-item externally."
+      },
+      {
+        "name": "items",
+        "type": "NgcCollapseMenuItem[]",
+        "default": "[]",
+        "description": "Array list of nested sub-menu items containing label and links."
+      }
+    ],
+    "outputs": [
+      {
+        "name": "selectItem",
+        "type": "EventEmitter<NgcCollapseMenuItem>",
+        "default": "-",
+        "description": "Event emitted when a sub-menu item link is clicked."
+      }
+    ],
+    "sourceCode": ""
+  },
   "Accordion": {
     "inputs": [
       {
