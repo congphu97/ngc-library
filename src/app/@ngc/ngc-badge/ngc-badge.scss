@@ -1,9 +1,12 @@
 @import '../../../scss/partials/variable.scss';
 
 .ngc-badge {
-	display: flex;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	position: relative;
 	width: fit-content;
+	vertical-align: middle;
 
 	&.ngc-badge--pos-inline {
 		>.ngc-badge-count {
@@ -15,7 +18,10 @@
 	&.ngc-badge--pos-absolute {
 		>.ngc-badge-count {
 			position: absolute;
-			left: 100%;
+			right: -10px;
+			top: -10px;
+			left: auto;
+			transform: none;
 		}
 	}
 
@@ -26,13 +32,11 @@
 		}
 	}
 
-
 	&.ngc-background-default {
 		background-color: var(--primary-color, $color-default);
-
-		padding: 5px 15px;
-		border: 1px solid $color-border;
-		border-radius: 15px;
+		padding: 8px;
+		border: 2px solid $color-border-thick;
+		border-radius: 10px;
 
 		>.ngc-badge-count {
 			background-color: var(--primary-color, $color-label);
@@ -42,23 +46,20 @@
 
 	&.ngc-background-primary {
 		background-color: var(--primary-color, $color-primary);
-
-		padding: 5px 15px;
-		border: 1px solid $color-border;
-		border-radius: 15px;
+		padding: 8px;
+		border: 2px solid var(--primary-color, $color-primary);
+		border-radius: 10px;
 
 		>.ngc-badge-count, ngc-icon {
-			background-color: var(--primary-color, $color-primary);
 			color: $color-white;
 		}
 	}
 
 	&.ngc-background-secondary {
 		background-color: var(--primary-color, $color-secondary);
-
-		padding: 5px 15px;
-		border: 1px solid $color-border;
-		border-radius: 15px;
+		padding: 8px;
+		border: 2px solid $color-border-thick;
+		border-radius: 10px;
 
 		>.ngc-badge-count {
 			background-color: var(--primary-color, $color-primary);
@@ -66,20 +67,31 @@
 		}
 	}
 
+	ngc-icon {
+		font-size: 24px !important; /* Significantly larger icon as requested */
+		height: 24px;
+		width: 24px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
 	>.ngc-badge-count {
-		padding: 2px 4px;
+		padding: 1px 5px;
 		background-color: var(--badge-color, $color-label);
-		border-radius: 5px;
-		font-size: 11px;
+		border-radius: 6px;
+		font-size: 10px;
+		font-weight: 600;
 		color: var(--badge-text-color, $color-white);
 		position: relative;
 		left: 0;
 		top: -7px;
 		transform: translateX(-40%);
 		width: fit-content;
-		min-width: 16px;
+		min-width: 14px;
 		height: fit-content;
-		min-height: 16px;
+		min-height: 14px;
+		line-height: 1.2;
 		text-align: center;
 		white-space: nowrap;
 

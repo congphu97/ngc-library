@@ -3,11 +3,11 @@
 .ngc-code-block-container {
   display: flex;
   flex-direction: column;
-  border: 1px solid $color-border;
+  border: 1px solid #e4e4e7;
   border-radius: 8px;
-  background-color: $color-default;
+  background-color: #ffffff;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
   font-family: $font-family-body;
   margin: 16px 0;
   box-sizing: border-box;
@@ -17,8 +17,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    background-color: $color-default;
-    border-bottom: 1px solid $color-border;
+    background-color: #f4f4f5;
+    border-bottom: 1px solid #e4e4e7;
     user-select: none;
 
     .ngc-code-block-lang {
@@ -36,7 +36,7 @@
       .lang-text {
         font-size: 11px;
         font-weight: $font-weight-semibold;
-        color: $color-label;
+        color: #71717a;
         text-transform: uppercase;
         letter-spacing: 0.5px;
       }
@@ -52,7 +52,7 @@
       padding: 4px 8px;
       font-size: 12px;
       font-weight: $font-weight-semibold;
-      color: $color-text;
+      color: #71717a;
       cursor: pointer;
       transition: all 0.2s ease-in-out;
       outline: none;
@@ -60,21 +60,21 @@
       ngc-icon {
         display: flex;
         align-items: center;
-          --icon-color: #{$color-label};
+        --icon-color: #71717a;
         transition: var(--icon-color) 0.2s ease-in-out;
       }
 
       &:hover {
-        background-color: color(lightGray, 200);
-        color: $color-black;
+        background-color: #e4e4e7;
+        color: #09090b;
 
         ngc-icon {
-          --icon-color: #{$color-text};
+          --icon-color: #09090b;
         }
       }
 
       &:active {
-        background-color: $color-border;
+        background-color: #d4d4d8;
       }
 
       &.copied {
@@ -91,7 +91,7 @@
 
   .ngc-code-block-body {
     position: relative;
-    background-color: $color-default;
+    background-color: #ffffff;
     
     pre, ::ng-deep pre {
       margin: 0;
@@ -106,6 +106,7 @@
       font-size: 13px;
       line-height: 1.5;
       box-sizing: border-box;
+      color: #1f2937; /* Darker clean text for light mode */
 
       /* Scrollbar styling */
       &::-webkit-scrollbar {
@@ -121,6 +122,7 @@
       }
       &::-webkit-scrollbar-thumb:hover {
         background: rgba(0, 0, 0, 0.25);
+        border-radius: 3px;
       }
     }
 

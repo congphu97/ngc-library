@@ -49,7 +49,7 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 	@Input() @DefaultValue() @CoerceBoolean() public hasBackdrop: boolean = true;
 	@Input() @DefaultValue() @CoerceBoolean() public closeOnClickOutside: boolean = true;
 	@Input() public openDelay: number = 300;
-	@Input() public closeDelay: number;
+	@Input() @DefaultValue() @CoerceNumber() public closeDelay: number = 150;
 	@Input() @CoerceNumber() public offsetX: number;
 	@Input() @CoerceNumber() public offsetY: number;
 	@Input() public originX: HorizontalConnectionPos;
@@ -122,7 +122,6 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 
 	@HostListener( 'mousemove', [ '$event' ] )
 	public triggerMouseEnter( event: MouseEvent ) {
-		console.log({event})
 		if ( this.triggerType === 'press' || ( this.once && this._visibleOnce ) ) return;
 
 		clearTimeout( this._openTimeout );
@@ -134,13 +133,11 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 	@HostListener( 'mouseleave', [ '$event' ] )
 	public triggerMouseLeave( event: MouseEvent ) {
 		if ( !this.autoClose || this.triggerType === 'press' ) return;
-		console.log({event})
 
 		clearTimeout( this._openTimeout );
 		clearTimeout( this._closeTimeout );
 		clearTimeout( this._closeAllTimeout );
 		!this.programmatically && this.close( event );
-		// !this.programmatically && this._closeDebounce( event );
 	}
 
 	/**
@@ -214,7 +211,10 @@ export class NgcTooltipDirective implements OnChanges, AfterViewInit, OnDestroy 
 		if ( !this._instance ) return;
 
 		this._closeTimeout = setTimeout(
-			this._close.bind( this, event ),
+			() => {
+				if ( this._overlayElementHover ) return; // Cancel closing if hover is active on tooltip popup
+				this._close( event );
+			},
 			!this.programmatically ? this.closeDelay : 0
 		);
 	}
