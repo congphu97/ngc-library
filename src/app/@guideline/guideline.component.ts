@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, QueryList, TemplateRef, ViewChildren } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, DoCheck, QueryList, TemplateRef, ViewChildren, ViewChild } from '@angular/core';
 import { AppComponent } from '../app.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { NgcToastService } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
@@ -58,7 +58,8 @@ const COMPONENT_ICON_MAP: Record<string, string> = {
 	'Sheet'              : 'document',
 	'Sidebar'            : 'sidebar',
 	'Skeleton'           : 'template',
-	'Sonner'             : 'bell-on',
+	'Navigation Menu'    : 'menu',
+	'Collapse Menu'      : 'menu',
 	'Switch'             : 'switch',
 	'Table'              : 'table',
 	'Tabs'               : 'tab-plus',
@@ -67,17 +68,89 @@ const COMPONENT_ICON_MAP: Record<string, string> = {
 	'Tooltip'            : 'help',
 };
 
+const COMPONENT_GROUP_MAP: Record<string, string> = {
+	'Accordion': 'Layout',
+	'Alert': 'Feedback',
+	'Avatar': 'Data Display',
+	'Avatar Picker': 'Data Entry',
+	'Badge': 'Data Display',
+	'Breadcrumb': 'Navigation',
+	'Button': 'General',
+	'Button Toggle': 'Data Entry',
+	'Calendar': 'Data Display',
+	'Card': 'Data Display',
+	'Carousel': 'Data Display',
+	'Checkbox': 'Data Entry',
+	'Clipboard': 'General',
+	'Code Block': 'Data Display',
+	'Collapse': 'Layout',
+	'Collapse Menu': 'Layout',
+	'Color Picker': 'Data Entry',
+	'Color & Typography': 'General',
+	'Data Table': 'Data Display',
+	'Date Picker': 'Data Entry',
+	'Dialog': 'Feedback',
+	'Divide': 'Layout',
+	'Dropdown': 'Data Entry',
+	'Emoji Picker': 'Data Entry',
+	'Form Field': 'Data Entry',
+	'Icon': 'General',
+	'Input': 'Data Entry',
+	'List': 'Data Display',
+	'Loading': 'Feedback',
+	'Member Picker': 'Data Entry',
+	'Menu': 'Navigation',
+	'Pagination': 'Navigation',
+	'Popover': 'Feedback',
+	'Progress': 'Feedback',
+	'Radio Group': 'Data Entry',
+	'Search Box ': 'Data Entry',
+	'Select': 'Data Entry',
+	'Sheet': 'Layout',
+	'Sidebar': 'Layout',
+	'Skeleton': 'Feedback',
+	'Navigation Menu': 'Navigation',
+	'Switch': 'Data Entry',
+	'Table': 'Data Display',
+	'Tabs': 'Navigation',
+	'Textarea': 'Data Entry',
+	'Toast': 'Feedback',
+	'Tooltip': 'Data Display',
+};
+
+const COMPONENT_GROUP_ORDER = ['General', 'Layout', 'Navigation', 'Data Entry', 'Data Display', 'Feedback'];
+
 @Component({
 	selector: 'guideline',
 	templateUrl: './guideline.html',
 	styleUrls: ['./guideline.component.scss'],
 })
-export class GuidelineComponent implements OnInit {
+export class GuidelineComponent implements OnInit, DoCheck {
+
+	@ViewChild('searchBox') public searchBox: any;
+	private _prevDataLength = 0;
+	private _prevSearchLength = 0;
+
+	ngDoCheck() {
+		const currentLength = this.compTemplatesArr?.length || 0;
+		const searchLength = this.searchBox?.filteredData?.length ?? -1;
+		
+		if (currentLength !== this._prevDataLength || searchLength !== this._prevSearchLength) {
+			this._prevDataLength = currentLength;
+			this._prevSearchLength = searchLength;
+			
+			this.groupedSidebarComponents = this.getGroupedComponents(
+				this.searchBox?.filteredData || this.compTemplatesArr
+			);
+			this._cdr.detectChanges();
+		}
+	}
 
 	public title = 'Components';
 	public opened = true;
 	public isDarkMode = false;
 	public componentDocs: any = {};
+	public demoDrawerOpened = false;
 
 	public toggleDrawer() {
 		this.opened = !this.opened;
@@ -159,8 +232,63 @@ export class GuidelineComponent implements OnInit {
 		return doc ? doc.sourceCode : '';
 	}
 
+	public showOverview = true;
+	public componentList: any[] = [];
+	public groupedSidebarComponents: any[] = [];
+
+	public onSearchFiltered(filteredData: any[]) {
+		this.groupedSidebarComponents = this.getGroupedComponents(filteredData || this.componentList);
+		this._cdr.detectChanges();
+	}
+
+	public getGroupedComponents(filteredData: any[]): { title: string; items: any[] }[] {
+		const data = (filteredData && filteredData.length > 0) ? filteredData : this.componentList;
+		if (!data || data.length === 0) return [];
+		
+		const groupMap: Record<string, any[]> = {};
+		COMPONENT_GROUP_ORDER.forEach(groupName => {
+			groupMap[groupName] = [];
+		});
+
+		data.forEach(item => {
+			const label = (item as any)?.label;
+			if (!label) return;
+			const groupName = COMPONENT_GROUP_MAP[label] || 'Feedback';
+			if (groupMap[groupName]) {
+				groupMap[groupName].push(item);
+			} else {
+				if (!groupMap['Feedback']) {
+					groupMap['Feedback'] = [];
+				}
+				groupMap['Feedback'].push(item);
+			}
+		});
+
+		COMPONENT_GROUP_ORDER.forEach(groupName => {
+			if (groupMap[groupName]) {
+				groupMap[groupName].sort((a, b) => {
+					const labelA = (a as any)?.label || '';
+					const labelB = (b as any)?.label || '';
+					return labelA.localeCompare(labelB);
+				});
+			}
+		});
+
+		return COMPONENT_GROUP_ORDER
+			.map(groupName => ({
+				title: groupName,
+				items: groupMap[groupName] || []
+			}))
+			.filter(group => group.items.length > 0);
+	}
+
 	ngAfterViewInit() {
 		this.currentCompTemplate = this.compTemplatesArr[this.selectedCompIndex];
+		
+		// If URL contains hash fragment, show the selected component template instead of overview
+		if (this.selectedCompIndex > 0) {
+			this.showOverview = false;
+		}
 
 		this.compTemplates
 			.changes
@@ -176,17 +304,54 @@ export class GuidelineComponent implements OnInit {
 					(item as IObject).icon = COMPONENT_ICON_MAP[label] || 'collection';
 				});
 
+				this.componentList = [...this.compTemplatesArr];
+				this.groupedSidebarComponents = this.getGroupedComponents(this.componentList);
 				this._cdr.detectChanges();
 			});
 	}
 
+	public showGetStarted = false;
+
 	get currentCompLabel(): string {
+		if (this.showOverview) return 'Overview';
+		if (this.showGetStarted) return 'Get Started';
 		return (this.currentCompTemplate as any)?.label || '';
+	}
+
+	public activeCollapseMenuItem = 'History';
+
+	public onCollapseMenuSelect(item: any) {
+		this.activeCollapseMenuItem = item.label;
+	}
+
+	public goOverview() {
+		this.showOverview = true;
+		this.showGetStarted = false;
+		this.opened = false; // close drawer on mobile if needed
+		this._cdr.detectChanges();
+	}
+
+	public goGetStarted() {
+		this.showGetStarted = true;
+		this.showOverview = false;
+		this.opened = false;
+		this._cdr.detectChanges();
+	}
+
+	public onOverviewSelect(item: any) {
+		const found = this.compTemplatesArr.find(
+			c => c && (c as any).label?.toLowerCase().trim() === item.label?.toLowerCase().trim()
+		);
+		if (found) {
+			this.selectCompTemplate(found);
+		}
 	}
 
 	public selectCompTemplate(compTemplate: TemplateRef<any>) {
 		const index: number = indexOf(this.compTemplatesArr, compTemplate);
 
+		this.showOverview = false;
+		this.showGetStarted = false;
 		this.currentCompTemplate = compTemplate;
 		this.selectedCompIndex = index;
 		window.location.hash = this.selectedCompIndex?.toString();

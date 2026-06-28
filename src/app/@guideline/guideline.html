@@ -1,23 +1,39 @@
 <div class="guideline-layout" [class.dark-theme]="isDarkMode">
 	<guideline-header [isDarkMode]="isDarkMode" (toggleTheme)="onThemeToggle($event)"
-		(componentClick)="opened = true"></guideline-header>
+		(componentClick)="opened = true" (logoClick)="goOverview()"></guideline-header>
 	<div class="guideline-main-content">
 		<ngc-drawer-container stretch>
 			<ngc-drawer [opened]="opened" width="250px" position="left" label="Menu" paddingVertical="20px"
 				paddingLeft="20px" [bgColor]="(isDarkMode ? 'darkGray.700' : 'WHITE') | color">
-				<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox
-					searchKey="label" [data]="compTemplatesArr">
-				</ngc-search-box>
-				<h3 class="mv-20">Components</h3>
-				<ngc-list class="mt-5" stretch>
-					<ngc-list-item *ngFor="let component of searchBox?.filteredData">
-						<button class="content-component" ngcButton
-							(click)="selectCompTemplate(component)">{{component?.label}}</button>
-					</ngc-list-item>
-				</ngc-list>
-				<div>
-					Version: 1.0.0
-				</div>
+				<ngc-scroll-bar style="height: 100%; display: block;">
+					<div style="padding-right: 12px; padding-bottom: 30px;">
+						<ngc-search-box [autoFocusOn]="autoFocusOn" [displayNotFound]="displayNotFound" #searchBox
+							searchKey="label" [data]="componentList">
+						</ngc-search-box>
+						<div style="display: flex; flex-direction: column; gap: 2px;" class="mt-10">
+							<button class="content-component" [class.content-component--active]="showOverview"
+								(click)="goOverview()">Overview</button>
+							<button class="content-component" [class.content-component--active]="showGetStarted"
+								(click)="goGetStarted()">Get Started</button>
+						</div>
+
+						<div *ngFor="let group of groupedSidebarComponents; let idx = index" class="mt-10">
+							<div class="sidebar-group-divider" *ngIf="idx > 0"></div>
+							<div class="sidebar-group-title">{{ group.title }}</div>
+							<div style="display: flex; flex-direction: column; gap: 2px;">
+								<button *ngFor="let component of group.items" 
+									class="content-component" 
+									[class.content-component--active]="!showOverview && currentCompLabel === component?.label"
+									(click)="selectCompTemplate(component)">
+									{{component?.label}}
+								</button>
+							</div>
+						</div>
+						<div class="mt-20 pl-15" style="font-size: 12px; color: #a1a1aa;">
+							Version: 1.0.0
+						</div>
+					</div>
+				</ngc-scroll-bar>
 
 			</ngc-drawer>
 
@@ -26,8 +42,60 @@
 					<h2 class="guideline-component-main-title" *ngIf="currentCompLabel">
 						{{ currentCompLabel }}
 					</h2>
-					<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
-					<div class="guideline-api-reference mt-40" *ngIf="getComponentDocs(currentCompLabel) && (getComponentDocs(currentCompLabel).inputs?.length || getComponentDocs(currentCompLabel).outputs?.length)">
+					
+					<guideline-overview *ngIf="showOverview" [components]="componentList" (selectComponent)="onOverviewSelect($event)"></guideline-overview>
+					
+					<!-- Detailed Get Started Documentation Page -->
+					<div *ngIf="showGetStarted" class="get-started-page p-20" style="max-width: 900px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+						<h3 class="mb-15" style="font-size: 24px; font-weight: 700; color: #09090b; margin-top: 0;">Introduction</h3>
+						<p style="font-size: 14px; color: #52525b; line-height: 1.6; margin-bottom: 25px;">
+							Welcome to the <strong>NGC Components Library</strong>. A collection of premium, reusable design system UI components built for modern Angular applications. Easy to integrate, clean, and highly customizable.
+						</p>
+
+						<h3 class="mb-15" style="font-size: 20px; font-weight: 700; color: #09090b; border-bottom: 1px solid #e4e4e7; padding-bottom: 8px;">Installation</h3>
+						<p style="font-size: 14px; color: #52525b; line-height: 1.6; margin-bottom: 15px;">
+							Install the library package from your private registry or npm repository:
+						</p>
+						<ngc-code-block language="bash">
+							<pre><code #codeContent>npm install ngc-library</code></pre>
+						</ngc-code-block>
+
+						<h3 class="mb-15 mt-30" style="font-size: 20px; font-weight: 700; color: #09090b; border-bottom: 1px solid #e4e4e7; padding-bottom: 8px;">Quick Start</h3>
+						<p style="font-size: 14px; color: #52525b; line-height: 1.6; margin-bottom: 15px;">
+							Import the global <code>NgcModule</code> (or import specific sub-modules) into your Angular application module:
+						</p>
+						<ngc-code-block language="typescript">
+							<pre><code #codeContent>import &#123; NgModule &#125; from '@angular/core';
+import &#123; BrowserModule &#125; from '@angular/platform-browser';
+import &#123; NgcModule &#125; from 'ngc-library'; // Import library
+import &#123; AppComponent &#125; from './app.component';
+
+@NgModule(&#123;
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    NgcModule // Add to imports
+  ],
+  bootstrap: [AppComponent]
+&#125;)
+export class AppModule &#123; &#125;</code></pre>
+						</ngc-code-block>
+
+						<h3 class="mb-15 mt-30" style="font-size: 20px; font-weight: 700; color: #09090b; border-bottom: 1px solid #e4e4e7; padding-bottom: 8px;">Styling</h3>
+						<p style="font-size: 14px; color: #52525b; line-height: 1.6; margin-bottom: 15px;">
+							Add library stylesheets to your project's global stylesheet or <code>angular.json</code> configurations:
+						</p>
+						<ngc-code-block language="scss">
+							<pre><code #codeContent>/* styles.scss */
+@import '~ngc-library/scss/index.scss';</code></pre>
+						</ngc-code-block>
+					</div>
+
+					<ng-container *ngIf="!showOverview && !showGetStarted">
+						<ng-container *ngTemplateOutlet="currentCompTemplate"></ng-container>
+					</ng-container>
+					
+					<div class="guideline-api-reference mt-40" *ngIf="!showOverview && getComponentDocs(currentCompLabel) && (getComponentDocs(currentCompLabel).inputs?.length || getComponentDocs(currentCompLabel).outputs?.length)">
 						<h3 class="mb-20">API Reference</h3>
 						
 						<div class="mb-35" *ngIf="getComponentDocs(currentCompLabel).inputs?.length">
@@ -989,6 +1057,55 @@
 	</ngc-tab-group>
 </ng-template>
 
+<ng-template #compTemplate label="Collapse Menu">
+	<p class="component-description">
+		<strong>Collapse Menu</strong> is a premium collapsible menu selector widget with vertical timeline lines, header options and nested items.
+	</p>
+	<h3 class="mb-20">Collapse Menu</h3>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="card p-20" style="max-width: 320px; border: 1px solid #e4e4e7; border-radius: 8px; background-color: #ffffff; display: flex; flex-direction: column; gap: 10px;">
+				<ngc-collapse-menu 
+					groupTitle="Platform" 
+					title="Playground" 
+					icon="code-block" 
+					[expanded]="true"
+					[activeItemLabel]="activeCollapseMenuItem"
+					(selectItem)="onCollapseMenuSelect($event)">
+				</ngc-collapse-menu>
+				<ngc-collapse-menu 
+					groupTitle="" 
+					title="Models" 
+					icon="menu" 
+					[expanded]="false"
+					[items]="[{ label: 'GPT-4o' }, { label: 'Gemini 1.5' }, { label: 'Claude 3.5' }]"
+					[activeItemLabel]="activeCollapseMenuItem"
+					(selectItem)="onCollapseMenuSelect($event)">
+				</ngc-collapse-menu>
+				<ngc-collapse-menu 
+					groupTitle="" 
+					title="Documentation" 
+					icon="document" 
+					[expanded]="false"
+					[items]="[{ label: 'API Reference' }, { label: 'Examples' }]"
+					[activeItemLabel]="activeCollapseMenuItem"
+					(selectItem)="onCollapseMenuSelect($event)">
+				</ngc-collapse-menu>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;ngc-collapse-menu 
+  groupTitle="Platform" 
+  title="Playground" 
+  icon="code-block" 
+  [expanded]="true"&gt;
+&lt;/ngc-collapse-menu&gt;</code></pre>
+			</ngc-code-block>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
+
 <ng-template #compTemplate label="Checkbox">
 	<h3 class="mb-20">Checkbox</h3>
 	<p class="component-description">
@@ -1121,6 +1238,7 @@
 	<p class="component-description">
 		<strong>Color Picker</strong> is an interface for selecting custom colors, supporting standard trigger button popup mode or mode='inline' configurations.
 	</p>
+	<h3 class="mb-20">Color Picker Default</h3>
 	<ngc-tab-group class="mb-20">
 		<ngc-tab [label]="'Preview'">
 			<div class="mb-10">
@@ -1394,20 +1512,24 @@
 	</p>
 	<ngc-tab-group>
 		<ngc-tab [label]="'Preview'">
+			<h4 class="mb-10">Horizontal</h4>
 			<ngc-divider></ngc-divider>
 			<br/>
-			<div style="height: 30px; display: inline-block;">
+			<h4 class="mb-10">Vertical</h4>
+			<div style="height: 30px; display: inline-flex; align-items: center; gap: 4px;">
+				<span>Left</span>
 				<ngc-divider vertical></ngc-divider>
+				<span>Right</span>
 			</div>
 		</ngc-tab>
-						<ngc-tab [label]="'Code'">
+		<ngc-tab [label]="'Code'">
 			<ngc-code-block language="html">
-									<pre><code #codeContent>&lt;!-- Horizontal Divider --&gt;
-					&lt;ngc-divider&gt;&lt;/ngc-divider&gt;
-					
-					&lt;!-- Vertical Divider --&gt;
-					&lt;ngc-divider vertical&gt;&lt;/ngc-divider&gt;</code></pre>
-								</ngc-code-block>
+				<pre><code #codeContent>&lt;!-- Horizontal Divider --&gt;
+&lt;ngc-divider&gt;&lt;/ngc-divider&gt;
+
+&lt;!-- Vertical Divider --&gt;
+&lt;ngc-divider vertical&gt;&lt;/ngc-divider&gt;</code></pre>
+			</ngc-code-block>
 			<div class="mt-15" *ngIf="getComponentTsCode('Divide')">
 				<ngc-code-block [code]="getComponentTsCode('Divide')" language="typescript"></ngc-code-block>
 			</div>
@@ -2355,7 +2477,63 @@
 	</ngc-tab-group>
 </ng-template>
 <ng-template #compTemplate label="Sheet">38</ng-template>
-<ng-template #compTemplate label="Sidebar">39</ng-template>
+<ng-template #compTemplate label="Sidebar">
+	<h3 class="mb-20">Sidebar (Drawer)</h3>
+	<p class="component-description">
+		<strong>Sidebar</strong> is a collapsible container component (Drawer) designed to hold side navigation, filters, or additional details with smooth transition animations.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<button ngcButton (click)="demoDrawerOpened = !demoDrawerOpened" class="mb-20">
+				{{ demoDrawerOpened ? 'Close Sidebar' : 'Open Sidebar' }}
+			</button>
+
+			<div style="border: 1px solid var(--border-color, #e4e4e7); border-radius: 8px; overflow: hidden; height: 350px; background-color: #fafafa;">
+				<ngc-drawer-container stretch>
+					<ngc-drawer [opened]="demoDrawerOpened" width="220px" position="left" label="Navigation" paddingVertical="20px" paddingLeft="20px">
+						<ngc-list stretch>
+							<ngc-list-item><button ngcButton>Dashboard</button></ngc-list-item>
+							<ngc-list-item><button ngcButton>Settings</button></ngc-list-item>
+							<ngc-list-item><button ngcButton>Users</button></ngc-list-item>
+						</ngc-list>
+					</ngc-drawer>
+					<ngc-drawer-content paddingVertical="20px" paddingHorizontal="20px">
+						<h4>Main Content Area</h4>
+						<p class="text-secondary" style="font-size: 13px; line-height: 1.6; margin-top: 10px;">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+							Click the toggle button above to animate the sidebar in and out.
+						</p>
+					</ngc-drawer-content>
+				</ngc-drawer-container>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Toggle Button --&gt;
+&lt;button ngcButton (click)="sidebarOpened = !sidebarOpened"&gt;Toggle Sidebar&lt;/button&gt;
+
+&lt;!-- Sidebar Container --&gt;
+&lt;ngc-drawer-container stretch&gt;
+  &lt;!-- Collapsible Sidebar --&gt;
+  &lt;ngc-drawer [opened]="sidebarOpened" width="220px" position="left" label="Navigation" paddingVertical="20px" paddingLeft="20px"&gt;
+    &lt;ngc-list stretch&gt;
+      &lt;ngc-list-item&gt;&lt;button ngcButton&gt;Dashboard&lt;/button&gt;&lt;/ngc-list-item&gt;
+      &lt;ngc-list-item&gt;&lt;button ngcButton&gt;Settings&lt;/button&gt;&lt;/ngc-list-item&gt;
+    &lt;/ngc-list&gt;
+  &lt;/ngc-drawer&gt;
+
+  &lt;!-- Main Content --&gt;
+  &lt;ngc-drawer-content paddingVertical="20px" paddingHorizontal="20px"&gt;
+    &lt;h4&gt;Main Content Area&lt;/h4&gt;
+  &lt;/ngc-drawer-content&gt;
+&lt;/ngc-drawer-container&gt;</code></pre>
+			</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Sidebar')">
+				<ngc-code-block [code]="getComponentTsCode('Sidebar')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
 <ng-template #compTemplate label="Skeleton">
 	<p class="component-description">
 		<strong>Skeleton</strong> serves as a placeholder loading animation representing textual data, circular avatar icons, or card blocks during active content fetching.
@@ -2408,7 +2586,31 @@
 		</ngc-tab>
 	</ngc-tab-group>
 </ng-template>
-<ng-template #compTemplate label="Sonner">42</ng-template>
+<ng-template #compTemplate label="Navigation Menu">
+	<h3 class="mb-20">Navigation Menu</h3>
+	<p class="component-description">
+		<strong>Navigation Menu</strong> is a collection of links for navigating websites, styled with smooth CSS transition popups and supporting multi-column layouts like Radix UI.
+	</p>
+	<ngc-tab-group>
+		<ngc-tab [label]="'Preview'">
+			<div class="p-20" style="background-color: #fafafa; border: 1px solid #e4e4e7; border-radius: 8px; min-height: 420px; display: flex; align-items: flex-start; justify-content: center; padding-top: 20px; position: relative; z-index: 5;">
+				<ngc-navigation-menu></ngc-navigation-menu>
+			</div>
+		</ngc-tab>
+		<ngc-tab [label]="'Code'">
+			<ngc-code-block language="html">
+				<pre><code #codeContent>&lt;!-- Basic Navigation Menu --&gt;
+&lt;ngc-navigation-menu&gt;&lt;/ngc-navigation-menu&gt;
+
+&lt;!-- Custom Items --&gt;
+&lt;ngc-navigation-menu [items]="myMenuItems"&gt;&lt;/ngc-navigation-menu&gt;</code></pre>
+			</ngc-code-block>
+			<div class="mt-15" *ngIf="getComponentTsCode('Navigation Menu')">
+				<ngc-code-block [code]="getComponentTsCode('Navigation Menu')" language="typescript"></ngc-code-block>
+			</div>
+		</ngc-tab>
+	</ngc-tab-group>
+</ng-template>
 <ng-template #compTemplate label="Switch">
 	<h3 class="mb-20">Switch</h3>
 	<p class="component-description">
@@ -3485,5 +3687,13 @@
 	<h3 class="mv-20">Font Family</h3>
 	<div>Default: AvertaStdCY, Helvetica, sans-serif</div>
 	<div>Code: SourceCodePro, Helvetica, sans-serif</div>
+
+	<!-- Design Token Panel -->
+	<h3 class="mv-20">Design Token Customizer</h3>
+	<p class="component-description">
+		Customize design tokens such as semantic colors, border radius, and spacing.
+		Click <strong>Get Token</strong> to export your token configuration as JSON.
+	</p>
+	<ngc-design-token></ngc-design-token>
 
 </ng-template>

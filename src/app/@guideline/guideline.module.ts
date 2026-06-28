@@ -37,6 +37,7 @@ import { CoreModule } from '@app/@core';
 import { NgcListModule } from '@app/@ngc/ngc-list';
 import { NgcDialogModule } from '@app/@ngc/ngc-dialog';
 import { MyDialogComponent } from './partial/dialog/my-dialog.component';
+import { GuidelineOverviewComponent } from './partial/overview/overview.component';
 import { NgcCarouselModule } from '@app/@ngc/ngc-carousel';
 import { NgcDrawerModule } from '@app/@ngc/ngc-drawer';
 import { NgcScrollBarModule } from '@app/@ngc/ngc-scroll-bar';
@@ -55,13 +56,16 @@ import { NgcAlertModule } from '@app/@ngc/ngc-alert';
 import { NGCTableModule } from '@app/@ngc/ngc-table/ngc-table.module';
 import { NgcTagModule } from '@app/@ngc/ngc-tag';
 import { NgcTimelineModule } from '@app/@ngc/ngc-timeline/ngc-timeline.module';
+import { NgcDesignTokenModule } from '@app/@ngc/ngc-design-token';
+import { NgcNavigationMenuModule } from '@app/@ngc/ngc-navigation-menu';
+import { NgcCollapseMenuModule } from '@app/@ngc/ngc-collapse-menu';
 
 // import { NgcSliderModule } from '@app/@ngc/ngc-range-input';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
-  declarations: [ GuidelineComponent, MyDialogComponent, ContactComponent, GuidelineHeaderComponent, GuidelineNavigatorComponent ],
+  declarations: [ GuidelineComponent, MyDialogComponent, ContactComponent, GuidelineHeaderComponent, GuidelineNavigatorComponent, GuidelineOverviewComponent ],
   imports: [
 		RouterModule,
 		DragDropModule,
@@ -75,6 +79,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
     NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule, NgcDropdownModule, NgcMemberPickerModule, NgcFormFieldModule,
     NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule, NgcAlertModule, NGCTableModule, NgcTagModule, NgcTimelineModule,
+    NgcDesignTokenModule, NgcNavigationMenuModule, NgcCollapseMenuModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],
