@@ -6,9 +6,16 @@
 
 	&:not(.ngc-divider--vertical) {
 		height: 1px;
+		width: 100%;
 	}
 
 	&.ngc-divider--vertical {
 		width: 1px;
+		height: 16px; /* fixed visible height */
+		background-color: #babcc0; /* solid visible color */
+		align-self: center;
+		margin: 0 12px;
+		display: inline-block;
+		flex-shrink: 0;
 	}
 }

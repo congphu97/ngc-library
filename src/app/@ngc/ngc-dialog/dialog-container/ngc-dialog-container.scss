@@ -4,11 +4,13 @@
 .ngc-dialog-panel {
 	display: flex;
 	flex-direction: column;
-	background-color: $color-white;
-	border-radius: 8px;
+	background-color: #f4f4f5; /* matches code-block gray background */
+	border-radius: 12px;
 	max-width: 90vw;
 	max-height: 90vh;
-	box-shadow: $box-shadow;
+	box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+	border: 1px solid rgba(0, 0, 0, 0.08);
+	overflow: hidden;
 
 	&.ngc-dialog-panel--fullscreen {
 		max-width: unset !important;
@@ -34,66 +36,144 @@
 	min-height: 0;
 	position: relative;
 
-	> * {
+	// Codeblock Header Styling (Applied directly on the projected [ngcDialogHeader])
+	[ngcDialogHeader] {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		background: #ececed !important;
+		padding: 10px 16px !important;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+		user-select: none;
+		font-size: 11px !important;
+		font-weight: 700 !important;
+		color: #71717a !important;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		min-height: 38px;
+		box-sizing: border-box;
+
+		// The blue dot before the title
+		&::before {
+			content: '';
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 50%;
+			background-color: #3b82f6;
+			margin-right: 8px;
+			flex-shrink: 0;
+		}
+
+		// Ensure h1/h2/span title behaves inside the layout flex
+		h1, h2, h3, h4, div {
+			margin: 0 !important;
+			font-size: 11px !important;
+			font-weight: 700 !important;
+			color: #71717a !important;
+			text-transform: uppercase;
+			letter-spacing: 0.5px;
+			display: flex;
+			align-items: center;
+		}
+
+		// Style the close button inside [ngcDialogHeader] to be the simple X button
+		button[ngcButton],
+		.ngc-button {
+			display: flex !important;
+			align-items: center !important;
+			justify-content: center !important;
+			background: #ffffff !important;
+			border: 1px solid rgba(0, 0, 0, 0.08) !important;
+			width: 28px !important;
+			height: 28px !important;
+			border-radius: 6px !important;
+			cursor: pointer !important;
+			color: #71717a !important;
+			transition: all 0.15s ease !important;
+			padding: 0 !important;
+			box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+
+			// Make the close icon bigger
+			ngc-icon, i, span.ngc-icon {
+				font-size: 18px !important;
+				width: 18px !important;
+				height: 18px !important;
+				display: block;
+			}
+
+			// Hide inner text if any, only show icon
+			span:not(.ngc-icon) {
+				display: none !important;
+			}
+
+			&:hover {
+				background: #f4f4f5 !important;
+				color: #18181b !important;
+				border-color: rgba(0, 0, 0, 0.15) !important;
+			}
+		}
+	}
+
+	// Content wrapper
+	&__body-wrapper {
 		display: flex;
 		flex-direction: column;
 		width: 100%;
 		min-width: 0;
 		height: 100%;
 		min-height: 0;
+		background-color: #ffffff; /* inner body is white */
+
+		> * {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			min-width: 0;
+			height: 100%;
+			min-height: 0;
+		}
 	}
 
-	[ngcDialogHeader],
 	[ngcDialogContent],
 	[ngcDialogFooter] {
 		display: flex;
 	}
 
-	[ngcDialogHeader],
 	[ngcDialogFooter] {
-		padding: 15px 25px;
+		padding: 16px 20px;
 		justify-content: space-between;
 		align-items: center;
 		position: relative;
 		z-index: $z-level-3;
+		background-color: #ffffff;
+		padding-bottom: 20px;
+		border-top: 1px solid #e4e4e7 !important; /* solid visible divider line */
 
-		&[boxShadow] + [ngcDialogContent] {
-			padding-top: 25px;
-			padding-bottom: 25px;
-		}
-	}
-
-	[ngcDialogHeader] {
 		&[divider] {
-			border-bottom: 1px solid $color-border;
-			margin-bottom: 20px;
-		}
-
-		&[boxShadow] {
-			box-shadow: 0 14px 24px -4px rgba(228, 228, 228, .4);
-		}
-	}
-
-	[ngcDialogFooter] {
-		&[divider] {
-			border-top: 1px solid $color-border;
-			margin-top: 20px;
-		}
-
-		&[boxShadow] {
-			box-shadow: 0 -14px 24px -4px rgba(228, 228, 228, .4);
+			border-top: 1px solid #e4e4e7 !important;
+			margin-top: 12px;
 		}
 
 		&[alignment='stretch'] {
-			margin-left: -10px;
-			margin-right: -10px;
+			margin-left: -6px;
+			margin-right: -6px;
 
 			.ngc-button {
 				width: 100%;
 				min-width: 0;
-				margin-right: 10px;
-				margin-left: 10px;
+				margin-right: 6px;
+				margin-left: 6px;
 			}
+		}
+
+		// Style footer buttons to be premium and matching codeblock layout
+		.ngc-button {
+			border-radius: 6px !important;
+			font-size: 12px !important;
+			font-weight: 600 !important;
+			height: 32px !important;
+			padding: 0 16px !important;
 		}
 	}
 
@@ -104,8 +184,8 @@
 		height: 100%;
 		min-height: 0;
 		flex-direction: column;
-		padding-left: 25px;
-		padding-right: 25px;
+		padding: 20px;
+		background-color: #ffffff;
 	}
 
 	.ngc-dialog-container__btn-previous,
@@ -123,5 +203,15 @@
 
 	.ngc-dialog-container__btn-next {
 		right: -70px;
+	}
+}
+
+// Global Backdrop Overrides
+.cdk-overlay-backdrop {
+	&.cdk-overlay-backdrop-showing {
+		visibility: visible !important;
+		opacity: 1 !important;
+		background: #7a7a7a !important;
+		z-index: 1000 !important; /* Ensure dialog backdrop stays below select dropdown overlay pane */
 	}
 }
