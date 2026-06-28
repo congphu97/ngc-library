@@ -10,6 +10,11 @@ export class GuidelineHeaderComponent implements OnInit {
   @Input() isDarkMode: boolean = false;
   @Output() toggleTheme = new EventEmitter<boolean>();
   @Output() componentClick = new EventEmitter<void>();
+  @Output() logoClick = new EventEmitter<void>();
+
+  public onLogoClick() {
+    this.logoClick.emit();
+  }
 
   constructor(
     private _cdr: ChangeDetectorRef,

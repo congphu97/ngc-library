@@ -19,20 +19,14 @@
     align-items: center;
     gap: 10px;
 
-    .logo-symbol {
-      font-family: $font-family-code;
-      font-size: 24px;
-      font-weight: $font-weight-bold;
-      color: #58a6ff; // bright developer blue
-      letter-spacing: -2px;
-      animation: logoPulse 2s infinite ease-in-out;
-    }
-
-    .logo-title {
-      font-size: 16px;
-      font-weight: $font-weight-bold;
-      color: #ffffff;
-      letter-spacing: 0.5px;
+    .logo-image {
+      height: 32px !important;
+      width: 32px !important;
+      max-width: 32px !important;
+      max-height: 32px !important;
+      border-radius: 6px;
+      display: block;
+      object-fit: contain;
     }
   }
 

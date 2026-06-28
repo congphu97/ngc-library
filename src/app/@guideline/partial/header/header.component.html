@@ -1,7 +1,6 @@
 <div class="guideline-header-bar">
-	<div class="header-logo">
-		<span class="logo-symbol"></span>
-		<span class="logo-title">Components</span>
+	<div class="header-logo" (click)="onLogoClick()" style="cursor: pointer;">
+		<img src="assets/images/logos/logo.png" alt="Logo" class="logo-image" />
 	</div>
 	<div class="header-menu">
 		<button ngcButton class="menu-btn" routerLink="/components" (click)="onComponentClick()">Component</button>
