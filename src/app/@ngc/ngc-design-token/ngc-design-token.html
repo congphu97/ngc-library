@@ -1,0 +1,501 @@
+<div class="ngc-design-token__panel">
+
+	<!-- Header -->
+	<div class="ngc-design-token__header">
+		<span class="ngc-design-token__title">Design Tokens</span>
+		<div class="ngc-design-token__header-actions">
+			<button class="ngc-design-token__reset-btn" (click)="resetTokens()"
+				title="Reset to defaults">
+				<ngc-icon name="rotate-ccw" size="13"></ngc-icon>
+			</button>
+			<ngc-icon class="ngc-design-token__icon" name="palette" size="16"></ngc-icon>
+		</div>
+	</div>
+
+	<ngc-divider></ngc-divider>
+
+	<!-- ── Semantic Colors ─────────────────────────────── -->
+	<div class="ngc-design-token__section-label">
+		Semantic Colors
+		<span class="ngc-design-token__var-hint">--ngc-color-*</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Primary</span>
+			<code class="ngc-design-token__var">--ngc-color-primary-default</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="semanticColorPrimaryDefault" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ semanticColorPrimaryDefault }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Success</span>
+			<code class="ngc-design-token__var">--ngc-color-success-default</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="semanticColorSuccessDefault" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ semanticColorSuccessDefault }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Warning</span>
+			<code class="ngc-design-token__var">--ngc-color-warning-default</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="semanticColorWarningDefault" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ semanticColorWarningDefault }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Danger</span>
+			<code class="ngc-design-token__var">--ngc-color-danger-default</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="semanticColorDangerDefault" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ semanticColorDangerDefault }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Info</span>
+			<code class="ngc-design-token__var">--ngc-color-info-default</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="semanticColorInfoDefault" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ semanticColorInfoDefault }}</span>
+		</div>
+	</div>
+
+	<!-- Raw Colors (Additional Variables from variable.scss) -->
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Black</span>
+			<code class="ngc-design-token__var">--ngc-color-neutral-black</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="primitiveColorBlack" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ primitiveColorBlack }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">White</span>
+			<code class="ngc-design-token__var">--ngc-color-neutral-white</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="primitiveColorWhite" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ primitiveColorWhite }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Secondary Canvas</span>
+			<code class="ngc-design-token__var">--ngc-color-neutral-background-canvas</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="colorSecondary" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ colorSecondary }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Disabled Background</span>
+			<code class="ngc-design-token__var">--ngc-color-neutral-background-disabled</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="colorDefault" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ colorDefault }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Active Color</span>
+			<code class="ngc-design-token__var">--ngc-color-info-subtle</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="colorActive" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ colorActive }}</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Highlight Color</span>
+			<code class="ngc-design-token__var">--ngc-color-warning-subtle</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__color-input" type="color"
+				[(ngModel)]="colorHighlight" (ngModelChange)="onValueChange()" />
+			<span class="ngc-design-token__color-value">{{ colorHighlight }}</span>
+		</div>
+	</div>
+
+	<!-- ── Border Radius ───────────────────────────────── -->
+	<ngc-divider class="mv-8"></ngc-divider>
+	<div class="ngc-design-token__section-label">
+		Border Radius
+		<span class="ngc-design-token__var-hint">--ngc-radius-*</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Interactive (300)</span>
+			<code class="ngc-design-token__var">--ngc-radius-300</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="semanticRadiusInteractive"
+				(selectionChange)="semanticRadiusInteractive = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Container (400)</span>
+			<code class="ngc-design-token__var">--ngc-radius-400</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="semanticRadiusContainer"
+				(selectionChange)="semanticRadiusContainer = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Overlay (500)</span>
+			<code class="ngc-design-token__var">--ngc-radius-500</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="semanticRadiusOverlay"
+				(selectionChange)="semanticRadiusOverlay = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<!-- Additional Raw Radii -->
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Radius None</span>
+			<code class="ngc-design-token__var">--ngc-radius-none</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="radiusNone"
+				(selectionChange)="radiusNone = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Radius 100</span>
+			<code class="ngc-design-token__var">--ngc-radius-100</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="radius100"
+				(selectionChange)="radius100 = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Radius 200</span>
+			<code class="ngc-design-token__var">--ngc-radius-200</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="radius200"
+				(selectionChange)="radius200 = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Radius 600</span>
+			<code class="ngc-design-token__var">--ngc-radius-600</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="radius600"
+				(selectionChange)="radius600 = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Radius 700</span>
+			<code class="ngc-design-token__var">--ngc-radius-700</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="radius700"
+				(selectionChange)="radius700 = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Radius Full</span>
+			<code class="ngc-design-token__var">--ngc-radius-full</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="radiusOptions"
+				[selectedValue]="radiusFull"
+				(selectionChange)="radiusFull = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<!-- ── Spacing ─────────────────────────────────────── -->
+	<ngc-divider class="mv-8"></ngc-divider>
+	<div class="ngc-design-token__section-label">
+		Spacing Base
+		<span class="ngc-design-token__var-hint">--ngc-spacing-base</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Base unit</span>
+			<code class="ngc-design-token__var">padding.default</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="spacingOptions"
+				[selectedValue]="spacingBase"
+				(selectionChange)="spacingBase = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<!-- ── Font ────────────────────────────────────────── -->
+	<ngc-divider class="mv-8"></ngc-divider>
+	<div class="ngc-design-token__section-label">
+		Font Family
+		<span class="ngc-design-token__var-hint">--ngc-font-body</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Body font</span>
+			<code class="ngc-design-token__var">$font-family-body</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--select">
+			<ngc-select
+				[options]="fontOptions"
+				[selectedValue]="primitiveFontBody"
+				(selectionChange)="primitiveFontBody = $event; onValueChange()">
+			</ngc-select>
+		</div>
+	</div>
+
+	<!-- ── Font Sizes ────────────────────────────────── -->
+	<ngc-divider class="mv-8"></ngc-divider>
+	<div class="ngc-design-token__section-label">
+		Font Sizes
+		<span class="ngc-design-token__var-hint">--ngc-font-size-*</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Mini</span>
+			<code class="ngc-design-token__var">$font-size-mini</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="8" max="32" step="1"
+				[(ngModel)]="fontSizeMiniVal" (ngModelChange)="fontSizeMini = $event + 'px'; onValueChange()" />
+			<span class="ngc-design-token__size-unit">px</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Small</span>
+			<code class="ngc-design-token__var">$font-size-small</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="8" max="32" step="1"
+				[(ngModel)]="fontSizeSmallVal" (ngModelChange)="fontSizeSmall = $event + 'px'; onValueChange()" />
+			<span class="ngc-design-token__size-unit">px</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Base</span>
+			<code class="ngc-design-token__var">$font-size-base</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="8" max="32" step="1"
+				[(ngModel)]="fontSizeBaseVal" (ngModelChange)="fontSizeBase = $event + 'px'; onValueChange()" />
+			<span class="ngc-design-token__size-unit">px</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Large</span>
+			<code class="ngc-design-token__var">$font-size-large</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="8" max="40" step="1"
+				[(ngModel)]="fontSizeLargeVal" (ngModelChange)="fontSizeLarge = $event + 'px'; onValueChange()" />
+			<span class="ngc-design-token__size-unit">px</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">X-Large</span>
+			<code class="ngc-design-token__var">$font-size-xlarge</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="8" max="48" step="1"
+				[(ngModel)]="fontSizeXlargeVal" (ngModelChange)="fontSizeXlarge = $event + 'px'; onValueChange()" />
+			<span class="ngc-design-token__size-unit">px</span>
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">2X-Large</span>
+			<code class="ngc-design-token__var">$font-size-xxlarge</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="8" max="64" step="1"
+				[(ngModel)]="fontSizeXxlargeVal" (ngModelChange)="fontSizeXxlarge = $event + 'px'; onValueChange()" />
+			<span class="ngc-design-token__size-unit">px</span>
+		</div>
+	</div>
+
+	<!-- ── Font Weights ──────────────────────────────── -->
+	<ngc-divider class="mv-8"></ngc-divider>
+	<div class="ngc-design-token__section-label">
+		Font Weights
+		<span class="ngc-design-token__var-hint">--ngc-font-weight-*</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Normal</span>
+			<code class="ngc-design-token__var">$font-weight-normal</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="100" max="900" step="100"
+				[(ngModel)]="fontWeightNormal" (ngModelChange)="onValueChange()" />
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Semibold</span>
+			<code class="ngc-design-token__var">$font-weight-semibold</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="100" max="900" step="100"
+				[(ngModel)]="fontWeightSemibold" (ngModelChange)="onValueChange()" />
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Bold</span>
+			<code class="ngc-design-token__var">$font-weight-bold</code>
+		</div>
+		<div class="ngc-design-token__control ngc-design-token__control--size">
+			<input class="ngc-design-token__size-input" type="number" min="100" max="900" step="100"
+				[(ngModel)]="fontWeightBold" (ngModelChange)="onValueChange()" />
+		</div>
+	</div>
+
+	<!-- ── Box Shadows ────────────────────────────────── -->
+	<ngc-divider class="mv-8"></ngc-divider>
+	<div class="ngc-design-token__section-label">
+		Box Shadows
+		<span class="ngc-design-token__var-hint">--ngc-box-shadow-*</span>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Default Shadow</span>
+			<code class="ngc-design-token__var">$box-shadow</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__text-input" type="text"
+				[(ngModel)]="boxShadowDefault" (ngModelChange)="onValueChange()" />
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Thick Shadow</span>
+			<code class="ngc-design-token__var">$box-shadow-thick</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__text-input" type="text"
+				[(ngModel)]="boxShadowThick" (ngModelChange)="onValueChange()" />
+		</div>
+	</div>
+
+	<div class="ngc-design-token__row">
+		<div class="ngc-design-token__label-wrap">
+			<span class="ngc-design-token__label">Focus Shadow</span>
+			<code class="ngc-design-token__var">$box-shadow-focus</code>
+		</div>
+		<div class="ngc-design-token__control">
+			<input class="ngc-design-token__text-input" type="text"
+				[(ngModel)]="boxShadowFocus" (ngModelChange)="onValueChange()" />
+		</div>
+	</div>
+
+	<!-- ── Get Token ───────────────────────────────────── -->
+	<ngc-divider class="mt-12"></ngc-divider>
+	<div class="ngc-design-token__footer">
+		<button ngcButton type="primary" class="ngc-design-token__get-btn"
+			(click)="openTokenDialog()">
+			<ngc-icon name="code-block" size="14"></ngc-icon>
+			Get Token
+		</button>
+	</div>
+
+</div>

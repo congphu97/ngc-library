@@ -1,0 +1,35 @@
+<div ngcDialogHeader>
+	<ngc-icon name="code-block" size="16"></ngc-icon>
+	Export Tokens
+</div>
+
+<div ngcDialogContent class="ngc-design-token-dialog">
+	<!-- Tab Bar -->
+	<div class="ngc-design-token-dialog__tabs">
+		<button class="ngc-design-token-dialog__tab-btn" 
+			[class.ngc-design-token-dialog__tab-btn--active]="activeTab === 'tokens'"
+			(click)="activeTab = 'tokens'">
+			<ngc-icon name="file-code" size="14"></ngc-icon>
+			JSON Tokens
+		</button>
+		<button class="ngc-design-token-dialog__tab-btn"
+			[class.ngc-design-token-dialog__tab-btn--active]="activeTab === 'css'"
+			(click)="activeTab = 'css'">
+			<ngc-icon name="palette" size="14"></ngc-icon>
+			CSS Variables
+		</button>
+	</div>
+
+	<!-- Code Block -->
+	<div class="ngc-design-token-dialog__json-wrapper">
+		<pre class="ngc-design-token-dialog__json" [innerHTML]="getHighlightedCode()"></pre>
+	</div>
+</div>
+
+<div ngcDialogFooter>
+	<button ngcButton type="secondary" (click)="close()">Close</button>
+	<button ngcButton [type]="copied ? 'success' : 'primary'" (click)="copyJson()">
+		<ngc-icon [name]="copied ? 'check' : 'clipboard'" size="14"></ngc-icon>
+		{{ copied ? 'Copied!' : 'Copy JSON' }}
+	</button>
+</div>
