@@ -1,0 +1,88 @@
+<div class="guideline-overview">
+	<div class="guideline-overview__header">
+		<h1 class="guideline-overview__title">Components</h1>
+		<p class="guideline-overview__subtitle">
+			A collection of premium design system UI components to enrich your web applications.
+		</p>
+		<div class="guideline-overview__search-wrapper">
+			<ngc-icon name="search" class="guideline-overview__search-icon"></ngc-icon>
+			<input type="text" 
+				   class="guideline-overview__search-input" 
+				   placeholder="Search in components..."
+				   [(ngModel)]="searchQuery" />
+		</div>
+	</div>
+
+	<div class="guideline-overview__content">
+		<div *ngFor="let group of filteredGroups" class="guideline-overview__group">
+			<h2 class="guideline-overview__group-title">
+				{{ group.title }}
+				<span class="guideline-overview__group-count">{{ group.items.length }}</span>
+			</h2>
+
+			<div class="guideline-overview__grid">
+				<div *ngFor="let item of group.items" 
+					 class="guideline-overview__card"
+					 (click)="clickItem(item)">
+					
+					<!-- Interactive mini graphics representation -->
+					<div class="guideline-overview__card-preview">
+						<ng-container [ngSwitch]="item.name">
+							<!-- Button Preview -->
+							<div *ngSwitchCase="'Button'" class="preview-graphics preview-graphics--btn">
+								<div class="g-btn g-btn--primary"></div>
+								<div class="g-btn g-btn--secondary"></div>
+							</div>
+							<!-- Icon Preview -->
+							<div *ngSwitchCase="'Icon'" class="preview-graphics preview-graphics--icon">
+								<span class="g-circle-dot"></span>
+								<span class="g-heart"></span>
+								<span class="g-star"></span>
+							</div>
+							<!-- Color & Typography -->
+							<div *ngSwitchCase="'Color & Typography'" class="preview-graphics preview-graphics--typo">
+								<span class="g-typo-aa">Aa</span>
+							</div>
+							<!-- Divide -->
+							<div *ngSwitchCase="'Divide'" class="preview-graphics preview-graphics--divider">
+								<div class="g-divider-line"></div>
+							</div>
+							<!-- Sidebar -->
+							<div *ngSwitchCase="'Sidebar'" class="preview-graphics preview-graphics--sidebar">
+								<div class="g-sidebar-layout">
+									<div class="g-sidebar-left"></div>
+									<div class="g-sidebar-right"></div>
+								</div>
+							</div>
+							<!-- Accordion -->
+							<div *ngSwitchCase="'Accordion'" class="preview-graphics preview-graphics--accordion">
+								<div class="g-acc-bar"></div>
+								<div class="g-acc-bar g-acc-bar--open"></div>
+							</div>
+							<!-- Navigation Menu -->
+							<div *ngSwitchCase="'Navigation Menu'" class="preview-graphics preview-graphics--nav">
+								<div class="g-nav-bar">
+									<span class="g-nav-dot"></span>
+									<span class="g-nav-dot"></span>
+								</div>
+							</div>
+							<!-- Form Field / Input -->
+							<div *ngSwitchCase="'Input'" class="preview-graphics preview-graphics--input">
+								<div class="g-input-field"></div>
+							</div>
+							<!-- Default fallback graphic -->
+							<div *ngSwitchDefault class="preview-graphics">
+								<ngc-icon [name]="item.icon" size="28px" class="g-fallback-icon"></ngc-icon>
+							</div>
+						</ng-container>
+					</div>
+
+					<div class="guideline-overview__card-info">
+						<div class="guideline-overview__card-name">{{ item.label }}</div>
+						<div class="guideline-overview__card-desc">{{ item.desc }}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
