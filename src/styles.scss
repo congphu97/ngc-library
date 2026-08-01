@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Lexend', Roboto, "Helvetica Neue", sans-serif; }
 @import '@angular/cdk/overlay-prebuilt.css';
 @import 'src/scss/partials/variable';
 
@@ -1354,4 +1354,17 @@ html[theme="tokyo-night"] {
       }
     }
   }
+}
+
+:root {
+  --ngc-font-body: 'Lexend', sans-serif !important;
+}
+
+/* Apply Lexend Font globally to all text elements, excluding icons and monospace/code components */
+*:not([class*="icon"]):not(.icon):not([class*="mono"]):not([class*="code"]):not(code):not(pre):not(.icomoon):not([class*="icomoon"]):not(ion-icon) {
+  font-family: 'Lexend', system-ui, -apple-system, sans-serif !important;
+}
+
+input, button, select, textarea {
+  font-family: 'Lexend', sans-serif !important;
 }
