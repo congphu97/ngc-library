@@ -5,11 +5,12 @@
 			A collection of premium design system UI components to enrich your web applications.
 		</p>
 		<div class="guideline-overview__search-wrapper">
-			<ngc-icon name="search" class="guideline-overview__search-icon"></ngc-icon>
-			<input type="text" 
-				   class="guideline-overview__search-input" 
-				   placeholder="Search in components..."
-				   [(ngModel)]="searchQuery" />
+			<ngc-search-box 
+				placeholder="Search in components..."
+				[debounceTime]="150"
+				(searching)="searchQuery = $event"
+				(cleared)="searchQuery = ''">
+			</ngc-search-box>
 		</div>
 	</div>
 

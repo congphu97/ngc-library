@@ -104,9 +104,9 @@
 <!-- Not Found Template -->
 <ng-template #notFoundTemplate let-name="name" let-size="size" let-debounceTime="debounceTime"
 	let-emptyImage="emptyImage" let-emptyImageSize="emptyImageSize" let-emptyTitle="emptyTitle"
-	let-emptyDescription="emptyDescription" [ngIf]="displayNotFound">
+	let-emptyDescription="emptyDescription">
 
-	<not-found *ngIf="!filteredData?.length" [mode]="searchQuery?.length ? 'search' : 'empty'"
+	<not-found *ngIf="displayNotFound && !filteredData?.length" [mode]="searchQuery?.length ? 'search' : 'empty'"
 		[name]="name || notFoundData?.name" [size]="size || notFoundData?.size"
 		[debounceTime]="debounceTime || notFoundData?.debounceTime || undefined"
 		[emptyImage]="emptyImage || notFoundData?.emptyImage"

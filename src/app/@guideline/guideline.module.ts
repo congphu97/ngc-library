@@ -59,6 +59,9 @@ import { NgcTimelineModule } from '@app/@ngc/ngc-timeline/ngc-timeline.module';
 import { NgcDesignTokenModule } from '@app/@ngc/ngc-design-token';
 import { NgcNavigationMenuModule } from '@app/@ngc/ngc-navigation-menu';
 import { NgcCollapseMenuModule } from '@app/@ngc/ngc-collapse-menu';
+import { NgcTreeModule } from '@app/@ngc/ngc-tree';
+import { NgcResizeModule } from '@app/@ngc/ngc-resize';
+import { NgcCommentModule } from '@app/@ngc/ngc-comment';
 
 // import { NgcSliderModule } from '@app/@ngc/ngc-range-input';
 
@@ -79,7 +82,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     NgcCollapseModule, NgcAvatarModule, NgcEmojiPickerModule, NgcAvatarPickerModule,
     NgcDrawerModule, NgcScrollBarModule, NgcSearchBoxModule, NgcDropdownModule, NgcMemberPickerModule, NgcFormFieldModule,
     NgcPhoneFieldModule, NgcRangeInputModule, NgcSkeletonModule, NgcAlertModule, NGCTableModule, NgcTagModule, NgcTimelineModule,
-    NgcDesignTokenModule, NgcNavigationMenuModule, NgcCollapseMenuModule,
+    NgcDesignTokenModule, NgcNavigationMenuModule, NgcCollapseMenuModule, NgcTreeModule, NgcResizeModule, NgcCommentModule,
     SocketIoModule.forRoot(config)
   ],
   exports: [ GuidelineComponent ],

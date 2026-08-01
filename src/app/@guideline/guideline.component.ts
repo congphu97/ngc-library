@@ -5,7 +5,7 @@ import { NgcToastService } from '@app/@ngc/ngc-toast/toast/ngc-toast.service';
 // import { untilCmpDestroyed } from 'angular-core';
 import { Socket } from 'ngx-socket-io';
 import { startWith } from 'rxjs/operators';
-import { forEach, indexOf, filter, search } from 'lodash';
+import _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import moment, { Moment } from 'moment';
 import { COLOR } from '@app/@resources';
@@ -66,6 +66,9 @@ const COMPONENT_ICON_MAP: Record<string, string> = {
 	'Textarea'           : 'long-text',
 	'Toast'              : 'bell-new',
 	'Tooltip'            : 'help',
+	'Tree'               : 'open-folder',
+	'Resize'             : 'sliders',
+	'Comment'            : 'message-circle',
 };
 
 const COMPONENT_GROUP_MAP: Record<string, string> = {
@@ -108,6 +111,9 @@ const COMPONENT_GROUP_MAP: Record<string, string> = {
 	'Select': 'Data Entry',
 	'Sheet': 'Layout',
 	'Sidebar': 'Layout',
+	'Tree': 'Data Display',
+	'Resize': 'Layout',
+	'Comment': 'Data Display',
 	'Skeleton': 'Feedback',
 	'Navigation Menu': 'Navigation',
 	'Switch': 'Data Entry',
@@ -298,7 +304,7 @@ export class GuidelineComponent implements OnInit, DoCheck {
 			)
 			.subscribe(() => {
 				console.log('Comp templates', this.compTemplatesArr);
-				forEach(this.compTemplatesArr, (item: TemplateRef<any>) => {
+				_.forEach(this.compTemplatesArr, (item: TemplateRef<any>) => {
 					const label: string = (item as IObject)._declarationTContainer.attrs[1];
 					(item as IObject).label = label;
 					(item as IObject).icon = COMPONENT_ICON_MAP[label] || 'collection';
@@ -348,7 +354,7 @@ export class GuidelineComponent implements OnInit, DoCheck {
 	}
 
 	public selectCompTemplate(compTemplate: TemplateRef<any>) {
-		const index: number = indexOf(this.compTemplatesArr, compTemplate);
+		const index: number = _.indexOf(this.compTemplatesArr, compTemplate);
 
 		this.showOverview = false;
 		this.showGetStarted = false;
@@ -663,14 +669,21 @@ export class GuidelineComponent implements OnInit, DoCheck {
 		/* eslint-enable */
 	}
 
+	public suggestionResults: any[] = [];
+	public suggestionServerSideResults: any[] = [];
+	public showDemoLoading = false;
+
 	/**
 	 * @param {string} searchStr
 	 * @return {IObject}
 	 */
 	public suggestion(searchStr: string): IObject[] {
-		return filter(this.positions, (position: IObject) => {
-			return search(position.name, searchStr);
+		const res = _.filter(this.positions, (position: IObject) => {
+			return _.search(position.name, searchStr);
 		});
+		this.suggestionResults = searchStr ? res : [];
+		this._cdr.detectChanges();
+		return res;
 	}
 
 	/**
@@ -679,11 +692,12 @@ export class GuidelineComponent implements OnInit, DoCheck {
 	 */
 	public suggestionServerSide(searchStr: string): Observable<IObject[]> {
 		return new Observable((observer: Observer<IObject[]>) => {
-			observer.next(
-				filter(this.positions, (position: IObject) => {
-					return search(position.name, searchStr);
-				})
-			);
+			const res = _.filter(this.positions, (position: IObject) => {
+				return _.search(position.name, searchStr);
+			});
+			observer.next(res);
+			this.suggestionServerSideResults = searchStr ? res : [];
+			this._cdr.detectChanges();
 		});
 	}
 
@@ -704,5 +718,91 @@ export class GuidelineComponent implements OnInit, DoCheck {
 	public onRowDropped(event: CdkDragDrop<any[]>) {
 		moveItemInArray(this.positions, event.previousIndex, event.currentIndex);
 		this.dataSource.data = [...this.positions];
+	}
+
+	public commentData: any[] = [
+		{
+			id: 1,
+			user: { id: 1, name: 'Alice Nguyen', avatar: null },
+			content: { text: 'This looks fantastic! The design is really clean and modern. 🎉' },
+			createdAt: new Date( Date.now() - 1000 * 60 * 35 ).toISOString(),
+			isEdited: false,
+			editable: true,
+			deletable: true,
+			reactions: [
+				{ type: 'like', count: 5, reacted: false },
+				{ type: 'heart', count: 2, reacted: true },
+			],
+			totalReplies: 2,
+			replies: [
+				{
+					id: 11,
+					user: { id: 2, name: 'Bob Tran', avatar: null },
+					content: { text: 'Totally agree! Can\'t wait to see the final release.' },
+					createdAt: new Date( Date.now() - 1000 * 60 * 20 ).toISOString(),
+					editable: false,
+					deletable: false,
+					reactions: [],
+				},
+				{
+					id: 12,
+					user: { id: 3, name: 'Charlie Do', avatar: null },
+					content: { text: 'Love the component library direction 🚀' },
+					createdAt: new Date( Date.now() - 1000 * 60 * 10 ).toISOString(),
+					editable: false,
+					deletable: false,
+					reactions: [],
+				},
+			],
+		},
+		{
+			id: 2,
+			user: { id: 2, name: 'Bob Tran', avatar: null },
+			content: { text: 'Has anyone tried integrating this with their existing projects? Would love some tips.' },
+			createdAt: new Date( Date.now() - 1000 * 60 * 5 ).toISOString(),
+			isEdited: true,
+			editable: true,
+			deletable: true,
+			reactions: [],
+			totalReplies: 0,
+			replies: [],
+		},
+	];
+
+	public treeData = [
+		{
+			title: 'Parent Node 1',
+			key: '0-0',
+			children: [
+				{ title: 'Leaf Node 1-1', key: '0-0-0', isLeaf: true },
+				{ title: 'Leaf Node 1-2', key: '0-0-1', isLeaf: true }
+			]
+		},
+		{
+			title: 'Parent Node 2',
+			key: '0-1',
+			children: [
+				{ title: 'Leaf Node 2-1', key: '0-1-0', isLeaf: true },
+				{ title: 'Leaf Node 2-2', key: '0-1-1', isLeaf: true }
+			]
+		}
+	];
+
+	public dynamicTreeData = [
+		{ title: 'Expand to load children 1', key: '0', isLeaf: false },
+		{ title: 'Expand to load children 2', key: '1', isLeaf: false },
+		{ title: 'Leaf Node (Non-dynamic)', key: '2', isLeaf: true }
+	];
+
+	public loadTreeDataFn = (node: any): Promise<void> => {
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				node.children = [
+					{ title: `Dynamic Child 1 of ${node.title}`, key: `${node.key}-0`, isLeaf: true },
+					{ title: `Dynamic Child 2 of ${node.title}`, key: `${node.key}-1`, isLeaf: true }
+				];
+				resolve();
+			}, 1000);
+		});
 	}
 }

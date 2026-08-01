@@ -59,6 +59,9 @@ const COMPONENT_GROUP_MAP: Record<string, string> = {
 	'Textarea': 'Data Entry',
 	'Toast': 'Feedback',
 	'Tooltip': 'Data Display',
+	'Tree': 'Data Display',
+	'Resize': 'Layout',
+	'Comment': 'Data Display',
 };
 
 const COMPONENT_GROUP_ORDER = ['General', 'Layout', 'Navigation', 'Data Entry', 'Data Display', 'Feedback'];
@@ -110,6 +113,9 @@ const COMPONENT_DESC_MAP: Record<string, string> = {
 	'Textarea': 'Multi line paragraph input text fields block',
 	'Toast': 'Auto-hide toast banners overlays system details',
 	'Tooltip': 'On-hover information bubbles tips detail popups',
+	'Tree': 'Interactive tree structure hierarchy view',
+	'Resize': 'Premium resizable panel grids divider layouts',
+	'Comment': 'Threaded comment system with replies and reactions',
 };
 
 @Component({
