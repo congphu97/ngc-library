@@ -1,0 +1,9 @@
+<div class="ngc-tree__root">
+	<ng-container *ngFor="let node of data">
+		<ngc-tree-node 
+			[node]="node" 
+			[checkable]="checkable" 
+			[loadData]="loadData">
+		</ngc-tree-node>
+	</ng-container>
+</div>

@@ -1,4 +1,101 @@
 {
+  "Resize": {
+    "inputs": [
+      {
+        "name": "direction",
+        "type": "'horizontal' | 'vertical'",
+        "default": "'horizontal'",
+        "description": "Direction of panel layout. 'horizontal' stacks panels side-by-side (row). 'vertical' stacks panels top-to-bottom (column)."
+      },
+      {
+        "name": "defaultSize",
+        "type": "number",
+        "default": "undefined",
+        "description": "[Panel] Initial size of the panel in percentage (0–100). Unconfigured panels split remaining space equally."
+      },
+      {
+        "name": "minSize",
+        "type": "number",
+        "default": "0",
+        "description": "[Panel] Minimum allowed size in percentage that the panel can be dragged down to."
+      },
+      {
+        "name": "maxSize",
+        "type": "number",
+        "default": "100",
+        "description": "[Panel] Maximum allowed size in percentage that the panel can be dragged up to."
+      }
+    ],
+    "outputs": [],
+    "sourceCode": ""
+  },
+  "Tree": {
+    "inputs": [
+      {
+        "name": "data",
+        "type": "NgcTreeNode[]",
+        "default": "[]",
+        "description": "Hierarchical node structure datasets to render in the tree."
+      },
+      {
+        "name": "checkable",
+        "type": "boolean",
+        "default": "false",
+        "description": "Whether to render interactive checkboxes next to each node."
+      },
+      {
+        "name": "multiple",
+        "type": "boolean",
+        "default": "false",
+        "description": "Support multiple selections inside the tree."
+      },
+      {
+        "name": "draggable",
+        "type": "boolean",
+        "default": "false",
+        "description": "Allow dragging and dropping tree nodes to modify the hierarchy."
+      },
+      {
+        "name": "loadData",
+        "type": "(node: NgcTreeNode) => Promise<void> | Observable<void>",
+        "default": "undefined",
+        "description": "Asynchronous callback handler to lazy-load child nodes on expand."
+      }
+    ],
+    "outputs": [
+      {
+        "name": "nodeExpand",
+        "type": "EventEmitter<NgcTreeNode>",
+        "default": "-",
+        "description": "Event emitted when a parent node is expanded or collapsed."
+      },
+      {
+        "name": "nodeSelect",
+        "type": "EventEmitter<NgcTreeNode>",
+        "default": "-",
+        "description": "Event emitted when a node title or text is clicked/selected."
+      },
+      {
+        "name": "nodeCheck",
+        "type": "EventEmitter<NgcTreeNode[]>",
+        "default": "-",
+        "description": "Event emitted when checkboxes are toggled, returning list of all checked nodes."
+      },
+      {
+        "name": "nodeDrop",
+        "type": "EventEmitter<{ dragNode: NgcTreeNode, dropNode: NgcTreeNode }>",
+        "default": "-",
+        "description": "Event emitted when a node is dragged and dropped onto another node."
+      },
+      {
+        "name": "dataChange",
+        "type": "EventEmitter<NgcTreeNode[]>",
+        "default": "-",
+        "description": "Event emitted on any node selection, check, or expansion change, returning the entire tree structure."
+      }
+    ],
+    "sourceCode": ""
+  },
   "Collapse Menu": {
     "inputs": [
       {
