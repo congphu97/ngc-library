@@ -1,7 +1,28 @@
 @import 'src/scss/partials/variable';
 
 .ngc-loading {
-	display: flex;
+	display: inline-flex;
 	width: fit-content;
-	animation: $spin-animation;
+
+	&__spinner {
+		display: flex;
+		animation: $spin-animation;
+	}
+
+	&--full-page {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100vw;
+		height: 100vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(15, 23, 42, 0.45); /* Slate-900 overlay backdrop */
+		backdrop-filter: blur(6px);
+		-webkit-backdrop-filter: blur(6px);
+		z-index: 9999;
+	}
 }
