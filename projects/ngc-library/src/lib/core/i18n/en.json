@@ -1,0 +1,32 @@
+{
+	"LABEL": {
+		"ITEMS": "Items",
+		"LOADING_DATA": "Loading data",
+		"RESULTS": "Results"
+	},
+	"MESSAGE": {
+		"COPYRIGHT": "© {{ year }} {{ appName }}. All rights reserved.<br>Make with ❤️ in Saigon.",
+		"COULD_NOT_LOAD_RESOURCES": "Sorry, couldn't load resources!",
+		"COULD_NOT_LOAD_RESOURCES_DESCRIPTION": "An unknown error occurred.",
+		"DRAG_DROP_HERE": "Drag & drop {{ name }} here to add",
+		"NO_DATA": "Have no {{ name }} yet!",
+		"NO_RESULT_FOUND": "No result found!",
+		"NO_RESULT_FOUND_DESCRIPTION": "Check the spelling, or try a different search.",
+		"SEEN_ALL": "You've seen it all",
+		"VERSION": "Version: {{ appVersion }}"
+	},
+	"VALIDATION_MESSAGE": {
+		"DISALLOW_SIMILAR_PASSWORD": "Your new password is too similar to your current password. Please try another password.",
+		"EQUAL": "{{ field }} must be equal {{ value }}.",
+		"INVALID": "Please enter a valid {{ field }}.",
+		"LENGTH": "{{ field }} must be equal {{ value }} characters.",
+		"MATCH_PASSWORD": "New Password and confirm password does not match.",
+		"MAX": "{{ field }} must be less or equal than {{ max }}.",
+		"MAX_LESS_THAN": "{{ field }} must be less than {{ max }}.",
+		"MAXLENGTH": "{{ field }} must be less or equal than {{ value }} characters.",
+		"MIN": "{{ field }} must be greater or equal than {{ min }}.",
+		"MIN_GREATER_THAN": "{{ field }} must be greater than {{ min }}.",
+		"MINLENGTH": "{{ field }} must be greater or equal than {{ value }} characters.",
+		"REQUIRED": "{{ field }} is <strong>required</strong>."
+	}
+}

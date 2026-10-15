@@ -1,0 +1,18 @@
+<ngc-alert
+    [color]="color || type"
+    [textColor]="textColor"
+    [icon]="iconName"
+    [closeable]="canClose"
+    (closed)="closed.emit($event)">
+    <div class="ngc-toast-container">
+        <div class="ngc-toast-header" *ngIf="title">
+            {{ title }}
+        </div>
+        <div class="ngc-toast-description" *ngIf="description" [innerHtml]="description | safeHtml"></div>
+        <div class="ngc-toast-button" *ngIf="buttons?.length">
+            <ng-container *ngFor="let button of buttons">
+                <button (click)="button?.onClicked(); closed?.emit( $event )">{{ button?.label || button?.title }}</button>
+            </ng-container>
+        </div>
+    </div>
+</ngc-alert>

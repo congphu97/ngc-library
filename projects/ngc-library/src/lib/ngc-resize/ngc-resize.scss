@@ -1,0 +1,66 @@
+.ngc-resizable-container {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+
+	&--horizontal {
+		flex-direction: row;
+
+		> .ngc-resizable-handle {
+			width: 8px;
+			cursor: col-resize;
+			margin: 0 -4px;
+			z-index: 10;
+			position: relative;
+			height: 100%;
+
+			.ngc-resizable-handle__line {
+				width: 2px;
+				height: 100%;
+				margin: 0 auto;
+				background-color: var(--ngc-color-neutral-border-default, #e4e4e7);
+				transition: background-color 0.2s ease;
+			}
+
+			&:hover, &.ngc-resizable-handle--dragging {
+				.ngc-resizable-handle__line {
+					background-color: var(--ngc-color-primary-default, #111);
+				}
+			}
+		}
+	}
+
+	&--vertical {
+		flex-direction: column;
+
+		> .ngc-resizable-handle {
+			height: 8px;
+			cursor: row-resize;
+			margin: -4px 0;
+			z-index: 10;
+			position: relative;
+			width: 100%;
+
+			.ngc-resizable-handle__line {
+				height: 2px;
+				width: 100%;
+				margin: auto 0;
+				background-color: var(--ngc-color-neutral-border-default, #e4e4e7);
+				transition: background-color 0.2s ease;
+			}
+
+			&:hover, &.ngc-resizable-handle--dragging {
+				.ngc-resizable-handle__line {
+					background-color: var(--ngc-color-primary-default, #111);
+				}
+			}
+		}
+	}
+}
+
+.ngc-resizable-panel {
+	display: block;
+	overflow: auto;
+	box-sizing: border-box;
+}

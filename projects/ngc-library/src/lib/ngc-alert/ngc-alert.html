@@ -1,0 +1,5 @@
+<ngc-icon *ngIf="icon" class="ngc-alert-icon" [name]="icon"></ngc-icon>
+<div class="ngc-alert-content">
+	<ng-content></ng-content>
+</div>
+<button *ngIf="closeable" class="ngc-alert-close-btn" ngcIconButton icon="close" (click)="close($event)"></button>

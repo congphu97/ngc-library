@@ -1,0 +1,238 @@
+<!-- mixin item-label
+	ng-container(*ngIf='searchBox; else elseBlock;')
+		span([innerHtml]='item?.label | markText : searchBox?.searchQuery : true')
+	ng-template(#elseBlock)
+		span([innerHtml]='item?.label')
+
+mixin item-content
+	ngc-icon.ngc-list-item__drag-handle(
+		cdkDragHandle,
+		name='drag',
+		size='20px',
+		*ngIf='item?.draggable && !item?.disabled',
+		[class.ngc-list-item__drag-handle--hidden]='!item?.draggable')
+	.ngc-list-item__content(
+		[autoUnhighlight]='item?.autoUnhighlight || item?.isForceAutoUnhighlight',
+		[highlightDisabled]='item?.disabled',
+		[(highlightState)]='item.highlight',
+		(highlightStateChange)='item?.highlightChange?.emit( $event )',
+		(click)='item?.click( $event )')
+		.ngc-list-item__content-wrapper
+			ngc-color-dot.ngc-list-item__content-color-dot(
+				*ngIf='displayColorDot',
+				[viewOnly]='item?.readonly',
+				[(color)]='item.dotColor',
+				(colorChange)='item?.dotColorChange?.emit( $event )')
+			.ngc-list-item__content-label(*ngIf='item?.label')
+				ngc-icon.ngc-list-item__content-icon(size='20px', *ngIf='item?.icon', [name]='item?.icon')
+				ngc-inline-input(
+					ngDefaultControl,
+					[name]='name',
+					[placeholder]='placeholder',
+					[formControl]='formControl',
+					[ngModel]='item?.label',
+					[(editing)]='item.isEditing',
+					(ngModelChange)='item?.labelChange?.emit( $event )',
+					(editingChange)='item?.editing?.emit( $event )',
+					(saved)='item?.save( $event )',
+					(cancelled)='item?.cancel( $event )')
+					ng-container(*ngIf='item?.truncate; else elseBlock;')
+						ngc-truncate([limitLine]='item?.truncateLimitLine')
+							+item-label
+					ng-template(#elseBlock)
+						+item-label
+			ng-container(*ngTemplateOutlet='item?.templateRef')
+		.ngc-list-item__content-description(*ngIf='item?.description')
+			ng-container(*ngIf='item?.truncate; else elseBlock;')
+				ngc-truncate([limitLine]='item?.truncateLimitLine')
+					| {{ item?.description }}
+			ng-template(#elseBlock)
+				| {{ item?.description }}
+
+.ngc-list-wrapper(
+	ngcScrollBar,
+	suppressScrollX,
+	detectScroll,
+	[suppress]='!hasScrollBar',
+	[mode]='scrollBarMode',
+	[reachBottomBuffer]='itemSize * loadMoreBuffer',
+	(scrollReachBottom)='loadMore?.emit( !!$event )',
+	(viewPortChanged)='!scroller?.scrollableY && scroller?.triggerScroll()')
+	div(
+		ngcScrollBarViewPort,
+		cdkDropList,
+		[cdkDropListData]='items',
+		(cdkDropListDropped)='onDropped( $event )')
+		.ngc-list-item(
+			cdkDrag,
+			ngcScrollBarViewPortItem,
+			cdkDragLockAxis='y',
+			#viewPortItem='ngcScrollBarViewPortItem',
+			*ngFor='let item of items | orderBy: [ "+order" ]; trackBy: "id" | trackByFn;',
+			[ngClass]='item?.classes',
+			[style.minHeight.px]='itemSize',
+			[class.ngc-list-item--active]='item?.active',
+			[class.ngc-list-item--disabled]='item?.disabled',
+			[class.ngc-list-item--focusing]='item?.focusing',
+			[class.ngc-list-item--hovering]='item?.hovering',
+			[class.ngc-list-item--dragging]='item?.dragging',
+			[cdkDragDisabled]='!item?.draggable || item?.disabled',
+			(cdkDragStarted)='item.dragging = true',
+			(cdkDragEnded)='item.dragging = false',
+			(mouseenter)='item.hovering = true',
+			(mouseleave)='item.hovering = false')
+			ng-container(*ngIf='hasScrollBar; else elseBlock;')
+				ng-container(*ngCacheIf='viewPortItem?.isInViewPort; else elseBlock;')
+					+item-content
+				ng-template(#elseBlock)
+					.ngc-list-item__content
+						.ngc-list-item__content-wrapper
+							.ngc-list-item__content-label
+								ngc-icon.ngc-list-item__content-icon(size='20px', *ngIf='item?.icon', [name]='item?.icon')
+								ng-container(*ngIf='item?.truncate; else elseBlock;')
+									ngc-truncate([limitLine]='item?.truncateLimitLine')
+										+item-label
+								ng-template(#elseBlock)
+									+item-label
+			ng-template(#elseBlock)
+				+item-content -->
+<!-- List Wrapper with Scroll & Viewport Handling -->
+<div class="ngc-list-wrapper" ngcScrollBar suppressScrollX detectScroll [suppress]="!hasScrollBar"
+	[mode]="scrollBarMode" [offset]="itemSize * loadMoreBuffer"
+	(scrollReachBottom)="loadMore?.emit(!!$event)"
+	(viewPortChanged)="!scroller?.scrollableY && scroller?.triggerScroll()">
+
+	<!-- Scroll ViewPort + CDK Drag List -->
+	<div ngcScrollBarViewPort cdkDropList [cdkDropListData]="items" (cdkDropListDropped)="onDropped($event)">
+
+		<!-- List Items -->
+		<div class="ngc-list-item" *ngFor="let item of items | orderBy: ['+order']; trackBy: 'id' | trackByFn"
+			ngcScrollBarViewPortItem cdkDrag cdkDragLockAxis="y" #viewPortItem="ngcScrollBarViewPortItem"
+			[ngClass]="item?.classes" [style.minHeight.px]="itemSize" [class.ngc-list-item--active]="item?.active"
+			[class.ngc-list-item--disabled]="item?.disabled" [class.ngc-list-item--focusing]="item?.focusing"
+			[class.ngc-list-item--hovering]="item?.hovering" [class.ngc-list-item--dragging]="item?.dragging"
+			[cdkDragDisabled]="!item?.draggable || item?.disabled" (cdkDragStarted)="item.dragging = true"
+			(cdkDragEnded)="item.dragging = false" (mouseenter)="item.hovering = true"
+			(mouseleave)="item.hovering = false">
+
+			<!-- Lazy loading with fallback -->
+			<ng-container *ngIf="hasScrollBar; else fallbackContent">
+				<ng-container *ngCacheIf="viewPortItem?.isInViewPort; else fallbackContent">
+
+					<!-- Item Content Start -->
+					<ngc-icon class="ngc-list-item__drag-handle" *ngIf="item?.draggable && !item?.disabled"
+						cdkDragHandle name="expand-outline" size="20px"
+						[class.ngc-list-item__drag-handle--hidden]="!item?.draggable">
+					</ngc-icon>
+
+					<div class="ngc-list-item__content"
+						[autoUnhighlight]="item?.autoUnhighlight || item?.isForceAutoUnhighlight"
+						[highlightDisabled]="item?.disabled" [(highlightState)]="item.highlight"
+						(highlightStateChange)="item?.highlightChange?.emit($event)" (click)="item?.click($event)">
+						<div class="ngc-list-item__content-wrapper">
+
+							<!-- Color Dot -->
+							<ngc-color-dot class="ngc-list-item__content-color-dot" *ngIf="displayColorDot"
+								[viewOnly]="item?.readonly" [(color)]="item.dotColor"
+								(colorChange)="item?.dotColorChange?.emit($event)">
+							</ngc-color-dot>
+
+							<!-- Label + Inline Edit -->
+							<div class="ngc-list-item__content-label" *ngIf="item?.label">
+								<ngc-icon class="ngc-list-item__content-icon" *ngIf="item?.icon" size="20px"
+									[name]="item?.icon">
+								</ngc-icon>
+
+								<ngc-inline-input ngDefaultControl [name]="name" [placeholder]="placeholder"
+									[formControl]="formControl" [ngModel]="item?.label" [(editing)]="item.isEditing"
+									(ngModelChange)="item?.labelChange?.emit($event)"
+									(editingChange)="item?.editing?.emit($event)" (saved)="item?.save($event)"
+									(cancelled)="item?.cancel($event)">
+
+									<!-- Label with Optional Highlighting -->
+									<ng-container *ngIf="item?.truncate; else untruncatedLabel">
+										<ngc-truncate [limitLine]="item?.truncateLimitLine">
+											<!-- Item Label with Search Highlight -->
+											<ng-container *ngIf="searchBox; else plainLabel">
+												<span
+													[innerHtml]="item?.label | markText : searchBox?.searchQuery : true"></span>
+											</ng-container>
+											<ng-template #plainLabel>
+												<span [innerHtml]="item?.label"></span>
+											</ng-template>
+										</ngc-truncate>
+									</ng-container>
+
+									<!-- Untruncated Fallback -->
+									<ng-template #untruncatedLabel>
+										<ng-container *ngIf="searchBox; else plainUntruncated">
+											<span
+												[innerHtml]="item?.label | markText : searchBox?.searchQuery : true"></span>
+										</ng-container>
+										<ng-template #plainUntruncated>
+											<span [innerHtml]="item?.label"></span>
+										</ng-template>
+									</ng-template>
+
+								</ngc-inline-input>
+							</div>
+
+							<!-- Custom Template Slot -->
+							<ng-container *ngTemplateOutlet="item?.templateRef"></ng-container>
+						</div>
+
+						<!-- Description -->
+						<div class="ngc-list-item__content-description" *ngIf="item?.description">
+							<ng-container *ngIf="item?.truncate; else fullDescription">
+								<ngc-truncate [limitLine]="item?.truncateLimitLine">
+									{{ item?.description }}
+								</ngc-truncate>
+							</ng-container>
+							<ng-template #fullDescription>
+								{{ item?.description }}
+							</ng-template>
+						</div>
+					</div>
+					<!-- Item Content End -->
+
+				</ng-container>
+			</ng-container>
+
+			<!-- Fallback: Non-Lazy Render -->
+			<ng-template #fallbackContent>
+				<div class="ngc-list-item__content">
+					<div class="ngc-list-item__content-wrapper">
+						<div class="ngc-list-item__content-label">
+							<ngc-icon class="ngc-list-item__content-icon" *ngIf="item?.icon" size="20px"
+								[name]="item?.icon">
+							</ngc-icon>
+
+							<!-- Truncated or Untruncated Label -->
+							<ng-container *ngIf="item?.truncate; else fallbackLabel">
+								<ngc-truncate [limitLine]="item?.truncateLimitLine">
+									<ng-container *ngIf="searchBox; else fallbackPlain">
+										<span
+											[innerHtml]="item?.label | markText : searchBox?.searchQuery : true"></span>
+									</ng-container>
+									<ng-template #fallbackPlain>
+										<span [innerHtml]="item?.label"></span>
+									</ng-template>
+								</ngc-truncate>
+							</ng-container>
+
+							<ng-template #fallbackLabel>
+								<ng-container *ngIf="searchBox; else fallbackPlainUntruncated">
+									<span [innerHtml]="item?.label | markText : searchBox?.searchQuery : true"></span>
+								</ng-container>
+								<ng-template #fallbackPlainUntruncated>
+									<span [innerHtml]="item?.label"></span>
+								</ng-template>
+							</ng-template>
+						</div>
+					</div>
+				</div>
+			</ng-template>
+
+		</div>
+	</div>
+</div>

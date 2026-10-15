@@ -1,0 +1,117 @@
+@import 'variable';
+@import 'mixin';
+
+.ngc-button {
+	display: flex;
+	cursor: pointer;
+	min-width: fit-content;
+	height: var(--button-size, 40px);
+	min-height: var(--button-size, 40px);
+	max-height: var(--button-size, 40px);
+	font-weight: $font-weight-semibold;
+	color: var(--button-text-color, $color-text);
+	background-color: var(--button-color, $color-white);
+	border-width: var(--button-border-width, 1px);
+	border-style: var(--button-border-style, solid);
+	border-color: var(--button-border-color, $color-border-thick);
+	border-radius: 8px;
+
+	&.ngc-primary {
+		background-color: var(--primary-color, $color-primary);
+		border-color: var(--primary-color, $color-primary);
+		color: $color-white;
+
+		&.ngc-button--loading .ngc-loading--dots .ngc-loading-dot {
+			background-color: $color-white;
+		}
+	}
+
+	&.ngc-white {
+		background-color: $color-white;
+		border-color: var(--button-border-color, $color-border);
+		color: var(--button-text-color, $color-text);
+	}
+
+	&:not(.ngc-button--has-icon) {
+		.ngc-button-wrapper {
+			min-width: calc(var(--button-size, 40px) * 2);
+		}
+	}
+
+	&.ngc-button--has-icon {
+		.ngc-button__content {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+
+	&:not(.ngc-button--disabled) {
+		&:hover {
+			opacity: .8;
+		}
+
+		&:focus-visible {
+			box-shadow: $box-shadow-focus;
+		}
+	}
+
+	&.ngc-button--disabled {
+		@include cursor-not-allowed;
+		background-color: $color-disabled;
+		border-color: $color-disabled;
+		color: $color-white;
+	}
+
+	&.ngc-button--loading {
+		.ngc-loading--dots .ngc-loading-dot {
+			background-color: $color-black;
+		}
+
+		.ngc-button__icon,
+		.ngc-button__content {
+			display: none;
+		}
+	}
+
+	&.ngc-button--left {
+		.ngc-button-wrapper {
+			justify-content: flex-start;
+		}
+	}
+
+	&.ngc-button--center {
+		.ngc-button-wrapper {
+			justify-content: center;
+		}
+	}
+
+	&.ngc-button--right {
+		.ngc-button-wrapper {
+			justify-content: flex-end;
+		}
+	}
+
+	.ngc-button-wrapper {
+		display: flex;
+		align-items: center;
+		padding-left: 10px;
+		padding-right: 10px;
+		width: 100%;
+		height: 100%;
+		// pointer-events: none;
+	}
+
+	.ngc-button__icon {
+		font-size: var(--button-icon-size, inherit);
+		line-height: var(--button-icon-size, inherit);
+	}
+
+	.ngc-button__content {
+		display: flex;
+		align-items: center;
+
+		&:empty {
+			display: none;
+		}
+	}
+}

@@ -1,0 +1,34 @@
+<div class="ngc-tab-group__header" #tabGroupHeader *ngIf="alwaysOnDisplay || items?.length > 1"
+	[class.ngc-tab-group__header--stretch]="stretchTab">
+	<div class="ngc-tab-group__header-list">
+		<ng-container *ngFor="let item of items; let index = index; let last = last">
+			<div class="ngc-tab-group__header-item" #tabHeader [ngClass]="item?.classes"
+				[class.ngc-tab-group__header-item--active]="selectedIndex === index"
+				[class.ngc-tab-group__header-item--disabled]="item?.disabled"
+				(click)="!item?.disabled && select(index)">
+				<ngc-icon class="ngc-tab-group__header-item-icon" size="20px" *ngIf="item?.icon"
+					[name]="item?.icon"></ngc-icon>
+
+				{{ item?.label }}
+
+				<ng-container *ngTemplateOutlet="item?.header"></ng-container>
+			</div>
+
+			<ngc-divider class="ngc-tab-group__header-vertical-divider" vertical
+				*ngIf="headerVerticalDivider && !last"></ngc-divider>
+		</ng-container>
+	</div>
+
+	<ngc-divider class="ngc-tab-group__header-horizontal-divider" *ngIf="headerHorizontalDivider"></ngc-divider>
+
+	<div class="ngc-tab-group__header-ink-bar" #tabInkBar></div>
+</div>
+
+<div class="ngc-tab-group__content" ngcScrollBar detectScroll suppressScrollX *ngIf="!noTabContent"
+	[suppress]="!hasScrollBar" [mode]="scrollBarMode">
+	<ng-container *ngFor="let item of items; let index = index">
+		<ng-container *ngIf="selectedIndex === index">
+			<ng-container *ngTemplateOutlet="item?.content"></ng-container>
+		</ng-container>
+	</ng-container>
+</div>

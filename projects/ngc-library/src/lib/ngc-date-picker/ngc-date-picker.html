@@ -1,0 +1,170 @@
+<ngc-menu #monthMenu height="365px">
+  <ngc-menu-content>
+    <ng-template ngcMenuContent>
+      <button
+        ngcMenuItem
+        *ngFor="let month of months; let index = index"
+        [active]="index === displayingMonth"
+        (click)="displayMonth(undefined, index)"
+      >
+        {{ month }}
+      </button>
+    </ng-template>
+  </ngc-menu-content>
+</ngc-menu>
+
+<ngc-menu #yearMenu height="365px">
+  <ngc-menu-content>
+    <ng-template ngcMenuContent>
+      <button
+        ngcMenuItem
+        *ngFor="let index of yearRange"
+        [active]="(currentYear + index) === displayingYear"
+        (click)="displayMonth(currentYear + index, undefined)"
+      >
+        {{ currentYear + index }}
+      </button>
+    </ng-template>
+  </ngc-menu-content>
+</ngc-menu>
+
+<ngc-menu #hourMenu height="365px">
+  <ngc-menu-content>
+    <ng-template ngcMenuContent>
+      <button
+        ngcMenuItem
+        *ngFor="let time of times"
+        (click)="setTime(time?.hour(), time?.minute())"
+      >
+        {{ time | momentDate : timeFormat }}
+      </button>
+    </ng-template>
+  </ngc-menu-content>
+</ngc-menu>
+
+<div class="ngc-date-picker__header" *ngIf="mode !== 'inline'">
+  <div class="ngc-date-picker__header-title">
+    {{ ("WGC.PLACEHOLDER." + (dateRange ? "SELECT_DATE_RANGE" : "PICK_DATE")) | translate }}
+  </div>
+  <button
+    ngcBasicButton
+    icon="close"
+    [ngcTooltip]="'NGC.LABEL.CLOSE' | translate"
+    (click)="close()"
+  ></button>
+</div>
+
+<div class="ngc-date-picker__controls">
+  <button
+    ngcIconButton
+    icon="chevron-back-outline"
+    size="28px"
+    (click)="displayPreviousMonth()"
+  ></button>
+  <div class="ngc-date-picker__month-preview-container">
+    <button
+      class="ngc-date-picker__month-preview"
+      ngcBasicButton
+      [panelClass]="'cdk-overlay-highest-pane'"
+      [backdropClass]="['cdk-overlay-transparent-backdrop', 'cdk-overlay-highest-backdrop']"
+      [ngcMenuTriggerFor]="monthMenu"
+    >
+      {{ months[displayingMonth] }}
+      <ngc-icon [name]="monthMenu?.isOpened ? 'chevron-up-outline' : 'chevron-down-outline'"></ngc-icon>
+    </button>
+
+    <button
+      class="ngc-date-picker__month-preview"
+      ngcBasicButton
+      [panelClass]="'cdk-overlay-highest-pane'"
+      [backdropClass]="['cdk-overlay-transparent-backdrop', 'cdk-overlay-highest-backdrop']"
+      [ngcMenuTriggerFor]="yearMenu"
+    >
+      {{ displayingYear }}
+      <ngc-icon [name]="yearMenu?.isOpened ? 'chevron-up-outline' : 'chevron-down-outline'"></ngc-icon>
+    </button>
+  </div>
+  <button
+    ngcButton
+    size="28px"
+    *ngIf="clearable"
+    (click)="clear()"
+  >
+    {{ "NGC.LABEL.CLEAR" | translate }}
+  </button>
+  <button
+    ngcIconButton
+    icon="chevron-forward-outline"
+    size="28px"
+    (click)="displayNextMonth()"
+  ></button>
+</div>
+
+<div class="ngc-date-picker__day-in-week">
+  <span *ngFor="let weekday of getWeekdays(weekStart)">
+    {{ weekday }}
+  </span>
+</div>
+
+<div class="ngc-date-picker__day-in-month">
+  <span
+    *ngFor="let item of dateInMonth; trackBy: 'date' | trackByFn; let index = index"
+    [class.ngc-date-picker__day-in-month--today]="item?.today"
+    [class.ngc-date-picker__day-in-month--picked]="item?.picked"
+    [class.ngc-date-picker__day-in-month--disabled]="item?.disabled"
+    [class.ngc-date-picker__day-in-month--in-range]="item?.inRange"
+    [class.ngc-date-picker__day-in-month--in-range--start]="item?.picked && !dateInMonth[index - 1]?.inRange"
+    [class.ngc-date-picker__day-in-month--in-range--end]="item?.picked && !dateInMonth[index + 1]?.inRange"
+    [attr.data-date]="item?.date"
+    (click)="pickDate(item?.year, item?.month, item?.date)"
+  >
+  </span>
+</div>
+
+<ng-container *ngIf="dateRange; else elseBlock">
+  <ngc-form-field class="ngc-date-picker__date-range-input" [label]="'NGC.LABEL.FROM' | translate">
+    <input
+      ngcFormFieldInput
+      readonly
+      alignment="center"
+      [value]="pickedDate?.[0] | momentDate | empty"
+    />
+  </ngc-form-field>
+
+  <ngc-form-field class="ngc-date-picker__date-range-input" [label]="'NGC.LABEL.TO' | translate">
+    <input
+      ngcFormFieldInput
+      readonly
+      alignment="center"
+      [value]="pickedDate?.[1] | momentDate | empty"
+    />
+  </ngc-form-field>
+</ng-container>
+
+<ng-template #elseBlock>
+  <div class="ngc-date-picker__time" *ngIf="!dateOnly">
+    <ngc-switch
+      color="primary"
+      [label]="'NGC.LABEL.ADD_TIME' | translate"
+      [(ngModel)]="showTime"
+      (ngModelChange)="setTime()"
+    ></ngc-switch>
+
+    <ngc-form-field
+      class="ngc-date-picker__time-input"
+      *ngIf="showTime"
+      [panelClass]="'cdk-overlay-highest-pane'"
+      [backdropClass]="['cdk-overlay-transparent-backdrop', 'cdk-overlay-highest-backdrop']"
+      [ngcMenuTriggerFor]="hourMenu"
+    >
+      <input
+        ngcFormFieldInput
+        alignment="center"
+        convertType="hour-string"
+        [value]="pickedDate | momentDate : timeFormat"
+        (input)="hourMenu?.close()"
+        (converted)="setTime($event?.hour, $event?.min)"
+      />
+    </ngc-form-field>
+  </div>
+</ng-template>

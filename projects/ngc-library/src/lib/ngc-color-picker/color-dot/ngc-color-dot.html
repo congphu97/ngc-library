@@ -1,0 +1,26 @@
+<!-- Define reusable content block -->
+<ng-template #temp>
+  <div class="ngc-color-dot-wrapper">
+    <ng-content></ng-content>
+  </div>
+</ng-template>
+
+<!-- View-Only Mode -->
+<ng-container *ngIf="viewOnly; else elseBlock">
+  <ng-container *ngTemplateOutlet="temp"></ng-container>
+</ng-container>
+
+<!-- Editable Mode -->
+<ng-template #elseBlock>
+  <button
+    ngcBasicButton
+    ngcColorPicker
+    [ngcTooltip]="'NGC.LABEL.PICK_COLOR' | translate"
+    [pickedColor]="color"
+    (picked)="onColorPicked($event)"
+    (click)="!viewOnly && $event?.stopPropagation()">
+    
+    <!-- Embed the same content -->
+    <ng-container *ngTemplateOutlet="temp"></ng-container>
+  </button>
+</ng-template>

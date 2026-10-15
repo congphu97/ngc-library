@@ -1,0 +1,56 @@
+<ng-template #content>
+	<div class="ngc-carousel-wrapper">
+		<!-- Left Action Button (Close) -->
+		<div class="ngc-carousel__actions ngc-carousel__actions-left">
+			<button ngcButton color="white" size="40px" position="after" icon="close" *ngIf="canClose"
+				[ngcTooltip]="'NGC.LABEL.CLOSE' | translate" (click)="close()">
+			</button>
+		</div>
+
+		<!-- Right Action Button (Fullscreen Toggle) -->
+		<div class="ngc-carousel__actions ngc-carousel__actions-right">
+			<button ngcButton color="white" size="40px" position="before" *ngIf="canFullscreen"
+				[icon]="isFullscreen ? 'fullscreen-off' : 'fullscreen-on'"
+				[ngcTooltip]="(isFullscreen ? 'NGC.LABEL.EXIT_FULLSCREEN' : 'NGC.LABEL.FULLSCREEN') | translate"
+				(click)="toggleFullscreen(dialog)">
+			</button>
+		</div>
+
+		<!-- Carousel Preview -->
+		<div class="ngc-carousel__preview">
+			<div class="ngc-carousel__preview-image" [lazyLoad]="photo[selectedIndex]" decode="true">
+			</div>
+		</div>
+
+		<!-- Carousel Controls -->
+		<div class="ngc-carousel__controls" *ngIf="photo?.length > 1">
+			<!-- Previous Image Button -->
+			<button ngcButton color="white" size="40px" icon="arrow-back-outline"
+				[ngcTooltip]="'NGC.LABEL.PREVIOUS_IMAGE' | translate" (click)="selectPrevImage()">
+			</button>
+
+			<!-- Thumbnail List with Scrollbar -->
+			<ngc-scroll-bar class="ngc-carousel__thumbnail-list" suppressScrollY #scrollBar>
+				<div #thumbnail *ngFor="let image of photo; let index = index" class="ngc-carousel__thumbnail-item"
+					[lazyLoad]="image" [defaultImage]="'assets/images/loading.gif'"
+					[class.ngc-carousel__thumbnail-item--active]="index === selectedIndex" (click)="selectImage(index)">
+				</div>
+			</ngc-scroll-bar>
+
+			<!-- Next Image Button -->
+			<button ngcButton color="white" size="40px" icon="arrow-forward-outline"
+				[ngcTooltip]="'NGC.LABEL.NEXT_IMAGE' | translate" (click)="selectNextImage()">
+			</button>
+		</div>
+	</div>
+
+</ng-template>
+<ng-template #dialog>
+	<div class="ngc-carousel ngc-carousel--fullscreen" [style.--carousel-size]="size"
+		[style.--carousel-real-size.px]="realSize" [style.--carousel-mode]="mode">
+	</div>
+	<ng-template *ngTemplateOutlet="content"></ng-template>
+
+</ng-template>
+
+<ng-template *ngTemplateOutlet="content"></ng-template>

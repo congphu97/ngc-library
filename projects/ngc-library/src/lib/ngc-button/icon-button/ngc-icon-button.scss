@@ -1,0 +1,62 @@
+@import 'variable';
+@import 'mixin';
+
+.ngc-icon-button {
+	display: flex;
+	cursor: pointer;
+	width: var(--icon-button-size, 32px);
+	min-width: var(--icon-button-size, 32px);
+	max-width: var(--icon-button-size, 32px);
+	height: var(--icon-button-size, 32px);
+	min-height: var(--icon-button-size, 32px);
+	max-height: var(--icon-button-size, 32px);
+	font-size: var(--icon-button-icon-size, calc(var(--icon-button-size, 32px) * .55));
+	color: var(--icon-button-icon-color, $color-label);
+	background-color: var(--icon-button-color, $color-default);
+	border-width: var(--icon-button-border-width, 1px);
+	border-style: var(--icon-button-border-style, solid);
+	border-color: var(--icon-button-border-color, transparent);
+	border-radius: 50%;
+	padding: 2px;
+
+	&.ngc-primary {
+		background-color: var(--primary-color, $color-primary);
+		color: $color-white;
+	}
+
+	&.ngc-white {
+		background-color: $color-white;
+		border-color: var(--icon-button-border-color, $color-border);
+		color: var(--icon-button-icon-color, $color-text);
+	}
+
+	&:not(.ngc-icon-button--disabled) {
+		&:hover {
+			opacity: .8;
+		}
+
+		&:focus-visible {
+			box-shadow: $box-shadow-focus;
+		}
+	}
+
+	&.ngc-icon-button--disabled {
+		@include cursor-not-allowed;
+		background-color: $color-disabled;
+		border-color: $color-disabled;
+		color: $color-white;
+	}
+
+	&.ngc-icon-button--square {
+		border-radius: 8px;
+	}
+
+	.ngc-icon-button-wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		// pointer-events: none;
+	}
+}

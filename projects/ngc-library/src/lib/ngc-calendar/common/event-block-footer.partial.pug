@@ -1,0 +1,28 @@
+button(
+	wgcButton,
+	alignment='left',
+	icon='double-chevron-up',
+	*ngIf='block?.seeMore',
+	(click)='block.seeMore = false')
+	| {{ "NGC.LABEL.COLLAPSE" | translate }}
+button.wgc-calendar-new-event(
+	wgcButton,
+	icon='plus',
+	*ngIf='creatable && !block?.isAdding',
+	(click)='addingNewEvent( block )')
+wgc-form-field.wgc-calendar-new-event-input(
+	errorDisplayMode='inline',
+	*ngIf='block?.isAdding',
+	[displayColorDot]='displayHighlight',
+	(dotColorChange)='newEvent.color = $event')
+	input(
+		wgcFormFieldInput,
+		autoFocusOn,
+		saveable,
+		cancelable,
+		[name]='name',
+		[placeholder]='placeholder',
+		[formControl]='nameFormControl',
+		[(ngModel)]='newEvent.name',
+		(saved)='createEvent( block )',
+		(cancelled)='cancelAddNewEvent( block )')

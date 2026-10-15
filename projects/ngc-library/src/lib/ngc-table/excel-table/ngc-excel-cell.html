@@ -1,0 +1,72 @@
+<ngc-menu
+  #excellCellList
+  class="ngc-excel-cell"
+  width="280px"
+  maxHeight="400px"
+  [hasScrollBar]="!useVirtualScroll">
+  <ngc-menu-header>
+    <ng-template ngcMenuHeader>
+      <ngc-search-box autoFocusOn [searchKey]="null" [data]="list"></ngc-search-box>
+    </ng-template>
+  </ngc-menu-header>
+  <ngc-menu-content>
+    <ng-template ngcMenuContent>
+      <ng-container *ngTemplateOutlet="searchBox?.notFoundTemplate"></ng-container>
+      <ng-container *ngIf="filteredList?.length">
+        <ng-container *ngIf="useVirtualScroll; else elseBlock">
+          <cdk-virtual-scroll-viewport
+            [itemSize]="itemSize"
+            [minBufferPx]="itemSize * 5"
+            [maxBufferPx]="itemSize * 10"
+            [style.height.px]="400">
+            <ng-container *cdkVirtualFor="let item of filteredList">
+              <button ngcMenuItem [autoClose]="type !== 'multi-list'" (click)="setTextContent( item )">
+                <ngc-truncate>{{ item | empty }}</ngc-truncate>
+              </button>
+            </ng-container>
+          </cdk-virtual-scroll-viewport>
+        </ng-container>
+        <ng-template #elseBlock>
+          <ng-container *ngFor="let item of filteredList">
+            <button ngcMenuItem [autoClose]="type !== 'multi-list'" (click)="setTextContent( item )">
+              <ngc-truncate>{{ item | empty }}</ngc-truncate>
+            </button>
+          </ng-container>
+        </ng-template>
+      </ng-container>
+    </ng-template>
+  </ngc-menu-content>
+</ngc-menu>
+
+<div
+  mwlResizable
+  #excellCellContent
+  [attr.contenteditable]="!readonly || undefined"
+  [resizeEdges]="{ bottom: true, right: true }"
+  (resizing)="onResizing( $event )"
+  (input)="onInput( $event )"
+  (keydown)="onKeydown( $event )"
+  (focus)="onFocus( $event )"
+  (blur)="onBlur( $event ); formControl?.markAsTouched();">
+  <ng-content></ng-content>
+</div>
+
+<button
+  ngcBasicButton
+  ngcDatePicker
+  dateOnly
+  icon="calendar"
+  *ngIf="!readonly && type === 'date'"
+  [ngcTooltip]="'NGC.LABEL.PICK' | translate"
+  (picked)="onDatePicked( $event )">
+</button>
+
+<button
+  ngcBasicButton
+  *ngIf="!readonly && list?.length"
+  [icon]="excellCellList?.isOpened ? 'chevron-up' : 'chevron-down'"
+  [ngcTooltip]="'NGC.LABEL.PICK' | translate"
+  [ngcMenuTriggerFor]="excellCellList">
+</button>
+
+<input style="display: none" tabindex="-1" [formControl]="formControl" [ngModel]="textContent" />

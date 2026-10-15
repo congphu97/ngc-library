@@ -1,0 +1,282 @@
+@import 'variable';
+
+.ngc-design-token {
+	display: block;
+	width  : 280px;
+
+	// ── Panel ──────────────────────────────────────────────────────────────────
+	&__panel {
+		background   : #18181b;
+		border-radius: 16px;
+		padding      : 18px 16px;
+		box-shadow   : 0 8px 32px rgba(0, 0, 0, 0.45),
+		               0 0 0 1px rgba(255, 255, 255, 0.07);
+		display      : flex;
+		flex-direction: column;
+	}
+
+	// ── Header ─────────────────────────────────────────────────────────────────
+	&__header {
+		display        : flex;
+		align-items    : center;
+		justify-content: space-between;
+		margin-bottom  : 12px;
+	}
+
+	&__header-actions {
+		display    : flex;
+		align-items: center;
+		gap        : 6px;
+	}
+
+	&__title {
+		font-size    : 13px;
+		font-weight  : 600;
+		color        : rgba(255, 255, 255, 0.88);
+		letter-spacing: 0.2px;
+	}
+
+	&__icon {
+		color  : rgba(255, 255, 255, 0.35);
+		display: flex;
+	}
+
+	&__reset-btn {
+		display       : flex;
+		align-items   : center;
+		justify-content: center;
+		width         : 24px;
+		height        : 24px;
+		border-radius : 6px;
+		border        : 1px solid rgba(255, 255, 255, 0.1);
+		background    : rgba(255, 255, 255, 0.05);
+		color         : rgba(255, 255, 255, 0.45);
+		cursor        : pointer;
+		transition    : background 0.15s ease, color 0.15s ease, transform 0.2s ease;
+		padding       : 0;
+
+		&:hover {
+			background: rgba(255, 255, 255, 0.1);
+			color     : rgba(255, 255, 255, 0.75);
+			transform : rotate(-30deg);
+		}
+	}
+
+	// ── Section label ──────────────────────────────────────────────────────────
+	&__section-label {
+		display      : flex;
+		align-items  : center;
+		gap          : 6px;
+		font-size    : 10px;
+		font-weight  : 600;
+		color        : rgba(255, 255, 255, 0.35);
+		letter-spacing: 0.8px;
+		text-transform: uppercase;
+		margin       : 10px 0 6px;
+	}
+
+	&__var-hint {
+		font-family  : 'SF Mono', 'Fira Code', 'Courier New', monospace;
+		font-size    : 9px;
+		font-weight  : 400;
+		color        : rgba(255, 255, 255, 0.2);
+		letter-spacing: 0;
+		text-transform: none;
+		background   : rgba(255, 255, 255, 0.05);
+		padding      : 1px 5px;
+		border-radius: 4px;
+	}
+
+	// ── Row ────────────────────────────────────────────────────────────────────
+	&__row {
+		display        : flex;
+		align-items    : center;
+		justify-content: space-between;
+		padding        : 6px 0;
+		border-bottom  : 1px solid rgba(255, 255, 255, 0.04);
+
+		&:last-of-type {
+			border-bottom: none;
+		}
+	}
+
+	&__label-wrap {
+		display       : flex;
+		flex-direction: column;
+		gap           : 2px;
+		min-width     : 0;
+		flex          : 1;
+		margin-right  : 8px;
+		overflow      : hidden;
+	}
+
+	&__label {
+		font-size  : 12px;
+		color      : rgba(255, 255, 255, 0.65);
+		font-weight: 400;
+		white-space: nowrap;
+	}
+
+	// CSS variable name shown below the label
+	&__var {
+		font-family  : 'SF Mono', 'Fira Code', 'Courier New', monospace;
+		font-size    : 9.5px;
+		color        : rgba(255, 255, 255, 0.22);
+		background   : transparent;
+		border       : none;
+		padding      : 0;
+		white-space  : nowrap;
+		overflow     : hidden;
+		text-overflow: ellipsis;
+		display      : block;
+		max-width    : 160px;
+	}
+
+	// ── Controls ───────────────────────────────────────────────────────────────
+	&__control {
+		display    : flex;
+		align-items: center;
+		gap        : 7px;
+		flex-shrink: 0;
+
+		&--select {
+			// Style override for ngc-select inside the dark panel
+			::ng-deep .ngc-select {
+				.ngc-select__trigger,
+				[class*="trigger"] {
+					background   : rgba(255, 255, 255, 0.07) !important;
+					border-color : rgba(255, 255, 255, 0.1) !important;
+					color        : rgba(255, 255, 255, 0.7) !important;
+					font-size    : 11px !important;
+					min-height   : 28px !important;
+					height       : 28px !important;
+					padding      : 0 8px !important;
+					border-radius: 7px !important;
+
+					&:hover {
+						border-color: rgba(255, 255, 255, 0.22) !important;
+					}
+				}
+			}
+		}
+	}
+
+	// Number size input
+	&__control--size {
+		gap: 4px;
+	}
+
+	&__size-input {
+		width        : 46px;
+		height       : 28px;
+		background   : rgba(255, 255, 255, 0.07);
+		border       : 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 7px;
+		color        : rgba(255, 255, 255, 0.75);
+		font-size    : 12px;
+		font-family  : 'SF Mono', 'Fira Code', monospace;
+		text-align   : center;
+		padding      : 0 4px;
+		outline      : none;
+		transition   : border-color 0.15s ease;
+
+		&::-webkit-outer-spin-button,
+		&::-webkit-inner-spin-button { appearance: none; }
+
+		&:hover  { border-color: rgba(255, 255, 255, 0.22); }
+		&:focus  { border-color: rgba(255, 255, 255, 0.4);  }
+	}
+
+	&__size-unit {
+		font-size  : 11px;
+		color      : rgba(255, 255, 255, 0.3);
+		font-family: 'SF Mono', 'Fira Code', monospace;
+		min-width  : 14px;
+	}
+
+	&__text-input {
+		width        : 140px;
+		height       : 28px;
+		background   : rgba(255, 255, 255, 0.07);
+		border       : 1px solid rgba(255, 255, 255, 0.1);
+		border-radius: 7px;
+		color        : rgba(255, 255, 255, 0.75);
+		font-size    : 11px;
+		font-family  : 'SF Mono', 'Fira Code', monospace;
+		padding      : 0 8px;
+		outline      : none;
+		transition   : border-color 0.15s ease;
+
+		&:hover  { border-color: rgba(255, 255, 255, 0.22); }
+		&:focus  { border-color: rgba(255, 255, 255, 0.4);  }
+	}
+
+	// Native color input
+	&__color-input {
+		width        : 26px;
+		height       : 26px;
+		border-radius: 50%;
+		border       : 2px solid rgba(255, 255, 255, 0.15);
+		padding      : 0;
+		cursor       : pointer;
+		background   : transparent;
+		appearance   : none;
+		overflow     : hidden;
+		transition   : border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+		flex-shrink  : 0;
+
+		&::-webkit-color-swatch-wrapper { padding: 0; }
+		&::-webkit-color-swatch {
+			border       : none;
+			border-radius: 50%;
+		}
+
+		&:hover {
+			border-color: rgba(255, 255, 255, 0.45);
+			transform   : scale(1.12);
+			box-shadow  : 0 0 0 3px rgba(255, 255, 255, 0.08);
+		}
+	}
+
+	// Hex value text
+	&__color-value {
+		font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+		font-size  : 10.5px;
+		color      : rgba(255, 255, 255, 0.35);
+		min-width  : 54px;
+		transition : color 0.2s ease;
+	}
+
+	// ── Footer ─────────────────────────────────────────────────────────────────
+	&__footer {
+		margin-top: 14px;
+	}
+
+	&__get-btn {
+		width          : 100% !important;
+		display        : flex !important;
+		align-items    : center !important;
+		justify-content: center !important;
+		gap            : 6px !important;
+		background     : rgba(255, 255, 255, 0.92) !important;
+		color          : #18181b !important;
+		border-radius  : 10px !important;
+		font-size      : 13px !important;
+		font-weight    : 600 !important;
+		height         : 36px !important;
+		border         : none !important;
+		letter-spacing : 0.1px !important;
+		transition     : background 0.15s ease, transform 0.12s ease, box-shadow 0.15s ease !important;
+
+		&:hover {
+			background: #ffffff !important;
+			transform : translateY(-1px) !important;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+		}
+
+		&:active {
+			transform : translateY(0) !important;
+			box-shadow: none !important;
+		}
+	}
+}

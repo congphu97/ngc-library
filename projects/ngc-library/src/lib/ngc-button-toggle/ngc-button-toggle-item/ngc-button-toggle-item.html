@@ -1,0 +1,12 @@
+<ngc-icon
+  class="ngc-button-toggle-item__icon"
+  *ngIf="icon"
+  [name]="icon"
+  [size]="iconSize">
+</ngc-icon>
+
+{{ label }}
+
+<ng-container *ngIf="!label">
+  <ng-content></ng-content>
+</ng-container>

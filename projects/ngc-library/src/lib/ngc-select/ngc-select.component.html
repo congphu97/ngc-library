@@ -1,0 +1,40 @@
+<div class="ngc-select__label" *ngIf="label">{{ label }}</div>
+
+<div #triggerEl
+     class="ngc-select__trigger"
+     [class.ngc-select__trigger--open]="isOpen"
+     [class.ngc-select__trigger--disabled]="disabled"
+     [class.ngc-select__trigger--has-value]="hasValue"
+     (click)="toggle()"
+     tabindex="0"
+     role="combobox"
+     [attr.aria-expanded]="isOpen"
+     [attr.aria-disabled]="disabled">
+  <span class="ngc-select__trigger-text">{{ displayLabel }}</span>
+  <span class="ngc-select__trigger-icon" [class.ngc-select__trigger-icon--open]="isOpen">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 8l4 4 4-4"/>
+    </svg>
+  </span>
+</div>
+
+<!-- Dropdown panel rendered via CDK Overlay into document.body -->
+<ng-template #panelTpl>
+  <div class="ngc-select__panel" role="listbox" [style.min-width.px]="triggerWidth">
+    <div class="ngc-select__option"
+         *ngFor="let option of options"
+         [class.ngc-select__option--selected]="isSelected(option)"
+         [class.ngc-select__option--disabled]="option.disabled"
+         (click)="selectOption(option)"
+         role="option"
+         [attr.aria-selected]="isSelected(option)">
+      <span class="ngc-select__option-label">{{ option.label }}</span>
+      <span class="ngc-select__option-desc" *ngIf="option.description">{{ option.description }}</span>
+      <span class="ngc-select__option-check" *ngIf="isSelected(option)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l4 4 6-7"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</ng-template>

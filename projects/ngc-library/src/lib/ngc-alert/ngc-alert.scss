@@ -1,0 +1,72 @@
+@import 'variable';
+
+.ngc-alert {
+	display: flex;
+	align-items: center;
+	padding: 12px 16px;
+	border-radius: 6px;
+	border: 1px solid var(--alert-border-color, $color-border);
+	background-color: var(--alert-bg-color, $color-default);
+	color: var(--alert-text-color, $color-text);
+	font-family: $font-family-body;
+	font-size: $font-size-base;
+	margin-bottom: 16px;
+	width: 100%;
+	box-sizing: border-box;
+
+	&.ngc-alert-hidden {
+		display: none !important;
+	}
+
+	&.ngc-primary {
+		--alert-border-color: #{hex-opacity($color-primary, 0.3)};
+		--alert-bg-color: #{hex-opacity($color-primary, 0.1)};
+		--alert-text-color: #{$color-primary};
+	}
+
+	&.ngc-info {
+		--alert-border-color: #{hex-opacity($color-info, 0.3)};
+		--alert-bg-color: #{hex-opacity($color-info, 0.1)};
+		--alert-text-color: #{$color-info};
+	}
+
+	&.ngc-success {
+		--alert-border-color: #{hex-opacity($color-success, 0.3)};
+		--alert-bg-color: #{hex-opacity($color-success, 0.1)};
+		--alert-text-color: #{$color-success};
+	}
+
+	&.ngc-warning {
+		--alert-border-color: #{hex-opacity($color-warning, 0.3)};
+		--alert-bg-color: #{hex-opacity($color-warning, 0.1)};
+		--alert-text-color: #{$color-warning};
+	}
+
+	&.ngc-danger {
+		--alert-border-color: #{hex-opacity($color-danger, 0.3)};
+		--alert-bg-color: #{hex-opacity($color-danger, 0.1)};
+		--alert-text-color: #{$color-danger};
+	}
+
+	.ngc-alert-icon {
+		margin-right: 12px;
+		display: flex;
+		align-items: center;
+		--icon-color: var(--alert-text-color, #{$color-text}) !important;
+	}
+
+	.ngc-alert-content {
+		flex: 1;
+		min-width: 0;
+	}
+
+	.ngc-alert-close-btn {
+		margin-left: 12px;
+		--icon-button-icon-color: var(--alert-text-color, #{$color-text}) !important;
+		--icon-button-color: transparent !important;
+		
+		&:hover {
+			--icon-button-color: rgba(120, 120, 120, 0.15) !important;
+		}
+	}
+}

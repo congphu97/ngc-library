@@ -1,0 +1,318 @@
+@import 'variable';
+@import 'mixin';
+
+.ngc-form-field {
+	display: flex;
+	flex-direction: column;
+	position: relative;
+
+	&.ngc-form-field--standard {
+		.ngc-form-field__prefix,
+		.ngc-form-field__suffix {
+			&:not(:empty) {
+				background-color: $color-default;
+				min-width: 38px;
+			}
+		}
+
+		.ngc-form-field__prefix:not(:empty) {
+			margin-right: 5px;
+		}
+
+		.ngc-form-field__suffix:not(:empty) {
+			margin-left: 5px;
+		}
+	}
+
+	&.ngc-form-field--legacy {
+		&:not(.ngc-form-field--disabled) {
+			&.ngc-form-field--empty:not(.ngc-form-field--focusing) {
+				.ngc-form-field__input-container {
+					border-color: transparent;
+					background-color: transparent;
+				}
+			}
+		}
+	}
+
+	&:not(.ngc-form-field--disabled) {
+		&:hover .ngc-form-field__input-container {
+			border-color: $color-border-thick;
+		}
+
+		&:focus-visible,
+		&.ngc-form-field--focusing {
+			.ngc-form-field__input-container {
+				box-shadow: $box-shadow-focus;
+				border-color: $color-border-super-thick;
+			}
+		}
+	}
+
+	&.ngc-form-field--disabled {
+		.ngc-form-field__input-container,
+		.ngc-form-field__input [ngcFormFieldInput] {
+			background-color: $color-secondary;
+		}
+
+		.ngc-form-field__input [ngcFormFieldInput] {
+			@include cursor-not-allowed;
+		}
+	}
+
+	&.ngc-form-field--custom-error,
+	&:not(.ngc-form-field--untouched) {
+		&.ngc-form-field--invalid .ngc-form-field__input-container {
+			border-color: $color-danger;
+		}
+	}
+
+	&.ngc-form-field--textarea {
+		.ngc-form-field__prefix,
+		.ngc-form-field__suffix,
+		.ngc-form-field__actions {
+			max-height: 38px;
+		}
+	}
+
+	.ngc-form-field__dot-color {
+		margin-left: 5px;
+		margin-right: 5px;
+		align-items: center;
+	}
+
+	.ngc-form-field__label {
+		margin-bottom: 5px;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.ngc-form-field__input {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex: 1;
+
+		&-container {
+			display: flex;
+			flex-wrap: wrap;
+			position: relative;
+			border-radius: 8px;
+			border: 1px solid $color-border;
+			background-color: $color-white;
+			// overflow: hidden;
+			min-height: 40px;
+		}
+
+		textarea[ngcFormFieldInput] {
+			padding-top: 10px;
+			padding-bottom: 10px;
+			resize: vertical;
+			min-height: 38px;
+		}
+
+		input[ngcFormFieldInput],
+		select[ngcFormFieldInput] {
+			height: 38px;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+
+			&::placeholder {
+				line-height: 35px;
+			}
+		}
+
+		quill-editor[ngcFormFieldInput] {
+			.ql-container,
+			.ql-editor {
+				border: none;
+				height: unset;
+				min-height: 38px;
+			}
+
+			.ql-editor {
+				padding: 11px 0;
+
+				&:before {
+					font-weight: $font-weight-semibold;
+					color: $color-placeholder;
+					left: 0;
+					right: 0;
+				}
+			}
+		}
+
+		.ngc-form-field__input__fake-input {
+			opacity: 0;
+		}
+
+		.ngc-form-field__input__fake-input-content {
+			position: absolute;
+			font-weight: $font-weight-semibold;
+			width: 100%;
+			min-width: 0;
+		}
+
+		[ngcFormFieldInput] {
+			background: none;
+			border: none;
+			font-weight: $font-weight-semibold;
+			font-size: var(--input-text-size, $font-size-body);
+			-webkit-appearance: none;
+			text-align: var(--input-text-alignment, left);
+			width: 100%;
+			min-width: 0;
+
+			&:required,
+			&:invalid {
+				box-shadow: none;
+			}
+
+			&::placeholder {
+				font-weight: $font-weight-semibold;
+				color: $color-placeholder;
+			}
+		}
+	}
+
+	.ngc-form-field__hint,
+	.ngc-form-field__error {
+		min-height: 20px;
+		line-height: 20px;
+	}
+
+	.ngc-form-field__hint {
+		font-style: italic;
+		font-size: 11px;
+		color: $color-label;
+
+		&:empty {
+			display: none;
+		}
+	}
+
+	.ngc-form-field__error {
+		text-align: left;
+		font-size: 12px;
+		color: $color-danger;
+
+		&.ngc-form-field__error--inline {
+			background-color: $color-danger;
+			color: $color-white;
+			font-size: 11px;
+			bottom: 0;
+			right: 0;
+			position: absolute;
+			padding: 2px 5px;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 100ms ease-in-out;
+			border-bottom-right-radius: 8px;
+
+			&:not(:empty) {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+
+	.ngc-form-field__password-validation {
+		.ngc-form-field__password-validation-rule-list {
+			display: flex;
+			flex-wrap: wrap;
+
+			.ngc-form-field__password-validation-rule {
+				display: flex;
+				align-items: center;
+				margin-top: 10px;
+				margin-bottom: 10px;
+				width: 50%;
+				min-width: 50%;
+
+				&.ngc-form-field__password-validation-rule--success {
+					color: $color-success;
+				}
+
+				&.ngc-form-field__password-validation-rule--error {
+					color: $color-danger;
+				}
+
+				.ngc-form-field__password-validation-rule__icon {
+					margin-right: 5px;
+				}
+			}
+		}
+
+		.ngc-form-field__password-validation__message {
+			font-weight: $font-weight-semibold;
+			margin-bottom: 5px;
+		}
+
+		.ngc-form-field__password-validation__hint {
+			font-size: 13px;
+		}
+	}
+
+	.ngc-form-field__prefix,
+	.ngc-form-field__suffix,
+	.ngc-form-field__prefix [ngcFormFieldPrefix],
+	.ngc-form-field__suffix [ngcFormFieldSuffix],
+	.ngc-form-field__actions {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.ngc-form-field__prefix,
+	.ngc-form-field__suffix {
+		padding-left: 10px;
+		padding-right: 10px;
+
+		&:empty {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+	}
+
+	.ngc-form-field__prefix {
+		border-top-left-radius: 8px;
+		border-bottom-left-radius: 8px;
+	}
+
+	.ngc-form-field__suffix {
+		border-top-right-radius: 8px;
+		border-bottom-right-radius: 8px;
+	}
+
+	.ngc-form-field__description {
+		display: flex;
+		width: 100%;
+		min-width: 0;
+
+		&:empty {
+			display: none;
+		}
+
+		[ngcFormFieldDescription] {
+			display: flex;
+			width: 100%;
+			min-width: 0;
+			padding-top: 10px;
+			padding-bottom: 10px;
+			margin-left: 10px;
+			margin-right: 10px;
+			border-top: 1px solid $color-border;
+		}
+	}
+
+	.ngc-form-field__actions {
+		.ngc-form-field__action {
+			margin-left: 5px;
+		}
+	}
+}

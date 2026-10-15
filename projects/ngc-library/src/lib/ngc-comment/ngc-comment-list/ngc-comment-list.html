@@ -1,0 +1,181 @@
+<!-- Empty state -->
+<div class="ngc-comment-list__empty" *ngIf="!comments?.length">
+	<ngc-icon name="message-circle" size="40px"></ngc-icon>
+	<p>No comments yet. Be the first to comment!</p>
+</div>
+
+<!-- Comments -->
+<div class="ngc-comment-list__items" *ngIf="comments?.length">
+	<div class="ngc-comment-list__comment" *ngFor="let comment of comments; trackBy: trackById;">
+
+		<!-- Comment row -->
+		<ng-container *ngTemplateOutlet="commentTpl; context: { $implicit: comment }"></ng-container>
+
+		<!-- Replies -->
+		<div class="ngc-comment-list__replies" *ngIf="comment.replies?.length">
+			<div class="ngc-comment-list__reply" *ngFor="let reply of comment.replies; trackBy: trackById;">
+				<ng-container *ngTemplateOutlet="commentTpl; context: { $implicit: reply, parent: comment }"></ng-container>
+			</div>
+		</div>
+
+		<!-- Load more replies -->
+		<button
+			class="ngc-comment-list__load-replies"
+			*ngIf="(comment.totalReplies || 0) > (comment.replies?.length || 0)"
+			(click)="repliesLoadMore.emit(comment)">
+			Load {{ (comment.totalReplies || 0) - (comment.replies?.length || 0) }} more replies
+		</button>
+
+		<!-- Reply box (inline) -->
+		<div class="ngc-comment-list__reply-box" *ngIf="replyingComment?.id === comment.id">
+			<ngc-comment-box
+				autoFocusOn
+				subEditor
+				[placeholder]="'Reply to ' + comment.user?.name + '...'"
+				[maxFilePerComment]="maxFilePerComment"
+				(commentSent)="createComment($event, comment)"
+				(cancelled)="cancelReply()">
+			</ngc-comment-box>
+		</div>
+
+	</div>
+</div>
+
+<!-- Load more comments -->
+<button
+	class="ngc-comment-list__load-more"
+	*ngIf="comments?.length"
+	(click)="commentsLoadMore.emit()">
+	Load more
+</button>
+
+<!-- Main comment box -->
+<div class="ngc-comment-list__main-box" *ngIf="canComment">
+	<div class="ngc-comment-list__main-box__hint" *ngIf="replyingComment && replyingComment?.id !== null">
+		<span>Replying to <strong>{{ replyingComment.user?.name }}</strong></span>
+		<button class="ngc-comment-list__cancel-reply" (click)="cancelReply()">Cancel</button>
+	</div>
+	<ngc-comment-box
+		[placeholder]="placeholder"
+		[maxFilePerComment]="maxFilePerComment"
+		(commentSent)="createComment($event)">
+	</ngc-comment-box>
+</div>
+
+<!-- Comment template -->
+<ng-template #commentTpl let-comment let-parent="parent">
+	<div class="ngc-comment-list-item" [class.ngc-comment-list-item--editing]="editingComment?.id === comment.id">
+
+		<!-- Avatar -->
+		<ngc-avatar
+			class="ngc-comment-list-item__avatar"
+			size="36px"
+			[label]="comment.user?.name"
+			[avatar]="comment.user?.avatar">
+		</ngc-avatar>
+
+		<div class="ngc-comment-list-item__body">
+
+			<!-- Normal content view -->
+			<ng-container *ngIf="editingComment?.id !== comment.id">
+				<div class="ngc-comment-list-item__bubble">
+					<div class="ngc-comment-list-item__header">
+						<span class="ngc-comment-list-item__name">{{ comment.user?.name }}</span>
+						<span class="ngc-comment-list-item__time">{{ getRelativeTime(comment.createdAt) }}</span>
+						<span class="ngc-comment-list-item__edited" *ngIf="comment.isEdited">edited</span>
+					</div>
+
+					<div class="ngc-comment-list-item__content">
+						<p *ngIf="comment.content?.text">{{ comment.content.text }}</p>
+
+						<!-- Images -->
+						<div class="ngc-comment-list-item__images" *ngIf="comment.content?.images?.length">
+							<img
+								*ngFor="let img of comment.content.images"
+								[src]="img.previewUrl || img.url"
+								[alt]="img.name"
+								class="ngc-comment-list-item__image" />
+						</div>
+
+						<!-- Attachments -->
+						<div class="ngc-comment-list-item__attachments" *ngIf="comment.content?.attachments?.length">
+							<div class="ngc-comment-list-item__attachment" *ngFor="let file of comment.content.attachments">
+								<ngc-icon name="attachment" size="13px"></ngc-icon>
+								<span>{{ file.name }}</span>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Actions row -->
+				<div class="ngc-comment-list-item__actions">
+
+					<!-- Emoji reactions -->
+					<div class="ngc-comment-list-item__reactions" *ngIf="comment.reactions?.length">
+						<button
+							class="ngc-comment-list-item__reaction-badge"
+							*ngFor="let r of comment.reactions"
+							[class.ngc-comment-list-item__reaction-badge--reacted]="r.reacted"
+							(click)="applyReaction(r.type, comment)">
+							<span>{{ REACTIONS | reactionEmoji:r.type }}</span>
+							<span>{{ r.count }}</span>
+						</button>
+					</div>
+
+					<!-- Reaction trigger -->
+					<div class="ngc-comment-list-item__reaction-wrap">
+						<button
+							class="ngc-comment-list-item__action-btn"
+							(click)="toggleReactions(comment.id)">
+							😊
+						</button>
+						<div class="ngc-comment-list-item__reaction-picker" *ngIf="openReactionCommentId === comment.id">
+							<button
+								*ngFor="let r of REACTIONS"
+								class="ngc-comment-list-item__reaction-opt"
+								[title]="r.label"
+								(click)="applyReaction(r.type, comment)">
+								{{ r.emoji }}
+							</button>
+						</div>
+					</div>
+
+					<!-- Reply -->
+					<button
+						class="ngc-comment-list-item__action-btn"
+						*ngIf="canComment && !parent"
+						(click)="setReplyComment(comment)">
+						Reply
+					</button>
+
+					<!-- Edit -->
+					<button
+						class="ngc-comment-list-item__action-btn"
+						*ngIf="comment.editable"
+						(click)="setEditComment(comment)">
+						Edit
+					</button>
+
+					<!-- Delete -->
+					<button
+						class="ngc-comment-list-item__action-btn ngc-comment-list-item__action-btn--danger"
+						*ngIf="comment.deletable"
+						(click)="deleteComment(comment, parent)">
+						Delete
+					</button>
+				</div>
+			</ng-container>
+
+			<!-- Inline edit box -->
+			<ngc-comment-box
+				autoFocusOn
+				subEditor
+				*ngIf="editingComment?.id === comment.id"
+				[editingComment]="comment"
+				[maxFilePerComment]="maxFilePerComment"
+				(commentSent)="updateComment($event, comment)"
+				(cancelled)="editingComment = null">
+			</ngc-comment-box>
+		</div>
+	</div>
+</ng-template>

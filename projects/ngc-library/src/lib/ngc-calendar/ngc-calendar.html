@@ -1,0 +1,146 @@
+<div class="ngc-calendar__header">
+  <div class="ngc-calendar__header-left">
+    <button ngcButton (click)="changeViewDate()">
+      {{ "NGC.LABEL.TODAY" | translate }}
+    </button>
+
+    <div
+      class="ngc-calendar__header-left__view-date"
+      ngcDatePicker
+      dateOnly
+      #datePicker="ngcDatePicker"
+      [clearable]="false"
+      [pickedDate]="viewDate"
+      (picked)="changeViewDate($event?.date)"
+    >
+      <h4 ngcTruncate [ngSwitch]="view">
+        <ng-container *ngSwitchCase="'day'">
+          {{ viewDate | momentDate : "dddd, D MMMM, YYYY" }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'week'">
+          {{ startDate | momentDate : "D MMM" }} - {{ endDate | momentDate : "D MMM, YYYY" }}
+        </ng-container>
+        <ng-container *ngSwitchCase="'month'">
+          {{ viewDate | momentDate : "MMMM, YYYY" }}
+        </ng-container>
+      </h4>
+      <ngc-icon
+        class="ngc-calendar__header-left__view-date__icon"
+        size="16px"
+        [name]="datePicker?.isOpened ? 'chevron-up' : 'chevron-down'"
+      >
+      </ngc-icon>
+    </div>
+  </div>
+
+  <div class="ngc-calendar__header-middle">
+    <ngc-button-toggle [selectedIndex]="selectedIndex">
+      <ngc-button-toggle-item (click)="changeView('day')">
+        {{ "NGC.LABEL.DAY" | translate }}
+      </ngc-button-toggle-item>
+      <ngc-button-toggle-item (click)="changeView('week')">
+        {{ "NGC.LABEL.WEEK" | translate }}
+      </ngc-button-toggle-item>
+      <ngc-button-toggle-item (click)="changeView('month')">
+        {{ "NGC.LABEL.MONTH" | translate }}
+      </ngc-button-toggle-item>
+    </ngc-button-toggle>
+  </div>
+
+  <div class="ngc-calendar__header-right">
+    <button
+      ngcButton
+      icon="chevron-back-outline"
+      [ngcTooltip]="
+        'NGC.LABEL.PREVIOUS_PERIOD' | translate : {
+          period: ('NGC.LABEL.' + view | uppercase | translate | lowercase)
+        }
+      "
+      (click)="changeViewDate(viewDate, -1)"
+    >
+    </button>
+    <button
+      class="ngc-calendar__header-right__next"
+      ngcButton
+      icon="chevron-forward-outline"
+      [ngcTooltip]="
+        'NGC.LABEL.NEXT_PERIOD' | translate : {
+          period: ('NGC.LABEL.' + view | uppercase | translate | lowercase)
+        }
+      "
+      (click)="changeViewDate(viewDate, 1)"
+    >
+    </button>
+  </div>
+</div>
+
+<div class="ngc-calendar__body" [ngSwitch]="view">
+  <ngc-calendar-day-view
+    ngDefaultControl
+    #calendarView
+    *ngSwitchCase="'day'"
+    [creatable]="creatable"
+    [displayHighlight]="displayHighlight"
+    [maxEventPerHour]="maxEventPerHour"
+    [name]="name"
+    [placeholder]="placeholder"
+    [nameFormControl]="nameFormControl"
+    [viewDate]="viewDate"
+    [events]="events"
+    [eventTemplate]="eventTemplate"
+    [actionMenu]="actionMenu"
+    [searchBox]="searchBox"
+    [(selectedEventID)]="selectedEventID"
+    (selectedEventIDChange)="selectedEventIDChange?.emit($event)"
+    (periodChange)="changePeriod($event)"
+    (eventChange)="eventChange?.emit($event)"
+    (eventCreate)="eventCreate?.emit($event)"
+  >
+  </ngc-calendar-day-view>
+
+  <ngc-calendar-week-view
+    ngDefaultControl
+    #calendarView
+    *ngSwitchCase="'week'"
+    [creatable]="creatable"
+    [displayHighlight]="displayHighlight"
+    [firstWeekDay]="firstWeekDay"
+    [name]="name"
+    [placeholder]="placeholder"
+    [nameFormControl]="nameFormControl"
+    [viewDate]="viewDate"
+    [events]="events"
+    [eventTemplate]="eventTemplate"
+    [actionMenu]="actionMenu"
+    [searchBox]="searchBox"
+    [(selectedEventID)]="selectedEventID"
+    (selectedEventIDChange)="selectedEventIDChange?.emit($event)"
+    (periodChange)="changePeriod($event)"
+    (eventChange)="eventChange?.emit($event)"
+    (eventCreate)="eventCreate?.emit($event)"
+  >
+  </ngc-calendar-week-view>
+
+  <ngc-calendar-month-view
+    ngDefaultControl
+    #calendarView
+    *ngSwitchCase="'month'"
+    [creatable]="creatable"
+    [displayHighlight]="displayHighlight"
+    [firstWeekDay]="firstWeekDay"
+    [name]="name"
+    [placeholder]="placeholder"
+    [nameFormControl]="nameFormControl"
+    [viewDate]="viewDate"
+    [events]="events"
+    [eventTemplate]="eventTemplate"
+    [actionMenu]="actionMenu"
+    [searchBox]="searchBox"
+    [(selectedEventID)]="selectedEventID"
+    (selectedEventIDChange)="selectedEventIDChange?.emit($event)"
+    (periodChange)="changePeriod($event)"
+    (eventChange)="eventChange?.emit($event)"
+    (eventCreate)="eventCreate?.emit($event)"
+  >
+  </ngc-calendar-month-view>
+</div>

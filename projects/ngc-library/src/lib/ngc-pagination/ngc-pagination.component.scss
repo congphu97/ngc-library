@@ -1,0 +1,33 @@
+@import 'variable';
+
+button {
+  margin: 0 4px;
+  padding: 6px 12px;
+  border: none;
+  background: $color-default;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  background: $color-border;
+}
+
+button.active {
+  background-color: $color-primary;
+  color: white;
+  font-weight: bold;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ellipsis {
+  margin: 0 6px;
+  font-weight: bold;
+  color: $color-label;
+  user-select: none;
+}

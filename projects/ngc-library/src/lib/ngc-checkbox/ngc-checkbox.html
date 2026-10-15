@@ -1,0 +1,15 @@
+<div class="ngc-checkbox__box">
+    <input
+        type="checkbox"
+        [disabled]="disabled"
+        [(ngModel)]="ngModel"
+        (ngModelChange)="ngModelChange?.emit( $event )"/>
+    <i *ngIf="ngModel && !indeterminate" class="ngc-checkbox__icon icon-check"></i>
+    <i *ngIf="indeterminate" class="ngc-checkbox__icon icon-minus"></i>
+</div>
+<div class="ngc-checkbox__label">
+    {{ label }}
+    <ng-container *ngIf="!label">
+        <ng-content></ng-content>
+    </ng-container>
+</div>

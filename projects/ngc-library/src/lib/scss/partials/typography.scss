@@ -1,0 +1,75 @@
+label {
+	display: flex;
+	color: $color-label;
+	font-size: 13px;
+	font-weight: $font-weight-regular;
+	width: fit-content;
+
+	&:empty {
+		display: none;
+	}
+
+	&[required] {
+		&:not([requiredDot]) {
+			@include inside-required-tag;
+		}
+
+		&[requiredDot] {
+			@include inside-required-dot;
+		}
+	}
+}
+
+a {
+	cursor: pointer;
+	color: color(blue, 700);
+
+	&:hover {
+		color: color(blue, 700);
+	}
+
+	&[disabled] {
+		@include cursor-not-allowed;
+		color: $color-disabled;
+	}
+}
+
+mark {
+	background-color: color(yellow, 400);
+}
+
+.color-text {
+	color: $color-text;
+}
+
+.color-label {
+	color: $color-label;
+}
+
+.color-disabled {
+	color: $color-disabled;
+}
+
+.color-placeholder {
+	color: $color-placeholder;
+}
+
+.color-primary {
+	color: var(--primary-color, $color-primary);
+}
+
+.color-info {
+	color: $color-info;
+}
+
+.color-success {
+	color: $color-success;
+}
+
+.color-warning {
+	color: $color-warning;
+}
+
+.color-danger {
+	color: $color-danger;
+}

@@ -1,0 +1,54 @@
+<div class="ngc-tree-node" [class.ngc-tree-node--disabled]="node.disabled">
+	<!-- Node row element -->
+	<div class="ngc-tree-node__row" 
+		[class.ngc-tree-node__row--selected]="node.selected"
+		[class.ngc-tree-node__row--drag-over]="isDragOver"
+		[draggable]="treeComponent.draggable"
+		(dragstart)="onDragStart($event)"
+		(dragover)="onDragOver($event)"
+		(dragleave)="onDragLeave()"
+		(drop)="onDrop($event)"
+		(dragend)="onDragEnd()">
+		
+		<!-- Caret Expand Icon / Spinner -->
+		<div class="ngc-tree-node__toggle-wrapper" (click)="toggleExpand($event)">
+			<ng-container *ngIf="node.loading; else caretBlock">
+				<ngc-icon name="progress-auto" class="ngc-tree-node__loading-icon"></ngc-icon>
+			</ng-container>
+			<ng-template #caretBlock>
+				<ngc-icon 
+					*ngIf="!node.isLeaf"
+					name="chevron-right" 
+					class="ngc-tree-node__caret" 
+					[class.ngc-tree-node__caret--expanded]="node.expanded">
+				</ngc-icon>
+			</ng-template>
+		</div>
+
+		<!-- Checkbox -->
+		<div class="ngc-tree-node__checkbox-wrapper" *ngIf="checkable && !node.disableCheckbox">
+			<ngc-checkbox 
+				[(ngModel)]="node.checked" 
+				[indeterminate]="isIndeterminate()"
+				(ngModelChange)="onCheck()" 
+				[disabled]="node.disabled">
+			</ngc-checkbox>
+		</div>
+
+		<!-- Text content -->
+		<div class="ngc-tree-node__content" (click)="onSelect($event)">
+			<span class="ngc-tree-node__title">{{ node.title }}</span>
+		</div>
+	</div>
+
+	<!-- Child nodes recursion container -->
+	<div class="ngc-tree-node__children" *ngIf="node.expanded && node.children?.length">
+		<ng-container *ngFor="let childNode of node.children">
+			<ngc-tree-node 
+				[node]="childNode" 
+				[checkable]="checkable" 
+				[loadData]="loadData">
+			</ngc-tree-node>
+		</ng-container>
+	</div>
+</div>

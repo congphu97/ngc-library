@@ -1,0 +1,15 @@
+<div class="ngc-timeline-item__side">
+  <span class="ngc-timeline-item__time" *ngIf="time">{{ time }}</span>
+  <ng-content select="[ngcTimelineSide]"></ng-content>
+</div>
+
+<div class="ngc-timeline-item__axis">
+  <div class="ngc-timeline-item__line"></div>
+  <div class="ngc-timeline-item__dot" [class.ngc-timeline-item__dot--custom]="!!customDot" [style.border-color]="!!customDot ? null : color" [style.background-color]="!!customDot ? null : color">
+    <ng-content select="[ngcTimelineDot]"></ng-content>
+  </div>
+</div>
+
+<div class="ngc-timeline-item__content">
+  <ng-content></ng-content>
+</div>

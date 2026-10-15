@@ -1,0 +1,30 @@
+<div class="ngc-avatar__label" #ref><ng-content></ng-content></div>
+
+<ng-container *ngIf="!ref?.childNodes?.length">
+
+	<ng-template #labelTemp>
+		<div class="ngc-avatar__label">
+			<ng-container *ngIf="isIconMode(avatar?.mode) && avatar?.icon; else elseBlock">
+				<ngc-emoji [emoji]="avatar?.icon"></ngc-emoji>
+			</ng-container>
+
+			<ng-template #elseBlock>
+				{{ parsedLabel }}
+			</ng-template>
+		</div>
+	</ng-template>
+
+	<ng-container
+		*ngIf="(isAutoMode(avatar?.mode) || isPhotoMode(avatar?.mode)) && (isPhotoLoaded$ | async); else labelTemp">
+		<ng-container *ngIf="lazy; else elseBlock">
+			<img class="ngc-avatar__image" [lazyLoad]="avatar?.photo"
+				[defaultImage]="defaultPhoto || 'assets/images/loading.gif'" [errorImage]="errorPhoto || avatar?.photo"
+				[customObservable]="scroll$" />
+		</ng-container>
+
+		<ng-template #elseBlock>
+			<img class="ngc-avatar__image" [src]="avatar?.photo" />
+		</ng-template>
+	</ng-container>
+
+</ng-container>

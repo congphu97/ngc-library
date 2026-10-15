@@ -1,0 +1,25 @@
+<div class="ngc-pagination layout-row layout-align-center-center" [class.ngc-pagination--disabled]="disabled">
+
+  <!-- Previous button -->
+  <button ngcIconButton icon="chevron-back-outline" class="m-5" square size="28px" (click)="goToPreviousPage()"
+    [disabled]="currentPage === 1 || disabled">
+  </button>
+
+  <!-- Page numbers -->
+  <ng-container *ngFor="let page of visiblePages">
+    <ng-container *ngIf="page !== null; else ellipsis">
+      <button [class.active]="page === currentPage" (click)="goToPage(page)">
+        {{ page }}
+      </button>
+    </ng-container>
+    <ng-template #ellipsis>
+      <span class="ellipsis">...</span>
+    </ng-template>
+  </ng-container>
+
+  <!-- Next button -->
+  <button ngcIconButton icon="chevron-forward-outline" class="m-5" square size="28px" (click)="goToNextPage()"
+    [disabled]="currentPage === totalPages || disabled">
+  </button>
+
+</div>

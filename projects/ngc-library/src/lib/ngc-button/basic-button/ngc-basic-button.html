@@ -1,0 +1,9 @@
+<div class="ngc-basic-button-wrapper">
+  <div class="ngc-basic-button__icon" *ngIf="buttonIcon || icon">
+    <ng-content select="[ngcButtonIcon]" *ngIf="buttonIcon"></ng-content>
+    <ngc-icon *ngIf="icon" [name]="icon"></ngc-icon>
+  </div>
+  <div class="ngc-basic-button__content">
+    <ng-content></ng-content>
+  </div>
+</div>

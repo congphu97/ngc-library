@@ -1,0 +1,37 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../../out-tsc/lib",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "baseUrl": "./src/lib",
+    "paths": {
+      "@core": [ "core" ],
+      "@core/*": [ "core/*" ],
+      "@app/@core": [ "core" ],
+      "@app/@core/*": [ "core/*" ],
+      "@resources": [ "resources" ],
+      "@resources/*": [ "resources/*" ],
+      "@app/@resources": [ "resources" ],
+      "@app/@resources/*": [ "resources/*" ],
+      "@app/@ngc/*": [ "*" ],
+      "@ngc/*": [ "*" ]
+    },
+    "types": []
+  },
+  "files": [
+    "src/public-api.ts",
+    "src/lib/types.d.ts"
+  ],
+  "angularCompilerOptions": {
+    "enableIvy": true,
+    "fullTemplateTypeCheck": false,
+    "strictTemplates": false
+  },
+  "exclude": [
+    "src/test.ts",
+    "**/*.spec.ts"
+  ]
+}

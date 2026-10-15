@@ -1,0 +1,25 @@
+<div class="ngc-collapse-wrapper"
+  [autoUnhighlight]="autoUnhighlight"
+  [(highlightState)]="highlight"
+  (highlightStateChange)="highlightChange?.emit($event)">
+  
+  <div class="ngc-collapse__header" (click)="active = !active">
+    <ng-content select="[ngcCollapseHeader]"></ng-content>
+    <ng-container>
+      <ngc-icon 
+        class="ngc-collapse__header__icon" 
+        [name]="active ? 'chevron-up-outline' : 'chevron-down-outline'" 
+        size="20px">
+      </ngc-icon>
+    </ng-container>
+  </div>
+
+  <div class="ngc-collapse__content" *ngIf="active" [@toggleHeight]>
+    <ng-content select="[ngcCollapseContent]"></ng-content>
+  </div>
+
+  <div class="ngc-collapse__footer">
+    <ng-content select="[ngcCollapseFooter]"></ng-content>
+  </div>
+
+</div>

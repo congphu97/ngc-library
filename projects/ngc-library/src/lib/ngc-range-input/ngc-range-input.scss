@@ -1,0 +1,26 @@
+
+
+.ngc-range-input {
+	display: flex;
+	flex-direction: column;
+
+	.ngc-range-input-wrapper {
+		display: flex;
+		align-items: center;
+		position: relative;
+	}
+
+	.ngc-range-input__form-field {
+		width: calc(50% - 12.5px);
+		position: relative;
+	}
+
+	.ngc-range-input__divider {
+		width: 25px;
+		text-align: center;
+	}
+
+	.ngc-range-input__label {
+		margin-bottom: 5px;
+	}
+}

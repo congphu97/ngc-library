@@ -1,0 +1,75 @@
+<div
+  class="ngc-grid-wrapper"
+  cdkDropListGroup
+  ngcScrollBar
+  suppressScrollX
+  detectScroll
+  [mode]="scrollBarMode"
+  (scrollReachBottom)="loadMore?.emit(!!$event)"
+  (viewPortChanged)="!scroller?.scrollableY && scroller?.triggerScroll()">
+
+  <div class="ngc-grid-list-item" ngcScrollBarViewPort>
+
+    <!-- Static container (possibly for dragging placeholders or fixed items) -->
+    <div
+      class="ngc-grid-item-container"
+      cdkDropList
+      [cdkDropListEnterPredicate]="enter"
+      (cdkDropListDropped)="onDropped()">
+    </div>
+
+    <!-- Dynamic grid items -->
+    <div
+      class="ngc-grid-item-container"
+      *ngFor="let item of items"
+      cdkDropList
+      [cdkDropListEnterPredicate]="enter"
+      (cdkDropListDropped)="onDropped()">
+
+      <div
+        class="ngc-grid-item"
+        cdkDrag
+        [ngClass]="item?.classes"
+        [class.ngc-grid-item--active]="item?.active"
+        [class.ngc-grid-item--disabled]="item?.disabled"
+        [class.ngc-grid-item--focusing]="item?.focusing"
+        [class.ngc-grid-item--hovering]="item?.hovering"
+        [class.ngc-grid-item--dragging]="item?.dragging"
+        [cdkDragDisabled]="!item?.draggable || item?.disabled"
+        [autoUnhighlight]="item?.autoUnhighlight"
+        [highlightDisabled]="item?.disabled"
+        [(highlightState)]="item.highlight"
+        (highlightStateChange)="item?.highlightChange?.emit($event)"
+        (cdkDragStarted)="item.dragging = true"
+        (cdkDragEnded)="item.dragging = false"
+        (mouseenter)="item.hovering = true"
+        (mouseleave)="item.hovering = false">
+
+        <!-- Drag handle (only shown if draggable and not disabled) -->
+        <ngc-icon
+          *ngIf="item?.draggable && !item?.disabled"
+          class="ngc-grid-item__drag-handle"
+          cdkDragHandle
+          name="drag"
+          size="20px">
+        </ngc-icon>
+
+        <!-- Radio selection -->
+        <ngc-radio
+          class="ngc-grid-item__radio"
+          color="primary"
+          [disabled]="item?.disabled"
+          [(checked)]="item.active"
+          (checkedChange)="onItemsSelected()">
+        </ngc-radio>
+
+        <!-- Item content via ng-template -->
+        <div class="ngc-grid-item__content">
+          <ng-container *ngTemplateOutlet="item?.templateRef"></ng-container>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

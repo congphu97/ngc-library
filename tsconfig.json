@@ -2,6 +2,8 @@
   "extends": "./node_modules/angular-core/tsconfig.json",
   "compilerOptions": {
     "baseUrl": "./src",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@app": [ "app" ],
       "@app/*": [ "app/*" ],
@@ -17,7 +19,12 @@
       "@wgc/*": [ "app/@wgc/*", "app/@wgc/lib/*" ],
       "@environments": [ "environments" ],
       "@environments/*": [ "environments/*" ],
-      "@src": [ "src" ],
+      "@src": [
+        "src"
+      ],
+      "ngc-library": [
+        "dist/ngc-library"
+      ]
     }
   }
 }

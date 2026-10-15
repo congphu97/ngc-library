@@ -1,0 +1,5 @@
+wgc-menu(#wgcCalendarActionMenu)
+	wgc-menu-content
+		ng-template(wgcMenuContent, let-event='event')
+			button(wgcMenuItem, icon='text-input', (click)='event.isEditing = true')
+				| {{ "NGC.LABEL.RENAME" | translate }}

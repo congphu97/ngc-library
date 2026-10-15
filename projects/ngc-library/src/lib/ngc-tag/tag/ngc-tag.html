@@ -1,0 +1,21 @@
+<ng-container *ngIf="minimize; else elseBlock">
+  <div class="ngc-tag__content"></div>
+</ng-container>
+<ng-template #elseBlock>
+  <div class="ngc-tag__content" [ngcTooltip]="label">
+    <ng-template #labelTemp>
+      {{ label }}
+      <ng-container *ngIf="!label">
+        <ng-content></ng-content>
+      </ng-container>
+    </ng-template>
+    <ng-container *ngIf="truncate; else elseBlockTruncate">
+      <ngc-truncate [limitLine]="truncateLimitLine">
+        <ng-container *ngTemplateOutlet="labelTemp"></ng-container>
+      </ngc-truncate>
+    </ng-container>
+    <ng-template #elseBlockTruncate>
+      <ng-container *ngTemplateOutlet="labelTemp"></ng-container>
+    </ng-template>
+  </div>
+</ng-template>

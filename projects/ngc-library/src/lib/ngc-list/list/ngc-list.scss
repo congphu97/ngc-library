@@ -1,0 +1,136 @@
+@import 'variable';
+@import 'mixin';
+
+@mixin list-item {
+	display: flex;
+
+	&:not(.ngc-list-item--disabled) {
+		&:focus-visible,
+		&:hover,
+		&.ngc-list-item--focusing,
+		&.ngc-list-item--hovering,
+		&.ngc-list-item--dragging {
+			.ngc-list-item__drag-handle {
+				opacity: 1;
+			}
+		}
+
+		&:focus-visible,
+		&:hover,
+		&.ngc-list-item--focusing,
+		&.ngc-list-item--hovering {
+			.ngc-list-item__content {
+				background-color: $color-secondary;
+			}
+		}
+
+		&.ngc-list-item--active,
+		&.ngc-list-item--dragging {
+			.ngc-list-item__content {
+				background-color: var(--list-item-active-color, $color-white);
+			}
+		}
+	}
+
+	&.ngc-list-item--disabled {
+		.ngc-list-item__content {
+			@include cursor-not-allowed;
+			opacity: .4;
+		}
+	}
+
+	.ngc-list-item__drag-handle {
+		color: $color-placeholder;
+		opacity: 0;
+		margin-top: 10px;
+		margin-right: 10px;
+		height: fit-content;
+
+		&.ngc-list-item__drag-handle--hidden {
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
+
+	.ngc-list-item__content {
+		display: flex;
+		flex-direction: column;
+		padding: 10px;
+		border-radius: 8px;
+		min-height: 40px;
+		cursor: pointer;
+		min-width: 0;
+		width: 100%;
+
+		.ngc-list-item__content-wrapper {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.ngc-list-item__content-color-dot {
+			margin-right: 5px;
+		}
+
+		.ngc-list-item__content-label {
+			display: flex;
+			align-items: center;
+			width: 100%;
+			min-width: 0;
+			font-weight: $font-weight-semibold;
+
+			.ngc-list-item__content-icon {
+				margin-right: 5px;
+			}
+		}
+
+		.ngc-list-item__content-description {
+			font-size: 13px;
+			color: $color-label;
+		}
+	}
+}
+
+.ngc-list {
+	display: flex;
+	flex-direction: column;
+
+	&.ngc-list--stretch {
+		width: 100%;
+		min-width: 0;
+		max-width: 100vw;
+		height: 100%;
+		min-height: 0;
+		max-height: 100vh;
+	}
+
+	.ngc-list-wrapper {
+		width: 100%;
+		min-width: 0;
+		height: 100%;
+		min-height: 0;
+	}
+
+	.ngc-list-item {
+		@include list-item;
+
+		&:not(:last-child) {
+			margin-bottom: 5px;
+		}
+	}
+}
+
+.cdk-drag-preview {
+	&.ngc-list-item {
+		@include list-item;
+
+		.ngc-list-item__content {
+			background-color: $color-white !important;
+			box-shadow: $box-shadow;
+		}
+
+		.ngc-list-item__drag-handle {
+			opacity: 1;
+		}
+	}
+}

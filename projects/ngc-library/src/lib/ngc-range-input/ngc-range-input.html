@@ -1,0 +1,27 @@
+<!-- Range Input Label -->
+<label class="ngc-range-input__label" ngcTruncate [attr.required]="required || undefined">
+  {{ label }}
+</label>
+
+<!-- Range Input Wrapper -->
+<div class="ngc-range-input-wrapper">
+
+  <!-- Start Range Field -->
+  <ngc-form-field class="ngc-range-input__form-field" [errorDisplayMode]="errorDisplayMode" [appearance]="appearance">
+    <input ngcFormFieldInput type="number" [step]="step" [max]="maxStartRange" [name]="startRangeName"
+      [placeholder]="placeholder" [required]="required" [autoFocusOn]="autoFocusOn" [readonly]="readonly"
+      [formControl]="startRangeFormControl" [disableControl]="disabled" [(ngModel)]="startRange"
+      (ngModelChange)="onStartRangeChanged()" (input)="onTouched()" (blur)="onTouched()" />
+  </ngc-form-field>
+
+  <span class="ngc-range-input__divider">-</span>
+
+  <!-- End Range Field -->
+  <ngc-form-field class="ngc-range-input__form-field" [errorDisplayMode]="errorDisplayMode" [appearance]="appearance">
+    <input ngcFormFieldInput type="number" [step]="step" [min]="minEndRange" [name]="endRangeName"
+      [placeholder]="placeholder" [required]="required" [readonly]="readonly" [formControl]="endRangeFormControl"
+      [disableControl]="disabled" [(ngModel)]="endRange" (ngModelChange)="onEndRangeChanged()" (input)="onTouched()"
+      (blur)="onTouched()" />
+  </ngc-form-field>
+
+</div>

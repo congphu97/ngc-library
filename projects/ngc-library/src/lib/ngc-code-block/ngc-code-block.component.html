@@ -1,0 +1,41 @@
+<div class="ngc-code-block-container">
+  <div class="ngc-code-block-header">
+    <div class="ngc-code-block-lang">
+      <span class="lang-dot" [style.background-color]="getLanguageColor()"></span>
+      <span class="lang-text">{{ getLanguageLabel() }}</span>
+    </div>
+    <button class="ngc-code-block-copy-btn" (click)="copyCode()" [class.copied]="copied" title="Copy code">
+      <ngc-icon [name]="copied ? 'checkmark-outline' : 'copy-outline'" size="16px"></ngc-icon>
+      <span class="copy-text">{{ copied ? 'Copied' : 'Copy' }}</span>
+    </button>
+  </div>
+  <div class="ngc-code-block-body">
+    <!-- Case 1: code input is provided -->
+    <pre *ngIf="code"><code #codeElem [highlight]="code" [languages]="[language]"></code></pre>
+    
+    <!-- Case 2: projected content is used -->
+    <div class="projected-content" [style.display]="code ? 'none' : 'block'">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>
+
+<!-- <h3 class="mb-20">Checkbox</h3>
+<ngc-tab-group>
+    <ngc-tab [label]="'Preview'">
+        <div class="mb-10">
+            <ngc-checkbox [label]="'Checkbox 1'"></ngc-checkbox>
+        </div>
+        <div class="mb-10">
+            <ngc-checkbox [label]="'Checkbox 2'" [checked]="true"></ngc-checkbox>
+        </div>
+        <div class="mb-10">
+            <ngc-checkbox [label]="'Checkbox 3'" [disabled]="true"></ngc-checkbox>
+        </div>
+    </ngc-tab>
+    <ngc-tab [label]="'Code'">
+        <ngc-code-block>
+            <pre><code #codeContent><div>123123</div></code></pre>
+        </ngc-code-block>
+    </ngc-tab>
+</ngc-tab-group> -->

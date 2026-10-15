@@ -1,0 +1,34 @@
+<ng-container *ngIf="loaded; else elseBlock">
+
+    <ng-container *ngIf="mode !== 'search'; else elseBlock2">
+        <img class="image" [style.width.px]="imageSize?.[0]" [style.height.px]="imageSize?.[1]" [lazyLoad]="image" />
+
+        <div class="title" [innerHtml]="title | safeHtml"></div>
+        <div class="description" [innerHtml]="description | safeHtml"></div>
+
+        <div class="content">
+            <ng-content></ng-content>
+        </div>
+    </ng-container>
+
+    <ng-template #elseBlock2>
+        <img class="image" [lazyLoad]="'assets/images/icons/search.png'" />
+        <div class="title">
+            {{ "CORE.MESSAGE.NO_RESULT_FOUND" | translate: { name: name | lowercase } }}
+        </div>
+        <div class="description">
+            {{ "CORE.MESSAGE.NO_RESULT_FOUND_DESCRIPTION" | translate: { name: name | lowercase } }}
+        </div>
+    </ng-template>
+
+</ng-container>
+
+<ng-template #elseBlock>
+    <div class="loading">
+        <round-progress class="loading__spinner" [max]="100" [current]="25" [stroke]="3" [radius]="15"
+            [color]="'INFO' | color" [background]="'BORDER' | color">
+        </round-progress>
+
+        {{ "CORE.LABEL.LOADING_DATA" | translate }} …
+    </div>
+</ng-template>

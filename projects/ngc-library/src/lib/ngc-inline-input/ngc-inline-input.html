@@ -1,0 +1,10 @@
+<ng-container *ngIf="editing && !disabled; else elseBlock">
+	<input autoFocusOn autoReset ngcFormFieldInput [style.width.ch]="value?.length || placeholder?.length || undefined"
+		[trim]="trim" [name]="name" [placeholder]="placeholder" [formControl]="formControl" [(ngModel)]="value"
+		(keydown)="$event?.stopPropagation()" (keyup)="$event?.stopPropagation()" (keyup.enter)="onSave()"
+		(keyup.esc)="onCancel()" (blur)="onAutoSave()" />
+</ng-container>
+
+<ng-template #elseBlock>
+	<ng-content></ng-content>
+</ng-template>

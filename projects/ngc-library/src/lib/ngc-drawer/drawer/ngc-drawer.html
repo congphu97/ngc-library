@@ -1,0 +1,36 @@
+<ng-template #content>
+  <ng-container *ngIf="lazyContent?.templateRef; else elseBlock">
+    <ng-container *ngTemplateOutlet="lazyContent?.templateRef"></ng-container>
+  </ng-container>
+  <ng-template #elseBlock>
+    <ng-content></ng-content>
+  </ng-template>
+</ng-template>
+
+<div
+  class="ngc-drawer__content-wrapper"
+  [@slide]="opened ? 'opened' : 'closed'"
+  (@slide.start)="isSliding = true"
+  (@slide.done)="isSliding = false">
+  
+  <div class="ngc-drawer__content">
+    <ng-container *ngIf="isRendered">
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<div class="ngc-drawer__divider">
+  <button
+    class="ngc-drawer__divider-btn-toggle"
+    ngcIconButton
+    size="28px"
+    [ngcTooltip]="'NGC.LABEL.' + (opened ? 'COLLAPSE' : 'EXPAND') | translate"
+    [position]="position === 'left' ? 'after' : 'before'"
+    [icon]="opened ? (position === 'left' ? 'chevron-back-outline' : 'chevron-forward-outline') : (position === 'left' ? 'chevron-forward-outline' : 'chevron-back-outline')"
+    (click)="toggle()">
+  </button>
+  <div class="ngc-drawer__divider-label" *ngIf="label">
+    {{ label }}
+  </div>
+</div>

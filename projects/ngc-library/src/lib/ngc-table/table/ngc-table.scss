@@ -1,0 +1,228 @@
+@import 'variable';
+
+:host(.ngc-table) {
+	width: 100%;
+	min-width: 100%;
+	table-layout: fixed;
+	border-spacing: 0;
+	border-collapse: separate;
+	border: 1px solid $color-border;
+	border-radius: 8px;
+
+	&.ngc-table--scrolling {
+		::ng-deep {
+			th,
+			td {
+				&[sticky='top'] {
+					box-shadow: $box-shadow-scroll-vertical;
+				}
+
+				&[sticky='left'] {
+					box-shadow: $box-shadow-scroll-horizontal;
+				}
+			}
+		}
+	}
+
+	&[border] {
+		::ng-deep {
+			th,
+			td {
+				border-right: 1px solid $color-border;
+
+				&:last-child {
+					border-right: none;
+				}
+			}
+		}
+	}
+
+	::ng-deep {
+		// Corner border radius to match table border-radius
+		thead:first-child tr:first-child > th:first-child,
+		thead:first-child tr:first-child > td:first-child,
+		tbody:first-child tr:first-child > td:first-child {
+			border-top-left-radius: 7px;
+		}
+		thead:first-child tr:first-child > th:last-child,
+		thead:first-child tr:first-child > td:last-child,
+		tbody:first-child tr:first-child > td:last-child {
+			border-top-right-radius: 7px;
+		}
+		tbody:last-child tr:last-child > td:first-child,
+		tfoot:last-child tr:last-child > td:first-child {
+			border-bottom-left-radius: 7px;
+		}
+		tbody:last-child tr:last-child > td:last-child,
+		tfoot:last-child tr:last-child > td:last-child {
+			border-bottom-right-radius: 7px;
+		}
+
+		th,
+		td {
+			text-align: center;
+			padding: 14px 18px;
+			background-color: $color-white;
+			border-bottom: 1px solid $color-border;
+			vertical-align: middle;
+
+			code {
+				background-color: #f1f5f9;
+				border: 1px solid #e2e8f0;
+				border-radius: 6px;
+				padding: 3px 6px;
+				font-size: 12px;
+				color: #3b82f6;
+				font-family: 'Fira Code', 'Courier New', monospace;
+			}
+
+			&[align='left'] {
+				text-align: left;
+			}
+
+			&[align='center'] {
+				text-align: center;
+			}
+
+			&[align='right'] {
+				text-align: right;
+			}
+
+			&[sticky] {
+				position: sticky;
+				z-index: 1;
+				overflow: hidden;
+				background-image: none;
+				background-color: $color-white;
+
+				&[sticky='top'] {
+					top: 0;
+				}
+
+				&[sticky='bottom'] {
+					bottom: 0;
+				}
+
+				&[sticky='left'] {
+					left: 0;
+				}
+
+				&[sticky='right'] {
+					right: 0;
+				}
+
+				> * {
+					position: relative;
+					z-index: 1;
+				}
+			}
+		}
+
+		thead {
+			th,
+			td {
+				font-size: 12px;
+				font-weight: $font-weight-bold;
+				background-color: $color-secondary;
+				color: $color-text;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+
+				&[sticky] {
+					background-color: $color-secondary;
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				&:hover {
+					td,
+					td[sticky] {
+						background-color: $color-secondary;
+						transition: background-color 0.15s ease-in-out;
+					}
+				}
+
+				&:not(:hover)[active] td {
+					background-color: $color-active;
+				}
+
+				&:last-child td {
+					border-bottom: none;
+				}
+			}
+
+			td {
+				transition: background 100ms ease-in-out;
+			}
+		}
+
+		tfoot {
+			td {
+				border-top: 1px solid $color-border;
+				border-bottom: none;
+			}
+		}
+	}
+}
+
+// Dark theme overrides
+:host-context(.dark-theme) {
+	border-color: #21262d;
+
+	&[border] {
+		::ng-deep {
+			th,
+			td {
+				border-right-color: #21262d;
+			}
+		}
+	}
+
+	::ng-deep {
+		th,
+		td {
+			background-color: #161b22;
+			border-bottom-color: #21262d;
+			color: #c9d1d9;
+
+			&[sticky] {
+				background-color: #161b22;
+			}
+
+			code {
+				background-color: #0d1117;
+				border-color: #21262d;
+				color: #58a6ff;
+			}
+		}
+
+		thead {
+			th,
+			td {
+				background-color: #0d1117;
+				color: #8b949e;
+
+				&[sticky] {
+					background-color: #0d1117;
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				&:hover {
+					td,
+					td[sticky] {
+						background-color: #1c2128;
+					}
+				}
+
+				&:not(:hover)[active] td {
+					background-color: #1f2937;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,55 @@
+<!-- include ../common/event-item-action.partial.pug -->
+
+<ngc-scroll-bar mode="auto">
+  <div class="ngc-calendar-month-view__wrapper">
+    <div class="ngc-calendar-month-view__header">
+      <div
+        class="ngc-calendar-month-view__header-day-block"
+        *ngFor="let block of eventBlocks | slice : 0 : 7"
+      >
+        {{ block?.moment | momentDate : "dddd" }}
+      </div>
+    </div>
+
+    <div class="ngc-calendar-month-view__body">
+      <div class="ngc-calendar-event-block" *ngFor="let block of eventBlocks">
+        <div class="ngc-calendar-event-block__header">
+          <span
+            [attr.data-date]="block?.moment | momentDate : 'D'"
+            [class.ngc-calendar-event-block__header--trim]="block?.notInThisMonth"
+            [class.ngc-calendar-event-block__header--highlight]="block?.showCurrentTime"
+          >
+          </span>
+        </div>
+
+        <div class="ngc-calendar-event-block__body">
+          <ng-container
+            *ngFor="
+              let event of
+                (block?.seeMore || block?.events?.length <= 3
+                  ? block?.events
+                  : block?.events | slice : 0 : 2);
+              trackBy: 'id' | trackByFn
+            "
+          >
+            <!-- include ../common/event-item.partial.pug -->
+          </ng-container>
+        </div>
+
+        <div class="ngc-calendar-event-block__footer">
+          <button
+            ngcButton
+            alignment="left"
+            icon="double-chevron-down"
+            *ngIf="block?.events?.length > 3 && !block?.seeMore"
+            (click)="block.seeMore = true"
+          >
+            {{ "NGC.LABEL.SHOW_MORE_COUNT" | translate : { count: block?.events?.length - 2 } }}
+          </button>
+
+          <!-- include ../common/event-block-footer.partial.pug -->
+        </div>
+      </div>
+    </div>
+  </div>
+</ngc-scroll-bar>

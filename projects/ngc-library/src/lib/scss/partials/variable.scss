@@ -1,0 +1,176 @@
+@import 'angular-core/lib/scss/partials/variable';
+
+@function hex-opacity($hex, $opacity: 1, $background: #fff) {
+	@if type-of($hex) == 'color' {
+		@return mix(
+			rgb(
+				red($hex),
+				green($hex),
+				blue($hex)
+			),
+			$background,
+			$opacity * 100%
+		);
+	} @else {
+		@return color-mix(in srgb, #{$hex} #{$opacity * 100%}, #{$background});
+	}
+}
+
+$palettes: (
+	blue: (
+		700: #0040dd,
+		500: #0a84ff,
+		400: #409cff,
+	),
+	green: (
+		700: #248a3d,
+		500: #34c759,
+		400: #30db5b,
+	),
+	yellow: (
+		700: #b79900,
+		500: #dfbf00,
+		400: #ffd426,
+	),
+	red: (
+		700: #d70015,
+		500: #ff3130,
+		400: #ff6961,
+	),
+	orange: (
+		700: #cb6f10,
+		500: #ff9500,
+		400: #ffb35b,
+	),
+	purple: (
+		700: #8944ab,
+		500: #af52de,
+		400: #da8fff,
+	),
+	pink: (
+		700: #d30f45,
+		500: #ff2d55,
+		400: #ff6482,
+	),
+	indigo: (
+		700: #3634a3,
+		500: #5856d6,
+		400: #7d7aff,
+	),
+	teal: (
+		700: #0071a4,
+		500: #5ac8fa,
+		400: #70d7ff,
+	),
+	mint: (
+		700: #3fb077,
+		500: #4cdd94,
+		400: #69f0ac,
+	),
+	darkGray: (
+		700: #242426,
+		500: #444446,
+		400: #545456,
+		300: #6c6c70,
+		200: #7c7c80,
+	),
+	lightGray: (
+		700: #8e8e93,
+		500: #babcc0,
+		400: #c4c4c6,
+		300: #e4e4e6,
+		200: #eee,
+	),
+);
+
+@function color($color, $tone) {
+	@if map-has-key($palettes, $color) {
+		$color: map-get($palettes, $color);
+
+		@if map-has-key($color, $tone) {
+			$tone: map-get($color, $tone);
+			@return $tone;
+		}
+
+		@return undefined;
+	}
+
+	@return undefined;
+}
+
+/* FONTS */
+$font-family-body: var(--ngc-font-body, AvertaStdCY, Helvetica, sans-serif);
+$font-family-code: var(--ngc-font-code, SourceCodePro, Helvetica, sans-serif);
+
+/* COLORS */
+$color-black: var(--ngc-color-neutral-black, #0a0a0a);
+$color-primary: var(--ngc-color-primary-default, #444446);
+$color-secondary: var(--ngc-color-neutral-background-canvas, #fafafa);
+$color-default: var(--ngc-color-neutral-background-disabled, #f5f5f5);
+$color-white: var(--ngc-color-neutral-white, #fff);
+
+$color-info: var(--ngc-color-info-default, #0a84ff);
+$color-success: var(--ngc-color-success-default, #34c759);
+$color-warning: var(--ngc-color-warning-default, #dfbf00);
+$color-danger: var(--ngc-color-danger-default, #ff3130);
+
+$color-text: var(--ngc-color-neutral-text-primary, #242426);
+$color-label: var(--ngc-color-neutral-text-tertiary, #8e8e93);
+$color-disabled: var(--ngc-color-neutral-text-disabled, #c4c4c6);
+$color-placeholder: var(--ngc-color-neutral-text-placeholder, #c4c4c6);
+
+$color-border-super-thick: var(--ngc-color-neutral-border-strong, #8e8e93);
+$color-border-thick: var(--ngc-color-neutral-border-strong, #babcc0);
+$color-border: var(--ngc-color-neutral-border-default, #e4e4e6);
+
+$color-active: var(--ngc-color-info-subtle, #ecf5ff);
+$color-highlight: var(--ngc-color-warning-subtle, #f4f0d9);
+
+$color-backdrop: rgba(207, 208, 210, .8);
+
+/* GRADIENTS */
+$gradient-primary: linear-gradient(to right, #7d7aff 0%, #f6627d 56%, #a4ebc9 100%);
+$gradient-primary-vertical: linear-gradient(to bottom, #a4ebc9 0%, #f6627d 44%, #7d7aff 100%);
+$gradient-secondary: linear-gradient(to right, rgba(#fff, 0) 1%, #fafafa 81%);
+$gradient-secondary-vertical: linear-gradient(to bottom, rgba(#fff, 0) 1%, #fafafa 81%);
+
+/* BOX SHADOWS */
+$box-shadow                  : var(--ngc-box-shadow,                  0 8px 10px -2px rgba(0, 0, 0, .15));
+$box-shadow-thick            : var(--ngc-box-shadow-thick,             0 10px 23px 2px rgba(36, 36, 38, .4));
+$box-shadow-focus            : var(--ngc-box-shadow-focus,             0 14px 24px -4px rgba(228, 228, 228, .4));
+$box-shadow-scroll-horizontal: var(--ngc-box-shadow-scroll-horizontal, 7px 0 7px -3px rgba(200, 200, 200, .5));
+$box-shadow-scroll-vertical  : var(--ngc-box-shadow-scroll-vertical,   0 14px 24px -4px rgba(187, 185, 185, .4));
+
+/* BORDER RADIUS */
+$radius-none: var(--ngc-radius-none, 0px);
+$radius-100: var(--ngc-radius-100, 2px);
+$radius-200: var(--ngc-radius-200, 4px);
+$radius-300: var(--ngc-radius-300, 6px);
+$radius-400: var(--ngc-radius-400, 8px);
+$radius-500: var(--ngc-radius-500, 12px);
+$radius-600: var(--ngc-radius-600, 16px);
+$radius-700: var(--ngc-radius-700, 24px);
+$radius-full: var(--ngc-radius-full, 9999px);
+
+/* ANIMATIONS */
+$popup-animation: 30ms ease-in forwards popupAnimation;
+$spin-animation: 2s linear infinite spin;
+
+/* Z-INDEX LEVELS */
+$z-level-1: var(--ngc-z-level-1, 100);
+$z-level-2: var(--ngc-z-level-2, 1000);
+$z-level-3: var(--ngc-z-level-3, 10000);
+$z-level-4: var(--ngc-z-level-4, 2147483647);
+
+/* FONT SIZES */
+$font-size-mini    : var(--ngc-font-size-mini,    10px);
+$font-size-small   : var(--ngc-font-size-small,   12px);
+$font-size-base    : var(--ngc-font-size-base,    14px);
+$font-size-large   : var(--ngc-font-size-large,   16px);
+$font-size-xlarge  : var(--ngc-font-size-xlarge,  18px);
+$font-size-xxlarge : var(--ngc-font-size-xxlarge, 20px);
+
+/* FONT WEIGHTS */
+$font-weight-normal   : var(--ngc-font-weight-normal,   400);
+$font-weight-semibold : var(--ngc-font-weight-semibold, 600);
+$font-weight-bold     : var(--ngc-font-weight-bold,     700);

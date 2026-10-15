@@ -1,0 +1,7 @@
+<ng-container *ngIf="isIonic; else icomoonBlock">
+  <ion-icon [name]="name"></ion-icon>
+</ng-container>
+<ng-template #icomoonBlock>
+  <!-- Icomoon icon font (local) -->
+  <i [ngClass]='"icon-" + name'></i>
+</ng-template>

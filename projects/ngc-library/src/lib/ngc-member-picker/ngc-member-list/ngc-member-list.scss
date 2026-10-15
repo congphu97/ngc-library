@@ -1,0 +1,85 @@
+@import 'variable';
+
+.ngc-member-list {
+	display: flex;
+
+	&:not(.ngc-member-list-menu) {
+		align-items: center;
+	}
+
+	&:hover,
+	&.ngc-member-list--active {
+		.ngc-member-list__btn-add {
+			opacity: 1;
+			visibility: visible;
+		}
+	}
+
+	.ngc-member-list__label {
+		margin-right: 15px;
+	}
+
+	.ngc-member-list__btn-add {
+		opacity: 0;
+		visibility: hidden;
+
+		&:not([disabled]) {
+			background-color: $color-white;
+			border-style: dashed;
+			border-color: $color-border-thick;
+			color: $color-placeholder;
+
+			&:focus-visible,
+			&:hover,
+			&.ngc-member-list__btn-add--focusing {
+				color: $color-text;
+			}
+
+			&:hover {
+				border-color: $color-border-thick;
+			}
+
+			&:focus-visible,
+			&.ngc-member-list__btn-add--focusing {
+				border-color: $color-border-super-thick;
+			}
+
+			&.ngc-member-list__btn-add--required {
+				border-color: $color-info;
+				color: $color-info;
+			}
+		}
+	}
+
+	.ngc-member-list__content {
+		display: flex;
+
+		&:not(:empty) ~ .ngc-member-list__btn-add {
+			margin-left: 10px;
+		}
+
+		.ngc-member-list__content-item {
+			position: relative;
+
+			&:hover {
+				.ngc-member-list__content-item__btn-remove {
+					z-index: 3;
+					opacity: 1;
+					visibility: visible;
+				}
+			}
+
+			&:not(:first-child) {
+				margin-left: -5px;
+			}
+
+			.ngc-member-list__content-item__btn-remove {
+				position: absolute;
+				top: -8px;
+				right: -8px;
+				opacity: 0;
+				visibility: hidden;
+			}
+		}
+	}
+}

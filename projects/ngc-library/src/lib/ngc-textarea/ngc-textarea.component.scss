@@ -1,0 +1,269 @@
+@import 'variable';
+
+.ngc-textarea-wrapper {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	font-family: $font-family-body;
+	box-sizing: border-box;
+
+	.ngc-textarea-label {
+		font-size: $font-size-small;
+		font-weight: $font-weight-bold;
+		margin-bottom: 6px;
+		color: var(--label-color, $color-label);
+		display: flex;
+		align-items: center;
+	}
+
+	.ngc-textarea-field-container {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+
+		textarea {
+			width: 100%;
+			box-sizing: border-box;
+			padding: 12px 14px;
+			border: 1px solid var(--border-color, $color-border);
+			border-radius: 6px;
+			background-color: var(--bg-color, $color-white);
+			color: var(--text-color, $color-text);
+			font-size: $font-size-base;
+			font-family: inherit;
+			outline: none;
+			resize: vertical;
+			min-height: 80px;
+			transition: all 0.2s ease;
+
+			&::placeholder {
+				color: $color-placeholder;
+				opacity: 0.8;
+			}
+
+			&:focus {
+				border-color: $color-primary;
+				box-shadow: 0 0 0 3px rgba($color-primary, 0.1);
+			}
+		}
+
+		.ngc-textarea-counter {
+			position: absolute;
+			bottom: 8px;
+			right: 12px;
+			font-size: $font-size-mini;
+			color: $color-placeholder;
+			pointer-events: none;
+			user-select: none;
+		}
+	}
+
+	.ngc-textarea-error-text {
+		font-size: $font-size-small;
+		color: $color-danger;
+		margin-top: 6px;
+		line-height: 1.4;
+	}
+
+	/* Appearance styles */
+	&.ngc-textarea--filled {
+		.ngc-textarea-field-container textarea {
+			background-color: $color-default;
+			border: none;
+			border-bottom: 1px solid var(--border-color, $color-border);
+			border-radius: 6px 6px 0 0;
+
+			&:focus {
+				border-color: transparent;
+				border-bottom: 2px solid $color-primary;
+				box-shadow: none;
+			}
+		}
+		
+		&.ngc-textarea--invalid {
+			.ngc-textarea-field-container textarea {
+				border-bottom-color: $color-danger;
+				&:focus {
+					border-bottom-color: $color-danger;
+				}
+			}
+		}
+	}
+
+	&.ngc-textarea--underlined {
+		.ngc-textarea-field-container textarea {
+			background-color: transparent;
+			border: none;
+			border-bottom: 1px solid var(--border-color, $color-border);
+			border-radius: 0;
+			padding-left: 0;
+			padding-right: 0;
+
+			&:focus {
+				border-color: transparent;
+				border-bottom: 2px solid $color-primary;
+				box-shadow: none;
+			}
+		}
+		
+		&.ngc-textarea--invalid {
+			.ngc-textarea-field-container textarea {
+				border-bottom-color: $color-danger;
+				&:focus {
+					border-bottom-color: $color-danger;
+				}
+			}
+		}
+		
+		.ngc-textarea-counter {
+			right: 0;
+		}
+	}
+
+	&.ngc-textarea--borderless {
+		.ngc-textarea-field-container textarea {
+			background-color: transparent;
+			border: none;
+			border-radius: 0;
+			padding-left: 0;
+			padding-right: 0;
+
+			&:focus {
+				box-shadow: none;
+			}
+		}
+		
+		.ngc-textarea-counter {
+			right: 0;
+		}
+	}
+
+	/* Invalid state styles */
+	&.ngc-textarea--invalid {
+		.ngc-textarea-field-container textarea {
+			&:not(:focus) {
+				border-color: $color-danger;
+			}
+
+			&:focus {
+				border-color: $color-danger;
+				box-shadow: 0 0 0 3px rgba($color-danger, 0.1);
+			}
+		}
+	}
+
+	/* Disabled state styles */
+	&.ngc-textarea--disabled {
+		pointer-events: none;
+
+		.ngc-textarea-field-container textarea {
+			background-color: $color-default;
+			border-color: $color-border;
+			color: $color-text;
+			opacity: 0.55;
+			cursor: not-allowed;
+		}
+
+		.ngc-textarea-label {
+			opacity: 0.5;
+		}
+	}
+}
+
+:host-context(.dark-theme) {
+	.ngc-textarea-wrapper {
+		.ngc-textarea-label {
+			color: $color-label;
+		}
+		.ngc-textarea-field-container textarea {
+			background-color: $color-black;
+			border-color: color(darkGray, 400);
+			color: $color-secondary;
+
+			&:focus {
+				border-color: $color-info;
+				box-shadow: 0 0 0 3px rgba($color-info, 0.15);
+			}
+		}
+		&.ngc-textarea--filled {
+			.ngc-textarea-field-container textarea {
+				background-color: color(darkGray, 500);
+				border-color: transparent;
+				border-bottom-color: color(darkGray, 400);
+
+				&:focus {
+					border-bottom-color: $color-info;
+					box-shadow: none;
+				}
+			}
+			&.ngc-textarea--invalid {
+				.ngc-textarea-field-container textarea {
+					border-bottom-color: $color-danger;
+					&:focus {
+						border-bottom-color: $color-danger;
+						box-shadow: none;
+					}
+				}
+			}
+		}
+		&.ngc-textarea--underlined {
+			.ngc-textarea-field-container textarea {
+				background-color: transparent;
+				border-color: transparent;
+				border-bottom-color: color(darkGray, 400);
+
+				&:focus {
+					border-bottom-color: $color-info;
+					box-shadow: none;
+				}
+			}
+			&.ngc-textarea--invalid {
+				.ngc-textarea-field-container textarea {
+					border-bottom-color: $color-danger;
+					&:focus {
+						border-bottom-color: $color-danger;
+						box-shadow: none;
+					}
+				}
+			}
+		}
+		&.ngc-textarea--borderless {
+			.ngc-textarea-field-container textarea {
+				background-color: transparent;
+				border-color: transparent;
+				
+				&:focus {
+					box-shadow: none;
+				}
+			}
+		}
+		&.ngc-textarea--invalid {
+			.ngc-textarea-field-container textarea {
+				&:not(:focus) {
+					border-color: $color-danger;
+				}
+				&:focus {
+					border-color: $color-danger;
+					box-shadow: 0 0 0 3px rgba($color-danger, 0.15);
+				}
+			}
+			.ngc-textarea-error-text {
+				color: $color-danger;
+			}
+		}
+		&.ngc-textarea--disabled {
+			.ngc-textarea-field-container textarea {
+				background-color: color(darkGray, 500);
+				border-color: color(darkGray, 400);
+				color: $color-label;
+				opacity: 0.6;
+				cursor: not-allowed;
+			}
+
+			.ngc-textarea-label {
+				opacity: 0.5;
+			}
+		}
+	}
+}

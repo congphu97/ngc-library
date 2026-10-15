@@ -1,0 +1,140 @@
+@import 'variable';
+
+.ngc-progress-bar {
+    width: 100%;
+    max-width: 500px;
+    margin: 5px;
+    font-family: $font-family-body;
+
+    .ngc-progress-bar__toggle {
+        height: 7px;
+        background: rgb(235, 235, 235);
+        border-radius: 7px;
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .ngc-progress-bar__line {
+        height: 12px;
+        background: var(--ngc-color-neutral-border-subtle, rgb(235, 235, 235));
+        border-radius: 12px;
+        width: 100%;
+        margin: 8px 0;
+    
+        .ngc-progress-bar__line-current {
+            width: calc(var(--ngc-progress-bar__percent) * 1%);
+            height: 100%;
+            background: var(--ngc-color-neutral-black, #000000);
+            border-radius: 12px;
+            transition: width 0.5s ease-in-out;
+        }
+    }    
+
+    .ngc-progress-bar__status {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--ngc-color-neutral-text-tertiary, #8e8e93);
+    }
+
+    /* PERCENT INLINE MODE */
+    &--percent-inline {
+        .ngc-progress-bar__percent-line {
+            position: relative;
+            height: 28px;
+            background-color: var(--ngc-color-neutral-border-subtle, #f0f2f9);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            .ngc-progress-bar__line-current {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: calc(var(--ngc-progress-bar__percent) * 1%);
+                background: var(--ngc-color-neutral-black, #000000);
+                border-radius: 14px;
+                transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .ngc-progress-bar__line-text {
+                position: absolute;
+                z-index: 1;
+                color: #ffffff;
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.5px;
+                mix-blend-mode: difference;
+            }
+        }
+    }
+
+    /* SAVINGS MODE */
+    &--savings {
+        .ngc-progress-bar__savings {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            .ngc-progress-bar__savings-header {
+                display: flex;
+                flex-direction: column;
+                margin-bottom: 12px;
+
+                .ngc-progress-bar__savings-category {
+                    font-size: 11px;
+                    text-transform: uppercase;
+                    font-weight: 700;
+                    letter-spacing: 0.8px;
+                    color: var(--ngc-color-neutral-text-tertiary, #9699a3);
+                }
+
+                .ngc-progress-bar__savings-target {
+                    font-size: 32px;
+                    font-weight: 800;
+                    color: var(--ngc-color-neutral-text-primary, #1f2335);
+                    margin-top: 4px;
+                }
+            }
+
+            .ngc-progress-bar__savings-bar {
+                height: 14px;
+                background-color: var(--ngc-color-neutral-border-subtle, #f0f2f9);
+                border-radius: 7px;
+                overflow: hidden;
+                width: 100%;
+                margin-bottom: 12px;
+
+                .ngc-progress-bar__line-current {
+                    height: 100%;
+                    width: calc(var(--ngc-progress-bar__percent) * 1%);
+                    background-color: var(--ngc-color-neutral-black, #000000);
+                    border-radius: 7px;
+                    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                }
+            }
+
+            .ngc-progress-bar__savings-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .ngc-progress-bar__savings-achieved {
+                    font-size: 13px;
+                    font-weight: 500;
+                    color: var(--ngc-color-neutral-text-tertiary, #9699a3);
+                }
+
+                .ngc-progress-bar__savings-current {
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: var(--ngc-color-neutral-text-primary, #1f2335);
+                }
+            }
+        }
+    }
+}

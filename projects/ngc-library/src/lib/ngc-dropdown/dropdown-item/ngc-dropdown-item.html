@@ -1,0 +1,12 @@
+<ng-template let-searchQuery="searchQuery">
+	<div #ref [ngClass]="classes" style="width: 100%; min-width: 0;"><ng-content></ng-content></div>
+
+	<ng-container *ngIf="!ref?.childNodes?.length">
+		<!--
+    <span
+      [innerHTML]="(label || value) | markText : searchQuery : true"
+    ></span>
+    -->
+		{{ (label || value) | empty }}
+	</ng-container>
+</ng-template>

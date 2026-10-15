@@ -1,0 +1,32 @@
+<ng-template>
+	<div class="ngc-menu" [ngClass]="classList" [style.width]="width" [style.minWidth]="minWidth"
+		[style.maxWidth]="maxWidth" [style.height]="height" [style.minHeight]="minHeight" [style.maxHeight]="maxHeight">
+		<div *ngIf="title || !!menuHeader?.templateRef" class="ngc-menu__header" [ngClass]="menuHeader?.classList">
+			<div *ngIf="title || !!menuHeader?.menuHeaderTitle?.templateRef" class="ngc-menu__header__title">
+				<div class="ngc-menu__header__title-wrapper" [ngClass]="menuHeader?.menuHeaderTitle?.classList">
+					<ngc-truncate limitLine="1" *ngIf="title">
+						{{ title }}
+					</ngc-truncate>
+					<ng-container *ngIf="!!menuHeader?.menuHeaderTitle?.templateRef">
+						<ng-container
+							*ngTemplateOutlet="menuHeader?.menuHeaderTitle?.templateRef; context: data;"></ng-container>
+					</ng-container>
+				</div>
+				<button ngcBasicButton icon="close" *ngIf="hasButtonClose" [ngcTooltip]="'NGC.LABEL.CLOSE' | translate"
+					(click)="close()">
+				</button>
+			</div>
+			<div class="ngc-menu__header__content" *ngIf="!!menuHeader?.templateRef">
+				<ng-container *ngTemplateOutlet="menuHeader?.templateRef; context: data;"></ng-container>
+			</div>
+		</div>
+		<div class="ngc-menu__content" ngcScrollBar detectScroll suppressScrollX *ngIf="!!menuContent?.templateRef"
+			[ngClass]="menuContent?.classList" [suppress]="!hasScrollBar" [mode]="scrollBarMode"
+			(scrollReachBottom)="loadMore?.emit(!!$event)">
+			<ng-container *ngTemplateOutlet="menuContent?.templateRef; context: data;"></ng-container>
+		</div>
+		<div class="ngc-menu__footer" *ngIf="!!menuFooter?.templateRef" [ngClass]="menuFooter?.classList">
+			<ng-container *ngTemplateOutlet="menuFooter?.templateRef; context: data;"></ng-container>
+		</div>
+	</div>
+</ng-template>

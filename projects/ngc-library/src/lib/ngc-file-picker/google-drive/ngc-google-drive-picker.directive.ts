@@ -1,0 +1,119 @@
+import {
+	Directive, HostListener, Output,
+	EventEmitter, Input
+} from '@angular/core';
+
+import { DefaultValue, CoerceBoolean, IObject, ENVIRONMENT } from '@core';
+
+declare const gapi: any;
+declare const google: any;
+
+export interface NgcIGoogleDriveFile {
+	description: string;
+	embedUrl: string;
+	iconUrl: string;
+	id: string;
+	isShared: boolean;
+	lastEditedUtc: number;
+	mimeType: string;
+	name: string;
+	organizationDisplayName: string;
+	rotation: number;
+	rotationDegree: number;
+	serviceId: string;
+	sizeBytes: number;
+	type: string;
+	url: string;
+}
+
+@Directive({ selector: '[ngcGoogleDrivePicker]', exportAs: 'ngcGoogleDrivePicker' })
+export class NgcGoogleDrivePickerDirective {
+
+	@Input() public mimeTypes: string[];
+	@Input() @DefaultValue() @CoerceBoolean() public multiSelect: boolean = true;
+	@Input() @CoerceBoolean() public disabled: boolean;
+
+	@Output() public picked: EventEmitter<NgcIGoogleDriveFile[]> = new EventEmitter<NgcIGoogleDriveFile[]>();
+
+	public pickerApiLoaded: boolean;
+
+	@HostListener( 'click', [ '$event' ] )
+	@HostListener( 'contextmenu', [ '$event' ] )
+	@HostListener( 'keydown.space', [ '$event' ] )
+	public triggerClick( event: Event ) {
+		if ( this.disabled ) return;
+
+		event.stopPropagation();
+		event.preventDefault();
+		this._loadPicker();
+	}
+
+	/**
+	 * @return {void}
+	 */
+	private _loadPicker() {
+		gapi.load( 'auth', { callback: this._onAuthApiLoaded.bind( this ) } );
+		gapi.load( 'picker', { callback: this._onPickerApiLoaded.bind( this ) } );
+	}
+
+	/**
+	 * @return {void}
+	 */
+	private _onAuthApiLoaded() {
+		gapi.auth.authorize(
+			{
+				// eslint-disable-next-line @typescript-eslint/naming-convention
+				client_id	: ENVIRONMENT.GOOGLE_DRIVE_CLIENT_ID,
+				scope		: [ 'profile', 'email', 'https://www.googleapis.com/auth/drive' ],
+				immediate	: false,
+			},
+			this._handleAuthResult.bind( this )
+		);
+	}
+
+	/**
+	 * @return {void}
+	 */
+	private _onPickerApiLoaded() {
+		this.pickerApiLoaded = true;
+	}
+
+	/**
+	 * @param {IObject} authResult
+	 * @return {void}
+	 */
+	private _handleAuthResult( authResult: IObject ) {
+		if ( authResult?.error === 'popup_closed_by_user' ) return;
+
+		if ( authResult?.error || !authResult?.access_token ) {
+			this.picked.emit( undefined );
+			return;
+		}
+
+		const pickerBuilder: typeof google.picker.PickerBuilder = new google.picker.PickerBuilder();
+		const view: typeof google.picker.View = new google.picker.View( google.picker.ViewId.DOCS );
+
+		view.setMimeTypes( this.mimeTypes );
+
+		const picker: typeof pickerBuilder.build = pickerBuilder
+		.enableFeature( google.picker.Feature.NAV_HIDDEN )
+		.enableFeature( this.multiSelect ? google.picker.Feature.MULTISELECT_ENABLED : undefined )
+		.setOAuthToken( authResult.access_token )
+		.addView( view )
+		.addView( new google.picker.DocsUploadView() )
+		.setCallback( this._onPicked.bind( this ) )
+		.build();
+
+		picker.setVisible( true );
+	}
+
+	/**
+	 * @param {IObject} event
+	 * @return {void}
+	 */
+	private _onPicked( event: IObject ) {
+		event[ google.picker.Response.ACTION ] === google.picker.Action.PICKED
+			&& this.picked.emit( event[ google.picker.Response.DOCUMENTS ] );
+	}
+
+}

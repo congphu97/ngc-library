@@ -1,0 +1,88 @@
+@import 'variable';
+@import 'mixin';
+
+.ngc-breadcrumb {
+	display: flex;
+	align-items: center;
+	font-family: $font-family-body;
+	font-weight: $font-weight-normal;
+	font-size: $font-size-base;
+	line-height: 14px;
+	color: color(lightGray, 700);
+
+	.ngc-breadcrumb__item {
+		display: flex;
+		align-items: center;
+		width: fit-content;
+		min-width: 0;
+		white-space: nowrap;
+		cursor: default;
+		color: color(lightGray, 700);
+		transition: color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+		&.ngc-breadcrumb__item--active {
+			cursor: pointer;
+
+			&:hover {
+				color: color(darkGray, 700);
+			}
+		}
+
+		&.ngc-breadcrumb__item--last {
+			font-weight: $font-weight-semibold;
+			color: color(darkGray, 700);
+			cursor: default;
+
+			&:hover {
+				color: color(darkGray, 700);
+			}
+		}
+
+		&.ngc-breadcrumb__item--disabled {
+			@include cursor-not-allowed;
+			color: $color-disabled;
+
+			&:hover {
+				color: $color-disabled;
+				opacity: 1;
+			}
+		}
+	}
+
+	.ngc-breadcrumb__divider-icon {
+		display: flex;
+		align-items: center;
+		margin-left: 8px;
+		margin-right: 8px;
+		--icon-color: #{color(lightGray, 500)};
+		--icon-font-size: 14px;
+	}
+}
+
+:host-context(.dark-theme) {
+	.ngc-breadcrumb {
+		color: color(lightGray, 500);
+
+		.ngc-breadcrumb__item {
+			color: color(lightGray, 500);
+
+			&.ngc-breadcrumb__item--active {
+				&:hover {
+					color: $color-white;
+				}
+			}
+
+			&.ngc-breadcrumb__item--last {
+				color: $color-white;
+			}
+
+			&.ngc-breadcrumb__item--disabled {
+				color: color(darkGray, 400);
+			}
+		}
+
+		.ngc-breadcrumb__divider-icon {
+			--icon-color: #{color(darkGray, 300)};
+		}
+	}
+}

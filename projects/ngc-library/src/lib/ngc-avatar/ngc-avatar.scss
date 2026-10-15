@@ -1,0 +1,102 @@
+@import 'variable';
+
+.ngc-avatar {
+	display: flex;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	color: var(--avatar-label-color, $color-white);
+	height: var(--avatar-size);
+	min-height: var(--avatar-size);
+	max-height: var(--avatar-size);
+	width: var(--size);
+	min-width: var(--avatar-size);
+	max-width: var(--avatar-size);
+	font-size: calc(var(--avatar-size) / 2.5);
+	border-radius: 50%;
+	font-weight: $font-weight-semibold;
+	overflow: hidden;
+	position: relative;
+
+	&:before {
+		content: '';
+		position: absolute;
+		top: .5px;
+		left: .5px;
+		right: .5px;
+		bottom: .5px;
+		background-color: var(--avatar-color, $color-black);
+		border: 1px solid $color-border;
+		border-radius: 50%;
+		z-index: 0;
+	}
+
+	&.ngc-avatar--auto {
+		color: white;
+
+		&:before {
+			background-image: url('/assets/images/bg-gradient.png');
+			background-position: center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+	}
+
+	&.ngc-avatar-xlarge {
+		height: 72px;
+		min-height: 72px;
+		max-height: 72px;
+		width: 72px;
+		min-width: 72px;
+		max-width: 72px;
+		font-size: 28px;
+	}
+
+	&.ngc-avatar-large {
+		height: 56px;
+		min-height: 56px;
+		max-height: 56px;
+		width: 56px;
+		min-width: 56px;
+		max-width: 56px;
+		font-size: 22.4px;
+	}
+
+	&.ngc-avatar-medium {
+		height: 40px;
+		min-height: 40px;
+		max-height: 40px;
+		width: 40px;
+		min-width: 40px;
+		max-width: 40px;
+		font-size: 16px;
+	}
+
+	&.ngc-avatar-small {
+		height: 32px;
+		min-height: 32px;
+		max-height: 32px;
+		width: 32px;
+		min-width: 32px;
+		max-width: 32px;
+		font-size: 12.8px;
+	}
+
+	.ngc-avatar__label {
+		position: relative;
+		z-index: 1;
+	}
+
+	.ngc-avatar__image {
+		position: absolute;
+		top: .5px;
+		left: .5px;
+		right: .5px;
+		bottom: .5px;
+		background-color: $color-white;
+		height: calc(100% - .5px);
+		width: calc(100% - .5px);
+		border-radius: 50%;
+		z-index: 2;
+	}
+}

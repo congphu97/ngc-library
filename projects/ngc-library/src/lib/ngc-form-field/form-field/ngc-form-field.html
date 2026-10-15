@@ -1,0 +1,189 @@
+<ng-template #content>
+  <ng-content></ng-content>
+</ng-template>
+
+<label
+  class="ngc-form-field__label"
+  ngcTruncate
+  [attr.required]="required || formFieldInput?.required || undefined">
+  <ng-container *ngIf="label; else elseBlock">
+    {{ label }}
+  </ng-container>
+</label>
+
+<ng-template #elseBlock>
+  <ng-content select="[ngcFormFieldLabel]"></ng-content>
+</ng-template>
+
+<div class="ngc-form-field__input-container">
+  <div class="ngc-form-field__prefix">
+    <ng-content select="[ngcFormFieldPrefix]"></ng-content>
+  </div>
+
+  <ngc-color-dot
+    class="ngc-form-field__dot-color"
+    *ngIf="displayColorDot"
+    [viewOnly]="disabled || control?.disabled || formFieldInput?.disabled"
+    [(color)]="dotColor"
+    (colorChange)="dotColorChange?.emit($event)">
+  </ngc-color-dot>
+
+  <div class="ngc-form-field__input">
+    <ng-container *ngIf="fakeInput; else elseBlock2">
+      <input
+        class="ngc-form-field__input__fake-input"
+        ngcFormFieldInput
+        readonly />
+      <div class="ngc-form-field__input__fake-input-content">
+        <ng-container *ngTemplateOutlet="content"></ng-container>
+      </div>
+    </ng-container>
+
+    <ng-template #elseBlock2>
+      <ng-container *ngTemplateOutlet="content"></ng-container>
+    </ng-template>
+  </div>
+
+  <div class="ngc-form-field__actions">
+    <button
+      class="ngc-form-field__action"
+      ngcBasicButton
+      tabindex="-1"
+      icon="close"
+      iconSize="16px"
+      *ngIf="canClear"
+      [ngcTooltip]="'NGC.LABEL.CLEAR' | translate"
+      (click)="formFieldInput?.clear(); formFieldInput?.focus($event);">
+    </button>
+
+    <button
+      class="ngc-form-field__action"
+      ngcBasicButton
+      tabindex="-1"
+      color="primary"
+      icon="check"
+      iconSize="16px"
+      *ngIf="canSave"
+      [ngcTooltip]="'NGC.LABEL.SAVE' | translate"
+      (click)="formFieldInput?.save($event); formFieldInput?.focus($event);">
+    </button>
+
+    <button
+      class="ngc-form-field__action"
+      ngcBasicButton
+      tabindex="-1"
+      icon="close"
+      iconSize="16px"
+      *ngIf="canCancel"
+      [ngcTooltip]="'NGC.LABEL.CANCEL' | translate"
+      (click)="formFieldInput?.cancel($event); formFieldInput?.focus($event);">
+    </button>
+
+    <button
+      class="ngc-form-field__action"
+      ngcBasicButton
+      tabindex="-1"
+      *ngIf="togglePasswordVisibility"
+      [ngcTooltip]="'NGC.LABEL.' + (unhidePassword ? 'HIDE_PASSWORD' : 'SHOW_PASSWORD') | translate"
+      [icon]="unhidePassword ? 'eye-off' : 'eye-on'"
+      (click)="togglePassword()">
+    </button>
+  </div>
+
+  <div class="ngc-form-field__suffix">
+    <ng-content select="[ngcFormFieldSuffix]"></ng-content>
+  </div>
+
+  <div class="ngc-form-field__description">
+    <ng-content select="[ngcFormFieldDescription]"></ng-content>
+  </div>
+</div>
+
+<div class="ngc-form-field__hint">
+  <ng-content select="[ngcFormFieldHint]"></ng-content>
+</div>
+
+<div
+  class="ngc-form-field__error"
+  *ngIf="control || formFieldError"
+  [class.ngc-form-field__error--inline]="errorDisplayMode === 'inline'">
+  <ng-container *ngIf="control?.touched">
+    <div
+      *ngFor="let error of control?.errors | controlErrors : (fieldName || ('NGC.LABEL.INPUT' | translate)) : multiErrors"
+      [innerHtml]="error">
+    </div>
+  </ng-container>
+  <ng-content select="[ngcFormFieldError]"></ng-content>
+</div>
+
+<div class="ngc-form-field__password-validation" *ngIf="canCheckWeekPassword">
+  <label class="ngc-form-field__password-validation__label">
+    {{ 'NGC.LABEL.MUST_CONTAINS' | translate }}
+  </label>
+
+  <div class="ngc-form-field__password-validation-rule-list">
+    <div
+      class="ngc-form-field__password-validation-rule"
+      [class.ngc-form-field__password-validation-rule--success]="passwordRule?.minlength"
+      [class.ngc-form-field__password-validation-rule--error]="!passwordRule?.minlength">
+      <ngc-icon
+        class="ngc-form-field__password-validation-rule__icon"
+        size="16px"
+        [name]="passwordRule?.minlength ? 'checkbox' : 'info'">
+      </ngc-icon>
+      {{ 'NGC.LABEL.MINIMUM_8_CHARACTERS' | translate }}
+    </div>
+
+    <div
+      class="ngc-form-field__password-validation-rule"
+      [class.ngc-form-field__password-validation-rule--success]="passwordRule?.numberOrSymbol"
+      [class.ngc-form-field__password-validation-rule--error]="!passwordRule?.numberOrSymbol">
+      <ngc-icon
+        class="ngc-form-field__password-validation-rule__icon"
+        name="info"
+        size="16px">
+      </ngc-icon>
+      {{ 'NGC.LABEL.NUMBERS_OR_SYMBOLS' | translate }}
+    </div>
+
+    <div
+      class="ngc-form-field__password-validation-rule"
+      [class.ngc-form-field__password-validation-rule--success]="passwordRule?.uppercase"
+      [class.ngc-form-field__password-validation-rule--error]="!passwordRule?.uppercase">
+      <ngc-icon
+        class="ngc-form-field__password-validation-rule__icon"
+        size="16px"
+        [name]="passwordRule?.uppercase ? 'checkbox' : 'info'">
+      </ngc-icon>
+      {{ 'NGC.LABEL.UPPERCASE_LETTERS' | translate }}
+    </div>
+
+    <div
+      class="ngc-form-field__password-validation-rule"
+      [class.ngc-form-field__password-validation-rule--success]="passwordRule?.lowercase"
+      [class.ngc-form-field__password-validation-rule--error]="!passwordRule?.lowercase">
+      <ngc-icon
+        class="ngc-form-field__password-validation-rule__icon"
+        size="16px"
+        [name]="passwordRule?.lowercase ? 'checkbox' : 'info'">
+      </ngc-icon>
+      {{ 'NGC.LABEL.LOWERCASE_LETTERS' | translate }}
+    </div>
+  </div>
+
+  <ngc-range-input
+    class="ngc-form-field__password-validation__slider"
+    readonly
+    tabindex="-1"
+    [ngModel]="passwordRule?.percent"
+    [color]="passwordHighlight[passwordRule?.percent]?.color">
+  </ngc-range-input>
+
+  <div class="ngc-form-field__password-validation__message">
+    {{ passwordHighlight[passwordRule?.percent]?.message }}
+  </div>
+
+  <div class="ngc-form-field__password-validation__hint">
+    {{ 'NGC.MESSAGE.CHECK_WEEK_PASSWORD_HINT' | translate }}
+  </div>
+</div>

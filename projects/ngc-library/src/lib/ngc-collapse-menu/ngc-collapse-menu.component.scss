@@ -1,0 +1,130 @@
+@import 'variable';
+
+.ngc-collapse-menu-container {
+	width: 100%;
+	max-width: 280px;
+	background-color: #ffffff;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	box-sizing: border-box;
+	user-select: none;
+	padding: 10px;
+
+	.ngc-collapse-menu__group-title {
+		font-size: 11px;
+		text-transform: uppercase;
+		color: #71717a;
+		font-weight: 600;
+		padding: 0 8px 8px 8px;
+		letter-spacing: 0.05em;
+	}
+
+	.ngc-collapse-menu__header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 12px;
+		border-radius: 8px;
+		cursor: pointer;
+		color: #09090b;
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			background-color: #f4f4f5;
+		}
+
+		.ngc-collapse-menu__title-wrapper {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.ngc-collapse-menu__main-icon {
+			--icon-color: #09090b;
+		}
+
+		.ngc-collapse-menu__title {
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		.ngc-collapse-menu__arrow {
+			--icon-color: #71717a;
+			transition: transform 0.2s ease;
+
+			&--rotated {
+				transform: rotate(-180deg);
+			}
+		}
+	}
+
+	/* Collapse Body & Vertical Timeline line */
+	.ngc-collapse-menu__body {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.22s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.22s ease;
+		opacity: 0;
+		position: relative;
+		padding-left: 12px;
+
+		&--expanded {
+			grid-template-rows: 1fr;
+			opacity: 1;
+			margin-top: 4px;
+		}
+
+		.ngc-collapse-menu__vertical-line {
+			display: none; /* Removed in favor of list border */
+		}
+
+		.ngc-collapse-menu__items-list {
+			grid-row: 1 / -1;
+			overflow: hidden;
+			list-style: none;
+			padding: 0 0 0 16px;
+			margin: 0 0 0 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			border-left: 1px solid #e4e4e7; /* Clean light gray vertical line */
+		}
+
+		.ngc-collapse-menu__item-wrapper {
+			width: 100%;
+			position: relative;
+		}
+
+		.ngc-collapse-menu__item-link {
+			display: flex;
+			align-items: center;
+			padding: 8px 12px;
+			font-size: 13px;
+			font-weight: 500;
+			color: #3f3f46;
+			text-decoration: none;
+			border-radius: 6px;
+			transition: all 0.15s ease-in-out;
+
+			&:hover {
+				background-color: #f4f4f5;
+				color: #09090b;
+			}
+
+			&--active {
+				background-color: #f4f4f5;
+				color: #09090b;
+				font-weight: 700;
+
+				&::before {
+					content: "";
+					position: absolute;
+					left: -17px; /* Align perfectly over the list border-left */
+					top: 4px;
+					bottom: 4px;
+					width: 2px;
+					background-color: #09090b; /* Dark active highlight line */
+					border-radius: 1px;
+				}
+			}
+		}
+	}
+}

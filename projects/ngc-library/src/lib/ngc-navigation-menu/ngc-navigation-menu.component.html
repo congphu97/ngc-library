@@ -1,0 +1,35 @@
+<div class="ngc-navigation-menu" (mouseleave)="onMouseLeave()">
+	<ul class="ngc-navigation-menu__list">
+		<li *ngFor="let item of items; let idx = index" 
+			class="ngc-navigation-menu__item"
+			(mouseenter)="onMouseEnter(idx)">
+			<button class="ngc-navigation-menu__trigger" [class.ngc-navigation-menu__trigger--active]="activeIndex === idx">
+				{{ item.label }}
+				<span class="ngc-navigation-menu__arrow-icon" *ngIf="item.trigger"></span>
+			</button>
+		</li>
+	</ul>
+
+	<!-- Animated Dropdown Panel Container -->
+	<div class="ngc-navigation-menu__viewport" 
+		 [class.ngc-navigation-menu__viewport--visible]="activeIndex !== null"
+		 (mouseenter)="onViewportEnter()"
+		 (mouseleave)="onMouseLeave()">
+		<div class="ngc-navigation-menu__panel-wrapper" 
+			 *ngFor="let item of items; let idx = index"
+			 [class.ngc-navigation-menu__panel-wrapper--active]="activeIndex === idx">
+			
+			<div *ngIf="item.trigger" 
+				 class="ngc-navigation-menu__panel"
+				 [class.ngc-navigation-menu__panel--cols-2]="item.columns === 2">
+				<a href="javascript:void(0)" 
+				   *ngFor="let sub of item.children" 
+				   class="ngc-navigation-menu__link">
+					<div class="ngc-navigation-menu__link-title">{{ sub.title }}</div>
+					<div class="ngc-navigation-menu__link-desc">{{ sub.description }}</div>
+				</a>
+			</div>
+
+		</div>
+	</div>
+</div>

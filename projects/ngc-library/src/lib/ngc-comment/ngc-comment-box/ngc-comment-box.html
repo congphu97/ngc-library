@@ -1,0 +1,108 @@
+<!-- Emoji popup menu -->
+<ngc-menu #emojiMenu [title]="'Emoji'">
+	<ng-template ngcMenuContent>
+		<ngc-emoji-picker (picked)="onEmojiPicked($event); emojiMenu.close()"></ngc-emoji-picker>
+	</ng-template>
+</ngc-menu>
+
+<!-- Image picker popup menu -->
+<ngc-menu #imageMenu [title]="'Add Image'">
+	<ng-template ngcMenuContent>
+		<ngc-file-picker imageOnly multiSelect mode="inline" (picked)="onImagePicked($event); imageMenu.close()"></ngc-file-picker>
+	</ng-template>
+</ngc-menu>
+
+<!-- File attachment popup menu -->
+<ngc-menu #fileMenu [title]="'Add Attachment'">
+	<ng-template ngcMenuContent>
+		<ngc-file-picker multiSelect mode="inline" (picked)="onFilePicked($event); fileMenu.close()"></ngc-file-picker>
+	</ng-template>
+</ngc-menu>
+
+<!-- Image previews -->
+<div class="ngc-comment-box__images" *ngIf="images?.length">
+	<div class="ngc-comment-box__image-item" *ngFor="let image of images; let i = index;">
+		<img [src]="image.previewUrl || image.url" [alt]="image.name" />
+		<button class="ngc-comment-box__file-remove" (click)="removeImage(i)">
+			<ngc-icon name="close" size="12px"></ngc-icon>
+		</button>
+	</div>
+	<div class="ngc-comment-box__file-btn-add"
+		*ngIf="!maxImagePerComment || images.length < maxImagePerComment"
+		[ngcMenuTriggerFor]="imageMenu">
+		<ngc-icon name="image-plus" size="16px"></ngc-icon>
+	</div>
+</div>
+
+<!-- Attachment previews -->
+<div class="ngc-comment-box__attachments" *ngIf="attachments?.length">
+	<div class="ngc-comment-box__attachment-item" *ngFor="let file of attachments; let i = index;">
+		<ngc-icon name="attachment" size="14px"></ngc-icon>
+		<span class="ngc-comment-box__attachment-name">{{ file.name }}</span>
+		<button class="ngc-comment-box__file-remove" (click)="removeAttachment(i)">
+			<ngc-icon name="close" size="12px"></ngc-icon>
+		</button>
+	</div>
+</div>
+
+<!-- Text area -->
+<textarea
+	#textarea
+	class="ngc-comment-box__textarea"
+	[placeholder]="placeholder"
+	[(ngModel)]="text"
+	(keydown)="onKeyDown($event)">
+</textarea>
+
+<!-- Toolbar -->
+<div class="ngc-comment-box__toolbar">
+	<div class="ngc-comment-box__toolbar-left">
+
+		<!-- Emoji -->
+		<div class="ngc-comment-box__toolbar-action"
+			position="above"
+			[ngcMenuTriggerFor]="emojiMenu"
+			ngcTooltip="Emoji">
+			<ngc-icon name="emoji" size="18px"></ngc-icon>
+		</div>
+
+		<!-- Image attach -->
+		<div class="ngc-comment-box__toolbar-action"
+			*ngIf="!images?.length"
+			position="above"
+			[ngcMenuTriggerFor]="imageMenu"
+			ngcTooltip="Add Image">
+			<ngc-icon name="image-plus" size="18px"></ngc-icon>
+		</div>
+
+		<!-- File attach -->
+		<div class="ngc-comment-box__toolbar-action"
+			*ngIf="!attachments?.length"
+			position="above"
+			[ngcMenuTriggerFor]="fileMenu"
+			ngcTooltip="Add Attachment">
+			<ngc-icon name="attachment" size="18px"></ngc-icon>
+		</div>
+
+	</div>
+
+	<div class="ngc-comment-box__toolbar-right">
+		<button
+			class="ngc-comment-box__btn-cancel"
+			*ngIf="subEditor || editingComment"
+			(click)="cancel()">
+			Cancel
+		</button>
+		<button
+			class="ngc-comment-box__btn-send"
+			[disabled]="isDisabled"
+			(click)="sendComment()">
+			{{ editingComment ? 'Save' : 'Send' }}
+		</button>
+	</div>
+</div>
+
+<!-- Hint for sub editor -->
+<p class="ngc-comment-box__hint" *ngIf="subEditor">
+	<kbd>Enter</kbd> send &nbsp;·&nbsp; <kbd>Shift+Enter</kbd> newline &nbsp;·&nbsp; <kbd>Esc</kbd> cancel
+</p>

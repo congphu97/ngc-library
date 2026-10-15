@@ -1,0 +1,97 @@
+<!-- Preview Mixin -->
+<ng-template #preview>
+  <img class="ngc-phone-field__country-picker__preview-image"
+       [style.width.px]="26"
+       [style.minWidth.px]="26"
+       [style.maxWidth.px]="26"
+       [lazyLoad]="countryCode | flagImage" />
+</ng-template>
+
+<!-- Country Menu -->
+<ngc-menu #countryMenu
+          width="200px"
+          maxHeight="300px"
+          [title]="'NGC.PLACEHOLDER.SELECT_COUNTRY' | translate">
+
+  <ngc-menu-header>
+    <ng-template ngcMenuHeader>
+      <ngc-search-box [data]="PHONE_COUNTRIES"
+                      [filterPredicate]="filterPredicate"
+                      (filtered)="filteredPhoneCountries = $any($event)">
+      </ngc-search-box>
+    </ng-template>
+  </ngc-menu-header>
+
+  <ngc-menu-content>
+    <ng-template ngcMenuContent>
+      <button ngcMenuItem
+              *ngFor="let phoneCountry of filteredPhoneCountries; trackBy: 'code' | trackByFn"
+              [active]="countryCode === phoneCountry?.code"
+              (click)="changeCountryCode(phoneCountry?.code, phoneCountry?.dialCode)">
+        <div ngcMenuItemPrefix>
+          <img [style.width.px]="26"
+               [style.minWidth.px]="26"
+               [style.maxWidth.px]="26"
+               [lazyLoad]="phoneCountry?.code | flagImage" />
+        </div>
+        <ngc-truncate>
+          {{ phoneCountry?.dialCode | empty }} {{ phoneCountry?.name | empty }}
+        </ngc-truncate>
+      </button>
+    </ng-template>
+  </ngc-menu-content>
+</ngc-menu>
+
+<!-- Phone Field Label -->
+<label class="ngc-phone-field__label" ngcTruncate [attr.required]="required || undefined">
+  {{ label }}
+</label>
+
+<!-- Phone Field Input Wrapper -->
+<div class="ngc-phone-field-wrapper">
+  <ngc-form-field class="ngc-phone-field__input"
+                  [appearance]="appearance"
+                  [errorDisplayMode]="errorDisplayMode">
+
+    <div ngcFormFieldPrefix>
+      <div class="ngc-phone-field__country-picker">
+        <ng-container *ngIf="readonly; else elseBlock">
+          <ng-container *ngTemplateOutlet="preview"></ng-container>
+        </ng-container>
+        <ng-template #elseBlock>
+          <button ngcBasicButton
+                  tabindex="-1"
+                  [disabled]="disabled"
+                  [ngcMenuTriggerFor]="countryMenu">
+            <ng-container *ngTemplateOutlet="preview"></ng-container>
+            <ngc-icon size="16px"
+                      [name]="countryMenu?.isOpened ? 'chevron-up' : 'chevron-down'">
+            </ngc-icon>
+          </button>
+        </ng-template>
+        <ngc-divider class="ngc-phone-field__country-picker__divider" vertical></ngc-divider>
+        <div class="ngc-phone-field__country-picker__preview-text">
+          {{ countryDialCode }}
+        </div>
+      </div>
+    </div>
+
+    <input ngcFormFieldInput
+           clearable
+           [name]="name || ('NGC.LABEL.PHONE_NUMBER' | translate)"
+           [autoFocusOn]="autoFocusOn"
+           [autoReset]="autoReset"
+           [disableControl]="disabled"
+           [readonly]="readonly"
+           [required]="required"
+           [formControl]="phoneFormControl"
+           [placeholder]="placeholder || (countryCode | examplePhoneNumber) || ('NGC.PLACEHOLDER.TYPE_PHONE' | translate)"
+           [(ngModel)]="phone"
+           (ngModelChange)="onChanged()"
+           (cleared)="cleared?.emit($event)"
+           (input)="input?.emit($event); onTouched();"
+           (focus)="focus?.emit($event)"
+           (blur)="blur?.emit($event); onTouched();" />
+
+  </ngc-form-field>
+</div>

@@ -1,0 +1,16 @@
+@import 'variable';
+
+ngc-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--icon-color, inherit);
+	font-size: var(--icon-font-size, inherit);
+	line-height: var(--icon-line-height, inherit);
+
+	i, ion-icon {
+		font-size: inherit;
+		line-height: inherit;
+		color: inherit;
+	}
+}

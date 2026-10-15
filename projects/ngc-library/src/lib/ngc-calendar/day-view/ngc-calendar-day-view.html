@@ -1,0 +1,71 @@
+<!-- include ../common/event-item-action.partial.pug -->
+
+<ngc-scroll-bar mode="auto">
+  <div class="ngc-calendar-event-block" *ngFor="let block of eventBlocks">
+    <div class="ngc-calendar-event-block__header">
+      <span>{{ block?.moment | momentDate : "HH:mm" }}</span>
+    </div>
+
+    <div class="ngc-calendar-current-time-block">
+      <div class="ngc-calendar-event-block__body">
+        <div class="ngc-calendar-event-item-wrapper" *ngFor="
+            let event of
+              (block?.seeMore || block?.events?.length <= maxEventPerHour * 2
+                ? block?.events
+                : block?.events | slice : 0 : maxEventPerHour);
+            trackBy: 'id' | trackByFn
+          " [style.--max-event-per-hour]="maxEventPerHour">
+
+
+          <!-- Calendar item -->
+
+          <ng-container *ngIf="eventTemplate; else elseBlock">
+            <ng-container *ngTemplateOutlet="eventTemplate; context: { event: event }"></ng-container>
+          </ng-container>
+
+          <ng-template #elseBlock>
+            <ngc-card class="ngc-calendar-event-item" borderRadius="12px" contentPaddingVertical="10px"
+              contentPaddingRight="10px" [color]="displayHighlight ? event?.color : undefined"
+              [active]="activeState && event?.id === selectedEventID"
+              [class.ngc-calendar-event-item--inactive]="event?.inactive" (click)="selectEvent(event)">
+              <div class="ngc-calendar-event-item__content">
+                <div class="ngc-calendar-event-item__info"
+                  [style.color]="displayHighlight && event?.color ? (event.color | contrast) : ('TEXT' | color)">
+                  <div class="ngc-calendar-event-item__name" ngcInlineInput ngDefaultControl [name]="'name'"
+                    [placeholder]="placeholder" [formControl]="nameFormControl" [ngModel]="event?.name"
+                    [(editing)]="event.isEditing" (saved)="updateEvent(event, $event)">
+                    <ngc-truncate [limitLine]="1">
+                      <span [innerHtml]="event?.name | markText : searchBox?.searchQuery : true"></span>
+                    </ngc-truncate>
+                  </div>
+                  {{ event?.moment | momentDate : 'HH:mm' }}
+                </div>
+
+                <button ngcIconButton icon="more-vertical" *ngIf="event?.actionable && !event?.inactive"
+                  [color]="'WHITE' | color" [ngcTooltip]="'ngc.LABEL.MORE_ACTIONS' | translate"
+                  [ngcMenuTriggerFor]="actionMenu || ngcCalendarActionMenu" [menuData]="{ event: event }"
+                  (click)="$event?.stopPropagation()"></button>
+              </div>
+            </ngc-card>
+          </ng-template>
+          <!-- Calendar item -->
+
+        </div>
+      </div>
+
+      <div class="ngc-calendar-event-block__footer">
+        <button ngcButton alignment="left" icon="double-chevron-down"
+          *ngIf="block?.events?.length > maxEventPerHour * 2 && !block?.seeMore" (click)="block.seeMore = true">
+          {{ "ngc.LABEL.SHOW_MORE_COUNT" | translate : { count: block?.events?.length - maxEventPerHour } }}
+        </button>
+
+        <!-- include ../common/event-block-footer.partial.pug -->
+      </div>
+
+      <div class="ngc-calendar-current-time" *ngIf="block?.showCurrentTime"
+        [style.--current-time]="currentTime?.minute()">
+        <span>{{ currentTime | momentDate : "HH:mm" }}</span>
+      </div>
+    </div>
+  </div>
+</ngc-scroll-bar>

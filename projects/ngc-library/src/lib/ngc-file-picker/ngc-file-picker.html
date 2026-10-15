@@ -1,0 +1,82 @@
+.ngc-file-picker__header(*ngIf='mode !== "inline"')
+	.ngc-file-picker__header-title
+		| {{ "WGC.LABEL.UPLOAD_FILE" | translate }}
+	button(
+		ngcBasicButton,
+		icon='close',
+		[ngcTooltip]='"WGC.LABEL.CLOSE" | translate',
+		(click)='close()')
+.ngc-file-picker__label
+	| {{ "WGC.LABEL.FROM" | translate }}
+button.ngc-file-picker__option(ngcBasicButton, [disabled]='isUploading', (click)='filePickerInput?.click()')
+	ngc-icon.ngc-file-picker__option-icon(name='document', size='20px')
+	| {{ "WGC.LABEL.YOUR_COMPUTER" | translate }}
+	| ({{ "WGC.LABEL.MAX" | translate }}: {{ maxFileSize | fileSize }})
+button.ngc-file-picker__option(
+	ngcBasicButton,
+	ngcGoogleDrivePicker,
+	*ngIf='cloudStorageConfig?.googleDrive',
+	[disabled]='isUploading',
+	[mimeTypes]='googleDriveMimeTypes',
+	[multiSelect]='multiSelect',
+	(picked)='onGoogleDrivePicked( $event )')
+	img.ngc-file-picker__option-icon(width='20px', height='20px', [lazyLoad]='"assets/images/icons/google-drive.png"')
+	| Google Drive
+button.ngc-file-picker__option(
+	ngcBasicButton,
+	ngcDropboxPicker,
+	*ngIf='cloudStorageConfig?.dropbox',
+	[disabled]='isUploading',
+	[extensions]='dropboxExtensions',
+	[multiSelect]='multiSelect',
+	(picked)='onDropboxPicked( $event )')
+	img.ngc-file-picker__option-icon(width='20px', height='20px', [lazyLoad]='"assets/images/icons/dropbox.png"')
+	| Dropbox
+button.ngc-file-picker__option(
+	ngcBasicButton,
+	ngcOneDrivePicker,
+	*ngIf='cloudStorageConfig?.oneDrive',
+	[disabled]='isUploading',
+	[extensions]='oneDriveExtensions',
+	[multiSelect]='multiSelect',
+	(picked)='onOneDrivePicked( $event )')
+	img.ngc-file-picker__option-icon(width='20px', height='20px', [lazyLoad]='"assets/images/icons/one-drive.png"')
+	| OneDrive
+.ngc-file-picker__label
+	| {{ "WGC.LABEL.OR_DROP_FILE_HERE" | translate }}
+.ngc-file-picker__upload-list(*ngIf='uploadingFiles; else elseBlock;')
+	.ngc-file-picker__upload-list-item(*ngFor='let file of uploadingFiles; let index = index;')
+		img.ngc-file-picker__upload-list-item__icon(width='24px', [lazyLoad]='file?.name | fileIcon')
+		.ngc-file-picker__upload-list-item__info
+			ngc-truncate.ngc-file-picker__upload-list-item__info-name(limitLine='1')
+				| {{ file?.name | empty }}
+			.ngc-file-picker__upload-list-item__info-size
+				| {{ file?.size | fileSize }}
+		.ngc-file-picker__upload-list-item__loading
+			ng-container(*ngIf='uploadingFileStates[ index ]?.success === undefined; else elseBlock;')
+				round-progress(
+					[stroke]='1.5',
+					[radius]='11',
+					[color]='"INFO" | color',
+					[background]='"PLACEHOLDER" | color',
+					[current]='uploadingFileStates[ index ]?.loaded || 0',
+					[max]='uploadingFileStates[ index ]?.total || 100')
+			ng-template(#elseBlock)
+				ngc-icon(
+					size='24px',
+					[name]='uploadingFileStates[ index ]?.success ? "check" : "warning"',
+					[color]='( uploadingFileStates[ index ]?.success ? "SUCCESS" : "WARNING" ) | color')
+ng-template(#elseBlock)
+	.ngc-file-picker__dropzone(
+		(dragover)='$event?.stopPropagation(); $event?.preventDefault();',
+		(drop)='$event?.preventDefault(); onLocalPicked( $event?.dataTransfer?.files )')
+		ngc-icon(name='cloud-upload', size='48px')
+input(
+	#filePickerInput,
+	type='file',
+	tabindex='-1',
+	style='display: none',
+	[disabled]='isUploading',
+	[attr.multiple]='multiSelect || undefined',
+	[attr.accept]='fileAccept',
+	(change)='onLocalPicked( $any( $event?.target )?.files ); filePickerInput.value = "";')

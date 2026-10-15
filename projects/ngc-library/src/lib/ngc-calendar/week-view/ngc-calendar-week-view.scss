@@ -1,0 +1,129 @@
+@import 'variable';
+
+.ngc-calendar-week-view {
+	flex-grow: 1;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+
+	.ngc-calendar-week-view__wrapper {
+		min-width: fit-content;
+		display: flex;
+		flex-direction: column;
+
+		.ngc-calendar-week-view__header {
+			padding-left: 50px;
+			background-color: $color-white;
+			display: flex;
+			position: sticky;
+			top: 0;
+			z-index: 3;
+
+			.ngc-calendar-week-view__header-day-block {
+				padding-right: 15px;
+				padding-bottom: 10px;
+				padding-left: 15px;
+				width: calc(100% / 7);
+				min-width: 200px;
+
+				&:not(:nth-child(7)) {
+					border-right: 1px solid $color-border;
+				}
+
+				span {
+					&:before {
+						width: 26px;
+						height: 26px;
+						border-radius: 50%;
+						border: 1px solid transparent;
+						font-weight: $font-weight-semibold;
+						content: attr(data-date);
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+
+					&.ngc-calendar-event-block__header--highlight {
+						&:before {
+							background-color: var(--primary-color, $color-primary);
+							color: $color-white;
+						}
+					}
+				}
+			}
+		}
+
+		.ngc-calendar-week-view__body {
+			flex: 1 1 auto;
+			margin-top: 5px;
+
+			.ngc-calendar-hour-block {
+				z-index: -2;
+				position: relative;
+
+				&:before {
+					z-index: -3;
+					position: absolute;
+					top: 50%;
+					right: 0;
+					bottom: 0;
+					left: 0;
+					border-top: 1px solid $color-border;
+					content: '';
+				}
+
+				span {
+					padding-right: 10px;
+					background-color: $color-white;
+					display: inline-block;
+					width: 48px;
+				}
+			}
+
+			.ngc-calendar-current-time-block {
+				padding-left: 50px;
+				display: flex;
+				position: relative;
+
+				.ngc-calendar-event-block {
+					width: calc(100% / 7);
+					min-width: 100px;
+					min-height: 100px;
+					margin-top: -23px;
+					padding-top: 25px;
+					padding-right: 10px;
+					padding-left: 10px;
+
+					&:not(:nth-child(7n)) {
+						border-right: 1px solid $color-border;
+					}
+
+					.ngc-calendar-event-block__body {
+						&:not(:empty) {
+							padding-bottom: 10px;
+						}
+
+						> :not(:last-child) {
+							margin-bottom: 10px;
+						}
+					}
+				}
+
+				.ngc-calendar-current-time {
+					position: absolute;
+					right: 0;
+					bottom: calc(100% - (var(--current-time) / 60 * 100 * 1%));
+					left: 0;
+					border-bottom: 2px solid var(--primary-color, $color-primary);
+					color: var(--primary-color, $color-primary);
+					z-index: -1;
+
+					span {
+						padding-right: 5px;
+						background-color: $color-white;
+					}
+				}
+			}
+		}
+	}
+}
