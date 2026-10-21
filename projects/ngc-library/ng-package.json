@@ -10,6 +10,7 @@
     ]
   },
   "assets": [
-    "./src/lib/scss"
+    "./src/lib/scss",
+    "./src/lib/core/i18n"
   ]
 }
