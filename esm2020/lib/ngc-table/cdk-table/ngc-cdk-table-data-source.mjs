@@ -1,0 +1,21 @@
+import { DataSource } from '@angular/cdk/collections';
+import { BehaviorSubject } from 'rxjs';
+export class NgcCdkTableDataSource extends DataSource {
+    constructor() {
+        super(...arguments);
+        this._data$ = new BehaviorSubject([]);
+    }
+    get data() { return this._data$.value; }
+    set data(data) { this._data$.next(data); }
+    /**
+     * @return {Observable}
+     */
+    connect() {
+        return this._data$;
+    }
+    /**
+     * @return {void}
+     */
+    disconnect() { }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmdjLWNkay10YWJsZS1kYXRhLXNvdXJjZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL25nYy1saWJyYXJ5L3NyYy9saWIvbmdjLXRhYmxlL2Nkay10YWJsZS9uZ2MtY2RrLXRhYmxlLWRhdGEtc291cmNlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxVQUFVLEVBQUUsTUFBTSwwQkFBMEIsQ0FBQztBQUN0RCxPQUFPLEVBQWMsZUFBZSxFQUFFLE1BQU0sTUFBTSxDQUFDO0FBRW5ELE1BQU0sT0FBTyxxQkFBeUIsU0FBUSxVQUFhO0lBQTNEOztRQUVpQixXQUFNLEdBQXlCLElBQUksZUFBZSxDQUFPLEVBQUUsQ0FBRSxDQUFDO0lBaUIvRSxDQUFDO0lBZkEsSUFBSSxJQUFJLEtBQVUsT0FBTyxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUM7SUFDN0MsSUFBSSxJQUFJLENBQUUsSUFBUyxJQUFLLElBQUksQ0FBQyxNQUFNLENBQUMsSUFBSSxDQUFFLElBQUksQ0FBRSxDQUFDLENBQUMsQ0FBQztJQUVuRDs7T0FFRztJQUNJLE9BQU87UUFDYixPQUFPLElBQUksQ0FBQyxNQUFNLENBQUM7SUFDcEIsQ0FBQztJQUVEOztPQUVHO0lBQ0ksVUFBVSxLQUFJLENBQUM7Q0FFdEIiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBEYXRhU291cmNlIH0gZnJvbSAnQGFuZ3VsYXIvY2RrL2NvbGxlY3Rpb25zJztcbmltcG9ydCB7IE9ic2VydmFibGUsIEJlaGF2aW9yU3ViamVjdCB9IGZyb20gJ3J4anMnO1xuXG5leHBvcnQgY2xhc3MgTmdjQ2RrVGFibGVEYXRhU291cmNlPFQ+IGV4dGVuZHMgRGF0YVNvdXJjZTxUPiB7XG5cblx0cHVibGljIHJlYWRvbmx5IF9kYXRhJDogQmVoYXZpb3JTdWJqZWN0PFRbXT4gPSBuZXcgQmVoYXZpb3JTdWJqZWN0PFRbXT4oIFtdICk7XG5cblx0Z2V0IGRhdGEoKTogVFtdIHsgcmV0dXJuIHRoaXMuX2RhdGEkLnZhbHVlOyB9XG5cdHNldCBkYXRhKCBkYXRhOiBUW10gKSB7IHRoaXMuX2RhdGEkLm5leHQoIGRhdGEgKTsgfVxuXG5cdC8qKlxuXHQgKiBAcmV0dXJuIHtPYnNlcnZhYmxlfVxuXHQgKi9cblx0cHVibGljIGNvbm5lY3QoKTogT2JzZXJ2YWJsZTxhbnlbXT4ge1xuXHRcdHJldHVybiB0aGlzLl9kYXRhJDtcblx0fVxuXG5cdC8qKlxuXHQgKiBAcmV0dXJuIHt2b2lkfVxuXHQgKi9cblx0cHVibGljIGRpc2Nvbm5lY3QoKSB7fVxuXG59XG4iXX0=

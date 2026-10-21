@@ -1,0 +1,13 @@
+export * from 'angular-core';
+export { FormModule } from './form.module';
+export { CoreModule } from './core.module';
+export { EqualValidators } from './equal-validators';
+export * from './components';
+export * from './decorators';
+export * from './interfaces';
+export * from './helpers';
+export * from './services';
+export * from './directives';
+export * from './pipes';
+export * from './loaders';
+export * from './environment';

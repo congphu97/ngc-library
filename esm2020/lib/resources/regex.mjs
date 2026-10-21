@@ -1,0 +1,7 @@
+import { REGEX as _REGEX } from 'angular-core';
+// eslint-disable-next-line @typescript-eslint/typedef, @typescript-eslint/explicit-function-return-type, @typescript-eslint/explicit-module-boundary-types
+export const REGEX = {
+    ..._REGEX,
+    IP_ADDRESS: /\b((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}\b/,
+};
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmVnZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9uZ2MtbGlicmFyeS9zcmMvbGliL3Jlc291cmNlcy9yZWdleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsS0FBSyxJQUFJLE1BQU0sRUFBRSxNQUFNLGNBQWMsQ0FBQztBQUUvQywySkFBMko7QUFDM0osTUFBTSxDQUFDLE1BQU0sS0FBSyxHQUFHO0lBQ3BCLEdBQUcsTUFBTTtJQUNULFVBQVUsRUFBRSx1REFBdUQ7Q0FDMUQsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IFJFR0VYIGFzIF9SRUdFWCB9IGZyb20gJ2FuZ3VsYXItY29yZSc7XG5cbi8vIGVzbGludC1kaXNhYmxlLW5leHQtbGluZSBAdHlwZXNjcmlwdC1lc2xpbnQvdHlwZWRlZiwgQHR5cGVzY3JpcHQtZXNsaW50L2V4cGxpY2l0LWZ1bmN0aW9uLXJldHVybi10eXBlLCBAdHlwZXNjcmlwdC1lc2xpbnQvZXhwbGljaXQtbW9kdWxlLWJvdW5kYXJ5LXR5cGVzXG5leHBvcnQgY29uc3QgUkVHRVggPSB7XG5cdC4uLl9SRUdFWCxcblx0SVBfQUREUkVTUzogL1xcYigoMjVbMC01XXwyWzAtNF1bMC05XXxbMDFdP1swLTldWzAtOV0/KShcXC58JCkpezR9XFxiLyxcbn0gYXMgY29uc3Q7XG4iXX0=

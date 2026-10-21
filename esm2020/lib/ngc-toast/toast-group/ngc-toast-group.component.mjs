@@ -1,0 +1,27 @@
+import { Component } from '@angular/core';
+import moment from 'moment-timezone';
+import _ from 'lodash';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/common";
+import * as i2 from "../toast/ngc-toast.component";
+export class NgcToastGroupComponent {
+    constructor() {
+        this.toasts = [];
+    }
+    createToast(title, description, config) {
+        const id = +moment();
+        this.toasts.push({ id, title, description, config });
+        setInterval(() => this.deleteToast(id), config.duration || 3000);
+        return id;
+    }
+    deleteToast(id) {
+        this.toasts = _.reject(this.toasts, { id });
+    }
+}
+NgcToastGroupComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: NgcToastGroupComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+NgcToastGroupComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: NgcToastGroupComponent, selector: "ngc-toast-group", ngImport: i0, template: "<ngc-toast *ngFor=\"let toast of toasts\"\n    [title]=\"toast?.title\"\n    [description]=\"toast?.description\"\n    [color]='toast?.config?.color'\n    [textColor]='toast?.config?.textColor'\n    [type]=\"toast?.config?.type\"\n    [icon]=\"toast?.config?.icon\"\n    [canClose]=\"toast?.config?.canClose\"\n    [buttons]=\"toast?.config?.buttons\"\n    (closed)=\"deleteToast( toast?.id )\">\n</ngc-toast>\n", dependencies: [{ kind: "directive", type: i1.NgForOf, selector: "[ngFor][ngForOf]", inputs: ["ngForOf", "ngForTrackBy", "ngForTemplate"] }, { kind: "component", type: i2.NgcToastComponent, selector: "ngc-toast", inputs: ["title", "description", "icon", "color", "textColor", "buttons", "canClose", "translate", "translateParams", "type"], outputs: ["closed"] }] });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: NgcToastGroupComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'ngc-toast-group', template: "<ngc-toast *ngFor=\"let toast of toasts\"\n    [title]=\"toast?.title\"\n    [description]=\"toast?.description\"\n    [color]='toast?.config?.color'\n    [textColor]='toast?.config?.textColor'\n    [type]=\"toast?.config?.type\"\n    [icon]=\"toast?.config?.icon\"\n    [canClose]=\"toast?.config?.canClose\"\n    [buttons]=\"toast?.config?.buttons\"\n    (closed)=\"deleteToast( toast?.id )\">\n</ngc-toast>\n" }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibmdjLXRvYXN0LWdyb3VwLmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL25nYy1saWJyYXJ5L3NyYy9saWIvbmdjLXRvYXN0L3RvYXN0LWdyb3VwL25nYy10b2FzdC1ncm91cC5jb21wb25lbnQudHMiLCIuLi8uLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9uZ2MtbGlicmFyeS9zcmMvbGliL25nYy10b2FzdC90b2FzdC1ncm91cC9uZ2MtdG9hc3QtZ3JvdXAuaHRtbCJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFDQSxPQUFPLEVBQUUsU0FBUyxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBQzFDLE9BQU8sTUFBTSxNQUFNLGlCQUFpQixDQUFDO0FBQ3JDLE9BQU8sQ0FBQyxNQUFNLFFBQVEsQ0FBQzs7OztBQU92QixNQUFNLE9BQU8sc0JBQXNCO0lBSm5DO1FBTVEsV0FBTSxHQUFjLEVBQUUsQ0FBQztLQWdCOUI7SUFkTyxXQUFXLENBQUUsS0FBYSxFQUFFLFdBQW9CLEVBQUUsTUFBd0I7UUFDaEYsTUFBTSxFQUFFLEdBQVcsQ0FBQyxNQUFNLEVBQUUsQ0FBQztRQUU3QixJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxFQUFFLEVBQUUsRUFBRSxLQUFLLEVBQUUsV0FBVyxFQUFFLE1BQU0sRUFBRSxDQUFDLENBQUM7UUFFckQsV0FBVyxDQUFDLEdBQUcsRUFBRSxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUUsRUFBRSxDQUFFLEVBQUUsTUFBTSxDQUFDLFFBQVEsSUFBSSxJQUFJLENBQUUsQ0FBQztRQUVwRSxPQUFPLEVBQUUsQ0FBQztJQUNYLENBQUM7SUFFTSxXQUFXLENBQUUsRUFBVTtRQUM3QixJQUFJLENBQUMsTUFBTSxHQUFHLENBQUMsQ0FBQyxNQUFNLENBQUUsSUFBSSxDQUFDLE1BQU0sRUFBRSxFQUFFLEVBQUUsRUFBRSxDQUFFLENBQUM7SUFDL0MsQ0FBQzs7bUhBaEJXLHNCQUFzQjt1R0FBdEIsc0JBQXNCLHVEQ1ZuQyw2WkFXQTsyRkREYSxzQkFBc0I7a0JBSmxDLFNBQVM7K0JBQ0UsaUJBQWlCIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSU9iamVjdCB9IGZyb20gJ0Bjb3JlJztcbmltcG9ydCB7IENvbXBvbmVudCB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IG1vbWVudCBmcm9tICdtb21lbnQtdGltZXpvbmUnO1xuaW1wb3J0IF8gZnJvbSAnbG9kYXNoJztcbmltcG9ydCB7IE5nY0lUb2FzdENvbmZpZyB9IGZyb20gJy4uL3RvYXN0L25nYy10b2FzdC5jb21wb25lbnQnO1xuXG5AQ29tcG9uZW50KHtcbiAgc2VsZWN0b3I6ICduZ2MtdG9hc3QtZ3JvdXAnLFxuICB0ZW1wbGF0ZVVybDogJy4vbmdjLXRvYXN0LWdyb3VwLmh0bWwnLFxufSlcbmV4cG9ydCBjbGFzcyBOZ2NUb2FzdEdyb3VwQ29tcG9uZW50IHtcblxuXHRwdWJsaWMgdG9hc3RzOiBJT2JqZWN0W10gPSBbXTtcblxuXHRwdWJsaWMgY3JlYXRlVG9hc3QoIHRpdGxlOiBzdHJpbmcsIGRlc2NyaXB0aW9uPzogc3RyaW5nLCBjb25maWc/OiBOZ2NJVG9hc3RDb25maWcgKSB7XG5cdFx0Y29uc3QgaWQ6IG51bWJlciA9ICttb21lbnQoKTtcblxuXHRcdHRoaXMudG9hc3RzLnB1c2goeyBpZCwgdGl0bGUsIGRlc2NyaXB0aW9uLCBjb25maWcgfSk7XG5cblx0XHRzZXRJbnRlcnZhbCgoKSA9PiB0aGlzLmRlbGV0ZVRvYXN0KCBpZCApLCBjb25maWcuZHVyYXRpb24gfHwgMzAwMCApO1xuXG5cdFx0cmV0dXJuIGlkO1xuXHR9XG5cblx0cHVibGljIGRlbGV0ZVRvYXN0KCBpZDogbnVtYmVyICkge1xuXHRcdHRoaXMudG9hc3RzID0gXy5yZWplY3QoIHRoaXMudG9hc3RzLCB7IGlkIH0gKTtcblx0fVxuXG59XG4iLCI8bmdjLXRvYXN0ICpuZ0Zvcj1cImxldCB0b2FzdCBvZiB0b2FzdHNcIlxuICAgIFt0aXRsZV09XCJ0b2FzdD8udGl0bGVcIlxuICAgIFtkZXNjcmlwdGlvbl09XCJ0b2FzdD8uZGVzY3JpcHRpb25cIlxuICAgIFtjb2xvcl09J3RvYXN0Py5jb25maWc/LmNvbG9yJ1xuICAgIFt0ZXh0Q29sb3JdPSd0b2FzdD8uY29uZmlnPy50ZXh0Q29sb3InXG4gICAgW3R5cGVdPVwidG9hc3Q/LmNvbmZpZz8udHlwZVwiXG4gICAgW2ljb25dPVwidG9hc3Q/LmNvbmZpZz8uaWNvblwiXG4gICAgW2NhbkNsb3NlXT1cInRvYXN0Py5jb25maWc/LmNhbkNsb3NlXCJcbiAgICBbYnV0dG9uc109XCJ0b2FzdD8uY29uZmlnPy5idXR0b25zXCJcbiAgICAoY2xvc2VkKT1cImRlbGV0ZVRvYXN0KCB0b2FzdD8uaWQgKVwiPlxuPC9uZ2MtdG9hc3Q+XG4iXX0=

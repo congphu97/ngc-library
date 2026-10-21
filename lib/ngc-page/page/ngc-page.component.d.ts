@@ -1,0 +1,36 @@
+import { DetectScrollDirective } from '@core';
+import { NgcScrollBarDirective, INgcScrollBarMode } from '../../ngc-scroll-bar';
+import { NgcPageHeaderDirective } from '../page-header/ngc-page-header.directive';
+import { NgcPageContentDirective } from '../page-content/ngc-page-content.directive';
+import * as i0 from "@angular/core";
+export declare class NgcPageComponent {
+    get styleHeaderPaddingTop(): string;
+    get styleHeaderPaddingBottom(): string;
+    get styleHeaderPaddingLeft(): string;
+    get styleHeaderPaddingRight(): string;
+    get styleContentPaddingTop(): string;
+    get styleContentPaddingBottom(): string;
+    get styleContentPaddingLeft(): string;
+    get styleContentPaddingRight(): string;
+    get classStretch(): boolean;
+    get classScrolling(): boolean;
+    scroller: DetectScrollDirective;
+    scrollBar: NgcScrollBarDirective;
+    pageHeader: NgcPageHeaderDirective;
+    pageContent: NgcPageContentDirective;
+    stretch: boolean;
+    suppressScrollX: boolean;
+    suppressScrollY: boolean;
+    scrollBarMode: INgcScrollBarMode;
+    isScrolling: boolean;
+    get headerPaddingTop(): string;
+    get headerPaddingBottom(): string;
+    get headerPaddingLeft(): string;
+    get headerPaddingRight(): string;
+    get contentPaddingTop(): string;
+    get contentPaddingBottom(): string;
+    get contentPaddingLeft(): string;
+    get contentPaddingRight(): string;
+    static ɵfac: i0.ɵɵFactoryDeclaration<NgcPageComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<NgcPageComponent, "ngc-page", never, { "stretch": "stretch"; "suppressScrollX": "suppressScrollX"; "suppressScrollY": "suppressScrollY"; "scrollBarMode": "scrollBarMode"; }, {}, ["pageHeader", "pageContent"], ["[ngcPageHeader]", "[ngcPageContent]"], false>;
+}

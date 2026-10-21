@@ -1,0 +1,31 @@
+import { OnInit, EventEmitter, ChangeDetectorRef } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import * as i0 from "@angular/core";
+export declare class NgcCheckboxComponent implements OnInit, ControlValueAccessor {
+    cdr: ChangeDetectorRef;
+    label: string;
+    color: string;
+    labelColor: string;
+    ngModel: boolean;
+    disabled: boolean;
+    readonly: boolean;
+    indeterminate: boolean;
+    get isChecked(): boolean;
+    get isIndeterminate(): boolean;
+    get isDisabled(): boolean;
+    get isReadonly(): boolean;
+    ngModelChange: EventEmitter<boolean>;
+    constructor(cdr: ChangeDetectorRef);
+    triggerClick(event: MouseEvent): void;
+    triggerKeyDownSpace(event: KeyboardEvent): void;
+    ngOnInit(): void;
+    private onChange;
+    private onTouched;
+    writeValue(value: boolean): void;
+    registerOnChange(fn: (value: boolean) => void): void;
+    registerOnTouched(fn: () => void): void;
+    setDisabledState(isDisabled: boolean): void;
+    toggle(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<NgcCheckboxComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<NgcCheckboxComponent, "ngc-checkbox", never, { "label": "label"; "color": "color"; "labelColor": "labelColor"; "ngModel": "ngModel"; "disabled": "disabled"; "readonly": "readonly"; "indeterminate": "indeterminate"; }, { "ngModelChange": "ngModelChange"; }, never, ["*"], false>;
+}

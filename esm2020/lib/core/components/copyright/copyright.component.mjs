@@ -1,0 +1,15 @@
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import moment from 'moment-timezone';
+import * as i0 from "@angular/core";
+export class CopyrightComponent {
+    constructor() {
+        this.year = moment().year();
+    }
+}
+CopyrightComponent.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CopyrightComponent, deps: [], target: i0.ɵɵFactoryTarget.Component });
+CopyrightComponent.ɵcmp = i0.ɵɵngDeclareComponent({ minVersion: "14.0.0", version: "14.3.0", type: CopyrightComponent, selector: "copyright", host: { classAttribute: "copyright" }, ngImport: i0, template: "", styles: [":host{font-size:12px;color:var(--ngc-color-neutral-text-tertiary, #8e8e93);text-align:center;line-height:20px;margin-top:20px;padding-top:20px;padding-bottom:20px;border-top:1px solid var(--ngc-color-neutral-border-default, #e4e4e6)}\n"], changeDetection: i0.ChangeDetectionStrategy.OnPush });
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "14.3.0", ngImport: i0, type: CopyrightComponent, decorators: [{
+            type: Component,
+            args: [{ selector: 'copyright', host: { class: 'copyright' }, changeDetection: ChangeDetectionStrategy.OnPush, template: "", styles: [":host{font-size:12px;color:var(--ngc-color-neutral-text-tertiary, #8e8e93);text-align:center;line-height:20px;margin-top:20px;padding-top:20px;padding-bottom:20px;border-top:1px solid var(--ngc-color-neutral-border-default, #e4e4e6)}\n"] }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29weXJpZ2h0LmNvbXBvbmVudC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL25nYy1saWJyYXJ5L3NyYy9saWIvY29yZS9jb21wb25lbnRzL2NvcHlyaWdodC9jb3B5cmlnaHQuY29tcG9uZW50LnRzIiwiLi4vLi4vLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvbmdjLWxpYnJhcnkvc3JjL2xpYi9jb3JlL2NvbXBvbmVudHMvY29weXJpZ2h0L2NvcHlyaWdodC5odG1sIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQUUsdUJBQXVCLEVBQUUsTUFBTSxlQUFlLENBQUM7QUFDbkUsT0FBTyxNQUFNLE1BQU0saUJBQWlCLENBQUM7O0FBU3JDLE1BQU0sT0FBTyxrQkFBa0I7SUFQL0I7UUFTUSxTQUFJLEdBQVcsTUFBTSxFQUFFLENBQUMsSUFBSSxFQUFFLENBQUM7S0FFdEM7OytHQUpZLGtCQUFrQjttR0FBbEIsa0JBQWtCLHdGQ1YvQixFQUFBOzJGRFVhLGtCQUFrQjtrQkFQOUIsU0FBUzsrQkFDRyxXQUFXLFFBR2QsRUFBRSxLQUFLLEVBQUUsV0FBVyxFQUFFLG1CQUNiLHVCQUF1QixDQUFDLE1BQU0iLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBDb21wb25lbnQsIENoYW5nZURldGVjdGlvblN0cmF0ZWd5IH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgbW9tZW50IGZyb20gJ21vbWVudC10aW1lem9uZSc7XG5cbkBDb21wb25lbnQoe1xuXHRzZWxlY3Rvclx0XHQ6ICdjb3B5cmlnaHQnLFxuXHR0ZW1wbGF0ZVVybFx0XHQ6ICcuL2NvcHlyaWdodC5odG1sJyxcblx0c3R5bGVVcmxzXHRcdDogWyAnLi9jb3B5cmlnaHQuc2NzcycgXSxcblx0aG9zdFx0XHRcdDogeyBjbGFzczogJ2NvcHlyaWdodCcgfSxcblx0Y2hhbmdlRGV0ZWN0aW9uXHQ6IENoYW5nZURldGVjdGlvblN0cmF0ZWd5Lk9uUHVzaCxcbn0pXG5leHBvcnQgY2xhc3MgQ29weXJpZ2h0Q29tcG9uZW50IHtcblxuXHRwdWJsaWMgeWVhcjogbnVtYmVyID0gbW9tZW50KCkueWVhcigpO1xuXG59XG4iLCIiXX0=
